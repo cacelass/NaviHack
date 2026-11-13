@@ -1,0 +1,14 @@
+{
+  "$comment": "Fuente de verdad del backlog: GEAS. Solo falta sustituir <IP> por la IP/URL del servidor (o poner GEAS_URL en .env) y tener GEAS_TOKEN en .env. No escribas el token aquí. `./scripts/geas_setup.sh <IP>` rellena esto y siembra los tickets.",
+  "backend": "geas",
+  "enabled": true,
+  "url": "http://<IP>:8790",
+  "org_id": "",
+  "repository": "NavaHack",
+  "repository_id": "",
+  "remote": "origin",
+  "branch": "",
+  "auto_commit": true,
+  "push": true,
+  "sync_after_claim": true
+}
