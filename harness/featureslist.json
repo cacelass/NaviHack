@@ -296,12 +296,12 @@
         "Closed dates recorded",
         "last_verified updated"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "4b410240-8bd7-4afa-933b-ac4412825c88",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "4b410240-r-04-collect-official-2026-27-pr",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -315,12 +315,14 @@
         "Log of changes kept",
         "Schedule changes reflected in points.json"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "e186d96f-8306-409d-8a62-786f586b4f47",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "e186d96f-r-05-weekly-re-verification-duri",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "R-06",
@@ -459,17 +461,10 @@
         "Consumed by planner's Easy walk option",
         "Missing data handled gracefully"
       ],
-<<<<<<< HEAD
       "status": "done",
       "depends_on": [],
       "ticket_id": "d2bedd01-70e1-4c04-b9be-766708ed6001",
       "raw_status": "DONE",
-=======
-      "status": "in_progress",
-      "depends_on": [],
-      "ticket_id": "d2bedd01-70e1-4c04-b9be-766708ed6001",
-      "raw_status": "IN_PROGRESS",
->>>>>>> 1c91492 (feat(BOOT-002): Installer scaffold: creador de agentes autocontenidos)
       "branch": "d2bedd01-d-11-elevation-mdt05-slope-layer",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -758,10 +753,12 @@
         "Offline file exported",
         "Fallback documented"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "715c81d2-ae46-4d72-88e9-c909511a3cc1",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "715c81d2-x-05-buildings-3d-footprint-heig",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "X-06",
@@ -1009,10 +1006,12 @@
         "Anything blocked has a named alternative",
         "Attribution text ready for D-17"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "b5bc2472-21e3-4c1e-bbb5-5b4209787b6f",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "b5bc2472-lic-01-licences-and-attributions",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "RENDER-01",
@@ -1495,6 +1494,40 @@
       "status": "pending",
       "depends_on": [],
       "ticket_id": "ef8724e0-be3f-4d28-a9fe-adf5c37564ed",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "DOC-01",
+      "title": "README completo y bonito: la idea, cómo funciona y cómo arrancarlo",
+      "description": "El README sigue siendo el de la plantilla MeshHarmes. Reescribirlo para TinyVigo: qué es y para quién, captura de la web, cómo se arranca (make website / python -m scripts.serve_web), arquitectura en un diagrama (feeds -> snapshots -> web; pipeline de render), fuentes de datos con licencias, cómo se trabaja con el arnés y GEAS, y estado/roadmap.\n\nCriterios de aceptación:\n  1. Abre con qué es TinyVigo y una captura actual de la web\n  2. Sección Arrancar en local con make website y la alternativa sin make (Windows)\n  3. Diagrama de arquitectura y del pipeline de datos y de render\n  4. Tabla de fuentes de datos con licencia y atribución (enlaza licencias.md)\n  5. Cómo se trabaja: arnés, GEAS, un actor por dispositivo, claim antes de tocar\n  6. Estado y roadmap enlazados al backlog\n  7. Sin restos de la plantilla MeshHarmes",
+      "acceptance_criteria": [
+        "Abre con qué es TinyVigo y una captura actual de la web",
+        "Sección Arrancar en local con make website y la alternativa sin make (Windows)",
+        "Diagrama de arquitectura y del pipeline de datos y de render",
+        "Tabla de fuentes de datos con licencia y atribución (enlaza licencias.md)",
+        "Cómo se trabaja: arnés, GEAS, un actor por dispositivo, claim antes de tocar",
+        "Estado y roadmap enlazados al backlog",
+        "Sin restos de la plantilla MeshHarmes"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "9ce3175f-a9bd-464d-b01b-0767f4f81a77",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "UI-01",
+      "title": "Interfaz D v2: 12 pantallas en claro y oscuro (web/ui)",
+      "description": "Direccion D ejecutada: Inter, vidrio, jerarquia por tonos, cero sombras; el pixel solo en mapa/iconos/marca. Paginas: inicio, mapa, ficha, rutas, eventos, transporte, postal, lista de puntos, estados, ajustes, A Navidena y catalogo. Ruta en el repo: web/ui/. Se abre localmente con python3 -m http.server desde web/ y abriendo web/ui/. Sistema de tokens en css/tokens.css y justificacion en DESIGN.md.\n\nCriterios de aceptación:\n  1. Las 12 paginas se abren servidas desde web/ con rutas relativas, sin CDN\n  2. Tema claro y oscuro con contraste AA, conmutador que recuerda la eleccion\n  3. Se ve en escritorio (1400) y movil (390); capturas en web/ui/capturas/\n  4. Ningun texto usa fuente de pixel: solo Inter (el pixel queda en mapa, iconos y matasellos)\n  5. A Navidena es jugable: 43 sellos, certificado numerado, estado en URL y localStorage",
+      "acceptance_criteria": [
+        "Las 12 paginas se abren servidas desde web/ con rutas relativas, sin CDN",
+        "Tema claro y oscuro con contraste AA, conmutador que recuerda la eleccion",
+        "Se ve en escritorio (1400) y movil (390); capturas en web/ui/capturas/",
+        "Ningun texto usa fuente de pixel: solo Inter (el pixel queda en mapa, iconos y matasellos)",
+        "A Navidena es jugable: 43 sellos, certificado numerado, estado en URL y localStorage"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "209c25e4-27af-4c5e-8f6c-b95ee16e43a0",
       "raw_status": "FREE"
     }
   ]
