@@ -89,10 +89,10 @@
         "El README describe el objetivo en una frase propia",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "b0fa3e7b-78b0-453f-90ad-eacd7992861e",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "b0fa3e7b-onboard-001-entender-el-proyecto",
       "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },

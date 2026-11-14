@@ -1,7 +1,7 @@
 # MeshHarmes
 
 ![Python](https://img.shields.io/badge/Python-3.12+-blue?logo=python&logoColor=white)
-![Version](https://img.shields.io/badge/Version-0.1.5-green)
+![Version](https://img.shields.io/badge/Version-0.1.6-green)
 ![Author](https://img.shields.io/badge/Author-cacelass-blueviolet)
 
 > TinyVigo: un mapa web de Vigo en Navidad con puntos navideños investigados, escenas pixel-art, eventos del día y rutas a pie que se adaptan a tu tiempo.

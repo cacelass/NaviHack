@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Entender el proyecto (TinyVigo) (ONBOARD-001)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Arranque en frio operativo (BOOT-001)
 
 ## [Unreleased] — 2026-11-14
