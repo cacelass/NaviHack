@@ -117,3 +117,37 @@ genera snapshot nuevo, solo actualiza `checked_at`.
 Créditos para `D-17`: «Concello de Vigo — datos.vigo.org (ODC-BY)», «Vitrasa
 (GTFS vía datos.vigo.org)», «Renfe Operadora (CC BY 4.0)», «Weather data by
 Open-Meteo.com (CC BY 4.0)».
+
+## Edificios 3D del Concello (X-05)
+
+- **Servicio:** `https://services9.arcgis.com/ss3qikvq575kYKRJ/arcgis/rest/services/Edificios_3D_de_Vigo_en_vectorial/FeatureServer/0`
+  (item `1196c4f7cdfa478eb9ac09b1fffc2576`), capa `EDIFICIOS`, **41 289**
+  edificios, MultiPatch, EPSG:25829, `maxRecordCount` 2000, formatos JSON,
+  geoJSON, PBF. Hay también SceneServer I3S (`7a4b08ad…`, `fe74b88f…`) con el
+  volumen real, fuera de v1.
+- **Campos útiles:** `refcat` (une con Catastro), `altura`, `z` (cota del
+  tejado), `ano_antiguedade`, `ano_reforma`, `uso_principal_superficie`,
+  `barrio`, `parroquia`, `distrito`, `seccion` (+ superficies por uso,
+  habitantes, riesgo de inundación, radiación).
+- **MultiPatch en GeoJSON: no.** `f=geojson` devuelve `Polygon` 2D;
+  `f=json&returnZ=true` devuelve `rings` con z = 0. Es decir, el servidor
+  aplana a huella. Para el render: extruir la huella `height_m` desde
+  `base_z = z − altura`.
+- **Reproyección:** `outSR=4326` en servidor; comprobada contra una
+  conversión UTM 29N → WGS84 propia (`utm29n_to_wgs84`): 0,03 mm de diferencia
+  en el vértice de `2565705NG2726N`.
+- **Completitud de `altura`:** ciudad 40 622 / 41 289 = **98,4 %** (667 sin
+  altura o ≤ 0); núcleo navideño 2 975 edificios, **99,6 %**. `ano_antiguedade`
+  falta en 93; `ano_reforma` > 0 en 10 868.
+- **Año de los datos por zona:** el servicio no publica la fecha de captura.
+  Usamos como indicador el año más reciente (construcción o reforma) por
+  barrio, en `stats.newest_year_by_barrio` del fichero exportado: un barrio
+  cuyo edificio más nuevo es de hace años es candidato a «zona desactualizada».
+- **Licencia:** no declarada en el item → ver `licencias.md` (pedir
+  confirmación para imágenes derivadas antes de publicar tiles).
+- **Fichero offline:** `data/render/buildings.geojson` (núcleo
+  `-8.7320,42.2310,-8.7080,42.2430`, 1,8 MB, versionado), WGS84, un
+  Polygon/MultiPolygon por edificio con `refcat, height_m, base_z, year_built,
+  year_reformed, use, barrio`. Otra zona: `python -m scripts.buildings --bbox …`.
+- **Fallback:** huellas de Catastro (INSPIRE, WFS de edificios) unidas por
+  `refcat`; la altura saldría de plantas × 3 m, peor que la del Concello.
