@@ -292,5 +292,15 @@
   "wx.source": "Weather: Open-Meteo, Vigo centre",
   "common.lit_now": "Lit now",
   "common.lights_on_at": "Lights up at {time}",
-  "common.lights_off_at": "Goes dark at {time}"
+  "common.lights_off_at": "Goes dark at {time}",
+  "track.follow": "Follow me",
+  "track.stop": "Stop",
+  "track.left": "{min} min to go",
+  "track.next": "Next: {name}, {min} min away",
+  "track.to_end": "To the end of the route",
+  "track.done": "Route finished",
+  "track.simulated": "Simulated",
+  "track.simulate": "Simulate walk",
+  "track.far": "You are not on the route",
+  "track.far_body": "No GPS or far from the route. You can watch a simulation."
 }

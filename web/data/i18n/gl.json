@@ -292,5 +292,15 @@
   "wx.source": "Tempo: Open-Meteo, centro de Vigo",
   "common.lit_now": "Aceso xa",
   "common.lights_on_at": "Acéndese ás {time}",
-  "common.lights_off_at": "Apágase ás {time}"
+  "common.lights_off_at": "Apágase ás {time}",
+  "track.follow": "Seguirme",
+  "track.stop": "Deixar de seguir",
+  "track.left": "Quédanche {min} min",
+  "track.next": "Seguinte: {name}, a {min} min",
+  "track.to_end": "Ata o final da ruta",
+  "track.done": "Ruta rematada",
+  "track.simulated": "Simulación",
+  "track.simulate": "Simular paseo",
+  "track.far": "Non estás na ruta",
+  "track.far_body": "Sen GPS ou lonxe do percorrido. Podes ver unha simulación."
 }

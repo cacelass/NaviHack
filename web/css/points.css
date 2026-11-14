@@ -453,3 +453,22 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 .tv-time-quick:focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
 body.is-city .tv-time-quick, body:has(.tv-sheet.is-open) .tv-time-quick, body:has(.tv-tour.is-open) .tv-time-quick { display: none; }
 @media (max-width: 700px) { .tv-time-quick { top: 8px; right: 60px; } .tv-time-quick span { display: none; } }
+
+/* seguimiento en ruta (track.js) — Miguel2 */
+.tv-walked { pointer-events: none; overflow: visible; }
+.tv-walked-line { fill: none; stroke: #8a8f9c; stroke-width: 10; stroke-linejoin: round; stroke-linecap: round; }
+.tv-me-dot { fill: #3d8bff; stroke: #fff; stroke-width: 5; }
+.tv-me-pulse { fill: rgba(61, 139, 255, .28); animation: tv-pulse 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes tv-pulse { 0% { transform: scale(.4); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+.tv-track-go { position: fixed; z-index: 7; left: 50%; bottom: 76px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: var(--sp-2); min-height: var(--tap); padding: 0 var(--sp-4); border: 0; border-radius: var(--r-panel); background: #3d8bff; color: #fff; font: var(--w-600) var(--fs-label)/1 var(--f-ui); cursor: pointer; }
+.tv-track { display: none; position: fixed; z-index: 9; left: 50%; top: 12px; transform: translateX(-50%); width: min(460px, calc(100vw - 140px)); box-sizing: border-box; padding: var(--sp-3) var(--sp-4); gap: var(--sp-2); flex-direction: column; background: var(--raised); color: var(--fg); border: 1px solid var(--line); border-radius: var(--r-panel); font: var(--fs-label)/1.35 var(--f-ui); }
+.tv-track.is-on { display: flex; }
+.tv-track-main { display: grid; gap: 2px; }
+.tv-track-main strong { font-size: var(--fs-title); font-weight: var(--w-600); font-variant-numeric: tabular-nums; }
+.tv-track-main span { color: var(--fg-2); }
+.tv-track-bar { height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; }
+.tv-track-bar span { display: block; height: 100%; background: #3d8bff; transition: width .3s linear; }
+.tv-track-actions { display: flex; gap: var(--sp-2); align-items: center; justify-content: flex-end; }
+.tv-track button { font: inherit; }
+@media (max-width: 700px) { .tv-track { top: auto; bottom: 70px; width: calc(100vw - 16px); } .tv-track-go { bottom: 70px; } }
+@media (prefers-reduced-motion: reduce) { .tv-me-pulse { animation: none; } }
