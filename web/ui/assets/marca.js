@@ -1,50 +1,13 @@
 /* Marca TinyVigo — "el árbol que se gira".
-   Delante es un abeto mínimo: dos capas y la luz en la punta. Girado 180°, la
-   falda es la V de Vigo y la luz cae al vértice. Un solo dibujo, dos lecturas.
-   Dos dibujos del mismo símbolo:
-     · pixel  — rejilla de 16, para 16–32 px (HUD del mapa, favicon, sellos)
-     · vector — trazado limpio, para 32 px en adelante (cabeceras, certificado)
-     · tinta  — una sola tinta, para impresión en blanco y negro
+   Delante es un abeto mínimo: dos trazos y la luz en la punta. Girado 180°, la
+   falda es la V de Vigo y la luz cae al vértice. Un solo dibujo, dos lecturas,
+   y un solo trazado vectorial para todos los tamaños (nada de rejilla de
+   píxeles: el símbolo son líneas, igual a 16 px que a 200).
+   Variante 'tinta': una sola tinta, sin el oro de la luz, para impresión.
    El nombre va SIEMPRE en Inter. Nada de fuente de píxel en el nombre.
    Uso: <span data-tv="simbolo" data-tv-size="24">, data-tv="logo", data-tv="matasellos".
    También monta el marcado antiguo <i class="marca" data-marca data-size="22">. */
 (function () {
-  var N = 16;
-  var ROWS = [
-    '................',
-    '.......aa.......',
-    '.......aa.......',
-    '................',
-    '.......##.......',
-    '......#..#......',
-    '......#..#......',
-    '....#......#....',
-    '....#......#....',
-    '.......##.......',
-    '......#..#......',
-    '.....#....#.....',
-    '...#........#...',
-    '..#..........#..',
-    '#..............#',
-    '................'
-  ];
-
-  function pixel(attrs) {
-    var out = '<svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true" focusable="false" ' + attrs + '>';
-    for (var y = 0; y < N; y++) {
-      var row = ROWS[y], x = 0;
-      while (x < N) {
-        var c = row[x];
-        if (c === '.') { x++; continue; }
-        var e = x;
-        while (e < N && row[e] === c) e++;
-        out += '<rect class="tv-p' + (c === 'a' ? 'l' : 'v') + '" x="' + x + '" y="' + y + '" width="' + (e - x) + '" height="1"/>';
-        x = e;
-      }
-    }
-    return out + '</svg>';
-  }
-
   function vector(attrs) {
     return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" ' + attrs + '>' +
       '<path class="tv-pv" d="M6.2 9.2L12 3.4L17.8 9.2" stroke-width="2.4" stroke-linecap="butt" stroke-linejoin="miter"/>' +
@@ -53,17 +16,15 @@
       '</svg>';
   }
 
-  /* opts: { size, variante: 'pixel'|'vector'|'tinta', clase } */
+  /* opts: { size, variante: 'tinta', clase } */
   function simbolo(opts) {
     opts = opts || {};
     var s = opts.size || 24;
-    var variante = opts.variante || (s <= 32 ? 'pixel' : 'vector');
-    var dibujo = variante === 'tinta' ? (s <= 32 ? 'pixel' : 'vector') : variante;
-    var cls = 'tv-simbolo tv-' + dibujo + (variante === 'tinta' ? ' tv-tinta' : '');
+    var tinta = opts.variante === 'tinta';
+    var cls = 'tv-simbolo' + (tinta ? ' tv-tinta' : '');
     if (opts.clase) cls += ' ' + opts.clase;
     var dim = 'width="' + s + '" height="' + s + '"';
-    return '<span class="' + cls + '" style="--tv-s:' + s + 'px">' +
-      (dibujo === 'pixel' ? pixel(dim) : vector(dim)) + '</span>';
+    return '<span class="' + cls + '" style="--tv-s:' + s + 'px">' + vector(dim) + '</span>';
   }
 
   /* lockup horizontal: símbolo + nombre en Inter */
@@ -103,8 +64,7 @@
   var css = '' +
     '.tv-simbolo{display:inline-block;flex:none;line-height:0}' +
     '.tv-simbolo svg{display:block;width:var(--tv-s,24px);height:var(--tv-s,24px)}' +
-    '.tv-pv{fill:currentColor}' +
-    '.tv-vector .tv-pv,.tv-tinta.tv-vector .tv-pv{fill:none;stroke:currentColor}' +
+    '.tv-pv{fill:none;stroke:currentColor}' +
     '.tv-pl{fill:var(--tv-luz,#d9a441)}' +
     '.tv-tinta .tv-pl{fill:currentColor}' +
     '.tv-lockup{display:inline-flex;align-items:center;gap:calc(var(--tv-s,28px) * .34);color:currentColor}' +
