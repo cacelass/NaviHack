@@ -235,3 +235,20 @@ $ ./init.sh → ENTORNO LISTO, pytest 7 passed in 0.01s. Creado vault/01_PROYECT
 ```
 
 </details>
+
+## QA-001 — Batería de calidad en verde
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.12s
+- **Ticket GEAS:** b335baf8 · commit_after `d1fc42a1`
+- **Cambios:** pyproject.toml (pythonpath=.); uv.lock (v0.1.2); Makefile (sin cambios); .github/workflows/ci.yml (sin cambios)
+- **Decisiones:** mypy no estaba instalado en el venv: uv sync --extra dev; pythonpath=. para que uv run pytest resuelva app/; CI ya era superset de make check, no se tocó
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ make check → 'check pasado: lint + typecheck + test + arnés OK'; $ make lint → ruff check+format OK; $ make typecheck → mypy OK (7 files); $ make test → 566 passed, 15 skipped in 9.62s; $ ./init.sh → ENTORNO LISTO. CI (.github/workflows/ci.yml) corre lint+typecheck+test+agents tests+harness gate+prompts sync+evals+bandit, superset de make check.
+```
+
+</details>

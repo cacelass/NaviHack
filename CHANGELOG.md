@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Batería de calidad en verde (QA-001)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Definir el objetivo del proyecto (TinyVigo) (SCOPE-001)
 
 ## [Unreleased] — 2026-11-14
