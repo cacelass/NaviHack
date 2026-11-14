@@ -394,3 +394,20 @@ R-06 evidencia (2026-11-14):
 ```
 
 </details>
+
+## D-10 — Weather (Open-Meteo)
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 36 passed in 0.78s
+- **Ticket GEAS:** 66ad58ab · commit_after `8b3d6acb`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 5a6ca17. $ pytest tests -> 20 passed (test_weather: tira ahora + 6 h; rain_probability en ventana de ruta = 57; tira None sin datos o caducada >3 h; payload malo mantiene último bueno con edad 3600 s). En vivo: python scripts/snapshot.py weather -> ok, source_timestamp 2026-11-14T13:15. Cron */30.
+```
+
+</details>
