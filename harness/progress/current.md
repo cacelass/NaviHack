@@ -1,26 +1,35 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** ONBOARD-001
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Nadie puede implementar contra un objetivo que no está escrito. Esta feature convierte lo que el usuario tiene en la cabeza en algo que un agente pueda leer: qué problema se resuelve, para quién, cuándo está hecho y qué queda fuera. El agente `bootstrap` hace las preguntas; el usuario las responde; la respuesta acaba en project.yml y en el vault.
+
+Criterios de aceptación:
+  1. uv run python -m agents run bootstrap describe --description "<respuesta del usuario>" --yes devuelve success=true
+  2. project.yml tiene una descripción propia del proyecto, no la de la plantilla
+  3. vault/01_PROYECTO/objetivo.md recoge problema, usuario, criterio de hecho y fuera de alcance
+  4. El README describe el objetivo en una frase propia
+  5. ./init.sh termina con ENTORNO LISTO
+
+[importada desde harness/featureslist.json: ONBOARD-001]
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] uv run python -m agents run bootstrap describe --description "<respuesta del usuario>" --yes devuelve success=true
+- [ ] project.yml tiene una descripción propia del proyecto, no la de la plantilla
+- [ ] vault/01_PROYECTO/objetivo.md recoge problema, usuario, criterio de hecho y fuera de alcance
+- [ ] El README describe el objetivo en una frase propia
+- [ ] ./init.sh termina con ENTORNO LISTO
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_

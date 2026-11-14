@@ -89,10 +89,12 @@
         "El README describe el objetivo en una frase propia",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "b0fa3e7b-78b0-453f-90ad-eacd7992861e",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "b0fa3e7b-onboard-001-entender-el-proyecto",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "BOOT-004",
@@ -334,10 +336,12 @@
         "Terms/licence noted",
         "Intervals in A7 updated with measured values"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "9f20797f-3ced-4eeb-8580-557d57115a79",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "9f20797f-d-00-measure-real-refresh-rate-a",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-01",
