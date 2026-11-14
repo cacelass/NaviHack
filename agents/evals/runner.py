@@ -47,34 +47,40 @@ def _smoke(orchestrator: Orchestrator) -> list[dict]:
             None,
         )
         if primary is None:
-            results.append({
-                "agent": name,
-                "action": "(ninguna)",
-                "success": True,
-                "duration_ms": 0,
-                "message": "sin acciones ejecutables sin argumentos — nada que probar en smoke",
-            })
+            results.append(
+                {
+                    "agent": name,
+                    "action": "(ninguna)",
+                    "success": True,
+                    "duration_ms": 0,
+                    "message": "sin acciones ejecutables sin argumentos — nada que probar en smoke",
+                }
+            )
             continue
         start = time.monotonic()
         try:
             result = agent.run(primary)
             duration = time.monotonic() - start
-            results.append({
-                "agent": name,
-                "action": primary,
-                "success": result.success,
-                "duration_ms": round(duration * 1000),
-                "message": result.message[:200],
-            })
+            results.append(
+                {
+                    "agent": name,
+                    "action": primary,
+                    "success": result.success,
+                    "duration_ms": round(duration * 1000),
+                    "message": result.message[:200],
+                }
+            )
         except Exception as exc:
             duration = time.monotonic() - start
-            results.append({
-                "agent": name,
-                "action": primary,
-                "success": False,
-                "duration_ms": round(duration * 1000),
-                "message": f"EXCEPTION: {exc}",
-            })
+            results.append(
+                {
+                    "agent": name,
+                    "action": primary,
+                    "success": False,
+                    "duration_ms": round(duration * 1000),
+                    "message": f"EXCEPTION: {exc}",
+                }
+            )
     return results
 
 
@@ -121,14 +127,16 @@ def _routing(orchestrator: Orchestrator) -> list[dict]:
         decision = orchestrator.select_agent(query)
         duration = time.monotonic() - start
         correct = decision.agent_name == expected_agent
-        results.append({
-            "query": query,
-            "expected": expected_agent,
-            "got": decision.agent_name,
-            "confidence": round(decision.confidence, 3),
-            "correct": correct,
-            "duration_ms": round(duration * 1000),
-        })
+        results.append(
+            {
+                "query": query,
+                "expected": expected_agent,
+                "got": decision.agent_name,
+                "confidence": round(decision.confidence, 3),
+                "correct": correct,
+                "duration_ms": round(duration * 1000),
+            }
+        )
     return results
 
 
@@ -138,11 +146,17 @@ def _contracts() -> list[dict]:
     y no hay colisiones de recursos.
     """
     from agents.contracts import CONTRACTS, validate_contracts
+
     agent_registry.discover()
     problems = validate_contracts(set(agent_registry.all()))
     return [
-        {"agent": c.role, "can": list(c.can), "cannot": list(c.cannot),
-         "owns": list(c.owns), "collaborates": list(c.collaborates)}
+        {
+            "agent": c.role,
+            "can": list(c.can),
+            "cannot": list(c.cannot),
+            "owns": list(c.owns),
+            "collaborates": list(c.collaborates),
+        }
         for c in CONTRACTS.values()
     ] + ([{"warning": p} for p in problems] if problems else [])
 
@@ -162,10 +176,18 @@ def _check_ficheros(root, check) -> None:
     else:
         check("init.sh", True, "presente")
         ejecutable = os.access(gate, os.X_OK)
-        check("init.sh:+x", ejecutable,
-              "ejecutable" if ejecutable else "sin bit de ejecución (chmod +x init.sh)")
+        check(
+            "init.sh:+x",
+            ejecutable,
+            "ejecutable" if ejecutable else "sin bit de ejecución (chmod +x init.sh)",
+        )
 
-    for rel in ("AGENTS.md", "harness/progress/current.md", "harness/progress/history.md", "harness/progress/README.md"):
+    for rel in (
+        "AGENTS.md",
+        "harness/progress/current.md",
+        "harness/progress/history.md",
+        "harness/progress/README.md",
+    ):
         check(rel, (root / rel).is_file(), "presente" if (root / rel).is_file() else "FALTA")
 
 
@@ -173,24 +195,37 @@ def _check_agentes(root, check) -> None:
     """Los cuatro agentes que razonan y los skills que los documentan."""
     for nombre in HARNESS_AGENTS:
         ruta = root / ".opencode" / "agents" / f"{nombre}.md"
-        check(f"agente:{nombre}", ruta.is_file(),
-              "definido" if ruta.is_file() else "FALTA su definición")
+        check(
+            f"agente:{nombre}",
+            ruta.is_file(),
+            "definido" if ruta.is_file() else "FALTA su definición",
+        )
 
     for skill in ("harness_workflow", "agents_reference"):
         ruta = root / "agents" / "prompts" / f"{skill}.md"
-        check(skill, ruta.is_file(),
-              "skill presente" if ruta.is_file() else f"FALTA agents/prompts/{skill}.md")
+        check(
+            skill,
+            ruta.is_file(),
+            "skill presente" if ruta.is_file() else f"FALTA agents/prompts/{skill}.md",
+        )
 
     agents_md = root / "AGENTS.md"
     if agents_md.is_file():
         texto = agents_md.read_text(encoding="utf-8", errors="replace")
         ok = "Protocolo del arnés" in texto and "init.sh" in texto
-        check("AGENTS.md:protocolo", ok,
-              "protocolo documentado" if ok else "no documenta el protocolo del arnés")
+        check(
+            "AGENTS.md:protocolo",
+            ok,
+            "protocolo documentado" if ok else "no documenta el protocolo del arnés",
+        )
 
 
-def _problemas_backlog(features: list) -> list[str]:
-    """Mismo contrato de esquema que valida ./init.sh."""
+def _problemas_backlog(features: list, multi_actor: bool = False) -> list[str]:
+    """Mismo contrato de esquema que valida ./init.sh.
+
+    Con ``multi_actor`` (backlog en GEAS) cada actor tiene su ticket abierto,
+    así que varias features ``in_progress`` a la vez son lo normal, no un error.
+    """
     problemas: list[str] = []
     ids: set[str] = set()
     for i, feat in enumerate(features):
@@ -215,10 +250,21 @@ def _problemas_backlog(features: list) -> list[str]:
                 if dep not in ids:
                     problemas.append(f"{feat.get('id')}: depends_on '{dep}' no existe")
 
-    abiertas = [f["id"] for f in features if isinstance(f, dict) and f.get("status") == "in_progress"]
-    if len(abiertas) > 1:
+    abiertas = [
+        f["id"] for f in features if isinstance(f, dict) and f.get("status") == "in_progress"
+    ]
+    if len(abiertas) > 1 and not multi_actor:
         problemas.append(f"{len(abiertas)} features in_progress a la vez: {', '.join(abiertas)}")
     return problemas
+
+
+def _geas_enabled(root) -> bool:
+    """harness/geas.json con ``enabled``: el backlog es compartido entre actores."""
+    try:
+        cfg = json.loads((root / "harness/geas.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    return bool(isinstance(cfg, dict) and cfg.get("enabled"))
 
 
 def _check_backlog(root, check) -> None:
@@ -235,10 +281,12 @@ def _check_backlog(root, check) -> None:
 
     features = doc.get("features") if isinstance(doc, dict) else None
     if not isinstance(features, list) or not features:
-        check("harness/featureslist.json", False, "falta la clave 'features' con una lista no vacía")
+        check(
+            "harness/featureslist.json", False, "falta la clave 'features' con una lista no vacía"
+        )
         return
 
-    problemas = _problemas_backlog(features)
+    problemas = _problemas_backlog(features, multi_actor=_geas_enabled(root))
     if problemas:
         for problema in problemas:
             check("harness/featureslist.json", False, problema)
@@ -263,7 +311,6 @@ def _harness() -> list[dict]:
     return resultados
 
 
-
 def _rag() -> dict:
     """
     Rag test: mide la recuperación contra el juego de pruebas del proyecto.
@@ -278,9 +325,18 @@ def _rag() -> dict:
         from agents.evals.rag_eval import suite
     except ImportError:
         return {
-            "suite": "rag", "total": 1, "passed": 1, "failed": 0, "avg_duration_ms": 0,
-            "results": [{"agent": "rag", "success": True,
-                         "message": "no evaluado — el proyecto no incluye el módulo RAG"}],
+            "suite": "rag",
+            "total": 1,
+            "passed": 1,
+            "failed": 0,
+            "avg_duration_ms": 0,
+            "results": [
+                {
+                    "agent": "rag",
+                    "success": True,
+                    "message": "no evaluado — el proyecto no incluye el módulo RAG",
+                }
+            ],
         }
     return suite(get_context().root)
 
@@ -299,9 +355,14 @@ def _summarize(results: list[dict], label: str) -> dict:
     }
 
 
-def run_evals(smoke: bool = True, routing: bool = True, contracts: bool = True,
-              harness: bool = True, rag: bool = True,
-              json_output: bool = False) -> EvalReport:
+def run_evals(
+    smoke: bool = True,
+    routing: bool = True,
+    contracts: bool = True,
+    harness: bool = True,
+    rag: bool = True,
+    json_output: bool = False,
+) -> EvalReport:
     orchestrator = Orchestrator(context=get_context())
     agent_registry.discover()
 
@@ -327,15 +388,14 @@ def run_evals(smoke: bool = True, routing: bool = True, contracts: bool = True,
         }
 
     overall_pass = all(
-        s.get("failed", 0) == 0 and s.get("warnings", 0) == 0
-        for s in suites.values()
+        s.get("failed", 0) == 0 and s.get("warnings", 0) == 0 for s in suites.values()
     )
 
     report: EvalReport = {
         "success": overall_pass,
-        "timestamp": __import__("datetime").datetime.now(
-            __import__("datetime").timezone.utc
-        ).isoformat(),
+        "timestamp": __import__("datetime")
+        .datetime.now(__import__("datetime").timezone.utc)
+        .isoformat(),
         "suites": suites,
     }
 
@@ -348,23 +408,27 @@ def run_evals(smoke: bool = True, routing: bool = True, contracts: bool = True,
 
 
 def _print_report(report: EvalReport) -> None:
-    print(f"\n{'='*50}")
+    print(f"\n{'=' * 50}")
     print(f"  EVAL REPORT  {'✔' if report['success'] else '✘'}")
-    print(f"{'='*50}")
+    print(f"{'=' * 50}")
     for name, suite in report["suites"].items():
         status = "✔" if suite.get("failed", 0) == 0 else "✘"
         print(f"\n  {status} {name.upper()}")
-        print(f"     {suite.get('passed', 0)}/{suite['total']} passed"
-              f"  |  avg {suite.get('avg_duration_ms', 0)}ms")
+        print(
+            f"     {suite.get('passed', 0)}/{suite['total']} passed"
+            f"  |  avg {suite.get('avg_duration_ms', 0)}ms"
+        )
         for r in suite.get("results", []):
             if not r.get("success", r.get("correct", True)):
-                print(f"     ✘ {r.get('agent', r.get('expected', '?'))}: "
-                      f"{r.get('message', r.get('query', ''))[:120]}")
+                print(
+                    f"     ✘ {r.get('agent', r.get('expected', '?'))}: "
+                    f"{r.get('message', r.get('query', ''))[:120]}"
+                )
             if "warning" in r:
                 print(f"     ⚠ {r['warning']}")
-    print(f"\n{'='*50}")
+    print(f"\n{'=' * 50}")
     print(f"  {'PASS' if report['success'] else 'FAIL'}")
-    print(f"{'='*50}\n")
+    print(f"{'=' * 50}\n")
 
 
 def main() -> int:
