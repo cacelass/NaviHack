@@ -1,29 +1,26 @@
 # Tarea actual
 
-**Feature:** X-04
-**Estado:** in_progress
-**Iniciada:** 2026-11-14
-**Responsable:** implementer
+> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
+> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
+> está el trabajo sin releer el proyecto entero.
+
+**Feature:** _(ninguna)_
+**Estado:** idle
+**Iniciada:** —
+**Responsable:** —
 
 ## Objetivo
 
-Walking+bus and train legs in the planner from the GTFS schedules, labelled 'scheduled'. Next departures at the nearest stop or station in the point panel. Stops and stations as map icons.
-
-Criterios de aceptación:
-  1. Transit leg option in the planner, legs labelled 'scheduled'
-  2. Next departures shown in the point panel
-  3. Bus stop and train station layers on the map
+_(sin trabajo en curso)_
 
 ## Criterios de aceptación
 
-- [ ] Transit leg option in the planner, legs labelled 'scheduled'
-- [ ] Next departures shown in the point panel
-- [ ] Bus stop and train station layers on the map
+_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
 
 ## Bitácora
 
-_(pendiente)_
+_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
 
 ## Bloqueos
 
-_(ninguno)_
+_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_

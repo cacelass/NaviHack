@@ -766,3 +766,20 @@ commit 94d5fb2. Cruce por id aprendido/nombre/dirección; 14 de 44 eventos en ma
 ```
 
 </details>
+
+## X-04 — Transit legs in planner + next departures
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 110 passed in 0.77s
+- **Ticket GEAS:** b7daf91d · commit_after `15dc2b52`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 15dc2b5. pytest 110 passed; evals PASS; node --check OK + smoke con datos reales (Samil→centro 15B 18:23→18:40; próximas salidas junto al árbol; tablero Renfe). 1) Opción bus en el planner: bus directo al centro desde la parada cercana, etiquetado 'horario programado'; 2) próximas salidas en la ficha del punto (parada a ≤400 m); 3) capas de paradas Vitrasa (desvío Navidad en dorado) y estaciones Urzaiz/Guixar en la vista ciudad. test_build_transit_web 3 tests.
+```
+
+</details>
