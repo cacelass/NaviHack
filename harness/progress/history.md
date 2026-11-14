@@ -879,3 +879,20 @@ commit 42cbd25. Endpoints Renfe RT probados (LD y Cercanías); cobertura Vigo 12
 ```
 
 </details>
+
+## MOB-01 — Web muy responsive en móvil: paneles como hojas inferiores, áreas seguras, objetivos táctiles y sin solapes
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 152 passed in 2.81s
+- **Ticket GEAS:** d4eaca36 · commit_after `45f60d01`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit c212996. Batería de 12 transiciones en Edge headless a 360/390/430 px: siempre 1 hoja abierta, sin scroll horizontal, 0 errores; hojas inferiores con safe-area; barra que se aparta; tour plegado; × sticky; 44 px táctiles; escritorio intacto.
+```
+
+</details>
