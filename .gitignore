@@ -99,3 +99,4 @@ pip-delete-this-directory.txt
 # Snapshots generados por scripts/snapshot.py (D-01)
 data/snapshots/
 data/agenda/
+data/layers/
