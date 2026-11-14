@@ -1,26 +1,37 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** X-05
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Read FeatureServer in pages, reproject EPSG:25829->WGS84, check GeoJSON for MultiPatch, altura completeness and licence; export offline footprint+height file; fallback Catastro footprints joined by refcat.
+
+Criterios de aceptación:
+  1. Pagination implemented (<=2000 records/request)
+  2. Reprojection to WGS84 correct
+  3. GeoJSON MultiPatch feasibility documented
+  4. altura completeness measured
+  5. Licence recorded
+  6. Offline file exported
+  7. Fallback documented
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] Pagination implemented (<=2000 records/request)
+- [ ] Reprojection to WGS84 correct
+- [ ] GeoJSON MultiPatch feasibility documented
+- [ ] altura completeness measured
+- [ ] Licence recorded
+- [ ] Offline file exported
+- [ ] Fallback documented
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_
