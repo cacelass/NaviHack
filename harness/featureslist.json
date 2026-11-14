@@ -362,12 +362,12 @@
         "History file appended",
         "App shows age and 'no data' after threshold"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-00"
       ],
       "ticket_id": "37c8b711-4172-4bf5-9b0a-c059419fe1d6",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "37c8b711-d-01-snapshot-publisher",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1438,6 +1438,38 @@
         "R-04"
       ],
       "ticket_id": "e652139e-1f34-4736-bded-fd148091b8f3",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "BASE-01",
+      "title": "Provisional base image of the 3x3 block (one 3072 px image, web version)",
+      "description": "Placeholder base image so the web, light, sea and weather can be developed before the final tiles exist. Redraw the 9 render tiles of 1024 px one at a time with gemini-3.1-flash-image (one call at a time, wait on 429, call count recorded), small style swatch plus a narrow neighbour strip, assemble in code with colour matching and soft blending at the joins (no AI on joins or corners), exactly 3072x3072 with the same georeference, publish as a new pyramid version. Style chosen by Jose: high-bit with painted light (p-3-highbit) for the web now; the unlit tiles (p-7) are kept for LIGHT-02.\n\nCriterios de aceptación:\n  1. 9 tiles drawn with the prompt of the chosen style, with the call count and 429 count written in pipeline/ledger/image-calls.jsonl\n  2. Assembled image is exactly 3072x3072 and aligned with the render (offset measured in pixels)\n  3. Colour matched between tiles in LAB and joins blended over 64-96 px by code\n  4. Published as a new pyramid version in web/tiles, never overwriting another version\n  5. A screenshot of the web at the local URL was looked at and its failures are listed",
+      "acceptance_criteria": [
+        "9 tiles drawn with the prompt of the chosen style, with the call count and 429 count written in pipeline/ledger/image-calls.jsonl",
+        "Assembled image is exactly 3072x3072 and aligned with the render (offset measured in pixels)",
+        "Colour matched between tiles in LAB and joins blended over 64-96 px by code",
+        "Published as a new pyramid version in web/tiles, never overwriting another version",
+        "A screenshot of the web at the local URL was looked at and its failures are listed"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "54b8c486-9bd9-432f-9a0b-d8519a0a88b0",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "LIGHT-02",
+      "title": "Research: can lighting by code reach the painted-light look?",
+      "description": "Jose liked most the tile drawn with the light painted in (s-3-highbit: warm sun, long bluish shadows, fine detail). Experiment: from the unlit central tile (p-7) reproduce that look by code: warm sun tint, long bluish shadows cast from the height map (red channel = height approx. h*4, tiles/height_rXcY.png), contrast boost on lit roofs and facades, ambient occlusion in narrow streets. Compare side by side (unlit, code light, painted light) with zooms and say honestly how close it gets and what is missing. If the code version reaches the painted one, the web moves to unlit tiles plus code light so hour and shadows move.\n\nCriterios de aceptación:\n  1. Script that takes an unlit tile and its height map and writes a lit version by code\n  2. Warm sun tint, long bluish shadows from the height map, contrast on lit faces and ambient occlusion are each implemented and can be switched off\n  3. Side-by-side sheet (unlit, code light, painted light) with 3 zoomed crops, committed under docs/\n  4. A written verdict: how close it gets, what is missing, and the decision on using unlit tiles plus code light\n  5. No image-model call is needed for the experiment",
+      "acceptance_criteria": [
+        "Script that takes an unlit tile and its height map and writes a lit version by code",
+        "Warm sun tint, long bluish shadows from the height map, contrast on lit faces and ambient occlusion are each implemented and can be switched off",
+        "Side-by-side sheet (unlit, code light, painted light) with 3 zoomed crops, committed under docs/",
+        "A written verdict: how close it gets, what is missing, and the decision on using unlit tiles plus code light",
+        "No image-model call is needed for the experiment"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "ef8724e0-be3f-4d28-a9fe-adf5c37564ed",
       "raw_status": "FREE"
     }
   ]
