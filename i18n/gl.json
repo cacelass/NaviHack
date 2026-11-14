@@ -302,5 +302,8 @@
   "track.simulated": "Simulación",
   "track.simulate": "Simular paseo",
   "track.far": "Non estás na ruta",
-  "track.far_body": "Sen GPS ou lonxe do percorrido. Podes ver unha simulación."
+  "track.far_body": "Sen GPS ou lonxe do percorrido. Podes ver unha simulación.",
+  "settings.design": "Como se deseñou a interface",
+  "detail.story": "Historia",
+  "detail.story_source": "Texto: Concello de Vigo, programa de Nadal 2026-27"
 }

@@ -481,3 +481,7 @@ body.is-city .tv-time-quick, body:has(.tv-sheet.is-open) .tv-time-quick, body:ha
 .tv-tour-head { padding-right: calc(var(--tap) + var(--sp-3)); }
 
 body.is-city .tv-night { display: none !important; }
+
+/* niebla: velo estático claro sobre el mapa (sin animación) */
+body.tv-fog #map::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(225, 230, 236, .55), rgba(225, 230, 236, .3) 60%, rgba(225, 230, 236, .45)); }
+.tv-story-card p { white-space: pre-line; }

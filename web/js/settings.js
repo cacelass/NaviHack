@@ -48,13 +48,14 @@
         el("p", "tv-note", t("settings.time")),
         seg([["auto", t("tour.now"), "clock"], ["day", t("settings.light"), "sun"], ["night", t("settings.dark"), "moon"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().time : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ time: v }), t("settings.time")),
         el("p", "tv-note", t("settings.weather")),
-        seg([["auto", t("settings.weather_real"), "layers"], ["clear", t("settings.weather_clear"), "sun"], ["cloudy", t("wx.cloudy"), "cloud"], ["rain", t("settings.weather_rain"), "cloud-rain"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().weather : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ weather: v }), t("settings.weather")),
+        seg([["auto", t("settings.weather_real"), "layers"], ["clear", t("settings.weather_clear"), "sun"], ["cloudy", t("wx.cloudy"), "cloud"], ["fog", t("settings.weather_fog"), "cloud-fog"], ["rain", t("settings.weather_rain"), "cloud-rain"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().weather : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ weather: v }), t("settings.weather")),
         el("p", "tv-note", t("settings.theme")),
         seg([["dark", t("settings.dark"), "moon"], ["light", t("settings.light"), "sun"]], theme(), (v) => {
           document.documentElement.setAttribute("data-theme", v);
           try { localStorage.setItem("tinyvigo-theme", v); } catch (e) {}
         }, t("settings.theme")),
-        info);
+        info,
+        Object.assign(el("a", "tv-btn tv-btn-quiet", lu("layers", 16), t("settings.design")), { href: "https://github.com/cacelass/NaviHack/tree/main/docs/ui-exploraciones", target: "_blank", rel: "noopener" }));
     }
     btn.onclick = () => {
       pop.classList.toggle("is-open"); render();

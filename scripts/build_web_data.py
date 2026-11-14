@@ -75,6 +75,7 @@ def web_points(
                 "type": p["type"],
                 "name": p["name"],
                 "short": p.get("short"),
+                "long": p.get("long"),
                 "schedule_text": p.get("schedule_text"),
                 "address": p.get("address"),
                 "image_url": p.get("image_url"),

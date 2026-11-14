@@ -218,6 +218,7 @@
       p.short ? el("p", "tv-short", txt(p.short)) : null,
       el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
       sched ? el("details", "tv-sched", el("summary", null, lu("clock", 16), t("detail.schedule")), el("p", null, sched)) : null,
+      p.long && txt(p.long) ? el("details", "tv-sched tv-story-card", el("summary", null, lu("star", 16), t("detail.story")), el("p", null, txt(p.long)), el("p", "tv-note", t("detail.story_source"))) : null,
       p.address ? el("div", "tv-addr", el("p", "tv-addr-line", lu("map-pin", 16), p.address), miniMap(p)) : null,
       parkingBlock(p),
       !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,

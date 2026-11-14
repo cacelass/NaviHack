@@ -302,5 +302,8 @@
   "track.simulated": "Simulated",
   "track.simulate": "Simulate walk",
   "track.far": "You are not on the route",
-  "track.far_body": "No GPS or far from the route. You can watch a simulation."
+  "track.far_body": "No GPS or far from the route. You can watch a simulation.",
+  "settings.design": "How the interface was designed",
+  "detail.story": "Story",
+  "detail.story_source": "Text: Concello de Vigo, Christmas 2026-27 programme"
 }

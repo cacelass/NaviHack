@@ -12,7 +12,7 @@
   let live = null; // {kind, sunrise:[Date], sunset:[Date]}
   try { Object.assign(state, JSON.parse(localStorage.getItem("tinyvigo.ambient") || "{}")); } catch (e) {}
 
-  const kindOf = (c) => (c === 0 || c === 1 ? "clear" : c <= 3 || c === 45 || c === 48 ? "cloudy" : "rain");
+  const kindOf = (c) => (c === 0 || c === 1 ? "clear" : c === 45 || c === 48 ? "fog" : c <= 3 ? "cloudy" : "rain");
   function fetchLive() {
     fetch(WX).then((r) => r.json()).then((d) => {
       live = { kind: kindOf(d.current.weather_code), sunrise: d.daily.sunrise.map((s) => new Date(s)), sunset: d.daily.sunset.map((s) => new Date(s)) };
@@ -96,6 +96,7 @@
     cancelAnimationFrame(raf);
     if (raining && !reduced) raf = requestAnimationFrame(rainLoop);
     clouds.classList.toggle("is-on", (w === "cloudy" || w === "rain") && !city && !reduced);
+    document.body.classList.toggle("tv-fog", w === "fog" && !city);
     document.body.classList.toggle("tv-reduced", reduced);
   }
 
