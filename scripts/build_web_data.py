@@ -74,6 +74,7 @@ def web_points(
                 "on_map": 0 <= cx <= CANVAS and 0 <= cy <= CANVAS,
                 "programme": {**programme, "holidays": holidays} if programme else None,
                 "last_verified": p.get("last_verified"),
+                "status": p.get("status"),  # official | not_confirmed (D-18)
             }
         )
     return out

@@ -98,6 +98,17 @@
     renderSheet();
   }
 
+  // D-18: de cuándo es el dato y quién lo respalda; >7 días sin verificar = caducado (R-05).
+  const STALE_DAYS = 7;
+  function freshness(p) {
+    const note = p.status === "not_confirmed" ? t("common.not_confirmed") : t("common.source") + ": Concello de Vigo";
+    if (!p.last_verified) return el("p", "tv-fresh is-stale", note + " · " + t("common.no_data"));
+    const days = (Date.now() - new Date(p.last_verified + "T00:00:00")) / 86400000;
+    const stale = days > STALE_DAYS || p.status === "not_confirmed";
+    const when = days > STALE_DAYS ? t("common.stale_since", { date: p.last_verified }) : t("common.verified", { date: p.last_verified });
+    return el("p", "tv-fresh" + (stale ? " is-stale" : ""), note + " · " + when);
+  }
+
   function renderSheet() {
     sheet.replaceChildren();
     sheet.classList.toggle("is-open", !!selected);
@@ -120,6 +131,7 @@
       sched ? el("details", "tv-sched", el("summary", null, t("detail.schedule")), el("p", null, sched)) : null,
       el("div", "tv-actions", dir, photo),
       !p.on_map ? el("p", "tv-note", t("common.no_data") + " · " + t("app.map_label")) : null,
+      freshness(p),
     ].filter(Boolean)
     );
   }

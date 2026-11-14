@@ -148,3 +148,9 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
   .tv-view { bottom: 76px; right: 8px; }
   .tv-theme { top: 8px; right: 8px; }
 }
+
+/* D-18: frescura del dato (verificado / sin confirmar / caducado) */
+.tv-fresh { margin: var(--sp-2) 0 0; font-size: var(--fs-meta); color: var(--fg-3); }
+.tv-fresh.is-stale { color: var(--danger); }
+.tv-fresh.is-stale::before { content: "⚠ "; }
+.tv-park-stale { color: var(--fg-3); opacity: .75; }

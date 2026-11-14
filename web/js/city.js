@@ -40,11 +40,15 @@
         const rows = (await (await fetch(PARKINGS)).json()).filter((r) => r.lat);
         parkLayer.clearLayers();
         for (const r of rows) {
-          const free = Math.max(0, r.plazaslibres), cls = free === 0 ? "full" : free < 30 ? "low" : "ok";
-          const icon = L.divIcon({ className: "", html: '<div class="tv-park tv-park-' + cls + '"><b>P</b>' + (free ? free : t("go.full")) + "</div>", iconSize: [64, 26], iconAnchor: [32, 13] });
+          // D-18: fechahora es hora local de Madrid; >10 min sin publicar = «sin datos» (D-00).
+          const age = (Date.now() - new Date(r.fechahora.replace(" ", "T"))) / 60000;
+          const stale = !(age <= 10);
+          const free = Math.max(0, r.plazaslibres), cls = stale ? "stale" : free === 0 ? "full" : free < 30 ? "low" : "ok";
+          const label = stale ? t("common.no_data") : free ? free : t("go.full");
+          const icon = L.divIcon({ className: "", html: '<div class="tv-park tv-park-' + cls + '"><b>P</b>' + label + "</div>", iconSize: [64, 26], iconAnchor: [32, 13] });
           const gm = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=" + r.lat + "," + r.lon;
           L.marker([r.lat, r.lon], { icon }).bindPopup(
-            "<strong>" + r.nombre + "</strong><br>" + (free ? t("go.free_n", { n: free }) : t("go.full")) + " / " + r.totalplazas +
+            "<strong>" + r.nombre + "</strong><br>" + (stale ? t("common.no_data") : free ? t("go.free_n", { n: free }) : t("go.full")) + " / " + r.totalplazas +
             '<br><small>' + t("common.updated", { when: r.fechahora.slice(11, 16) }) + '</small><br><a target="_blank" rel="noopener" href="' + gm + '">' + t("go.route_to") + "</a>").addTo(parkLayer);
         }
       } catch (e) { /* sin feed: la capa queda vacía */ }
