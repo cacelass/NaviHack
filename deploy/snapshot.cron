@@ -19,3 +19,5 @@ CRON_TZ=Europe/Madrid
 40 7 * * *   cd $HOME/NaviHack && python3 -m scripts.venues >/dev/null
 # R-05: re-verificación semanal de la capa navideña (lunes 06:00)
 0 6 * * 1    cd $HOME/NaviHack && python3 -m scripts.reverify >/dev/null
+# X-09: la capa de cámaras (posiciones/URLs) cambia poco: una vez al día
+15 4 * * *   cd $HOME/NaviHack && python3 -m scripts.cameras >/dev/null
