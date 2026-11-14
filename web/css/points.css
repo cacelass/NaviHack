@@ -560,3 +560,9 @@ body.tv-fog #map::after { content: ""; position: absolute; inset: 0; z-index: 1;
 .tv-planmodes button.is-on { border-color: var(--acc); background: var(--surface); box-shadow: inset 0 0 0 1px var(--acc); }
 .tv-why { margin: 0; }
 .tv-from { width: 100%; }
+
+/* Ajustes: las filas de opciones pasan a otra línea si no caben (Clima tiene 5) — Miguel2 */
+.tv-settings { width: 340px; }
+.tv-settings .tv-seg { grid-auto-flow: row; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: 2px; }
+.tv-settings .tv-seg button { min-width: 0; white-space: nowrap; }
+@media (max-width: 700px) { .tv-settings { width: auto; } }
