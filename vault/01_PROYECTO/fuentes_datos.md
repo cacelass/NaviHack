@@ -105,3 +105,15 @@ genera snapshot nuevo, solo actualiza `checked_at`.
   copia; `--offline` lo fuerza. Los cambios que el Concello aún no publique van
   a `data/points_overrides.json` (`{"id", ...campos}` parchea, un id nuevo se
   añade como `status: not_confirmed`, `"remove": true` lo quita).
+
+## Transporte (X-01, X-02)
+
+| Fuente | URL | Licencia | Refresco | Notas |
+|---|---|---|---|---|
+| Vitrasa GTFS | `https://datos.vigo.org/data/transporte/gtfs_vigo.zip` (CKAN `gtfs-vitrasa`) | ODC-BY | diario (~13:05 UTC) | 1165 paradas, 59 líneas, 132 672 salidas. `calendar.txt` vacío: todo en `calendar_dates.txt`. Lleva dentro un `Google_transit.zip` anidado (se ignora). **Solo horario programado**: no hay tiempo real oficial. |
+| Avisos de transporte | `https://datos.vigo.org/data/avisos/avisos_transporte_es.json` | ODC-BY | — | «DESVÍOS NADAL 2026 / 2027» (id 4033): 11/11/2026–10/01/2027, 22 líneas, zona restringida Policarpo Sanz → 3 paradas marcadas `christmas_detour`. |
+| Renfe AV/LD/MD GTFS | `https://ssl.renfe.com/gtransit/Fichero_AV_LD/google_transit.zip` | **CC BY 4.0** (Renfe Operadora) | diario (~00:08 UTC) | `Vigo Urzaiz` (08223) y `Vigo-Guixar` (22308) presentes. 185 movimientos en Vigo (84 salidas). Cabeceras rellenas de espacios. Sin Cercanías. |
+
+Créditos para `D-17`: «Concello de Vigo — datos.vigo.org (ODC-BY)», «Vitrasa
+(GTFS vía datos.vigo.org)», «Renfe Operadora (CC BY 4.0)», «Weather data by
+Open-Meteo.com (CC BY 4.0)».
