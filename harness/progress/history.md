@@ -535,3 +535,20 @@ commit c945dca. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. GTFS ofici
 ```
 
 </details>
+
+## X-02 — Renfe static GTFS ingest
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 86 passed in 0.53s
+- **Ticket GEAS:** 5d40e61c · commit_after `de03d5a6`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 5496341. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Renfe AV/LD/MD CC BY 4.0: Vigo Urzaiz 08223 y Vigo-Guixar 22308 presentes; 185 movimientos (84 salidas); test_gtfs_renfe 4 tests.
+```
+
+</details>

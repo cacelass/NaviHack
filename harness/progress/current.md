@@ -1,29 +1,26 @@
 # Tarea actual
 
-**Feature:** X-09
-**Estado:** in_progress
-**Iniciada:** 2026-11-14
-**Responsable:** implementer
+> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
+> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
+> está el trabajo sin releer el proyecto entero.
+
+**Feature:** _(ninguna)_
+**Estado:** idle
+**Iniciada:** —
+**Responsable:** —
 
 ## Objetivo
 
-Fetch camera images through server if terms allow, else outbound links.
-
-Criterios de aceptación:
-  1. Terms checked
-  2. Either proxied images or links implemented
-  3. 61 cameras with location shown
+_(sin trabajo en curso)_
 
 ## Criterios de aceptación
 
-- [ ] Terms checked
-- [ ] Either proxied images or links implemented
-- [ ] 61 cameras with location shown
+_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
 
 ## Bitácora
 
-_(pendiente)_
+_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
 
 ## Bloqueos
 
-_(ninguno)_
+_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
