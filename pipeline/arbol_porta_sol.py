@@ -69,10 +69,11 @@ def main() -> None:
     ap.add_argument("--with-photo", action="store_true", default=True)
     ap.add_argument("--no-photo", dest="with_photo", action="store_false")
     ap.add_argument("--prompt", type=Path, default=None)
+    ap.add_argument("--canvas", type=Path, default=CANVAS, help="base 3072 px image to paste the tree into")
     a = ap.parse_args()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    canvas = Image.open(CANVAS).convert("RGB")
+    canvas = Image.open(a.canvas).convert("RGB")
     box = crop_box()
     crop350 = canvas.crop(box)
     crop350.save(OUT_DIR / "arbol-ps-crop350.png")
