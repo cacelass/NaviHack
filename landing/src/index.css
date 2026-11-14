@@ -216,32 +216,14 @@ section[id] {
   display: none;
 }
 
-/* ── Hero: the map, full bleed, behind a veil ── */
+/* ── Hero: sin fondo, sobre el color de la página ── */
 .hero {
   position: relative;
   min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
   padding-block: clamp(4rem, 8vh, 7rem);
-  overflow: hidden;
-  color: #f6f1e6;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-.hero-veil {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(9, 13, 19, 0.78) 0%, rgba(9, 13, 19, 0.5) 42%, rgba(9, 13, 19, 0.82) 100%),
-    radial-gradient(ellipse 60% 45% at 18% 18%, rgba(217, 164, 65, 0.16), transparent 60%);
+  color: var(--color-fg);
 }
 
 .hero .wrap {
@@ -254,7 +236,7 @@ section[id] {
   line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-fg);
   text-wrap: balance;
   max-width: 18ch;
 }
@@ -267,12 +249,12 @@ section[id] {
   margin-top: 1.25rem;
   font-size: clamp(1rem, 1.4vw, 1.15rem);
   line-height: 1.6;
-  color: rgba(246, 241, 230, 0.82);
+  color: var(--color-fg-secondary);
   max-width: 46ch;
 }
 
 .hero-tagline strong {
-  color: #fff;
+  color: var(--color-fg);
   font-weight: 600;
 }
 
@@ -357,16 +339,6 @@ section[id] {
 .btn-outline:hover {
   background: var(--color-bg-muted);
   color: var(--color-fg);
-}
-
-.hero .btn-outline {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.45);
-}
-
-.hero .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
 }
 
 /* ── About cards ── */

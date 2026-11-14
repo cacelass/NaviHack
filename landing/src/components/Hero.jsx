@@ -1,11 +1,6 @@
-import baseV5 from '../assets/base-v5.webp'
-
 export default function Hero() {
   return (
     <section className="hero" id="top">
-      <img className="hero-bg" src={baseV5} alt="" aria-hidden="true" />
-      <div className="hero-veil" aria-hidden="true" />
-
       <div className="wrap">
         <h1 className="hero-title">
           Mapa navideño de
