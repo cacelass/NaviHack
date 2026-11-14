@@ -1,26 +1,31 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** X-03
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Test whether real-time feeds cover Vigo; go/no-go decision.
+
+Criterios de aceptación:
+  1. Trip-update and vehicle-position endpoints tested for Vigo
+  2. Coverage documented
+  3. Go/no-go recorded
+  4. Protobuf decoding handled or noted as blocker
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] Trip-update and vehicle-position endpoints tested for Vigo
+- [ ] Coverage documented
+- [ ] Go/no-go recorded
+- [ ] Protobuf decoding handled or noted as blocker
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_
