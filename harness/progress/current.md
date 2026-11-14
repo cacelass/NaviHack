@@ -1,28 +1,26 @@
 # Tarea actual
 
-**Feature:** D-12
+**Feature:** UI-04
 **Estado:** in_progress
 **Iniciada:** 2026-11-14
 **Responsable:** implementer
 
 ## Objetivo
 
-Weights for After dark and Easy walk. Rain warning when rain is expected during the route and an option to favour covered or indoor stops. Parking hint kept only if the team confirms it (not in the spec).
+Aplicar la guía de web/ui/DESIGN.md a la web real (web/index.html, web/js, web/css, web/app): fuentes, sombras, radios, iconos, separadores y controles sobre el mapa. Lo estructural que no sea de estilo puro se deja como ticket aparte. Comprobar por DOM y getComputedStyle.
 
 Criterios de aceptación:
-  1. After dark uses light hours and avoids unlit stretches
-  2. Easy walk uses slope and benches/cafes
-  3. Rain warning in the summary when rain is expected inside the route window
-  4. Planner can favour covered or indoor stops when rain is expected
-  5. Missing signals reported, not fatal
+  1. web/index.html, web/js, web/css y web/app pasan el checklist de UI-03
+  2. Controles sobre el mapa con superficie sólida y contraste AA medido
+  3. Sin fuente de píxel en texto; iconos Lucide en la interfaz
+  4. Auditoría en docs/investigacion/auditoria-ui.md con las desviaciones y su estado
 
 ## Criterios de aceptación
 
-- [ ] After dark uses light hours and avoids unlit stretches
-- [ ] Easy walk uses slope and benches/cafes
-- [ ] Rain warning in the summary when rain is expected inside the route window
-- [ ] Planner can favour covered or indoor stops when rain is expected
-- [ ] Missing signals reported, not fatal
+- [ ] web/index.html, web/js, web/css y web/app pasan el checklist de UI-03
+- [ ] Controles sobre el mapa con superficie sólida y contraste AA medido
+- [ ] Sin fuente de píxel en texto; iconos Lucide en la interfaz
+- [ ] Auditoría en docs/investigacion/auditoria-ui.md con las desviaciones y su estado
 
 ## Bitácora
 

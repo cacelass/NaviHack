@@ -564,13 +564,13 @@
         "Each point shows last_verified and status",
         "Stale state visually distinct"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-05",
         "R-01"
       ],
       "ticket_id": "15ffa301-87c3-43e1-9216-b109cea5fef3",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "15ffa301-d-18-freshness-ui",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1721,10 +1721,12 @@
         "Sin fuente de píxel en texto; iconos Lucide en la interfaz",
         "Auditoría en docs/investigacion/auditoria-ui.md con las desviaciones y su estado"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "773b34d3-a45a-4137-a32d-5fa093082c22",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "773b34d3-ui-04-aplicar-la-gu-a-a-la-web-r",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "WEB-01",
