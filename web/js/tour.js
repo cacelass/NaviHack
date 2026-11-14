@@ -116,7 +116,7 @@
     const xs = line.map(([lo, la]) => project(la, lo));
     const minX = Math.min(...xs.map((p) => p[0])), maxX = Math.max(...xs.map((p) => p[0]));
     const minY = Math.min(...xs.map((p) => p[1])), maxY = Math.max(...xs.map((p) => p[1]));
-    const pad = 420; // los paneles tapan los bordes
+    const pad = matchMedia("(max-width: 700px)").matches ? 90 : 420; // en escritorio los paneles tapan los bordes
     viewer.viewport.fitBounds(new OpenSeadragon.Rect((minX - pad) / CANVAS, (minY - pad) / CANVAS, (maxX - minX + 2 * pad) / CANVAS, (maxY - minY + 2 * pad) / CANVAS));
   }
   function clear(viewer) { if (layer) { viewer.removeOverlay(layer); layer = null; } }

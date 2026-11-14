@@ -68,7 +68,7 @@
 
   // ── DOM ──────────────────────────────────────────────────────────────────
   const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null)); return n; };
-  const panel = el("aside", "tv-panel");
+  const panel = el("aside", "tv-panel" + (matchMedia("(max-width: 700px)").matches ? " is-collapsed" : ""));
   const sheet = el("section", "tv-sheet");
   document.body.append(panel, sheet);
   let filter = "all", query = "", selected = null;

@@ -108,7 +108,7 @@ run:
 	uv run $(PYTHON) -m $(MODULE) hello
 
 website:
-	uv run $(PYTHON) -m scripts.serve_web --port $(PORT)
+	node scripts/serve_web.mjs --port $(PORT) || uv run $(PYTHON) -m scripts.serve_web --port $(PORT)
 
 profile:
 	@echo "▶  Profiling → profile.prof"

@@ -156,7 +156,7 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-park-stale { color: var(--fg-3); opacity: .75; }
 /* números de la ruta: se pueden pulsar (abren esa parada del paseo) */
 .tv-route .tv-route-stop { pointer-events: auto; cursor: pointer; }
-.tv-route-hit { fill: transparent; stroke: none; }
+.tv-route-stop .tv-route-hit { fill: transparent; stroke: none; }
 .tv-route-stop:hover circle:first-child { fill: #fff1c9; }
 .tv-stopnum { cursor: pointer; }
 
@@ -178,3 +178,10 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-deps b { font-variant-numeric: tabular-nums; }
 .tv-transit-leg { margin-top: var(--sp-2); }
 .tv-train { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--raised); border: 1px solid var(--line); color: var(--fg); }
+/* lo fijo del panel no encoge; solo la lista */
+.tv-panel > header, .tv-panel > .tv-search, .tv-panel > .tv-chips, .tv-panel > .tv-count { flex: none; }
+@media (max-width: 700px) {
+  #zoom, body.is-city .leaflet-control-zoom { display: none; }   /* en móvil se hace zoom con los dedos */
+  .tv-panel.is-collapsed { right: auto; }
+  .tv-today-open, .tv-tour-open { min-height: 48px; }
+}
