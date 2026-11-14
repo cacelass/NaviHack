@@ -57,3 +57,19 @@ Observaciones:
 
 `D-01` usa `If-None-Match` con el `ETag` guardado: un `304` no es un fallo ni
 genera snapshot nuevo, solo actualiza `checked_at`.
+
+## Tiempo: Open-Meteo (D-10)
+
+- Forecast: `api.open-meteo.com/v1/forecast`, punto Porta do Sol
+  (42.2376, -8.7247), `timezone=Europe/Madrid`, `forecast_days=4` → 96 horas
+  con `temperature_2m, precipitation_probability, precipitation, weather_code,
+  cloud_cover_low/mid/high, visibility, wind_speed_10m, wind_direction_10m,
+  wind_gusts_10m`. Licencia **CC BY 4.0** (atribución «Weather data by
+  Open-Meteo.com» → `D-17`). Actualiza cada 15 min; snapshot cada 30 min,
+  «sin datos» a las 3 h.
+- **Marine en la ría: cobertura gruesa.** `marine-api.open-meteo.com` devuelve
+  la **misma celda** (42.2917, -8.7917, boca de la ría junto a Cíes) para Porta
+  do Sol, el centro de la ría (42.24, -8.76) y Cíes (42.22, -8.80): ola 1,2 m,
+  SST 15,6–15,9 °C (2026-11-14). Sirve como indicativo de «estado del mar en
+  la boca», **no** como dato por punto dentro de la ría. No se usa en v1 más
+  allá de, como mucho, un icono en la capa de tiempo.

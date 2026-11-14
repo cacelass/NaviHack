@@ -50,6 +50,21 @@ def _valid_agenda(payload: object) -> str | None:
     return None
 
 
+WEATHER_HOURLY = (
+    "temperature_2m",
+    "precipitation_probability",
+    "precipitation",
+    "weather_code",
+    "cloud_cover_low",
+    "cloud_cover_mid",
+    "cloud_cover_high",
+    "visibility",
+    "wind_speed_10m",
+    "wind_direction_10m",
+    "wind_gusts_10m",
+)
+
+
 def _valid_weather(payload: object) -> str | None:
     if not isinstance(payload, dict):
         return "se esperaba un objeto"
@@ -57,9 +72,12 @@ def _valid_weather(payload: object) -> str | None:
     if not isinstance(payload.get("current"), dict) or not isinstance(hourly, dict):
         return "faltan 'current' u 'hourly'"
     times = hourly.get("time")
-    probs = hourly.get("precipitation_probability")
-    if not isinstance(times, list) or not isinstance(probs, list) or len(times) != len(probs):
-        return "'hourly' incompleto"
+    if not isinstance(times, list) or not times:
+        return "'hourly' sin horas"
+    for var in WEATHER_HOURLY:
+        values = hourly.get(var)
+        if not isinstance(values, list) or len(values) != len(times):
+            return f"'hourly.{var}' falta o no cuadra con 'time'"
     return None
 
 
@@ -98,11 +116,11 @@ FEEDS = {
         stale_after_s=36 * 3600,
     ),
     # Open-Meteo (CC BY 4.0) actualiza cada 15 min; sondeamos cada 30 y damos 3 h.
+    # 4 días horarios: tira de estado, planner y capa de tiempo del mapa (D-10 v4).
     "weather": Feed(
         "https://api.open-meteo.com/v1/forecast?latitude=42.2376&longitude=-8.7247"
-        "&hourly=temperature_2m,precipitation_probability,precipitation,weather_code"
-        "&current=temperature_2m,weather_code,precipitation"
-        "&timezone=Europe%2FMadrid&forecast_days=2",
+        "&hourly=" + ",".join(WEATHER_HOURLY) + "&current=temperature_2m,weather_code,"
+        "precipitation,wind_speed_10m&timezone=Europe%2FMadrid&forecast_days=4",
         _valid_weather,
         _ts_weather,
         stale_after_s=3 * 3600,

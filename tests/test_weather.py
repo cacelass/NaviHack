@@ -7,7 +7,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from scripts.snapshot import publish, rain_probability, weather_strip
+from scripts.snapshot import WEATHER_HOURLY, publish, rain_probability, weather_strip
 
 NOW = datetime(2026, 11, 14, 12, 0, tzinfo=UTC)
 HOURS = [f"2026-11-14T{h:02d}:00" for h in range(24)]
@@ -18,6 +18,7 @@ PAYLOAD = {
         "temperature_2m": [10.0 + h / 2 for h in range(24)],
         "precipitation_probability": [h * 3 for h in range(24)],
         "weather_code": [3] * 24,
+        **{v: [0.0] * 24 for v in WEATHER_HOURLY[4:]},
     },
 }
 
@@ -53,3 +54,9 @@ def test_payload_malo_mantiene_el_ultimo_bueno_con_su_edad(tmp_path: Path) -> No
     snap = json.loads((tmp_path / "weather" / "latest.json").read_text("utf-8"))
     strip = weather_strip(snap, NOW + timedelta(hours=1))
     assert strip is not None and strip["age_s"] == 3600.0
+
+
+def test_falta_una_variable_horaria_se_rechaza(tmp_path: Path) -> None:
+    bad = {**PAYLOAD, "hourly": {k: v for k, v in PAYLOAD["hourly"].items() if k != "visibility"}}
+    row = publish("weather", json.dumps(bad).encode(), None, out=tmp_path, now=NOW)
+    assert row["ok"] is False and "visibility" in str(row["error"])
