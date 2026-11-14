@@ -26,3 +26,13 @@
 {"t":"2026-11-14T15:14:39.865Z","model":"gemini-3.1-flash-image","label":"arbol-porta-sol-real-v2","size":"default","status":"OK"}
 {"t":"2026-11-14T15:29:22.856Z","model":"gemini-3.1-flash-image","label":"seam-h-r1c1","size":"default","status":"OK"}
 {"t":"2026-11-14T15:30:13.517Z","model":"gemini-3.1-flash-image","label":"seam-corner-2048-1536","size":"default","status":"OK"}
+{"t":"2026-11-14T17:00:16.213Z","model":"gemini-3.1-flash-image","label":"puerto-r0c1-A","size":"default","status":"OK"}
+{"t":"2026-11-14T17:02:38.520Z","model":"gemini-3.1-flash-image","label":"puerto-ventana-1","size":"default","status":"OK"}
+{"t":"2026-11-14T17:06:56.807Z","model":"gemini-3.1-flash-image","label":"puerto-ventana-2-este","size":"default","status":"OK"}
+{"t":"2026-11-14T17:08:41.465Z","model":"gemini-3.1-flash-image","label":"puerto-ventana-3-oeste","size":"default","status":"OK"}
+{"t":"2026-11-14T17:30:04.596Z","model":"gemini-3.1-flash-image","label":"zona-c2_a","size":"default","status":"OK"}
+{"t":"2026-11-14T17:30:09.105Z","model":"gemini-3.1-flash-image","label":"zona-c2_b","size":"default","status":"OK"}
+{"t":"2026-11-14T17:31:17.018Z","model":"gemini-3.1-flash-image","label":"zona-c1_a","size":"default","status":"OK"}
+{"t":"2026-11-14T17:31:28.094Z","model":"gemini-3.1-flash-image","label":"zona-c2_c","size":"default","status":"OK"}
+{"t":"2026-11-14T17:32:22.340Z","model":"gemini-3.1-flash-image","label":"zona-c1_b","size":"default","status":"OK"}
+{"t":"2026-11-14T17:32:30.246Z","model":"gemini-3.1-flash-image","label":"zona-c1_c","size":"default","status":"OK"}

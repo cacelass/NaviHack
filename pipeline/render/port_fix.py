@@ -20,6 +20,7 @@ No llama a ningún modelo.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import sys
 from pathlib import Path
 
@@ -32,12 +33,25 @@ from assemble_block import to_lab, to_rgb, water_mask, water_texture  # noqa: E4
 
 Image.MAX_IMAGE_PIXELS = None
 SIZE = 1024
+CACHE = Path("/tmp/opencode/port_fix_cache")
 SEA_DEEP = np.array([27, 41, 59], np.float32)  # los de assemble_block --flat-sea
 SEA_NEAR = np.array([52, 78, 100], np.float32)
 # Zona limpia del mapa para medir color de tierra (centro del bloque, debajo del parche roto).
 REF_LAND = (1024, 1700, 2048, 2500)
 # Mar limpio del mapa (arriba a la izquierda, lejos de cualquier costa) para ajustar el mar por código.
 REF_SEA = (60, 60, 700, 560)
+
+
+def get_water(render: np.ndarray) -> np.ndarray:
+    """``water_mask`` con caché en disco (clave: contenido del render), porque pesa y se repite."""
+    key = hashlib.md5(render.tobytes()).hexdigest()[:16]
+    path = CACHE / f"agua_{key}.npy"
+    if path.exists():
+        return np.load(path)
+    wm = water_mask(render)
+    CACHE.mkdir(parents=True, exist_ok=True)
+    np.save(path, wm)
+    return wm
 
 
 def sea_layer(wm: np.ndarray) -> np.ndarray:
@@ -58,6 +72,17 @@ def fit_to_base(layer: np.ndarray, base: np.ndarray) -> np.ndarray:
     return np.clip(out, 0, 255)
 
 
+def extend(base: np.ndarray, render: np.ndarray) -> np.ndarray:
+    """Amplía el mapa hasta el tamaño del render; lo nuevo empieza siendo mar por código."""
+    h, w = render.shape[:2]
+    if base.shape[:2] == (h, w):
+        return base
+    sea = fit_to_base(sea_layer(get_water(render)), base.astype(np.float32))
+    out = np.clip(sea, 0, 255).astype(np.uint8)
+    out[: base.shape[0], : base.shape[1]] = base
+    return out
+
+
 def match_land(
     window: np.ndarray, base: np.ndarray, wm: np.ndarray, origin: tuple[int, int]
 ) -> np.ndarray:
@@ -71,7 +96,9 @@ def match_land(
     return to_rgb((lab - own.mean(axis=0)) * gain + ref.mean(axis=0))
 
 
-def feather(feather_px: int, oy: int, fade: tuple[int, int]) -> np.ndarray:
+def feather(
+    feather_px: int, oy: int, fade: tuple[int, int], cut_top: int = 0, hard_right: bool = False
+) -> np.ndarray:
     """1 dentro, bajando a 0 en los bordes de la ventana.
 
     Izquierda, derecha y arriba usan ``feather_px``. Abajo el degradado va de la fila ``fade[0]`` a la
@@ -79,10 +106,10 @@ def feather(feather_px: int, oy: int, fade: tuple[int, int]) -> np.ndarray:
     do Sol, que está pintado en el mapa y la ventana no tiene.
     """
     ramp = np.clip(np.arange(SIZE) / feather_px, 0, 1)
-    across = np.minimum(ramp, ramp[::-1])
+    across = ramp if hard_right else np.minimum(ramp, ramp[::-1])
     rows = np.arange(oy, oy + SIZE)
     down = np.clip((fade[1] - rows) / max(fade[1] - fade[0], 1), 0, 1)
-    top = ramp
+    top = np.clip((np.arange(SIZE) - cut_top) / feather_px, 0, 1)
     return np.minimum.outer(np.minimum(top, down), across)
 
 
@@ -94,9 +121,11 @@ def compose(
     feather_px: int,
     edge_soft: float,
     fade: tuple[int, int],
+    cut_top: int = 0,
+    hard_right: bool = False,
 ) -> np.ndarray:
     ox, oy = origin
-    wm = water_mask(render)
+    wm = get_water(render)
     win = np.asarray(Image.fromarray(window).resize((SIZE, SIZE), Image.LANCZOS))
     win = match_land(win, base, wm, origin).astype(np.float32)
 
@@ -106,7 +135,7 @@ def compose(
     )[..., None]
     piece = win * (1 - water) + sea * water
 
-    alpha = feather(feather_px, oy, fade)[..., None]
+    alpha = feather(feather_px, oy, fade, cut_top, hard_right)[..., None]
     out = base.astype(np.float32).copy()
     region = out[oy : oy + SIZE, ox : ox + SIZE]
     out[oy : oy + SIZE, ox : ox + SIZE] = region * (1 - alpha) + piece * alpha
@@ -121,7 +150,7 @@ def drop_floaters(
     Un trozo es «suelto» si en el render su tierra es pequeña (``max_area``) y queda a más de
     ``min_dist`` px de la tierra firme. Se pintan con el mismo mar por código, con borde suave.
     """
-    wm = water_mask(render)
+    wm = get_water(render)
     land = (~wm).astype(np.uint8)
     n, lab, st, cen = cv2.connectedComponentsWithStats(land, connectivity=8)
     big = np.isin(lab, [i for i in range(1, n) if st[i, 4] > 20000])
@@ -164,16 +193,38 @@ def main(argv: list[str] | None = None) -> int:
         "--edge-soft", type=float, default=1.0, help="desenfoque (px) de la orilla del agua"
     )
     ap.add_argument(
+        "--cut-top", type=int, default=0, help="filas de la ventana (desde arriba) que NO se usan"
+    )
+    ap.add_argument(
+        "--hard-right",
+        action="store_true",
+        help="sin degradado en el borde derecho (borde del lienzo)",
+    )
+    ap.add_argument(
+        "--extend", action="store_true", help="amplía el mapa al tamaño del render (4096x3072)"
+    )
+    ap.add_argument(
         "--drop-floaters", action="store_true", help="quita trozos de tierra sueltos en el mar"
     )
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args(argv)
 
     base = np.asarray(Image.open(args.base).convert("RGB"))
-    render = np.asarray(Image.open(args.render).convert("RGB"))[:3072, :3072]
+    render = np.asarray(Image.open(args.render).convert("RGB"))
+    if not args.extend:
+        render = render[:3072, :3072]
+    base = extend(base, render)
     window = np.asarray(Image.open(args.window).convert("RGB"))
     out = compose(
-        base, render, window, tuple(args.origin), args.feather, args.edge_soft, tuple(args.fade)
+        base,
+        render,
+        window,
+        tuple(args.origin),
+        args.feather,
+        args.edge_soft,
+        tuple(args.fade),
+        args.cut_top,
+        args.hard_right,
     )
     if args.drop_floaters:
         out, found = drop_floaters(out, render)
