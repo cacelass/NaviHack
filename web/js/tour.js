@@ -39,8 +39,7 @@
   }
 
   // ── planificador ─────────────────────────────────────────────────────────
-  function plan(points, start, budget, status) {
-    const now = new Date();
+  function plan(points, start, budget, status, now = new Date()) {
     const pool = [], later = [], closed = [];
     for (const p of points) {
       const pos = [p.lat, p.lon], reach = walkMin(start, pos);
@@ -124,10 +123,12 @@
     const box = document.createElement("section");
     box.className = "tv-tour";
     document.body.append(btn, box);
+    let when = "now";
+    const startTime = () => { if (when === "now") return new Date(); const d = new Date(); d.setHours(+when, 0, 0, 0); if (d < new Date()) d.setDate(d.getDate() + 1); return d; };
     let budget = 60, fromHere = true, result = null, startPos = ORIGIN, busy = "", far = null, parkings = null;
 
     const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null && k !== false)); return n; };
-    const hhmm = (min) => { const d = new Date(Date.now() + min * 60000); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+    const hhmm = (min) => { const d = new Date(startTime().getTime() + min * 60000); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
     const gmaps = (mode, dest, way = []) => "https://www.google.com/maps/dir/?api=1&travelmode=" + mode + "&origin=" + startPos.join(",") + "&destination=" + dest.join(",") + (way.length ? "&waypoints=" + way.map((w) => w.join(",")).join("|") : "");
 
     function render() {
@@ -137,8 +138,9 @@
       const close = el("button", "tv-close", "×"); close.onclick = () => { box.classList.remove("is-open"); render(); };
       const chips = el("div", "tv-chips", ...BUDGETS.map((b) => { const c = el("button", b === budget ? "is-on" : "", t("tour.minutes", { min: b })); c.onclick = () => { budget = b; render(); }; return c; }));
       const from = el("div", "tv-langs tv-from", ...[[true, "tour.from_here"], [false, "tour.from_centre"]].map(([v, k]) => { const c = el("button", v === fromHere ? "is-on" : "", t(k)); c.onclick = () => { fromHere = v; render(); }; return c; }));
+      const whenChips = el("div", "tv-chips", ...[["now", t("tour.now")], ["18", "18:00"], ["20", "20:00"], ["22", "22:00"]].map(([v, label]) => { const c = el("button", v === when ? "is-on" : "", label); c.onclick = () => { when = v; render(); }; return c; }));
       const go = el("button", "tv-btn tv-go", t("tour.go")); go.onclick = run;
-      box.append(close, el("h2", null, t("tour.title")), chips, from, go);
+      box.append(close, el("h2", null, t("tour.title")), chips, el("p", "tv-note", t("tour.when")), whenChips, from, go);
       if (busy) box.append(el("p", "tv-note", busy));
       if (far) box.append(renderFar());
       if (result) box.append(renderResult());
@@ -260,7 +262,7 @@
         } catch (e) { /* sin router: quedan los enlaces */ }
         return;
       }
-      const planned = plan(P.points, startPos, budget, P.status);
+      const planned = plan(P.points, startPos, budget, P.status, startTime());
       if (!planned.stops.length) { result = { ...planned, line: [], km: "0" }; busy = ""; render(); return; }
       busy = t("tour.routing"); render();
       let line, meters;
@@ -281,7 +283,7 @@
     btn.onclick = () => { box.classList.toggle("is-open"); render(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, run, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
+    window.tinyvigoTour = { plan, project, run, setWhen: (v) => { when = v; }, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
   }
 
   if (window.tinyvigoPoints) init();

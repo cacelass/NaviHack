@@ -186,7 +186,7 @@
   "tour.stop_at": "{time} · {stay} min",
   "tour.later": "Para outro día (quedan lonxe)",
   "tour.later_item": "{km} km · {min} min a pé",
-  "tour.closed_now": "Pechado agora",
+  "tour.closed_now": "Pechado a esa hora",
   "tour.open_gmaps": "Abrir en Google Maps",
   "tour.clear": "Borrar ruta",
   "tour.nothing": "Non dá tempo a ver nada desde aquí. Proba con máis tempo.",
@@ -210,5 +210,7 @@
   "walk.leg": "{min} min a pé desde {from}",
   "walk.you": "o teu punto de saída",
   "walk.end": "Fin do paseo. Bo Nadal!",
-  "walk.story": "Vas ver"
+  "walk.story": "Vas ver",
+  "tour.when": "Cando vas?",
+  "tour.now": "Agora"
 }

@@ -186,7 +186,7 @@
   "tour.stop_at": "{time} · {stay} min",
   "tour.later": "Para otro día (quedan lejos)",
   "tour.later_item": "{km} km · {min} min a pie",
-  "tour.closed_now": "Cerrado ahora",
+  "tour.closed_now": "Cerrado a esa hora",
   "tour.open_gmaps": "Abrir en Google Maps",
   "tour.clear": "Borrar ruta",
   "tour.nothing": "No da tiempo a ver nada desde aquí. Prueba con más tiempo.",
@@ -210,5 +210,7 @@
   "walk.leg": "{min} min andando desde {from}",
   "walk.you": "tu punto de salida",
   "walk.end": "Fin del paseo. ¡Feliz Navidad!",
-  "walk.story": "Vas a ver"
+  "walk.story": "Vas a ver",
+  "tour.when": "¿Cuándo vas?",
+  "tour.now": "Ahora"
 }
