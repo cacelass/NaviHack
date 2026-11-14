@@ -301,12 +301,12 @@
         "Schedule confirmed from the official 2026-27 programme",
         "List of the 6 landmarks recorded as input for SCENES-01 and NOTES-01"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "42cdd200-3293-4acc-9194-b2af84fa2337",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "42cdd200-r-02-landmarks-first-verify-6-la",
       "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },

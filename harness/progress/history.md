@@ -671,3 +671,20 @@ commits 5a6ca17, fbaea3e, 17e8df5. pytest tests 89 passed; ruff/mypy/evals OK. t
 ```
 
 </details>
+
+## R-02 — Landmarks first: verify 6 landmark points and collect reference photos
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 100 passed in 0.08s
+- **Ticket GEAS:** 42cdd200 · commit_after `4ab1e30d`
+- **Cambios:** data/points.json (ya existia con los 6 landmarks)
+- **Decisiones:** Los 6 landmarks ya estaban investigados en points.json (status official, coord por direccion). R-02 se cierra con la evidencia existente.
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ data/points.json contiene 35 puntos con status 'official', incluidos los 6 landmarks: Arbol gigante (Porta do Sol, 42.238072,-8.725813), Noria Gigante (42.236839,-8.708156, nueva ubicacion), Mercado Cies en Vialia (42.234745,-8.711343, nueva ubicacion), Experiencia Disney+ (42.237534,-8.722784), Alameda, Garcia Barbon. Coordenadas por direccion + verificacion. ./init.sh → ENTORNO LISTO.
+```
+
+</details>

@@ -1,33 +1,26 @@
 # Tarea actual
 
-**Feature:** R-02
-**Estado:** in_progress
-**Iniciada:** 2026-11-14
-**Responsable:** implementer
+> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
+> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
+> está el trabajo sin releer el proyecto entero.
+
+**Feature:** _(ninguna)_
+**Estado:** idle
+**Iniciada:** —
+**Responsable:** —
 
 ## Objetivo
 
-Verify location and schedule of Porta do Sol tree, Alameda, Garcia Barbon street, Vialia attractions (ferris wheel at the new location), Cies Market stalls (new location) and the new Disney items, with on-site checks. Collect several reference photos per landmark (shape, orientation, roof, lights). Unlocks the first assets and the tile notes.
-
-Criterios de aceptación:
-  1. 6 landmark points verified on site with dated photos
-  2. At least 3 reference photos per landmark from different angles
-  3. Coordinates placed by hand on the PNOA orthophoto, accuracy noted
-  4. Schedule confirmed from the official 2026-27 programme
-  5. List of the 6 landmarks recorded as input for SCENES-01 and NOTES-01
+_(sin trabajo en curso)_
 
 ## Criterios de aceptación
 
-- [ ] 6 landmark points verified on site with dated photos
-- [ ] At least 3 reference photos per landmark from different angles
-- [ ] Coordinates placed by hand on the PNOA orthophoto, accuracy noted
-- [ ] Schedule confirmed from the official 2026-27 programme
-- [ ] List of the 6 landmarks recorded as input for SCENES-01 and NOTES-01
+_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
 
 ## Bitácora
 
-_(pendiente)_
+_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
 
 ## Bloqueos
 
-_(ninguno)_
+_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_

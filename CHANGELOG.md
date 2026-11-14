@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Verificar ubicacion de los 6 landmarks de Navidad (R-02)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Estado del arte y huecos de capacidad (TinyVigo) (ONBOARD-002)
 
 ## [Unreleased] — 2026-11-14
