@@ -1,5 +1,7 @@
 <img src="web/favicon.svg" width="32" height="32" alt=""> TinyVigo
 
+**Web en vivo: [navihack.vercel.app](https://navihack.vercel.app)** · [probar la demo](https://navihack.vercel.app/demo/)
+
 ![TinyVigo](docs/img/web-desktop-1400.png)
 
 > Mapa isométrico pixel art del centro de Vigo, con la Navidad encima: puntos con
@@ -7,7 +9,6 @@
 > pixel art a partir de una foto propia. Mobile-first, una sola ciudad, un solo
 > mapa dibujado una vez.
 
-**Web:** [navihack.vercel.app](https://navihack.vercel.app) (landing) · [demo](https://navihack.vercel.app/demo/).
 La landing está en [`landing/`](landing/); se publica con `landing/deploy.sh`, que copia `web/` como `demo/`.
 
 **Para quién:** personas que pasean por el centro de Vigo con el móvil, de día y
