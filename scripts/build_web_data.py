@@ -21,12 +21,20 @@ from typing import Any
 
 from scripts import elevation
 
+try:  # GEO-01: la transformación oficial del render (pipeline/georef.py)
+    import sys as _sys
+
+    _sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "pipeline"))
+    import georef as _georef  # type: ignore[import-not-found]
+except Exception:  # noqa: BLE001 — sin el módulo se usan las constantes de abajo
+    _georef = None
+
 ROOT = Path(__file__).resolve().parent.parent
 POINTS = ROOT / "data" / "points.json"
 PROGRAMME = ROOT / "data" / "programme_2026.json"
 OUT = ROOT / "web" / "data"
 
-ORIGIN = (42.238072, -8.725813)  # Árbol de Porta do Sol = centro del lienzo
+ORIGIN = (42.23807, -8.72581)  # Árbol de Porta do Sol = centro del lienzo (render-params de GEO-01)
 CANVAS = 3072
 SCALE = 2.0  # px por metro
 TILT = math.radians(45)
@@ -35,7 +43,13 @@ M_PER_DEG_LAT = 111_320.0
 
 
 def project(lat: float, lon: float, z: float = 0.0) -> tuple[float, float]:
-    """(lat, lon, cota m) -> píxel del lienzo 3072 del render."""
+    """(lat, lon, cota m) -> píxel del lienzo 3072 del render.
+
+    Usa pipeline/georef.py (GEO-01, parámetros del renderer original) si está; si no,
+    la misma cámara con constantes (coinciden a < 0,5 px en los cuatro puntos de control).
+    """
+    if _georef is not None:
+        return _georef.to_pixel(lat, lon, z)
     x = (lon - ORIGIN[1]) * M_PER_DEG_LAT * math.cos(math.radians(ORIGIN[0]))
     y = (lat - ORIGIN[0]) * M_PER_DEG_LAT
     u = math.cos(HEAD) * x - math.sin(HEAD) * y
