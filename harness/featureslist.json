@@ -189,12 +189,14 @@
         "uv run python -m agents.prompts_sync sale en verde (todo agente registrado tiene prompt y contrato)",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "ONBOARD-001"
       ],
       "ticket_id": "220b23f5-c265-4050-97b5-78da664d9c49",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "220b23f5-onboard-002-qu-se-sabe-ya-y-qu-a",
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
     {
       "id": "CORE-001",
@@ -498,10 +500,12 @@
         "Licences shown",
         "Reachable from main UI"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "d1049a58-68a3-4d2e-8dab-bddc0cede2cf",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "d1049a58-d-17-about-screen-with-attributi",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "D-18",
