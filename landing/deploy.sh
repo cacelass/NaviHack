@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Deploy the NaviHack landing to Vercel.
-# The landing lives in landing/; the demo it links to (demo/) is web/, copied in at deploy time.
+# Deploy the NaviHack landing (a Vite React app) to Vercel.
+# The demo it links to (demo/) is web/, copied in next to the built landing.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -8,8 +8,8 @@ PROJECT="${VERCEL_PROJECT:-navihack}"
 DIST="$(mktemp -d)"
 trap 'rm -rf "$DIST"' EXIT
 
-cp -r "$ROOT/landing/." "$DIST/"
-rm -f "$DIST/deploy.sh" "$DIST/README.md"
+(cd "$ROOT/landing" && npm ci && npm run build)
+cp -r "$ROOT/landing/dist/." "$DIST/"
 cp -r "$ROOT/web" "$DIST/demo"
 
 cd "$DIST"
