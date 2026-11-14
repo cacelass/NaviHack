@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Deploy the NaviHack landing (a Vite React app) to Vercel.
+# Deploy the NaviVigo landing (a Vite React app) to Vercel.
 # The demo it links to (demo/) is web/, copied in next to the built landing.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PROJECT="${VERCEL_PROJECT:-navihack}"
+PROJECT="${VERCEL_PROJECT:-navivigo}"
 DIST="$(mktemp -d)"
 trap 'rm -rf "$DIST"' EXIT
 

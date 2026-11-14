@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { nav } from '../data.js'
+import { useEffect, useRef, useState } from 'react'
+import { nav, site } from '../data.js'
 
 function ThemeToggle() {
   const [dark, setDark] = useState(() => document.documentElement.dataset.theme === 'dark')
@@ -17,17 +17,17 @@ function ThemeToggle() {
 
   return (
     <button
-      className="theme-toggle"
+      className="icon-btn theme-toggle"
       type="button"
       aria-label={dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
       aria-pressed={dark}
       title="Modo claro / oscuro"
       onClick={toggle}
     >
-      <svg className="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <svg className="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
       </svg>
-      <svg className="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <svg className="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4" />
         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
       </svg>
@@ -36,46 +36,156 @@ function ThemeToggle() {
 }
 
 export default function Header() {
-  const [past, setPast] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('')
+  const headerRef = useRef(null)
+  const burgerRef = useRef(null)
+  const openRef = useRef(open)
+  openRef.current = open
 
+  // Solid bar that tucks away when scrolling down and returns when scrolling up.
   useEffect(() => {
-    const hero = document.getElementById('top')
-    const onScroll = () => {
-      if (!hero) return
-      // Switch the text colour once the hero has scrolled out from under the header.
-      setPast(window.scrollY > hero.offsetHeight - 64)
+    let lastY = window.scrollY
+    let ticking = false
+    const update = () => {
+      const y = window.scrollY
+      setScrolled(y > 8)
+      if (!openRef.current) {
+        if (y > lastY + 6 && y > 320) setHidden(true)
+        else if (y < lastY - 6 || y < 320) setHidden(false)
+      }
+      lastY = y
+      ticking = false
     }
-    onScroll()
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    }
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Highlight the link of the section on screen.
+  useEffect(() => {
+    const sections = nav.map((l) => document.getElementById(l.id)).filter(Boolean)
+    if (!('IntersectionObserver' in window) || !sections.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+    )
+    sections.forEach((s) => io.observe(s))
+    const hero = document.getElementById('top')
+    const heroIo = hero
+      ? new IntersectionObserver(([e]) => e.isIntersecting && setActive(''), { rootMargin: '-45% 0px -50% 0px' })
+      : null
+    if (hero && heroIo) heroIo.observe(hero)
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      io.disconnect()
+      if (heroIo) heroIo.disconnect()
     }
   }, [])
 
+  // Mobile menu: Escape and outside click close it; widening the window resets it.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        burgerRef.current?.focus()
+      }
+    }
+    const onPointer = (e) => {
+      if (headerRef.current && !headerRef.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+    }
+  }, [open])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 800px)')
+    const onChange = () => mq.matches && setOpen(false)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  const cls = ['site-header', scrolled && 'is-scrolled', hidden && !open && 'is-hidden', open && 'is-open']
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <header className={`site-header${past ? ' is-past' : ''}`}>
+    <header className={cls} ref={headerRef}>
       <div className="wrap header-inner">
-        <a className="brand" href="#top" aria-label="NaviHack TinyVigo">
+        <a className="brand" href="#top" aria-label={`${site.name}, ir al inicio`} onClick={() => setOpen(false)}>
           <svg className="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6.2 9.2L12 3.4L17.8 9.2" stroke="currentColor" strokeWidth="2.4" strokeLinecap="butt" strokeLinejoin="miter" />
             <path d="M1.6 19.6L12 10.8L22.4 19.6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="butt" strokeLinejoin="miter" />
             <circle cx="12" cy="1.7" r="1.5" fill="#d9a441" />
           </svg>
-          <span className="brand-name">NaviHack</span>
-          <span className="brand-sub">/ tinyvigo</span>
+          <span className="brand-name">{site.name}</span>
         </a>
 
         <nav className="nav" aria-label="Navegación principal">
           {nav.map((link) => (
-            <a key={link.label} href={link.href} className={link.cta ? 'nav-cta' : undefined}>
+            <a key={link.id} href={link.href} className={active === link.id ? 'is-active' : undefined} aria-current={active === link.id ? 'true' : undefined}>
               {link.label}
             </a>
           ))}
         </nav>
 
+        <a className="btn btn-gold btn-sm header-cta" href={site.demo}>
+          Probar demo
+        </a>
+
         <ThemeToggle />
+
+        <button
+          ref={burgerRef}
+          className="icon-btn burger"
+          type="button"
+          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className="burger-lines" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+      </div>
+
+      <div className="mobile-menu" id="mobile-menu" aria-hidden={!open}>
+        <nav className="wrap mobile-menu-inner" aria-label="Menú móvil">
+          {nav.map((link, i) => (
+            <a
+              key={link.id}
+              href={link.href}
+              className={active === link.id ? 'is-active' : undefined}
+              style={{ '--i': i }}
+              tabIndex={open ? 0 : -1}
+              onClick={() => setOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a className="btn btn-gold mobile-cta" href={site.demo} style={{ '--i': nav.length }} tabIndex={open ? 0 : -1}>
+            Probar demo
+          </a>
+        </nav>
       </div>
     </header>
   )

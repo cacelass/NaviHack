@@ -4,7 +4,8 @@ import Reveal from './components/Reveal.jsx'
 import FeatureCard from './components/FeatureCard.jsx'
 import TeamCard from './components/TeamCard.jsx'
 import Footer from './components/Footer.jsx'
-import { about, features, team, cta } from './data.js'
+import Icon from './components/Icon.jsx'
+import { about, features, origin, team, cta, stats, site } from './data.js'
 
 export default function App() {
   return (
@@ -14,14 +15,33 @@ export default function App() {
       <main>
         <Hero />
 
+        <section className="stats" aria-label="NaviVigo en cifras">
+          <div className="wrap">
+            <ul className="stats-grid">
+              {stats.map((s, i) => (
+                <Reveal as="li" className="stat" delay={50 * i} key={s.label}>
+                  <span className="stat-value">{s.value}</span>
+                  <span className="stat-label">{s.label}</span>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         <section className="section" id={about.id}>
           <div className="wrap">
             <Reveal as="h2" className="section-title">
               {about.title}
             </Reveal>
+            <Reveal as="p" className="section-intro">
+              {about.intro}
+            </Reveal>
             <div className="about-grid">
               {about.items.map((item, i) => (
                 <Reveal as="article" className="about-card" delay={60 * i} key={item.title}>
+                  <span className="about-icon">
+                    <Icon name={item.icon} size={22} />
+                  </span>
                   <h3>{item.title}</h3>
                   <p>{item.desc}</p>
                 </Reveal>
@@ -30,7 +50,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id={features.id}>
+        <section className="section section-tint" id={features.id}>
           <div className="wrap">
             <Reveal as="h2" className="section-title">
               {features.title}
@@ -43,7 +63,33 @@ export default function App() {
           </div>
         </section>
 
-        <section className="section" id={team.id}>
+        <section className="section" id={origin.id}>
+          <div className="wrap">
+            <Reveal>
+              <div className="origin-band">
+                <div className="origin-copy">
+                  <p className="eyebrow">{origin.eyebrow}</p>
+                  <h2 className="section-title">{origin.title}</h2>
+                  <p className="origin-text">{origin.text}</p>
+                  <ul className="origin-chips">
+                    {origin.chips.map((c) => (
+                      <li key={c.label}>
+                        <Icon name={c.icon} size={16} />
+                        {c.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <a className="btn btn-outline" href={site.repo} target="_blank" rel="noopener noreferrer">
+                  <Icon name="github" size={18} />
+                  Seguir el proyecto
+                </a>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="section section-tint" id={team.id}>
           <div className="wrap">
             <Reveal as="h2" className="section-title">
               {team.title}
@@ -65,8 +111,9 @@ export default function App() {
               <div className="cta-band">
                 <h2>{cta.title}</h2>
                 <p>{cta.intro}</p>
-                <a className="btn btn-tile" href="demo/">
+                <a className="btn btn-tile btn-lg" href={site.demo}>
                   Probar demo
+                  <Icon name="arrow" size={18} />
                 </a>
               </div>
             </Reveal>
