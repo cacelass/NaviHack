@@ -21,7 +21,7 @@
 <body>
 <h1>Prueba de asset: el árbol de Porta do Sol</h1>
 <p class="lead">Método: recorte del bloque ensamblado → el modelo pinta el árbol dentro, mismo estilo → se compone con máscara suave (fuera queda el bloque intacto). Sin croma ni recorte pegado.</p>
-<div class="aviso">Validación visual pendiente: el modelo de visión (OpenCode Go kimi-k3) está en límite. Compara tú por ahora.</div>
+<div class="aviso">Rehecho (pipeline/arbol_porta_sol.py): el intento anterior pintaba el árbol fuera de la Porta do Sol real y la máscara lo recortaba, dejando solo un parche de tejados repintados sin árbol. Ahora se recorta un cuadro de 350 px centrado en la plaza (georreferencia del lienzo, 42.23807 -8.72581), se amplía a 1024 px antes de llamar al modelo, y se compone con una máscara que sale del propio cambio de píxeles (árbol + gente + su sombra), no de una zona fija: fuera de ese contorno el resultado es bit a bit igual al original. Noche todavía pendiente de la misma corrección.</div>
 
 <h2>Día · antes / después (a escala real, 512 m)</h2>
 <div class="par">
