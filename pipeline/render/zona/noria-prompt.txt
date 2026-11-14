@@ -1,0 +1,9 @@
+Redraw this 3D aerial render of central Vigo, Galicia, Spain as an isometric pixel-art map tile. Keep the exact layout: every building footprint, height, street, square and tree stays where it is; do not add, remove or move buildings. Granite facades, white glass galleries (miradores), terracotta and dark grey slate roofs. No text, no labels, no thin anti-aliased outlines.
+Style: modern high-bit pixel art like Eastward or Octopath Traveler. Rich lighting and many tones, soft ambient occlusion in the streets, warm sunlight with cool shadows, subtle glow, fine detail on roofs, windows and balconies, still clearly pixel art with hard pixel edges.
+
+
+Picture 1 is the square to edit. Picture 2 is a real photo of the actual object to add: the Christmas Ferris wheel of Vialia in Vigo, at night and lit up. Use Picture 2 only for the SHAPE, STRUCTURE and PROPORTIONS of the object, not for the surroundings, the lighting state or the time of day.
+
+Add that exact object standing in the open paved car park in the middle of Picture 1, drawn switched OFF in daylight: a 40-metre Ferris wheel standing upright, seen from the same high isometric viewpoint as the rest of the picture. It has a thin round steel rim, many thin straight spokes meeting at a central hub, small closed gondola cabins evenly spaced around the rim (mostly white, a few coloured), two slanted steel support legs forming an A-frame down to a low base platform with a small ticket booth and a few tiny people. All lights are switched off, so draw the light strings as pale grey-white thin cables along the rim and spokes, not glowing. Draw it at its real scale: a wheel about 40 metres tall is clearly taller than the surrounding blocks of flats.
+
+Keep everything else exactly where it is: same framing, same buildings, same streets, same style. No text, no labels.
