@@ -10,6 +10,7 @@
   const FILTERS = ["all", "light", "attraction", "market", "santa_kings", "exhibit"];
   const ICON = { light: "star", attraction: "ferris-wheel", market: "store", santa_kings: "gift", exhibit: "camera", photo_gallery: "camera", photocall: "camera", all: "layers" };
   const lu = (name, size = 20) => { const s = document.createElement("span"); s.innerHTML = window.LU ? LU.svg(name, { size }) : ""; return s.firstChild || s; };
+  const PXICON = { light: "star", attraction: "wheel", market: "market", santa_kings: "gift", exhibit: "camera", photo_gallery: "camera", photocall: "camera" };
   const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   const [{ points }, ...cats] = await Promise.all([
@@ -84,10 +85,34 @@
   for (const p of points.filter((p) => p.on_map && !PAINTED.has(p.id))) {
     const m = el("button", "tv-marker" + (status(p) && status(p).open ? " is-open" : ""));
     m.setAttribute("aria-label", txt(p.name));
-    m.onclick = (ev) => { ev.stopPropagation(); select(p, false); };
+    m.title = txt(p.name);
+    if (window.PX) m.innerHTML = PX.svg(PXICON[p.type] || "pin", { size: 16 }); // WEB-02: icono pixel por tipo
+    m.dataset.id = p.id;
+    m.onclick = (ev) => { ev.stopPropagation(); const c = +(m.dataset.count || 0); if (c > 1) { viewer.viewport.zoomBy(2.2, new OpenSeadragon.Point(p.x, p.y)); viewer.viewport.applyConstraints(); } else select(p, false); };
     viewer.addOverlay({ element: m, location: new OpenSeadragon.Point(p.x, p.y), placement: OpenSeadragon.Placement.BOTTOM });
     markers.set(p.id, m);
   }
+  // WEB-02: los que se solapan en pantalla se agrupan en uno con el número; al pulsarlo se acerca
+  const byId = new Map(points.map((p) => [p.id, p]));
+  function cluster() {
+    const R = 30, list = [...markers.entries()].map(([id, m]) => {
+      const p = byId.get(id), px = viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(p.x, p.y), true);
+      return { m, x: px.x, y: px.y, done: false };
+    });
+    for (const a of list) {
+      if (a.done) continue;
+      a.done = true; let n = 1;
+      for (const b of list) if (!b.done && Math.hypot(a.x - b.x, a.y - b.y) < R) { b.done = true; b.m.style.visibility = "hidden"; n++; }
+      a.m.style.visibility = "";
+      a.m.dataset.count = n;
+      a.m.classList.toggle("is-group", n > 1);
+      let g = a.m.querySelector(".tv-grp"); if (!g) { g = document.createElement("span"); g.className = "tv-grp"; a.m.append(g); }
+      g.textContent = n;
+    }
+  }
+  viewer.addHandler("animation-finish", cluster);
+  viewer.addHandler("resize", cluster);
+  setTimeout(cluster, 300);
   // los clics en el marcador no deben arrastrar el mapa
   markers.forEach((m) => new OpenSeadragon.MouseTracker({ element: m, clickHandler: (e) => { e.preventDefaultAction = true; } }));
 

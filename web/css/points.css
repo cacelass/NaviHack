@@ -38,12 +38,18 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 .tv-badge { font-size: var(--fs-meta); color: var(--fg-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .tv-badge.is-open { color: var(--ok); font-weight: var(--w-500); }
 
-/* marcador sobre el mapa (píxel: aquí sí) */
-.tv-marker { width: 22px; height: 26px; padding: 0; border: 0; cursor: pointer; background: none; position: relative; image-rendering: pixelated; }
-.tv-marker::before { content: ""; position: absolute; left: 0; top: 0; width: 22px; height: 22px; background: #f4cd80; box-shadow: inset 0 0 0 2px #4a2d00; }
-.tv-marker::after { content: ""; position: absolute; left: 7px; top: 22px; border: 4px solid transparent; border-top: 5px solid #4a2d00; }
-.tv-marker.is-open::before { background: #fff1c9; }
-.tv-marker:hover::before, .tv-marker.is-selected::before { background: #fff; transform: scale(1.3); transition: transform .3s var(--ease); }
+/* marcador sobre el mapa (píxel: aquí sí). WEB-02: icono pixel por tipo, grupo con número */
+.tv-marker { width: 30px; height: 36px; padding: 0; border: 0; cursor: pointer; background: none; position: relative; display: grid; justify-items: center; align-content: start; image-rendering: pixelated; --i-a: #f4cd80; --i-x: #fff3c4; --i-w: #efe3c8; --i-r: #d9715a; --i-b: #6a9bd1; --i-g: #86ad52; color: #f4ecd9; }
+.tv-marker::before { content: ""; position: absolute; left: 0; top: 0; width: 30px; height: 30px; background: #1b1f2c; box-shadow: inset 0 0 0 2px #f4cd80; }
+.tv-marker::after { content: ""; position: absolute; left: 11px; top: 30px; border: 4px solid transparent; border-top: 6px solid #f4cd80; }
+.tv-marker svg { position: relative; z-index: 1; margin-top: 7px; }
+.tv-marker.is-open::before { box-shadow: inset 0 0 0 2px #97c46f; }
+.tv-marker.is-open::after { border-top-color: #97c46f; }
+.tv-marker:hover::before, .tv-marker.is-selected::before { background: #2c3244; transform: scale(1.15); transition: transform .3s var(--ease); }
+.tv-marker.is-group[data-count]:not([data-count="1"]) > span.tv-count-badge { display: none; }
+.tv-marker.is-group::after { border-top-color: #f4cd80; }
+.tv-marker.is-group > svg { margin-top: 7px; }
+.tv-marker.is-group { counter-reset: n; }
 
 /* ficha de un punto */
 .tv-sheet { position: fixed; z-index: 7; right: 12px; top: 12px; width: 380px; max-height: calc(100vh - 24px); overflow: auto; padding: var(--sp-4); transform: translateX(calc(100% + 24px)); transition: transform .5s var(--ease); }
@@ -210,3 +216,7 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-res .tv-badge { max-width: 45%; overflow: hidden; text-overflow: ellipsis; }
 .tv-res-empty { padding: var(--sp-2); }
 @media (max-width: 700px) { .tv-results { left: var(--sp-3); right: var(--sp-3); top: 108px; } }
+
+/* número del grupo de marcadores */
+.tv-marker.is-group .tv-grp { position: absolute; z-index: 2; top: -8px; right: -10px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; display: grid; place-items: center; border-radius: 9px; background: #f4cd80; color: #1d1d1d; font: 600 12px/1 var(--f-ui); font-variant-numeric: tabular-nums; }
+.tv-marker:not(.is-group) .tv-grp { display: none; }
