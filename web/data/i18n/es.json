@@ -201,5 +201,6 @@
   "go.full": "Lleno",
   "go.free_n": "{n} libres",
   "go.route_to": "Ir a este parking",
-  "go.live_traffic": "Google Maps evita los atascos en directo"
+  "go.live_traffic": "Google Maps evita los atascos en directo",
+  "app.city_view": "Vista ciudad"
 }

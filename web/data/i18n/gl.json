@@ -201,5 +201,6 @@
   "go.full": "Cheo",
   "go.free_n": "{n} libres",
   "go.route_to": "Ir a este aparcadoiro",
-  "go.live_traffic": "Google Maps evita os atascos en directo"
+  "go.live_traffic": "Google Maps evita os atascos en directo",
+  "app.city_view": "Vista cidade"
 }

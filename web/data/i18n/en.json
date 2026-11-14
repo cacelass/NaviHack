@@ -201,5 +201,6 @@
   "go.full": "Full",
   "go.free_n": "{n} free",
   "go.route_to": "Drive to this car park",
-  "go.live_traffic": "Google Maps avoids live traffic jams"
+  "go.live_traffic": "Google Maps avoids live traffic jams",
+  "app.city_view": "City view"
 }

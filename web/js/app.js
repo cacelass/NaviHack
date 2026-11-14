@@ -1,5 +1,8 @@
 // TinyVigo viewer: tiles come from tiles/<version>/ (version in tiles/current.json).
 (async function () {
+  // Si vendor/openseadragon no llegó a ejecutarse (primera carga con caché vacía), se reintenta.
+  const need = (ok, src) => ok() ? null : new Promise((res, rej) => { const s = document.createElement("script"); s.src = src + "?r=" + Date.now(); s.onload = res; s.onerror = rej; document.head.append(s); });
+  await need(() => window.OpenSeadragon, "vendor/openseadragon.min.js");
   const current = await (await fetch("tiles/current.json")).json();
   const base = "tiles/" + current.version + "/";
   const m = await (await fetch(base + "manifest.json")).json();
@@ -43,5 +46,5 @@
   const zoomBy = (f) => { viewer.viewport.zoomBy(f); viewer.viewport.applyConstraints(); };
   document.getElementById("zoom-in").onclick = () => zoomBy(1.6);
   document.getElementById("zoom-out").onclick = () => zoomBy(1 / 1.6);
-  window.tinyvigo = { viewer, manifest: m };
+  window.tinyvigo = { viewer, manifest: m, need };
 })();

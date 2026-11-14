@@ -11,6 +11,8 @@
   const BUDGETS = [30, 60, 90, 120];
   const FAR_KM = 2.5; // más lejos de Porta do Sol: primero hay que llegar al centro
   const ROUTER = "https://routing.openstreetmap.de/routed-foot/route/v1/foot/";
+  const CAR_ROUTER = "https://routing.openstreetmap.de/routed-car/route/v1/driving/";
+  const emit = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
   const PARKINGS = "https://datos.vigo.org/data/trafico/parkings-ocupacion.json";
 
   let elev = null;
@@ -173,7 +175,7 @@
       const dest = stops[stops.length - 1].p;
       gm.href = gmaps("walking", [dest.lat, dest.lon], stops.slice(0, -1).map((s) => [s.p.lat, s.p.lon]).slice(0, 9));
       gm.target = "_blank"; gm.rel = "noopener";
-      const clr = el("button", "tv-btn tv-btn-quiet", t("tour.clear")); clr.onclick = () => { result = null; clear(viewer); render(); };
+      const clr = el("button", "tv-btn tv-btn-quiet", t("tour.clear")); clr.onclick = () => { result = null; clear(viewer); emit("tv:clear-route"); render(); };
       return el("div", "tv-result",
         el("p", "tv-summary", t("tour.summary", { min: budget, n: stops.length, km })),
         ol, el("div", "tv-actions", gm, clr),
@@ -199,7 +201,15 @@
       if (kmToCentre > FAR_KM) {
         far = kmToCentre;
         try { parkings = (await (await fetch(PARKINGS)).json()).filter((p) => p.lat); } catch (e) { parkings = null; }
-        busy = ""; render(); return;
+        busy = ""; render();
+        // ruta en coche hasta el parking con más plazas libres, dibujada en la vista ciudad
+        const best = parkings && parkings.slice().sort((a, b) => b.plazaslibres - a.plazaslibres)[0];
+        const dest = best ? [best.lat, best.lon] : ORIGIN;
+        try {
+          const j = await (await fetch(CAR_ROUTER + startPos[1] + "," + startPos[0] + ";" + dest[1] + "," + dest[0] + "?overview=full&geometries=geojson")).json();
+          if (j.code === "Ok") emit("tv:route", { line: j.routes[0].geometry.coordinates, start: startPos, stops: [], mode: "driving", showCity: true });
+        } catch (e) { /* sin router: quedan los enlaces */ }
+        return;
       }
       const planned = plan(P.points, startPos, budget, P.status);
       if (!planned.stops.length) { result = { ...planned, line: [], km: "0" }; busy = ""; render(); return; }
@@ -215,13 +225,14 @@
       result = { ...planned, line, km: (meters / 1000).toFixed(1).replace(".", P.lang() === "en" ? "." : ",") };
       busy = "";
       draw(viewer, line, startPos, planned.stops);
+      emit("tv:route", { line, start: startPos, stops: planned.stops, mode: "walking", showCity: planned.stops.some((s) => !s.p.on_map) || distM(startPos, ORIGIN) > 900 });
       render();
     }
 
     btn.onclick = () => { box.classList.toggle("is-open"); render(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, run, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
+    window.tinyvigoTour = { plan, project, run, setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
   }
 
   if (window.tinyvigoPoints) init();

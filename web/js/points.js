@@ -92,6 +92,7 @@
     selected = p;
     markers.forEach((m, id) => m.classList.toggle("is-selected", id === p.id));
     if (fly && p.on_map) viewer.viewport.panTo(new OpenSeadragon.Point(p.x, p.y));
+    document.dispatchEvent(new CustomEvent("tv:select", { detail: p }));
     renderSheet();
   }
 

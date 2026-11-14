@@ -93,3 +93,21 @@
   .tv-tour { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; max-height: 70vh; }
   .tv-tour-open { bottom: 12px; }
 }
+
+/* vista ciudad */
+#city { position: fixed; inset: 0; z-index: 4; display: none; background: #0b1020; }
+body.is-city #city { display: block; }
+body.is-city #zoom { display: none; }
+.tv-view { position: fixed; z-index: 6; right: 12px; bottom: 120px; min-height: 44px; padding: 0 14px; border: 0; border-radius: 8px; background: var(--tv-bg); color: var(--tv-text); font: 500 14px/1 Inter, system-ui, sans-serif; cursor: pointer; }
+.tv-pin { width: 46px; height: 46px; border-radius: 50%; background: var(--c); border: 3px solid var(--c); box-sizing: border-box; overflow: hidden; position: relative; }
+.tv-pin::after { content: ""; position: absolute; }
+.tv-pin img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tv-pin + * {}
+.leaflet-marker-icon:has(.tv-pin)::after { content: ""; position: absolute; left: 17px; top: 44px; border: 6px solid transparent; border-top: 9px solid var(--c, #fff); }
+.tv-park { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 7px 0 3px; border-radius: 6px; font: 600 12px/1 Inter, system-ui, sans-serif; color: #151b2a; white-space: nowrap; }
+.tv-park b { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: #2f6fd6; color: #fff; }
+.tv-park-ok { background: #8fcf7a; } .tv-park-low { background: #f4cd80; } .tv-park-full { background: #e7836a; }
+.tv-stopnum { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 6px; background: #f4cd80; color: #151b2a; font: 700 13px Inter, sans-serif; outline: 2px solid #151b2a; }
+.leaflet-container { font: 13px Inter, system-ui, sans-serif; }
+@media (max-width: 700px) { .tv-view { bottom: 72px; right: 8px; } }
+.tv-osm { filter: brightness(.62) saturate(.7) contrast(1.1) hue-rotate(195deg) invert(.92); }
