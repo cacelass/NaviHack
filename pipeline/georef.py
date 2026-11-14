@@ -100,7 +100,6 @@ class RenderParams:
         self, lat: float, lon: float, z: float = 0.0, canvas: str = "3x3"
     ) -> tuple[float, float]:
         """(lat, lon, z) -> píxel del lienzo. z en metros sobre el suelo."""
-        c = self.canvas(canvas)
         x, y = self.geo.metres(lat, lon)
         return self.to_pixel_m(x, y, z, canvas)
 
