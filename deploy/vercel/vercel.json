@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/demo/data/live/:feed.json", "destination": "/api/live?feed=:feed" }
+  ]
+}

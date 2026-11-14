@@ -38,6 +38,9 @@
     const viewer = window.tinyvigo.viewer;
     if (!viewer) return null;
     viewer.addOverlay({ element: node, location: new OpenSeadragon.Point(x / CANVAS, y / CANVAS), placement: OpenSeadragon.Placement.CENTER });
+    // el visor se queda el clic de los overlays: se reenvía a onclick, como los marcadores de tour.js
+    node.addEventListener("pointerdown", (e) => e.stopPropagation());
+    new OpenSeadragon.MouseTracker({ element: node, clickHandler: (e) => { e.preventDefaultAction = true; if (node.onclick) node.onclick(); } });
     return node;
   }
   function dot(cls, icon, label) {
@@ -147,7 +150,8 @@
         const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
         if (!inside) continue;
         const props = f.properties || f;
-        const b = dot("is-cam", "camera", props.nombre || "Cámara");
+        const b = dot("is-cam", "camera", props.name || props.nombre || "Cámara");
+        if (props.link) b.onclick = () => window.open(props.link, "_blank", "noopener"); // imagen en directo del Concello (X-09)
         if (overlay(b, xy[0], xy[1])) add("camaras", b);
       }
     } catch (err) { /* sin capa: vacía */ }

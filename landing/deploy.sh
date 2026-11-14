@@ -11,6 +11,10 @@ trap 'rm -rf "$DIST"' EXIT
 (cd "$ROOT/landing" && npm ci && npm run build)
 cp -r "$ROOT/landing/dist/." "$DIST/"
 cp -r "$ROOT/web" "$DIST/demo"
+# Datos en vivo: los sirve deploy/vercel/api/live.mjs; los ficheros del repo quedan de respaldo.
+# Se renombran porque en Vercel un fichero estático gana a la reescritura de vercel.json.
+mv "$DIST/demo/data/live" "$DIST/demo/data/live-snapshot"
+cp -r "$ROOT/deploy/vercel/." "$DIST/"
 
 cd "$DIST"
 npx -y vercel@latest link --yes --project "$PROJECT" >/dev/null

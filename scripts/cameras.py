@@ -18,7 +18,7 @@ Hay cámaras que a ratos devuelven 0 bytes: la UI debe mostrar «sin imagen»
 cuando la imagen no carga (`onerror`). `--probe` lo mide, una petición por
 segundo.
 
-    python -m scripts.cameras            # → data/layers/cameras.geojson (git-ignored)
+    python -m scripts.cameras            # → web/data/layers/cameras.geojson (la lee la capa de cámaras)
     python -m scripts.cameras --probe    # además, anota qué cámaras responden
 
 Stdlib pura.
@@ -35,7 +35,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 FEED = "https://datos.vigo.org/data/trafico/camaras-trafico.json"
-OUT = ROOT / "data" / "layers" / "cameras.geojson"
+OUT = ROOT / "web" / "data" / "layers" / "cameras.geojson"
 USER_AGENT = "TinyVigo-X09/0.1 (+https://github.com/cacelass/NaviHack)"
 CREDIT = "Imagen: Concello de Vigo (camaras.vigo.org) · datos: datos.vigo.org (ODC-BY)"
 
