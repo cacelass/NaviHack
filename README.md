@@ -41,7 +41,6 @@ make test            # pytest (proyecto + agentes)
 make check           # lint + typecheck + test + arnés
 ```
 
-<<<<<<< HEAD
 ## Qué hace la web
 
 ![Tour a pie con el paseo parada a parada](docs/img/web-tour-1400.jpg)
@@ -67,7 +66,7 @@ make check           # lint + typecheck + test + arnés
 El servidor de `make website` es `scripts/serve_web.mjs` (Node, sin dependencias): el
 `http.server` de Python en Windows deja respuestas a medias con varias conexiones y la
 primera carga podía quedar en blanco. `scripts/serve_web.py` lo usa si hay Node.
-=======
+
 ## Línea de comandos
 
 El paquete `app` expone un CLI con `python -m app`. El subcomando principal es
@@ -89,7 +88,6 @@ Puntos navidenos de Vigo (35):
   concello-2553: Muneco de Nieve (light)
   ...
 ```
->>>>>>> 0e3b18c (feat(CORE-001): Primer vertical slice: CLI points carga data/points.json)
 
 ## Arquitectura
 
