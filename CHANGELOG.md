@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Arranque en frio operativo (BOOT-001)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Batería de calidad en verde (QA-001)
 
 ## [Unreleased] — 2026-11-14

@@ -64,11 +64,13 @@ Ver el ciclo completo: `skill harness_workflow`.
 - escribir código del producto → 'refactor' y el implementer
 - ejecutar los tests por su cuenta → los ejecuta init.sh, o el agente 'test'
 - cerrar una feature sin evidencia → devuelve needs, nunca la da por buena
+- seguir trabajando si GEAS no responde → fail-closed, no inventa trabajo local
+- commitear secretos (.env, *.pem, *.key, secrets/) en el WIP previo al claim
 
-**Necesita que le den:** el id de la feature; la evidencia real de verificación para cerrarla
+**Necesita que le den:** el id de la feature o el UUID del ticket; la evidencia real de verificación para cerrarla; GEAS_URL/GEAS_TOKEN y un remoto git configurado para reclamar
 
 **Escribe en (nadie más toca esto):** harness/featureslist.json, harness/progress/, harness/memory.md
 
-**Se apoya en:** plan, test, review, memory
+**Se apoya en:** plan, test, review, memory, git
 
 <!-- END AUTOGEN -->

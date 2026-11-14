@@ -252,3 +252,20 @@ $ make check → 'check pasado: lint + typecheck + test + arnés OK'; $ make lin
 ```
 
 </details>
+
+## BOOT-001 — Arranque en frio operativo: contratos inline + agente bootstrap
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.11s
+- **Ticket GEAS:** ba181545 · commit_after `3da28526`
+- **Cambios:** agents/prompts/harness_agent.md (AUTOGEN regenerado); uv.lock
+- **Decisiones:** El unico desajuste era el prompt del harness (1 prompt desincronizado); make prompts-sync lo regenero. No hubo cambios de codigo de producto.
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ uv run python -m agents list → 24 agentes, bootstrap incluido. $ uv run python -m agents describe bootstrap → contrato inline. $ uv run python -m agents.prompts_sync → 'Prompts y subagentes sincronizados'. $ make check → 'check pasado'. Tests: 28 passed (bootstrap+contracts).
+```
+
+</details>
