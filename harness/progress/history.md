@@ -791,3 +791,20 @@ commit 15dc2b5. pytest 110 passed; evals PASS; node --check OK + smoke con datos
 ```
 
 </details>
+
+## WEB-01 — El visor llena la pantalla con el mapa y no deja fondo vacío
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 110 passed in 0.54s
+- **Ticket GEAS:** 711d514a · commit_after `2b65f8e0`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+WEB-01 (Miguel2, 0c45ef7): visor con homeFillsViewer, visibilityRatio 1, minZoom = encuadre del bloque, limites desde manifest (canvas/offset) y applyConstraints tras el encuadre del tour; capturas escritorio 1400 y movil 390 con el bloque v6 al abrir y tras un tour, sin franjas de fondo.   [32m✔[0m pytest                 110 passed in 0.59s [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+```
+
+</details>
