@@ -1,5 +1,5 @@
 .PHONY: setup lock info \
-        run profile \
+        run profile website \
         test lint format typecheck security audit check \
         docs \
         init harness-check backlog \
@@ -14,6 +14,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 MODULE = app
 PYTHON = python
+PORT   ?= 8000
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  help  →  target por defecto
@@ -33,6 +34,7 @@ help:
 	@echo ""
 	@echo "  Ejecución"
 	@echo "    make run             ejecuta el paquete (python -m $(MODULE))"
+	@echo "    make website         sirve web/ en http://127.0.0.1:$(PORT) y la abre"
 	@echo "    make profile         cProfile de la ejecución → profile.prof"
 	@echo ""
 	@echo "  Calidad"
@@ -104,6 +106,9 @@ info:
 # ─────────────────────────────────────────────────────────────────────────────
 run:
 	uv run $(PYTHON) -m $(MODULE) hello
+
+website:
+	uv run $(PYTHON) -m scripts.serve_web --port $(PORT)
 
 profile:
 	@echo "▶  Profiling → profile.prof"
