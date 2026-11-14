@@ -1,7 +1,7 @@
 # MeshHarmes
 
 ![Python](https://img.shields.io/badge/Python-3.12+-blue?logo=python&logoColor=white)
-![Version](https://img.shields.io/badge/Version-0.1.8-green)
+![Version](https://img.shields.io/badge/Version-0.1.9-green)
 ![Author](https://img.shields.io/badge/Author-cacelass-blueviolet)
 
 > TinyVigo: un mapa isométrico pixel art de todo el centro de Vigo, con la Navidad encima (puntos con su horario real, eventos del día, rutas a pie, autobuses y trenes) y postales pixel art a partir de una foto propia.
