@@ -1,0 +1,53 @@
+/* Andamio de las hojas de estilo (comun a todas las direcciones). El aspecto lo ponen dir-*.css */
+*{box-sizing:border-box}
+html{background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:var(--f-ui);font-size:15px;line-height:1.5}
+.sp{max-width:1180px;margin:0 auto;padding:24px 24px 96px}
+.sp-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:8px 0 40px}
+.sp-top .grow{flex:1}
+.sp-top a{color:var(--ink2);text-decoration:none;padding:12px 8px;min-height:44px;display:inline-flex;align-items:center}
+.sp-top a:hover{color:var(--ink)}
+.sp h1{font:var(--w-title);margin:0;font-size:var(--s-display);line-height:1.15}
+.sp .lead{color:var(--ink2);max-width:62ch;margin:12px 0 0;font-size:16px}
+.sp-sec{padding-top:72px}
+.sp-sec>h2{font:var(--w-title);font-size:var(--s-title);margin:0 0 28px;display:flex;gap:12px;align-items:baseline}
+.sp-sec>h2 .n{color:var(--mute)}
+.sp-sec h3{font:var(--w-label);font-size:14px;color:var(--ink2);margin:36px 0 12px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.demo{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.demo>small,.cap{color:var(--mute);font-size:12px}
+.stage{padding:20px;background:var(--stage);border-radius:var(--r-stage)}
+.sw{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink2)}
+.sw i{display:block;height:48px;border-radius:var(--r-sw);border:1px solid var(--swline)}
+.sw b{font-weight:600;color:var(--ink);font-size:12px}
+.sw code{font-family:var(--f-num);font-size:12px}
+.swrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}
+table.ct{border-collapse:collapse;width:100%;font-size:13px}
+table.ct td,table.ct th{padding:8px 12px 8px 0;text-align:left;border-bottom:1px solid var(--swline);vertical-align:top}
+table.ct th{color:var(--mute);font-weight:500}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.pass{color:var(--ok)}.fail{color:var(--bad)}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:12px}
+.icons figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px;font-size:12px;color:var(--ink2)}
+.mapbit{position:relative;height:150px;border-radius:var(--r-stage);overflow:hidden;background:url(../assets/mapa-escritorio.jpg) -420px -240px/1440px 900px;image-rendering:pixelated}
+.mapbit[data-m=night]::before{content:"";position:absolute;inset:0;background:#58679f;mix-blend-mode:multiply}
+.mapbit .mk{position:absolute;top:56px}
+.frames{display:grid;grid-template-columns:auto auto;gap:24px;align-items:start}
+.fr{display:flex;flex-direction:column;gap:8px}
+.fr .box{overflow:hidden;border:1px solid var(--swline)}
+.fr iframe{border:0;transform-origin:0 0;display:block}
+.fr.m .box{width:calc(390px*.62);height:calc(844px*.62)}
+.fr.m iframe{width:390px;height:844px;transform:scale(.62)}
+.fr.e .box{width:calc(1440px*.5);height:calc(900px*.5)}
+.fr.e iframe{width:1440px;height:900px;transform:scale(.5)}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pc ul{margin:0;padding-left:18px;color:var(--ink2)}.pc li{margin:6px 0}
+.type-s{display:grid;grid-template-columns:120px 1fr;gap:6px 24px;align-items:baseline}
+.type-s .k{color:var(--mute);font-size:12px}
+.scale{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.scale i{display:block;background:var(--ink2);width:var(--w);height:var(--w);flex:none}
+.scale span{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--mute)}
+@media(max-width:900px){.frames{grid-template-columns:1fr}.pc{grid-template-columns:1fr}}

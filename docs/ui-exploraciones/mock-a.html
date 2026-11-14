@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es" data-mode="night">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TinyVigo · maqueta A. Juego pixel</title>
+<script>if(location.hash.indexOf("day")>-1)document.documentElement.setAttribute("data-mode","day")</script>
+<link rel="stylesheet" href="css/mock-a.css"></head>
+<body class="mock a-game">
+<div class="map"><div class="world">
+  <img class="bg-d" src="assets/mapa-escritorio.jpg" alt="Mapa isométrico del centro de Vigo">
+  <img class="bg-m" src="assets/mapa-movil.jpg" alt="">
+  <div class="tint" aria-hidden="true"></div>
+  <div class="mks">
+    <button class="mk" data-pt="arbol" data-state="sel" style="--x:49.5;--y:52;--mx:50;--my:41" aria-label="Árbol gigante de Nadal"><i class="ic" data-ic="tree" data-size="22"></i></button>
+    <button class="mk" data-pt="noria" data-state="normal" style="--x:62;--y:17;--mx:74;--my:22" aria-label="Noria gigante"><i class="ic" data-ic="wheel" data-size="22"></i></button>
+    <button class="mk" data-pt="mercado" data-state="normal" style="--x:31;--y:63;--mx:24;--my:52" aria-label="Mercado de Navidad"><i class="ic" data-ic="market" data-size="22"></i></button>
+    <button class="mk" data-layer="bus" data-state="normal" style="--x:66;--y:61;--mx:80;--my:31" aria-label="Parada de bus"><i class="ic" data-ic="bus" data-size="22"></i></button>
+    <button class="mk" data-layer="train" data-state="normal" style="--x:9;--y:28;--mx:16;--my:14" aria-label="Estación de tren"><i class="ic" data-ic="train" data-size="22"></i></button>
+  </div>
+</div></div>
+
+<header class="hud">
+  <div class="brand sh">
+    <div class="plate brand-plate">
+      <span class="crest"><i class="ic" data-ic="star" data-size="28"></i></span>
+      <span class="btext"><b class="wm">TinyVigo</b><small>Vigo · Nadal 2026</small></span>
+    </div>
+  </div>
+
+  <div class="search sh">
+    <div class="plate search-plate">
+      <button class="sbtn" aria-label="Buscar"><i class="ic" data-ic="search" data-size="20"></i></button>
+      <input type="search" placeholder="Buscar un sitio, una calle o una estación" aria-label="Buscar un sitio, una calle o una estación">
+    </div>
+    <div class="sres"><div class="plate sres-plate">
+      <button data-pt="arbol"><i class="ic" data-ic="tree" data-size="18"></i><span>Árbol gigante de Nadal</span><small>Navidad</small></button>
+      <button data-pt="noria"><i class="ic" data-ic="wheel" data-size="18"></i><span>Noria gigante</span><small>Atracción</small></button>
+      <button data-pt="mercado"><i class="ic" data-ic="market" data-size="18"></i><span>Mercado de Navidad</span><small>Mercado</small></button>
+      <button data-pt="arbol"><i class="ic" data-ic="train" data-size="18"></i><span>Estación Vigo-Urzáiz</span><small>Tren</small></button>
+    </div></div>
+  </div>
+
+  <nav class="layers" aria-label="Capas del mapa">
+    <button class="chip on" aria-pressed="true" aria-label="Navidad" title="Navidad"><i class="ic" data-ic="tree" data-size="20"></i><span class="lbl">Navidad</span></button>
+    <button class="chip on" aria-pressed="true" aria-label="Eventos" title="Eventos" data-layer="events"><i class="ic" data-ic="calendar" data-size="20"></i><span class="lbl">Eventos</span></button>
+    <button class="chip on" aria-pressed="true" aria-label="Buses" title="Buses" data-layer="bus"><i class="ic" data-ic="bus" data-size="20"></i><span class="lbl">Buses</span></button>
+    <button class="chip" aria-pressed="false" aria-label="Trenes" title="Trenes" data-layer="train"><i class="ic" data-ic="train" data-size="20"></i><span class="lbl">Trenes</span></button>
+    <button class="chip" aria-pressed="false" aria-label="Parkings" title="Parkings"><i class="ic" data-ic="parking" data-size="20"></i><span class="lbl">Parkings</span></button>
+    <button class="chip on" aria-pressed="true" aria-label="Rutas" title="Rutas"><i class="ic" data-ic="route" data-size="20"></i><span class="lbl">Rutas</span></button>
+  </nav>
+</header>
+
+<div class="wx sh">
+  <div class="plate wx-plate">
+    <span class="wx-lb">Clima</span>
+    <div class="seg" role="group" aria-label="Clima del mapa">
+      <button class="on" aria-pressed="true" aria-label="Clima real" title="Real"><i class="ic" data-ic="clock" data-size="18"></i></button>
+      <button aria-pressed="false" aria-label="Despejado" title="Despejado"><i class="ic" data-ic="sun" data-size="18"></i></button>
+      <button aria-pressed="false" aria-label="Niebla" title="Niebla"><i class="ic" data-ic="fog" data-size="18"></i></button>
+      <button aria-pressed="false" aria-label="Lluvia" title="Lluvia"><i class="ic" data-ic="rain" data-size="18"></i></button>
+    </div>
+    <span class="temp">12°</span>
+  </div>
+</div>
+
+<section class="agenda sh" aria-label="Eventos de hoy">
+  <div class="plate ag-plate">
+    <header class="ag-h">
+      <h2>Hoy en Vigo</h2>
+      <span>3 citas</span>
+    </header>
+    <div class="dash" aria-hidden="true"></div>
+    <ol class="ag-list">
+      <li class="past"><span class="when">19:30</span><div><b>Desfile de los Reyes Magos</b><small>Rúa do Príncipe · gratis</small></div><span class="flag">Hecho</span></li>
+      <li class="now"><span class="when">21:00</span><div><b>Feria de Navidad</b><small>Praza de Compostela · gratis</small></div><span class="flag on">Ahora</span></li>
+      <li><span class="when">22:00</span><div><b>Concierto de la Coral</b><small>Colexiata de Santa María</small></div><span class="flag">En 30 min</span></li>
+    </ol>
+  </div>
+</section>
+
+<div class="clock sh">
+  <div class="plate clock-plate">
+    <div class="tctl">
+      <button class="btn plate tmode" aria-label="Cambiar entre día y noche" data-size="22"></button>
+      <span class="tm" data-time>21:30</span>
+      <div class="track" tabindex="0" role="slider" aria-label="Hora del mapa" aria-valuemin="0" aria-valuemax="1439"><span class="fill"></span><span class="thumb"></span></div>
+    </div>
+    <div class="under"><span class="tag"><i class="ic" data-ic="bus" data-size="14"></i>Horario, no en vivo</span></div>
+  </div>
+</div>
+
+<div class="zoom" role="group" aria-label="Zoom del mapa">
+  <button class="btn plate zbtn" data-dz="+" aria-label="Acercar"><i class="ic" data-ic="plus" data-size="18"></i></button>
+  <button class="btn plate zbtn" data-dz="-" aria-label="Alejar"><i class="ic" data-ic="minus" data-size="18"></i></button>
+</div>
+
+<aside class="ficha sh" data-live aria-label="Ficha del punto">
+  <div class="plate card">
+    <div class="card-bar">
+      <span class="id"><i class="ic" data-ic="star" data-size="14"></i>Punto 01 · Nadal</span>
+      <button class="close" aria-label="Cerrar la ficha"><i class="ic" data-ic="x" data-size="14"></i></button>
+    </div>
+    <div class="card-body">
+      <div class="shot">
+        <div class="ph" data-f="photo" role="img" aria-label="Foto del punto"></div>
+        <div class="slot"><i class="ic" data-f="sprite" data-ic="tree" data-size="38"></i></div>
+      </div>
+      <h2 data-f="name">Árbol gigante de Nadal</h2>
+      <p class="type" data-f="type">Elementos lumínicos</p>
+      <div class="st" data-f="status" data-open="1"><span class="st-ic"><i class="ic" data-ic="open" data-size="16"></i></span><span class="st-tx">Abierto ahora, hasta las 00:00</span></div>
+      <div class="facts">
+        <p><i class="ic" data-ic="clock" data-size="16"></i><span data-f="hours">Todos los días de 18:00 a 00:00</span></p>
+        <p><i class="ic" data-ic="walk" data-size="16"></i><span data-f="walk">4 min andando</span></p>
+        <p class="soft" data-f="extra">Pases de música y luz a las 18:00 y a las 20:00</p>
+      </div>
+      <div class="acts">
+        <button class="btn plate get"><i class="ic" data-ic="walk" data-size="18"></i><span>Cómo llegar</span></button>
+        <button class="btn plate pri" data-addroute data-label="Añadir a la ruta"><span class="bi"><i class="ic" data-ic="route" data-size="18"></i></span><span class="lb">Añadir a la ruta</span></button>
+      </div>
+      <section class="story">
+        <h3>Historia</h3>
+        <p data-f="story">Árbol de luces led de 46,40 metros en la Praza da Porta do Sol. Se puede entrar dentro, escuchar la música y ver el juego de luz desde fuera.</p>
+        <a href="#" data-f="src">Concello de Vigo, programa de Navidad</a>
+      </section>
+    </div>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status"><span class="plate tst"><i class="ic" data-ic="check" data-size="16"></i><span class="tx"></span></span></div>
+<script src="assets/iconos.js"></script><script src="assets/ui.js"></script>
+</body></html>
