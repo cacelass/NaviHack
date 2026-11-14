@@ -105,10 +105,11 @@
     const dir = el("a", "tv-btn", t("detail.directions"));
     dir.href = "https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=" + p.lat + "," + p.lon;
     dir.target = "_blank"; dir.rel = "noopener";
-    const photo = p.image_url ? Object.assign(el("a", "tv-btn tv-btn-quiet", t("detail.real_photo")), { href: p.image_url, target: "_blank", rel: "noopener" }) : null;
+    const photo = p.image_url ? Object.assign(el("a", "tv-btn tv-btn-quiet", t("detail.real_photo")), { href: p.image_url.replace("._lgjpeg", ".jpeg"), target: "_blank", rel: "noopener" }) : null;
     const sched = txt(p.schedule_text);
     sheet.append(...[
       close,
+      p.image_url ? Object.assign(el("img", "tv-photo"), { src: p.image_url.replace("._lgjpeg", ".jpeg"), alt: txt(p.name), loading: "lazy", onerror() { this.remove(); } }) : null,
       el("p", "tv-kicker", t(TYPE_KEY[p.type] || "points.filter_all") + (p.address ? " · " + p.address : "")),
       el("h2", null, txt(p.name)),
       st ? el("p", "tv-state " + (st.open ? "is-open" : ""), (st.open ? t("common.open_now") : t("common.closed")) + " · " + st.label) : null,
@@ -124,7 +125,7 @@
     panel.replaceChildren();
     const langs = el("div", "tv-langs", ...LANGS.map((l) => {
       const b = el("button", l === lang ? "is-on" : "", l.toUpperCase());
-      b.onclick = () => { lang = l; try { localStorage.setItem("tinyvigo.lang", l); } catch (e) {} document.documentElement.lang = l; renderPanel(); renderSheet(); };
+      b.onclick = () => { lang = l; try { localStorage.setItem("tinyvigo.lang", l); } catch (e) {} document.documentElement.lang = l; renderPanel(); renderSheet(); document.dispatchEvent(new Event("tv:lang")); };
       return b;
     }));
     const search = el("input", "tv-search"); search.type = "search"; search.placeholder = t("points.search"); search.value = query;
@@ -161,5 +162,6 @@
   document.documentElement.lang = lang;
   renderPanel();
   setInterval(() => { renderPanel(); renderSheet(); }, 60_000); // «abierto ahora» al minuto
-  window.tinyvigoPoints = { points, status, select };
+  window.tinyvigoPoints = { points, status, select, t: (k, v) => t(k, v), txt: (o) => txt(o), lang: () => lang };
+  document.dispatchEvent(new Event("tv:ready"));
 })();

@@ -76,15 +76,36 @@ def web_points(
     return out
 
 
+def elevation_grid(grid: elevation.Grid, step: int = 4) -> dict[str, Any]:
+    """Rejilla reducida (~20 m) para proyectar rutas en el navegador."""
+    rows = [
+        [round(grid.rows[i][j]) for j in range(0, grid.ncols, step)]
+        for i in range(0, grid.nrows, step)
+    ]
+    return {
+        "west": grid.xll,
+        "north": grid.yll + grid.nrows * grid.dy,
+        "dx": grid.dx * step,
+        "dy": grid.dy * step,
+        "rows": rows,
+        "origin_z": grid.elevation(*ORIGIN),
+    }
+
+
 def main() -> int:
     doc = json.loads(POINTS.read_text(encoding="utf-8"))
     points = doc["points"] if isinstance(doc, dict) else doc
     holidays = json.loads(PROGRAMME.read_text(encoding="utf-8"))["holidays"]
-    result = web_points(points, holidays, elevation.load())
+    grid = elevation.load()
+    result = web_points(points, holidays, grid)
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "points.json").write_text(
         json.dumps({"points": result}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
     )
+    if grid:
+        (OUT / "elevation.json").write_text(
+            json.dumps(elevation_grid(grid), separators=(",", ":")), encoding="utf-8"
+        )
     (OUT / "i18n").mkdir(exist_ok=True)
     for lang in ("gl", "es", "en"):
         shutil.copyfile(ROOT / "i18n" / f"{lang}.json", OUT / "i18n" / f"{lang}.json")
