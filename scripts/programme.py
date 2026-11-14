@@ -118,4 +118,4 @@ def attach(points: list[dict[str, Any]], programme: dict[str, Any]) -> None:
         ] = []  # el texto oficial no publica cierres fuera de temporada
         for show in entry.get("shows", []):
             p["show_times"] = sorted(set(p.get("show_times", [])) | set(show["times"]))
-        p["last_verified"] = programme["verified"]
+        p["programme"]["verified"] = programme["verified"]  # last_verified lo pone la capa (R-05)

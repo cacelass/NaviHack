@@ -85,6 +85,8 @@ def test_attach_mete_programa_y_horas_de_espectaculo() -> None:
         {"id": "concello-3527"},
     ]
     attach(points, PROG)
-    assert points[0]["programme"]["rules"] and points[0]["last_verified"] == PROG["verified"]
+    assert (
+        points[0]["programme"]["rules"] and points[0]["programme"]["verified"] == PROG["verified"]
+    )
     assert points[0]["show_times"] == ["18:00", "19:00", "20:00", "21:00", "21:50"]
     assert points[1]["programme"] is None

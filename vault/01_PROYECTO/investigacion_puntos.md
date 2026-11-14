@@ -79,3 +79,23 @@ copia cruda. Re-verificación semanal: R-05.
 - Visitas in situ con foto/GPS: R-02 (6 hitos) y R-03 (todos).
 - Horarios estructurados: R-04.
 - Licencia de textos y fotos de la capa: `licencias.md` (por confirmar).
+
+## Re-verificación durante la temporada (R-05)
+
+- **Cadencia:** cada **lunes a las 06:00 Europe/Madrid** (`deploy/snapshot.cron`,
+  `python -m scripts.reverify`) desde el 14-nov hasta el fin de temporada (sin
+  fecha oficial; como mínimo el 16-ene, último día de horario de vacaciones en
+  Vialia). Además, a mano tras cualquier noticia de cambios.
+- **Qué hace:** descarga la capa, la compara con la última copia cruda (altas,
+  bajas, nombre, tipo, horario, posición > 15 m), añade una línea a
+  `data/raw/concello_navidad/changes.jsonl` (registro append-only), guarda la
+  copia nueva y reconstruye `points.json`: el texto del horario y
+  `last_verified` se actualizan solos.
+- **Horarios estructurados:** si cambia el horario de un punto que tiene reglas
+  en `data/programme_2026.json`, sale en «revisar programa de: …» y hay que
+  actualizar sus reglas a mano (R-04).
+- **Caducidad:** `scripts.reverify.stale(points, hoy)` lista los puntos con
+  `last_verified` de hace más de 7 días; la UI (D-18) no los muestra como
+  vigentes.
+- **Primera pasada:** 2026-11-14 13:57 UTC → 0 cambios respecto a la copia de
+  las 12:34.
