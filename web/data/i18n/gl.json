@@ -240,5 +240,8 @@
   "search.g_streets": "Rúas",
   "search.recent": "Buscas recentes",
   "search.hint": "Proba «noria», «Porta do Sol», «Urzáiz» ou «Príncipe».",
-  "search.none": "Nada para «{q}». Proba con outra palabra."
+  "search.none": "Nada para «{q}». Proba con outra palabra.",
+  "share.button": "Compartir",
+  "share.copied": "Ligazón copiada",
+  "share.copy": "Copia a ligazón"
 }

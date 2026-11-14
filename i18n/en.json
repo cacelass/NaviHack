@@ -240,5 +240,8 @@
   "search.g_streets": "Streets",
   "search.recent": "Recent searches",
   "search.hint": "Try «noria», «Porta do Sol», «Urzáiz» or «Príncipe».",
-  "search.none": "Nothing for «{q}». Try another word."
+  "search.none": "Nothing for «{q}». Try another word.",
+  "share.button": "Share",
+  "share.copied": "Link copied",
+  "share.copy": "Copy the link"
 }

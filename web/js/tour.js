@@ -194,7 +194,7 @@
       const clr = el("button", "tv-btn tv-btn-quiet", t("tour.clear")); clr.onclick = () => { result = null; clear(viewer); emit("tv:clear-route"); render(); };
       return el("div", "tv-result",
         el("p", "tv-summary", t("tour.summary", { min: budget, n: stops.length, km })),
-        el("p", "tv-note", t("walk.story")), ol, walk, el("div", "tv-actions", gm, clr),
+        el("p", "tv-note", t("walk.story")), ol, walk, el("div", "tv-actions", gm, window.tinyvigoShare ? window.tinyvigoShare.button(t("tour.summary", { min: budget, n: stops.length, km })) : null, clr),
         later.length ? el("details", "tv-later", el("summary", null, t("tour.later") + " · " + later.length),
           el("ul", null, ...later.slice(0, 12).map((l) => { const b = el("button", null, el("span", "tv-name", txt(l.p.name)), el("span", "tv-badge", t("tour.later_item", { km: l.km.toFixed(1), min: l.min }))); b.onclick = () => P.select(l.p); return el("li", null, b); }))) : null,
         closed.length ? el("details", "tv-later", el("summary", null, t("tour.closed_now") + " · " + closed.length),
@@ -293,7 +293,7 @@
     btn.onclick = () => { const open = !box.classList.contains("is-open"); document.querySelectorAll(".tv-tour.is-open").forEach((b) => b.classList.remove("is-open")); box.classList.toggle("is-open", open); render(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, run, setWhen: (v) => { when = v; }, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
+    window.tinyvigoTour = { plan, project, run, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
   }
 
   if (window.tinyvigoPoints) init();

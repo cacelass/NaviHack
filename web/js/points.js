@@ -155,7 +155,7 @@
       st ? el("p", "tv-state " + (st.open ? "is-open" : ""), (st.open ? t("common.open_now") : t("common.closed")) + " · " + st.label) : null,
       p.short ? el("p", "tv-short", txt(p.short)) : null,
       sched ? el("details", "tv-sched", el("summary", null, t("detail.schedule")), el("p", null, sched)) : null,
-      el("div", "tv-actions", dir, photo),
+      el("div", "tv-actions", dir, photo, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
       !p.on_map ? el("p", "tv-note", t("common.no_data") + " · " + t("app.map_label")) : null,
       freshness(p),
     ].filter(Boolean)

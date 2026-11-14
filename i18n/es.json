@@ -240,5 +240,8 @@
   "search.g_streets": "Calles",
   "search.recent": "Búsquedas recientes",
   "search.hint": "Prueba «noria», «Porta do Sol», «Urzáiz» o «Príncipe».",
-  "search.none": "Nada para «{q}». Prueba con otra palabra."
+  "search.none": "Nada para «{q}». Prueba con otra palabra.",
+  "share.button": "Compartir",
+  "share.copied": "Enlace copiado",
+  "share.copy": "Copia el enlace"
 }

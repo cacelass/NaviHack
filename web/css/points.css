@@ -220,3 +220,6 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 /* número del grupo de marcadores */
 .tv-marker.is-group .tv-grp { position: absolute; z-index: 2; top: -8px; right: -10px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; display: grid; place-items: center; border-radius: 9px; background: #f4cd80; color: #1d1d1d; font: 600 12px/1 var(--f-ui); font-variant-numeric: tabular-nums; }
 .tv-marker:not(.is-group) .tv-grp { display: none; }
+
+/* compartir (SHARE-01) */
+.tv-toast { position: fixed; z-index: 20; left: 50%; bottom: 84px; transform: translateX(-50%); padding: var(--sp-3) var(--sp-4); border-radius: var(--r-ctl); background: var(--fg); color: var(--raised); font: var(--w-500) var(--fs-label)/1 var(--f-ui); }
