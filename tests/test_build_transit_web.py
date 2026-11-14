@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scripts.build_transit_web import centre_stops, direct_to_centre, nearest_stop
+from scripts.build_transit_web import centre_stops, daytime_served, direct_to_centre, nearest_stop
 
 STOPS = [
     {"id": "C", "lat": 42.23807, "lon": -8.72581},  # Porta do Sol
@@ -54,3 +54,9 @@ def test_parada_cercana_solo_si_esta_a_menos_de_400_m() -> None:
         "distance_m": 21,
     }
     assert nearest_stop({"lat": 42.30, "lon": -8.60}, STOPS) is None
+
+
+def test_paradas_solo_con_buhos_no_cuentan_como_servidas() -> None:
+    day = [[f"{h:02d}:00", "C1", "X", "S", False] for h in range(7, 23)] * 2
+    night = [["00:03", "N4", "X", "S", False], ["25:27", "N4", "X", "S", False]]
+    assert daytime_served({"diurna": day, "buho": night}) == {"diurna"}

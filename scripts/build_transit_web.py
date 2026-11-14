@@ -121,6 +121,16 @@ def compact_trips(
     return out
 
 
+def daytime_served(departures: dict[str, list[list[Any]]], minimum: int = 30) -> set[str]:
+    """Paradas con servicio de día (07–23 h). Las de Policarpo Sanz, cortadas por los desvíos de
+    Navidad, solo conservan búhos nocturnos: recomendarlas en la ficha no sirve de nada."""
+    return {
+        sid
+        for sid, deps in departures.items()
+        if sum(1 for d in deps if "07:00" <= d[0] <= "23:00") >= minimum
+    }
+
+
 def nearest_stop(point: dict[str, Any], stops: list[dict[str, Any]]) -> dict[str, Any] | None:
     best = min(
         stops,
@@ -146,7 +156,9 @@ def build(
     lights = [(p["lat"], p["lon"]) for p in points if p["type"] == "light"]
     centre = centre_stops(stops, lights)
     to_centre = direct_to_centre(trips, stop_times, routes, centre)
-    near = {p["id"]: n for p in points if (n := nearest_stop(p, stops))}
+    served = daytime_served(base["departures"])
+    useful = [st for st in stops if st["id"] in served]
+    near = {p["id"]: n for p in points if (n := nearest_stop(p, useful))}
     near_ids = {n["stop_id"] for n in near.values()}
     keep = {
         s["id"] for s in stops if s["id"] in centre or s["id"] in near_ids or s["id"] in to_centre
