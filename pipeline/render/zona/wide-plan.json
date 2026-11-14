@@ -1,0 +1,93 @@
+{
+ "c2_a": {
+  "x": 3072,
+  "y": 934,
+  "cut_top": 0,
+  "agua_pct": 26.0,
+  "prompt": "prompt_water.txt"
+ },
+ "c2_b2": {
+  "x": 3072,
+  "y": 1894,
+  "cut_top": 0,
+  "agua_pct": 0.0,
+  "prompt": "prompt_nowater.txt"
+ },
+ "c2_c2": {
+  "x": 3072,
+  "y": 2048,
+  "cut_top": 352,
+  "agua_pct": 0.0,
+  "prompt": "prompt_nowater.txt"
+ },
+ "c1_a": {
+  "x": 2816,
+  "y": 934,
+  "cut_top": 0,
+  "agua_pct": 23.4,
+  "prompt": "prompt_water.txt"
+ },
+ "c1_b2": {
+  "x": 2816,
+  "y": 1894,
+  "cut_top": 0,
+  "agua_pct": 0.0,
+  "prompt": "prompt_nowater.txt"
+ },
+ "c1_c": {
+  "x": 2816,
+  "y": 2048,
+  "cut_top": 352,
+  "agua_pct": 0.0,
+  "prompt": "prompt_nowater.txt"
+ },
+ "e1_a": {
+  "x": 4096,
+  "y": 934,
+  "cut_top": 0,
+  "agua_pct": 7.2,
+  "prompt": "prompt_water.txt"
+ },
+ "e1_b2": {
+  "x": 4096,
+  "y": 1894,
+  "cut_top": 0,
+  "agua_pct": 0.1,
+  "prompt": "prompt_nowater.txt"
+ },
+ "e1_c": {
+  "x": 4096,
+  "y": 2048,
+  "cut_top": 352,
+  "agua_pct": 0.1,
+  "prompt": "prompt_nowater.txt"
+ },
+ "e2_a": {
+  "x": 3840,
+  "y": 934,
+  "cut_top": 120,
+  "agua_pct": 18.0,
+  "prompt": "prompt_water.txt"
+ },
+ "e2_b2": {
+  "x": 3840,
+  "y": 1894,
+  "cut_top": 0,
+  "agua_pct": 0.0,
+  "prompt": "prompt_nowater.txt"
+ },
+ "e2_c": {
+  "x": 3840,
+  "y": 2048,
+  "cut_top": 352,
+  "agua_pct": 0.0,
+  "prompt": "prompt_nowater.txt"
+ },
+ "n1": {
+  "x": 4096,
+  "y": 0,
+  "cut_top": 0,
+  "agua_pct": 52.1,
+  "prompt": "prompt_water.txt"
+ }
+}
