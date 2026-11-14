@@ -112,6 +112,31 @@
     const dateFmt = (d) => new Date(d + "T12:00").toLocaleDateString(P.lang() === "en" ? "en-GB" : P.lang() === "gl" ? "gl-ES" : "es-ES", { day: "numeric", month: "long" });
     const thumb = (p) => (p.photo ? Object.assign(el("img", "tv-thumb"), { src: p.photo, alt: "" }) : null);
 
+    // tiempo (D-10): Open-Meteo en vivo para el centro, cada 10 min; si falla no se enseña nada
+    let wx = null, wxAt = 0, wxLoading = false;
+    function loadWx() {
+      if (wxLoading || (wx && Date.now() - wxAt < 600000)) return;
+      wxLoading = true;
+      fetch("https://api.open-meteo.com/v1/forecast?latitude=42.2376&longitude=-8.7247&current=temperature_2m,weather_code,is_day&hourly=precipitation_probability,weather_code&forecast_hours=8&timezone=Europe%2FMadrid")
+        .then((r) => r.json()).then((d) => { wx = d; wxAt = Date.now(); }).catch(() => {}).finally(() => { wxLoading = false; render(); });
+    }
+    const wxKind = (c) => (c === 0 ? "clear" : c <= 3 ? "cloudy" : c <= 48 ? "fog" : c <= 67 || (c >= 80 && c <= 82) ? "rain" : c <= 77 || c <= 86 ? "snow" : "storm");
+    const WX_ICON = { clear: "sun", cloudy: "cloud", fog: "cloud-fog", rain: "cloud-rain", snow: "cloud", storm: "cloud-rain" };
+    function wxBlock() {
+      if (!wx || !wx.current) return null;
+      const c = wx.current, k = wxKind(c.weather_code), night = c.is_day === 0 && k === "clear";
+      const hours = (wx.hourly && wx.hourly.time) || [], probs = (wx.hourly && wx.hourly.precipitation_probability) || [];
+      const nowH = new Date().getHours();
+      let rainAt = null;
+      hours.forEach((h, i) => { const hh = +h.slice(11, 13); if (rainAt === null && probs[i] >= 50 && (hh >= nowH || hh < 6)) rainAt = { time: h.slice(11, 16), pct: probs[i] }; });
+      const strip = el("ol", "tv-wx-hours", ...hours.slice(0, 6).map((h, i) => el("li", null, el("span", null, h.slice(11, 13) + "h"), lu(WX_ICON[wxKind(wx.hourly.weather_code[i])], 16), el("span", "tv-badge" + (probs[i] >= 50 ? " is-rain" : ""), probs[i] + " %"))));
+      return el("div", "tv-wx",
+        el("div", "tv-wx-now", lu(night ? "moon" : WX_ICON[k], 28), el("strong", null, Math.round(c.temperature_2m) + "°"), el("span", null, t("wx." + k))),
+        el("p", "tv-wx-hint" + (rainAt ? " is-rain" : ""), rainAt ? t("wx.rain_at", rainAt) : t("wx.dry")),
+        strip,
+        el("p", "tv-note", t("wx.source")));
+    }
+
     function render() {
       btn.replaceChildren(lu("calendar-days"), t("events.open"));
       box.replaceChildren();
@@ -124,6 +149,8 @@
         loading = true;
         load(P.points).then((e) => { events = e; }).catch(() => { error = true; }).finally(() => { loading = false; render(); });
       }
+      loadWx();
+      const w = wxBlock(); if (w) box.append(w);
       const x = christmasToday(events);
       box.append(x.timeline.length
         ? el("ol", "tv-timeline", ...x.timeline.map((it) => {

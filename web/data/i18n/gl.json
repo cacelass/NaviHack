@@ -277,5 +277,14 @@
   "detail.off_map_note": "Queda fóra do mapa debuxado do centro.",
   "settings.view": "Vista",
   "settings.dark": "Noite",
-  "settings.light": "Día"
+  "settings.light": "Día",
+  "wx.clear": "Despexado",
+  "wx.cloudy": "Nubrado",
+  "wx.fog": "Néboa",
+  "wx.rain": "Choiva",
+  "wx.snow": "Neve",
+  "wx.storm": "Treboada",
+  "wx.rain_at": "Choiva probable cara ás {time} ({pct} %). Leva paraugas.",
+  "wx.dry": "Sen choiva nas próximas horas.",
+  "wx.source": "Tempo: Open-Meteo, centro de Vigo"
 }

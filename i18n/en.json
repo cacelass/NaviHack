@@ -277,5 +277,14 @@
   "detail.off_map_note": "It is outside the drawn map of the centre.",
   "settings.view": "View",
   "settings.dark": "Night",
-  "settings.light": "Day"
+  "settings.light": "Day",
+  "wx.clear": "Clear",
+  "wx.cloudy": "Cloudy",
+  "wx.fog": "Fog",
+  "wx.rain": "Rain",
+  "wx.snow": "Snow",
+  "wx.storm": "Storm",
+  "wx.rain_at": "Rain likely around {time} ({pct} %). Take an umbrella.",
+  "wx.dry": "No rain in the next hours.",
+  "wx.source": "Weather: Open-Meteo, Vigo centre"
 }

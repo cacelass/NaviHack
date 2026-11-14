@@ -277,5 +277,14 @@
   "detail.off_map_note": "Queda fuera del mapa dibujado del centro.",
   "settings.view": "Vista",
   "settings.dark": "Noche",
-  "settings.light": "Día"
+  "settings.light": "Día",
+  "wx.clear": "Despejado",
+  "wx.cloudy": "Nublado",
+  "wx.fog": "Niebla",
+  "wx.rain": "Lluvia",
+  "wx.snow": "Nieve",
+  "wx.storm": "Tormenta",
+  "wx.rain_at": "Lluvia probable hacia las {time} ({pct} %). Lleva paraguas.",
+  "wx.dry": "Sin lluvia en las próximas horas.",
+  "wx.source": "Tiempo: Open-Meteo, centro de Vigo"
 }

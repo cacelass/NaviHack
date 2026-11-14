@@ -345,3 +345,14 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
+
+/* tiempo en «Navidad hoy» (D-10, Open-Meteo) — Miguel2 */
+.tv-wx { display: grid; gap: var(--sp-2); padding: var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
+.tv-wx-now { display: flex; align-items: center; gap: var(--sp-2); }
+.tv-wx-now strong { font-size: var(--fs-display); font-weight: var(--w-600); font-variant-numeric: tabular-nums; line-height: 1; }
+.tv-wx-now span { color: var(--fg-2); font-weight: var(--w-500); }
+.tv-wx-hint { margin: 0; font-weight: var(--w-500); }
+.tv-wx-hint.is-rain { color: var(--warning); }
+.tv-wx-hours { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.tv-wx-hours li { display: grid; justify-items: center; gap: 2px; font-size: var(--fs-meta); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.tv-wx-hours .is-rain { color: var(--warning); font-weight: var(--w-600); }
