@@ -34,10 +34,12 @@
         "El README describe el objetivo en una frase propia, no con el texto de la plantilla",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "46b195ef-364d-42ad-8063-864f44068f89",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "46b195ef-scope-001-definir-qu-se-quiere-r",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "QA-001",
