@@ -1,0 +1,242 @@
+// TinyVigo capas (MAP-01): panel de 7 capas conmutables. Navidad y eventos encendidas por
+// defecto; el resto apagadas. Los marcadores de eventos, buses, trenes, parking y cámaras se
+// pintan sobre el mapa isométrico con la misma proyección que el resto de la app (tour.project).
+(function () {
+  const CANVAS = 3072;
+  const LAYERS = [
+    { id: "navidad", icon: "tree-pine", text: "layer.navidad", on: true },
+    { id: "eventos", icon: "calendar-days", text: "layer.eventos", on: true },
+    { id: "buses", icon: "bus", text: "layer.buses", on: false },
+    { id: "trenes", icon: "train-front", text: "layer.trenes", on: false },
+    { id: "parking", icon: "square-parking", text: "layer.parking", on: false },
+    { id: "camaras", icon: "camera", text: "layer.camaras", on: false },
+    { id: "rutas", icon: "route", text: "layer.rutas", on: false },
+  ];
+  const KEY = "tinyvigo.layers";
+  let state = Object.fromEntries(LAYERS.map((l) => [l.id, l.on]));
+  try { const saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved) state = { ...state, ...saved }; } catch (e) { /* sin storage */ }
+
+  const lu = (name, size = 18) => { const s = document.createElement("span"); s.innerHTML = window.LU ? LU.svg(name, { size }) : ""; return s.firstChild || s; };
+  const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null && k !== false)); return n; };
+  const t = (k) => (window.tinyvigoPoints ? window.tinyvigoPoints.t(k) : k);
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* sin storage */ } };
+
+  // ── marcadores sobre el isométrico ───────────────────────────────────────
+  const groups = {}; // id -> [elementos]
+  function add(id, node) { (groups[id] ||= []).push(node); }
+  function visible(id) { return state[id]; }
+  function apply(id) {
+    for (const n of groups[id] || []) n.style.display = state[id] ? "" : "none";
+    if (id === "navidad") document.querySelectorAll(".tv-marker").forEach((m) => { m.style.display = state.navidad ? "" : "none"; });
+    if (id === "rutas") document.querySelectorAll(".tv-route").forEach((r) => { r.style.display = state.rutas ? "" : "none"; });
+  }
+  function project(lat, lon) {
+    if (window.tinyvigoTour && window.tinyvigoTour.project) return window.tinyvigoTour.project(lat, lon);
+    return null;
+  }
+  function overlay(node, x, y) {
+    const viewer = window.tinyvigo.viewer;
+    if (!viewer) return null;
+    viewer.addOverlay({ element: node, location: new OpenSeadragon.Point(x / CANVAS, y / CANVAS), placement: OpenSeadragon.Placement.CENTER });
+    return node;
+  }
+  function dot(cls, icon, label) {
+    const b = el("button", "tv-lmark " + cls);
+    b.title = label; b.setAttribute("aria-label", label);
+    if (window.LU) b.append(lu(icon, 14));
+    return b;
+  }
+
+  const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9ñ ]/g, " ").replace(/\s+/g, " ").trim();
+  async function loadEventos() {
+    if (!window.tinyvigoTour || !window.tinyvigoTour.project) return; // aún sin proyección
+    if (groups.eventos) return;
+    groups.eventos = [];
+    try {
+      const [rows, centros] = await Promise.all([
+        window.tinyvigoData ? window.tinyvigoData.agenda() : [],
+        window.tinyvigoData ? window.tinyvigoData.centros().catch(() => []) : [],
+      ]);
+      // la agenda no trae coordenadas: se casa la dirección con los puntos y los recintos
+      const places = [];
+      const P = window.tinyvigoPoints;
+      for (const p of (P && P.points) || []) {
+        if (p.lat == null || p.lon == null) continue;
+        for (const key of [p.address, p.name && p.name.es, p.name && p.name.gl]) {
+          const q = norm(key); if (q && q.length > 5) places.push({ q, lat: p.lat, lon: p.lon });
+        }
+      }
+      for (const c of centros || []) {
+        if (c.lat == null || c.lon == null) continue;
+        const q = norm(c.nombre); if (q && q.length > 5) places.push({ q, lat: c.lat, lon: c.lon });
+      }
+      const find = (dir) => {
+        const q = norm(dir); if (!q) return null;
+        return places.find((pl) => pl.q === q)
+          || places.find((pl) => q.includes(pl.q) || pl.q.includes(q))
+          || null;
+      };
+      let placed = 0;
+      for (const e of (rows || [])) {
+        const at = find(e.direccion);
+        if (!at) continue;
+        const xy = project(at.lat, at.lon); if (!xy) continue;
+        const b = dot("is-event", "calendar-days", e.titulo || "Evento");
+        b.onclick = () => toast((e.titulo || "Evento") + (e.horario ? " · " + e.horario : "") + (e.direccion ? "\n" + e.direccion : ""));
+        if (overlay(b, xy[0], xy[1])) { add("eventos", b); placed++; }
+      }
+      if (placed === 0) console.info("TinyVigo capas: agenda sin direcciones casadas con el mapa");
+    } catch (err) { /* sin feed: capa vacía */ }
+    apply("eventos");
+  }
+
+  async function loadTransit() {
+    if (!window.tinyvigoTour || !window.tinyvigoTour.project) return; // aún sin proyección
+    if (groups.buses) return;
+    groups.buses = []; groups.trenes = [];
+    try {
+      const d = await (await fetch("data/transit.json")).json();
+      for (const [id, name, lat, lon] of d.stops || []) {
+        const xy = project(lat, lon); if (!xy) continue;
+        const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
+        if (!inside) continue;
+        const b = dot("is-bus", "bus", name);
+        if (overlay(b, xy[0], xy[1])) add("buses", b);
+      }
+      // las estaciones de Renfe no traen lat/lon en transit.json: coordenadas conocidas (WEB-03)
+      const ST = { "Vigo Urzaiz": [42.234189, -8.713728], "Vigo-Guixar": [42.2392656, -8.7146089] };
+      for (const s of (d.trains && d.trains.stations) || []) {
+        const pos = ST[s.name]; if (!pos) continue;
+        const xy = project(pos[0], pos[1]); if (!xy) continue;
+        const b = dot("is-train", "train-front", s.name);
+        if (overlay(b, xy[0], xy[1])) add("trenes", b);
+      }
+    } catch (err) { /* sin dato: capa vacía */ }
+    apply("buses"); apply("trenes");
+  }
+
+  async function loadParking() {
+    if (!window.tinyvigoTour || !window.tinyvigoTour.project) return; // aún sin proyección
+    if (groups.parking) return;
+    groups.parking = [];
+    try {
+      const rows = (window.tinyvigoData ? await window.tinyvigoData.parkings() : []).filter((r) => r.lat && r.lon); // WEB-05
+      for (const r of rows) {
+        const xy = project(r.lat, r.lon); if (!xy) continue;
+        const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
+        if (!inside) continue;
+        const b = dot("is-park", "square-parking", r.nombre || "Parking");
+        b.onclick = () => toast(r.nombre + " · " + (r.plazaslibres ?? "?") + "/" + (r.totalplazas ?? "?") + " libres");
+        if (overlay(b, xy[0], xy[1])) add("parking", b);
+      }
+    } catch (err) { /* sin feed: capa vacía */ }
+    apply("parking");
+  }
+
+  async function loadCamaras() {
+    if (!window.tinyvigoTour || !window.tinyvigoTour.project) return; // aún sin proyección
+    if (groups.camaras) return;
+    groups.camaras = [];
+    try {
+      const geo = await (await fetch("data/layers/cameras.geojson")).json();
+      const rows = geo.features || geo || [];
+      for (const f of rows) {
+        const c = f.geometry ? f.geometry.coordinates : [f.lon, f.lat];
+        if (!c || c[1] == null) continue;
+        const xy = project(c[1], c[0]); if (!xy) continue;
+        const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
+        if (!inside) continue;
+        const props = f.properties || f;
+        const b = dot("is-cam", "camera", props.nombre || "Cámara");
+        if (overlay(b, xy[0], xy[1])) add("camaras", b);
+      }
+    } catch (err) { /* sin capa: vacía */ }
+    apply("camaras");
+  }
+
+  const lazies = { eventos: loadEventos, buses: loadTransit, trenes: loadTransit, parking: loadParking, camaras: loadCamaras };
+
+  // aviso breve para los clics de capa
+  let toastTimer = null;
+  function toast(text) {
+    let n = document.querySelector(".tv-ltoast");
+    if (!n) { n = el("div", "tv-ltoast"); document.body.append(n); }
+    n.textContent = text; n.classList.add("is-on");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => n.classList.remove("is-on"), 2600);
+  }
+
+  function set(id, on, opts = {}) {
+    state[id] = !!on; save(); apply(id);
+    const group = document.querySelector('.tv-layers-pop [data-layer="' + id + '"]');
+    if (group) { group.classList.toggle("is-on", !!on); group.setAttribute("aria-pressed", on ? "true" : "false"); }
+    if (on && lazies[id] && !opts.silent) lazies[id]();
+    document.dispatchEvent(new CustomEvent("tv:layer", { detail: { id, on: !!on } }));
+  }
+
+  function init() {
+    if (document.querySelector(".tv-layers")) return;
+    const wrap = el("div", "tv-layers");
+    const btn = el("button", "tv-layers-btn");
+    btn.type = "button";
+    btn.setAttribute("aria-label", t("layers.title"));
+    btn.setAttribute("aria-haspopup", "true");
+    btn.setAttribute("aria-expanded", "false");
+    btn.append(lu("layers", 20));
+    const pop = el("div", "tv-layers-pop");
+    pop.setAttribute("role", "group");
+    pop.setAttribute("aria-label", t("layers.title"));
+    for (const l of LAYERS) {
+      const b = el("button", "tv-layer" + (state[l.id] ? " is-on" : ""), lu(l.icon, 18), el("span", null, t(l.text)));
+      b.type = "button";
+      b.dataset.layer = l.id;
+      b.setAttribute("aria-pressed", state[l.id] ? "true" : "false");
+      b.onclick = () => set(l.id, !state[l.id]);
+      pop.append(b);
+    }
+    // MAP-01: el «arte pixel off» enseña la ortofoto real de la misma zona.
+    const sep = el("div", "tv-layers-sep");
+    const sat = el("button", "tv-layer tv-layer-sat" + (window.tinyvigoSat && window.tinyvigoSat.isOn() ? " is-on" : ""), lu("map", 18), el("span", null, t("sat.button")));
+    sat.type = "button";
+    sat.setAttribute("aria-pressed", window.tinyvigoSat && window.tinyvigoSat.isOn() ? "true" : "false");
+    sat.onclick = () => {
+      if (!window.tinyvigoSat) return;
+      const next = !window.tinyvigoSat.isOn();
+      window.tinyvigoSat.set(next);
+    };
+    document.addEventListener("tv:sat", (e) => {
+      sat.classList.toggle("is-on", e.detail.on);
+      sat.setAttribute("aria-pressed", e.detail.on ? "true" : "false");
+      sat.lastChild.textContent = e.detail.on ? t("sat.back") : t("sat.button");
+    });
+    pop.append(sep, sat);
+    btn.onclick = () => {
+      const open = !pop.classList.contains("is-open");
+      pop.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) Object.keys(lazies).forEach((id) => { if (state[id]) lazies[id](); });
+    };
+    wrap.append(btn, pop);
+    document.body.append(wrap);
+    // cerrar al tocar fuera
+    document.addEventListener("pointerdown", (ev) => {
+      if (!wrap.contains(ev.target)) { pop.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); }
+    });
+
+    for (const l of LAYERS) apply(l.id);
+    // los marcadores de puntos se crean después de tv:ready
+    document.addEventListener("tv:ready", () => { apply("navidad"); apply("rutas"); }, { once: true });
+    // una ruta nueva debe verse aunque la capa estuviera apagada: se enciende al planificar
+    document.addEventListener("tv:clear-route", () => apply("rutas"));
+    // una ruta recién planificada enciende su capa aunque estuviera apagada
+    document.addEventListener("tv:route", () => { if (!state.rutas) set("rutas", true); else apply("rutas"); });
+    document.addEventListener("tv:lang", () => {
+      btn.setAttribute("aria-label", t("layers.title"));
+      pop.querySelectorAll("[data-layer]").forEach((b) => { const id = b.dataset.layer; const l = LAYERS.find((x) => x.id === id); if (l) b.lastChild.textContent = t(l.text); });
+      if (sat.lastChild) sat.lastChild.textContent = window.tinyvigoSat && window.tinyvigoSat.isOn() ? t("sat.back") : t("sat.button");
+    });
+    window.tinyvigoLayers = { isOn: (id) => !!state[id], set, toggle: (id) => set(id, !state[id]), state: () => ({ ...state }) };
+  }
+
+  if (window.tinyvigoPoints) init();
+  else document.addEventListener("tv:ready", init, { once: true });
+})();

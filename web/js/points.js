@@ -15,7 +15,7 @@
   const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   const [{ points }, ...cats] = await Promise.all([
-    fetch("data/points.json").then((r) => r.json()),
+    (() => { const baked = document.getElementById("tv-baked-points"); return baked ? Promise.resolve(JSON.parse(baked.textContent)) : fetch("data/points.json").then((r) => r.json()); })(),
     ...LANGS.map((l) => fetch("data/i18n/" + l + ".json").then((r) => r.json())),
   ]);
   const CAT = Object.fromEntries(LANGS.map((l, i) => [l, cats[i]]));

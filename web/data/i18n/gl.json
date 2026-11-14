@@ -326,5 +326,16 @@
   "track.far_body": "Sen GPS ou lonxe do percorrido. Podes ver unha simulación.",
   "settings.design": "Como se deseñou a interface",
   "detail.story": "Historia",
-  "detail.story_source": "Texto: Concello de Vigo, programa de Nadal 2026-27"
+  "detail.story_source": "Texto: Concello de Vigo, programa de Nadal 2026-27",
+  "layers.title": "Capas",
+  "layer.navidad": "Nadal",
+  "layer.eventos": "Eventos",
+  "layer.buses": "Autobuses",
+  "layer.trenes": "Trens",
+  "layer.parking": "Aparcadoiros",
+  "layer.camaras": "Cámaras",
+  "layer.rutas": "Rutas",
+  "sat.button": "Ver a foto real",
+  "sat.back": "Volver ao mapa pixel",
+  "minimap.label": "Mini-mapa: vista xeral"
 }

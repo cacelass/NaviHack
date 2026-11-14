@@ -326,5 +326,16 @@
   "track.far_body": "No GPS or far from the route. You can watch a simulation.",
   "settings.design": "How the interface was designed",
   "detail.story": "Story",
-  "detail.story_source": "Text: Concello de Vigo, Christmas 2026-27 programme"
+  "detail.story_source": "Text: Concello de Vigo, Christmas 2026-27 programme",
+  "layers.title": "Layers",
+  "layer.navidad": "Christmas",
+  "layer.eventos": "Events",
+  "layer.buses": "Buses",
+  "layer.trenes": "Trains",
+  "layer.parking": "Parking",
+  "layer.camaras": "Cameras",
+  "layer.rutas": "Routes",
+  "sat.button": "Show the real photo",
+  "sat.back": "Back to the pixel map",
+  "minimap.label": "Mini-map: overview"
 }

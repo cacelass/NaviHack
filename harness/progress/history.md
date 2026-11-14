@@ -955,3 +955,20 @@ commit 3f1f61a. Datos de la web desde ficheros propios (web/data/live) vía web/
 ```
 
 </details>
+
+## MAP-01 — Isometric map viewer: tiles, search, mini-map, layers
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 155 passed in 2.05s
+- **Ticket GEAS:** a1927419 · commit_after `9fb8756b`
+- **Cambios:** web/js/minimap.js, web/js/layers.js, web/js/satellite.js (nuevos); web/js/app.js (precarga + fps + first view); web/js/tour.js (unproject + tinyvigoGeo); web/js/points.js (datos incrustados); web/index.html (scripts nuevos + bloque baked); web/css/app.css (estilos mini-mapa/capas/PNOA); web/data/i18n/{es,gl,en}.json (claves de capas); scripts/bake_first_view.py, scripts/test_web_geo.mjs (nuevos); scripts/build_web_data.py (llama a bake); README.md
+- **Decisiones:** La mini-mapa va arriba a la derecha (la columna derecha ya tiene ajustes/capas) para no chocar con zoom ni con la hoja movil. El interruptor PNOA vive en el panel de capas en vez de un boton flotante: el hueco superior derecho estaba ocupado por 'Ahora' y Ajustes. La capa 'rutas' arranca apagada (solo navidad y eventos on, como pide el criterio) y se enciende sola al planificar una ruta (evento tv:route). La agenda no trae coordenadas: los eventos se colocan casando direccion con puntos/recintos (3 de 44 en los datos actuales; el resto queda solo en lista, como dice la spec). El primer vistazo ya no hace fetch de points.json: va incrustado en la pagina. Cero llamadas a APIs del Concello desde el navegador: WEB-05 manda y layers.js usa web/data/live. fps y first view medidos en Firefox headless de escritorio, no en movil de gama media: el medidor queda en tinyvigoPerf para medirlo en dispositivo real.
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ node scripts/test_web_geo.mjs → 'OK proyeccion: centro y 5 puntos ida/vuelta sin error' | $ Playwright/Firefox sobre http://127.0.0.1:8123 → defaults {navidad:true, eventos:true, buses:false, trenes:false, parking:false, camaras:false, rutas:false}; 7 filas + 'Show the real photo'; parking ON → 7 marcadores; PNOA ON → 24 teselas IGN y attribution 'PNOA © IGN'; Escape/close → off; minimapa drag → centro (0.5, 0.598); firstViewMs 89; lastPanFps 54-60; logs sin errores | $ ./init.sh → ENTORNO LISTO | $ make check → 'check pasado: lint + typecheck + test + arnes OK'
+```
+
+</details>

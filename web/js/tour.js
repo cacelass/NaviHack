@@ -45,6 +45,21 @@
     const v = -Math.sin(TILT) * d - Math.cos(TILT) * z(lat, lon);
     return [CANVAS / 2 + SCALE * u, CANVAS / 2 + SCALE * v];
   }
+  // vuelta: coordenadas del lienzo -> (lat, lon). La altura se corrige con dos pasadas.
+  function unproject(cx, cy) {
+    const u = (cx - CANVAS / 2) / SCALE, v = (cy - CANVAS / 2) / SCALE;
+    let lat = ORIGIN[0], lon = ORIGIN[1];
+    for (let k = 0; k < 3; k++) {
+      const d = (-v - Math.cos(TILT) * z(lat, lon)) / Math.sin(TILT);
+      const x = Math.cos(HEAD) * u + Math.sin(HEAD) * d, y = -Math.sin(HEAD) * u + Math.cos(HEAD) * d;
+      lat = ORIGIN[0] + y / MLAT;
+      lon = ORIGIN[1] + x / (MLAT * Math.cos(rad(ORIGIN[0])));
+    }
+    return [lat, lon];
+  }
+  // MAP-01: la proyección también se usa desde el mini-mapa y la ortofoto; queda a mano
+  // para poder probarla con node sin arrancar el visor.
+  window.tinyvigoGeo = { project, unproject, z };
 
   // ── planificador ─────────────────────────────────────────────────────────
   function plan(points, start, budget, status, now = new Date()) {
@@ -441,7 +456,7 @@
     btn.onclick = () => { const open = !box.classList.contains("is-open"); document.querySelectorAll(".tv-tour.is-open").forEach((b) => b.classList.remove("is-open")); box.classList.toggle("is-open", open); render(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, run, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; startKind = v ? "here" : "centre"; startPick = v ? null : { pos: STARTS.centre.pos, label: "Porta do Sol" }; }, setStart2: (k) => { startKind = k; fromHere = k === "here"; startPick = STARTS[k].pos ? { pos: STARTS[k].pos, label: k } : null; }, result: () => result };
+    window.tinyvigoTour = { plan, project, unproject, run, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; startKind = v ? "here" : "centre"; startPick = v ? null : { pos: STARTS.centre.pos, label: "Porta do Sol" }; }, setStart2: (k) => { startKind = k; fromHere = k === "here"; startPick = STARTS[k].pos ? { pos: STARTS[k].pos, label: k } : null; }, result: () => result };
   }
 
   if (window.tinyvigoPoints) init();

@@ -592,12 +592,14 @@
         "First-view tiles are precomputed and downloaded in parallel, the coarsest zoom levels are preloaded and the map data of the first view is baked into the page",
         "No plain-HTTP or direct city-feed request from the browser"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "a1927419-9aac-400e-9a8e-160aced45086",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "a1927419-map-01-isometric-map-viewer-tile",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "SCENES-01",
@@ -996,10 +998,12 @@
         "commit_feature regenera uv.lock al subir versión",
         "README documenta el setup en Windows (uv, --system-certs, sin make)"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "9a918c7c-7b1b-410b-9a58-3c11d622605d",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "9a918c7c-win-001-compatibilidad-windows-e",
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
     {
       "id": "SCOPE-002",
@@ -1192,13 +1196,15 @@
         "Each check tested with one known good and one known bad tile",
         "Report per tile lists which checks failed"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "RENDER-01",
         "DRAW-01"
       ],
       "ticket_id": "58fab62a-ecd4-479b-9cca-d7cd3bcf1475",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "58fab62a-check-01-automatic-checks-on-dra",
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
     {
       "id": "REVIEW-01",
@@ -1585,10 +1591,12 @@
         "A written verdict: how close it gets, what is missing, and the decision on using unlit tiles plus code light",
         "No image-model call is needed for the experiment"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "ef8724e0-be3f-4d28-a9fe-adf5c37564ed",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "ef8724e0-light-02-research-can-lighting-b",
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
     {
       "id": "DOC-01",
@@ -1866,7 +1874,7 @@
         "Un script regenera todo web/data/ y la web funciona solo con esos ficheros, sin pedir nada a APIs de terceros desde el navegador",
         "Si un fichero falta o viene vacío, la pantalla muestra un error claro y no una tabla vacía sin explicación"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-03",
         "D-05",
@@ -1874,7 +1882,7 @@
         "X-02"
       ],
       "ticket_id": "47691fa2-b371-4fdf-8102-c9889b3a318d",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "47691fa2-web-05-conectar-los-datos-reales",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },

@@ -146,6 +146,10 @@ def main() -> int:
         shutil.copyfile(ROOT / "i18n" / f"{lang}.json", OUT / "i18n" / f"{lang}.json")
     shown = sum(p["on_map"] for p in result)
     print(f"{len(result)} puntos, {shown} dentro del mapa -> web/data/points.json")
+    # MAP-01: el primer vistazo lleva sus datos dentro de la página.
+    from scripts.bake_first_view import main as bake
+
+    bake()
     return 0
 
 

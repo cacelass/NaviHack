@@ -326,5 +326,16 @@
   "track.far_body": "Sin GPS o lejos del recorrido. Puedes ver una simulación.",
   "settings.design": "Cómo se diseñó la interfaz",
   "detail.story": "Historia",
-  "detail.story_source": "Texto: Concello de Vigo, programa de Navidad 2026-27"
+  "detail.story_source": "Texto: Concello de Vigo, programa de Navidad 2026-27",
+  "layers.title": "Capas",
+  "layer.navidad": "Navidad",
+  "layer.eventos": "Eventos",
+  "layer.buses": "Buses",
+  "layer.trenes": "Trenes",
+  "layer.parking": "Parking",
+  "layer.camaras": "Cámaras",
+  "layer.rutas": "Rutas",
+  "sat.button": "Ver la foto real",
+  "sat.back": "Volver al mapa pixel",
+  "minimap.label": "Mini-mapa: vista general"
 }

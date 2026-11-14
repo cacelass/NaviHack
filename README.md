@@ -98,6 +98,37 @@ El servidor de `make website` es `scripts/serve_web.mjs` (Node, sin dependencias
 `http.server` de Python en Windows deja respuestas a medias con varias conexiones y la
 primera carga podía quedar en blanco. `scripts/serve_web.py` lo usa si hay Node.
 
+## El mapa (MAP-01)
+
+El visor sirve la pirámide de teselas (`web/tiles/<version>/`) y añade encima
+lo que cambia: marcadores de Navidad, eventos, buses, trenes, parkings, cámaras
+y rutas. El panel de capas (icono de capas, arriba a la derecha) enciende y
+apaga cada una; Navidad y Eventos vienen encendidas. El mini-mapa (arriba a la
+derecha) enseña el lienzo entero con el rectángulo de lo que estás viendo y
+sirve para moverte: tócalo o arrástralo. El interruptor «Foto real (PNOA)» del
+mismo panel cambia al mapa real del IGN de la misma zona para orientarte.
+
+Los niveles de zoom más gruesos se precargan en paralelo al arrancar, y los
+datos del primer vistazo (`web/data/points.json`) van incrustados en
+`web/index.html` para no añadir una petición más:
+
+```bash
+python -m scripts.bake_first_view   # reincrusta los puntos tras build_web_data
+```
+
+Medidas de rendimiento en el dispositivo real (no se envían a ningún sitio):
+la consola del navegador deja `tinyvigoPerf.firstViewMs` (primer vistazo) y
+`tinyvigoPerf.lastPanFps` (fps mientras se mueve el mapa):
+
+```js
+// consola del navegador
+tinyvigoPerf
+```
+
+Los datos de ciudad (agenda, parkings, tiempo, recintos) salen de
+`web/data/live/*.json`, publicados por `scripts/build_web_live.py`; el navegador
+no llama a las APIs del Concello (WEB-05).
+
 ## Línea de comandos
 
 El paquete `app` expone un CLI con `python -m app`. El subcomando principal es

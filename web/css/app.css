@@ -8,3 +8,83 @@ html, body { margin: 0; height: 100%; background: var(--stage, #f1efe9); overflo
   color: var(--fg); background: var(--raised); -webkit-tap-highlight-color: transparent;
 }
 #zoom button:active { background: var(--surface); }
+
+/* ── MAP-01: mini-mapa ─────────────────────────────────────────────────────
+   Superficie sólida, sin sombra, esquinas pequeñas. Arriba de los botones de
+   zoom para no taparlos y para dejar libre la hoja de abajo en móvil. */
+.tv-minimap {
+  position: fixed; right: 12px; top: 116px; z-index: 5;
+  width: 112px; height: 112px; box-sizing: border-box;
+  border: 1px solid var(--line); border-radius: var(--r-ctl, 8px);
+  background: var(--raised); overflow: hidden; cursor: crosshair;
+  touch-action: none;
+}
+.tv-minimap img { width: 100%; height: 100%; display: block; object-fit: cover; image-rendering: pixelated; pointer-events: none; }
+.tv-minimap-view {
+  position: absolute; box-sizing: border-box; border: 2px solid var(--acc, #d8a13a);
+  background: color-mix(in srgb, var(--acc, #d8a13a) 18%, transparent);
+  pointer-events: none;
+}
+@media (max-width: 700px) { .tv-minimap { width: 88px; height: 88px; top: 112px; } }
+
+/* ── MAP-01: panel de capas ─────────────────────────────────────────────── */
+.tv-layers { position: fixed; z-index: 9; top: 64px; right: 12px; }
+.tv-layers-btn {
+  width: var(--tap, 44px); height: var(--tap, 44px); display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: var(--r-ctl, 8px);
+  background: var(--raised); color: var(--fg); cursor: pointer;
+}
+.tv-layers-pop {
+  display: none; position: absolute; top: calc(var(--tap, 44px) + 6px); right: 0;
+  width: 190px; padding: 6px; box-sizing: border-box;
+  border: 1px solid var(--line); border-radius: var(--r-panel, 12px);
+  background: var(--raised); flex-direction: column; gap: 2px;
+}
+.tv-layers-pop.is-open { display: flex; }
+.tv-layer {
+  display: flex; align-items: center; gap: 10px; min-height: var(--tap, 44px);
+  padding: 0 10px; border: 0; border-radius: var(--r-sm, 6px);
+  background: transparent; color: var(--fg-2, #51554c);
+  font: var(--w-500, 500) var(--fs-label, 14px)/1 var(--f-ui, sans-serif);
+  cursor: pointer; text-align: left;
+}
+.tv-layer.is-on { color: var(--fg); background: var(--surface); }
+.tv-layer.is-on::after { content: ""; width: 8px; height: 8px; margin-left: auto; border-radius: 50%; background: var(--acc, #d8a13a); }
+.tv-layer:not(.is-on) { opacity: .68; }
+
+/* marcadores de capa sobre el isométrico */
+.tv-lmark {
+  width: 22px; height: 22px; padding: 0; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: var(--raised); color: var(--fg); cursor: pointer;
+  transform: translateY(-50%);
+}
+.tv-lmark.is-bus { border-color: #3d6a96; color: #3d6a96; }
+.tv-lmark.is-train { border-color: #6b4d8a; color: #6b4d8a; }
+.tv-lmark.is-park { border-color: #2f7d4f; color: #2f7d4f; }
+.tv-lmark.is-cam { border-color: #9a5b2d; color: #9a5b2d; }
+.tv-lmark.is-event { border-color: var(--acc, #d8a13a); color: #8a6414; }
+.tv-ltoast {
+  position: fixed; z-index: 30; left: 50%; bottom: 96px; transform: translate(-50%, 12px);
+  max-width: min(420px, calc(100vw - 32px)); padding: 10px 14px;
+  border-radius: var(--r-ctl, 8px); background: var(--fg); color: var(--raised);
+  font: var(--w-500, 500) var(--fs-label, 14px)/1.35 var(--f-ui, sans-serif);
+  opacity: 0; pointer-events: none; transition: opacity .2s var(--ease, ease), transform .2s var(--ease, ease);
+  white-space: pre-line;
+}
+.tv-ltoast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+/* ── MAP-01: ortofoto real (PNOA) ───────────────────────────────────────── */
+.tv-layers-sep { height: 1px; margin: 6px 4px; background: var(--line); }
+.tv-layer-sat.is-on::after { background: #3d6a96; }
+.tv-sat { position: fixed; inset: 0; z-index: 7; display: none; background: var(--bg); }
+.tv-sat-map { position: absolute; inset: 0; }
+.tv-sat-close {
+  position: absolute; z-index: 1000; top: 12px; left: 12px; width: var(--tap, 44px); height: var(--tap, 44px);
+  display: grid; place-items: center; border: 1px solid var(--line); border-radius: var(--r-ctl, 8px);
+  background: var(--raised); color: var(--fg); cursor: pointer;
+}
+.tv-sat .leaflet-control-attribution { font: 11px/1.3 var(--f-ui, sans-serif); }
+body.is-sat #zoom, body.is-sat .tv-minimap { display: none; }
+body.is-sat .tv-settings-open, body.is-sat .tv-time-quick, body.is-sat .tv-tour-open,
+body.is-sat .tv-today-open, body.is-sat .tv-view, body.is-sat #about-open { display: none; }
