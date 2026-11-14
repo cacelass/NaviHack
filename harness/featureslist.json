@@ -232,6 +232,656 @@
       "started": "2026-08-04",
       "closed": "2026-08-04",
       "review_rounds": 0
+    },
+    {
+      "id": "R-01",
+      "title": "Master research of all Christmas attractions",
+      "description": "Build the candidate list from last year's points, the 2026-27 official programme, Turismo de Vigo, press, social profiles, Google Maps/Street View, OSM, listings and blogs. For each point compare several websites recording source, date, location and schedule; resolve conflicts per F2 protocol; produce points.json and the research log.\n\nCriterios de aceptación:\n  1. Candidate list built from all listed sources\n  2. Each point has >=3 sources recorded (or on-site check)\n  3. Conflicts resolved with the documented priority order\n  4. points.json and research log committed\n  5. Every shown point has status above 'unverified'",
+      "acceptance_criteria": [
+        "Candidate list built from all listed sources",
+        "Each point has >=3 sources recorded (or on-site check)",
+        "Conflicts resolved with the documented priority order",
+        "points.json and research log committed",
+        "Every shown point has status above 'unverified'"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "5cc3fec4-bc72-4731-b8aa-e0b34537eab3",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "R-02",
+      "title": "Landmarks first: verify 6 landmark points",
+      "description": "Verify location and schedule of Porta do Sol tree, Alameda, Garcia Barbon street, Vialia attractions (ferris wheel at new location), Cies Market stalls (new location), new Disney items, with on-site checks. Unlocks the first scenes.\n\nCriterios de aceptación:\n  1. 6 landmark points verified on site with dated photos\n  2. Coordinates placed by hand on satellite with accuracy noted\n  3. Schedule confirmed from official 2026-27 programme\n  4. Scene generation unblocked for these 6",
+      "acceptance_criteria": [
+        "6 landmark points verified on site with dated photos",
+        "Coordinates placed by hand on satellite with accuracy noted",
+        "Schedule confirmed from official 2026-27 programme",
+        "Scene generation unblocked for these 6"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-01"
+      ],
+      "ticket_id": "42cdd200-3293-4acc-9194-b2af84fa2337",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "R-03",
+      "title": "On-site visit: dated photos and GPS of every point",
+      "description": "Take dated photos and GPS positions of every point reachable on foot. Feeds F3 scenes and story cards.\n\nCriterios de aceptación:\n  1. Dated photo per point\n  2. GPS position recorded where reachable\n  3. Photos stored and referenced in points.json\n  4. Copyright status noted (own photos preferred)",
+      "acceptance_criteria": [
+        "Dated photo per point",
+        "GPS position recorded where reachable",
+        "Photos stored and referenced in points.json",
+        "Copyright status noted (own photos preferred)"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-01"
+      ],
+      "ticket_id": "b8eb94fc-351a-453a-99d7-f8a3544bde71",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "R-04",
+      "title": "Collect official 2026-27 programme into points.json",
+      "description": "Opening days, hours, show times, prices and closures for every point loaded into points.json.\n\nCriterios de aceptación:\n  1. Programme fields populated for every point\n  2. Show times with clock times where available\n  3. Closed dates recorded\n  4. last_verified updated",
+      "acceptance_criteria": [
+        "Programme fields populated for every point",
+        "Show times with clock times where available",
+        "Closed dates recorded",
+        "last_verified updated"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-01"
+      ],
+      "ticket_id": "4b410240-8bd7-4afa-933b-ac4412825c88",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "R-05",
+      "title": "Weekly re-verification during the season",
+      "description": "Re-verify dataset before launch and weekly during season, after any Concello announcement. Update last_verified and log.\n\nCriterios de aceptación:\n  1. Re-verification cadence documented\n  2. last_verified within 7 days for shown points\n  3. Log of changes kept\n  4. Schedule changes reflected in points.json",
+      "acceptance_criteria": [
+        "Re-verification cadence documented",
+        "last_verified within 7 days for shown points",
+        "Log of changes kept",
+        "Schedule changes reflected in points.json"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-01"
+      ],
+      "ticket_id": "e186d96f-8306-409d-8a62-786f586b4f47",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "R-06",
+      "title": "Locate Concello Christmas layer (optional baseline)",
+      "description": "Try portal search API (nadal, luces, atracciones, photocall, mercado) one request at a time; then network requests of official map; then request channel. Only a starting checklist.\n\nCriterios de aceptación:\n  1. Search attempted and outcome documented\n  2. If found: URL recorded and layer compared to points.json\n  3. If not found: documented as not blocking v1\n  4. No dependency created on this layer",
+      "acceptance_criteria": [
+        "Search attempted and outcome documented",
+        "If found: URL recorded and layer compared to points.json",
+        "If not found: documented as not blocking v1",
+        "No dependency created on this layer"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "822d9147-9765-4b80-9441-4e9f3d21f4f1",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-00",
+      "title": "Measure real refresh rate and terms of Concello feeds",
+      "description": "Measure real refresh rate, CORS, payload size, availability and terms for car parks and agenda feeds. Sets snapshot intervals.\n\nCriterios de aceptación:\n  1. Refresh rate measured for parkings-ocupacion.json\n  2. Refresh rate measured for agenda-hoy.json\n  3. CORS headers recorded\n  4. Terms/licence noted\n  5. Intervals in A7 updated with measured values",
+      "acceptance_criteria": [
+        "Refresh rate measured for parkings-ocupacion.json",
+        "Refresh rate measured for agenda-hoy.json",
+        "CORS headers recorded",
+        "Terms/licence noted",
+        "Intervals in A7 updated with measured values"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "9f20797f-3ced-4eeb-8580-557d57115a79",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-01",
+      "title": "Snapshot publisher",
+      "description": "Scheduled job: fetch feed, validate payload, write timestamped static snapshot with fetched_at and source timestamp, append history row, keep last-good on failure, expose age to app.\n\nCriterios de aceptación:\n  1. Job runs on schedule (cron/systemd timer)\n  2. Bad payloads rejected, previous good kept\n  3. Snapshot includes fetched_at and source timestamp\n  4. History file appended\n  5. App shows age and 'no data' after threshold",
+      "acceptance_criteria": [
+        "Job runs on schedule (cron/systemd timer)",
+        "Bad payloads rejected, previous good kept",
+        "Snapshot includes fetched_at and source timestamp",
+        "History file appended",
+        "App shows age and 'no data' after threshold"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-00"
+      ],
+      "ticket_id": "37c8b711-4172-4bf5-9b0a-c059419fe1d6",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-03",
+      "title": "Agenda loader",
+      "description": "Nightly fetch of agenda-hoy.json; identify which dataset serves future days; build own history if none does.\n\nCriterios de aceptación:\n  1. agenda-hoy.json fetched nightly\n  2. Future-days dataset identified (or history built)\n  3. Clock times sourced from points.json, not agenda\n  4. Events without time show 'time to be confirmed'",
+      "acceptance_criteria": [
+        "agenda-hoy.json fetched nightly",
+        "Future-days dataset identified (or history built)",
+        "Clock times sourced from points.json, not agenda",
+        "Events without time show 'time to be confirmed'"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-00"
+      ],
+      "ticket_id": "fb6752c1-8180-49a6-a511-0148a3a9272d",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-04",
+      "title": "Venue join for agenda events",
+      "description": "Join instalacion to CKAN venue datasets, with name and address fallbacks; unmatched-event report.\n\nCriterios de aceptación:\n  1. Join by instalacion id implemented\n  2. Fallback by venue name\n  3. Fallback by direccion text\n  4. Unmatched events logged\n  5. Events without location shown in list only",
+      "acceptance_criteria": [
+        "Join by instalacion id implemented",
+        "Fallback by venue name",
+        "Fallback by direccion text",
+        "Unmatched events logged",
+        "Events without location shown in list only"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-03"
+      ],
+      "ticket_id": "0753e662-0daf-4237-a7ff-bc6c45f079c1",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-05",
+      "title": "Car park layer",
+      "description": "Snapshot, stale detection, map layer and detail in point panel.\n\nCriterios de aceptación:\n  1. 12 car parks shown with free spaces and percent\n  2. Last update time shown\n  3. Stale car park shown as 'no data'\n  4. Detail in point panel (nearest car park)",
+      "acceptance_criteria": [
+        "12 car parks shown with free spaces and percent",
+        "Last update time shown",
+        "Stale car park shown as 'no data'",
+        "Detail in point panel (nearest car park)"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01"
+      ],
+      "ticket_id": "37eb79b5-cd7c-4d05-b134-5604dd84f476",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-10",
+      "title": "Weather (Open-Meteo)",
+      "description": "Open-Meteo snapshot, status strip, hourly rain for the planner.\n\nCriterios de aceptación:\n  1. Now + next 6 hours shown\n  2. Rain probability for route window\n  3. Last-good fallback with age\n  4. Strip hides itself if feed fails",
+      "acceptance_criteria": [
+        "Now + next 6 hours shown",
+        "Rain probability for route window",
+        "Last-good fallback with age",
+        "Strip hides itself if feed fails"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01"
+      ],
+      "ticket_id": "66ad58ab-90c3-4724-b997-14de71842058",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-11",
+      "title": "Elevation: MDT05 slope layer",
+      "description": "CNIG MDT05 slope layer for 'Easy walk' route.\n\nCriterios de aceptación:\n  1. Slope data loaded for Vigo centre\n  2. Consumed by planner's Easy walk option\n  3. Missing data handled gracefully",
+      "acceptance_criteria": [
+        "Slope data loaded for Vigo centre",
+        "Consumed by planner's Easy walk option",
+        "Missing data handled gracefully"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "d2bedd01-70e1-4c04-b9be-766708ed6001",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-12",
+      "title": "Planner signals and weights",
+      "description": "Weights for After dark and Easy walk, rain and parking hints in the summary.\n\nCriterios de aceptación:\n  1. After dark uses light hours and avoids unlit stretches\n  2. Easy walk uses slope and benches/cafes\n  3. Rain hint in summary\n  4. Parking hint when occupancy >90%\n  5. Missing signals reported, not fatal",
+      "acceptance_criteria": [
+        "After dark uses light hours and avoids unlit stretches",
+        "Easy walk uses slope and benches/cafes",
+        "Rain hint in summary",
+        "Parking hint when occupancy >90%",
+        "Missing signals reported, not fatal"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-04",
+        "D-05",
+        "D-10",
+        "D-11"
+      ],
+      "ticket_id": "88638b5e-d722-4dd6-ae97-c7f8ea9c2d81",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-17",
+      "title": "About screen with attributions",
+      "description": "Credits for OSM, IGN, Concello (ODC-BY) and other sources.\n\nCriterios de aceptación:\n  1. All data sources credited\n  2. Licences shown\n  3. Reachable from main UI",
+      "acceptance_criteria": [
+        "All data sources credited",
+        "Licences shown",
+        "Reachable from main UI"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "d1049a58-68a3-4d2e-8dab-bddc0cede2cf",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "D-18",
+      "title": "Freshness UI",
+      "description": "Per-layer last-updated time and per-point last-verified date and status.\n\nCriterios de aceptación:\n  1. Each data layer shows last update\n  2. Each point shows last_verified and status\n  3. Stale state visually distinct",
+      "acceptance_criteria": [
+        "Each data layer shows last update",
+        "Each point shows last_verified and status",
+        "Stale state visually distinct"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-05",
+        "R-01"
+      ],
+      "ticket_id": "15ffa301-87c3-43e1-9216-b109cea5fef3",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "MAP-01",
+      "title": "Base map: satellite + night, points, lights schedule",
+      "description": "PNOA orthophoto base with pan/zoom. Two base modes (Satellite, Night: darkened+tinted with lights on at real hours). Points as pixel-art sprites. Layers toggle: points, events, car parks (points+events on by default).\n\nCriterios de aceptación:\n  1. Satellite base pans smoothly on mid-range phone\n  2. Night mode darkens and tints, lights on at Concello schedule\n  3. Points rendered as sprites at researched coords\n  4. Layer toggles work\n  5. First view loads under 3s on 4G (to be measured)\n  6. No plain-HTTP or direct city-feed request from browser",
+      "acceptance_criteria": [
+        "Satellite base pans smoothly on mid-range phone",
+        "Night mode darkens and tints, lights on at Concello schedule",
+        "Points rendered as sprites at researched coords",
+        "Layer toggles work",
+        "First view loads under 3s on 4G (to be measured)",
+        "No plain-HTTP or direct city-feed request from browser"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-01"
+      ],
+      "ticket_id": "a1927419-9aac-400e-9a8e-160aced45086",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "SCENES-01",
+      "title": "Generate scenes for 6 landmarks",
+      "description": "Prove the look: generate pixel-art scenes for the 6 landmarks using real photo + satellite crop + style reference. Review against photo before shipping.\n\nCriterios de aceptación:\n  1. 6 landmark scenes generated\n  2. Each reviewed against real photo\n  3. Invented/identity-changing elements rejected and redone\n  4. Style matches reference look (warm night, chunky pixels, no thin outlines)\n  5. Scenes stored as images with prompt and source photo",
+      "acceptance_criteria": [
+        "6 landmark scenes generated",
+        "Each reviewed against real photo",
+        "Invented/identity-changing elements rejected and redone",
+        "Style matches reference look (warm night, chunky pixels, no thin outlines)",
+        "Scenes stored as images with prompt and source photo"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-02"
+      ],
+      "ticket_id": "561fce4c-e226-495b-acae-3f07fcdc83a9",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "PREVIEW-01",
+      "title": "Point preview panel",
+      "description": "Tap a point: scene, real photo one tap away, schedule today+next days and on-now, story card, walk directions + add-to-route, nearest car park with occupancy and update time, confirmation status and last_verified date.\n\nCriterios de aceptación:\n  1. Panel opens on tap\n  2. Scene and real photo both available\n  3. Schedule and on-now state shown\n  4. Story card shown\n  5. Walk directions and add-to-route button\n  6. Nearest car park occupancy + update time\n  7. Confirmation status and last_verified shown",
+      "acceptance_criteria": [
+        "Panel opens on tap",
+        "Scene and real photo both available",
+        "Schedule and on-now state shown",
+        "Story card shown",
+        "Walk directions and add-to-route button",
+        "Nearest car park occupancy + update time",
+        "Confirmation status and last_verified shown"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-02",
+        "D-05"
+      ],
+      "ticket_id": "c6ea584d-584a-4e15-9305-27f2a4984eb8",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "STORY-01",
+      "title": "Story cards for Christmas points",
+      "description": "3-5 sentence story per point about the tradition. Set of cards tells the history of Christmas in Vigo. Every historical claim has a source link; unsourced cards not shown.\n\nCriterios de aceptación:\n  1. Card per shown point\n  2. 3-5 sentences each\n  3. Every historical claim sourced\n  4. Cards read in order tell Vigo Christmas history\n  5. Unsourced cards hidden",
+      "acceptance_criteria": [
+        "Card per shown point",
+        "3-5 sentences each",
+        "Every historical claim sourced",
+        "Cards read in order tell Vigo Christmas history",
+        "Unsourced cards hidden"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-01",
+        "R-03"
+      ],
+      "ticket_id": "85fa5a29-1d8c-43c7-bc84-b1940be7863d",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "EVENTS-01",
+      "title": "Events UI (list + map layer)",
+      "description": "Daily events list and map layer, date picker for next days, filters (date, time of day, category, free, near me), permanent items and cycles grouped, add-to-route.\n\nCriterios de aceptación:\n  1. Events list and map layer\n  2. Date picker for future days\n  3. Filters work\n  4. Permanent/cycle items grouped\n  5. Add-to-route button\n  6. Events without clock time show 'time to be confirmed'",
+      "acceptance_criteria": [
+        "Events list and map layer",
+        "Date picker for future days",
+        "Filters work",
+        "Permanent/cycle items grouped",
+        "Add-to-route button",
+        "Events without clock time show 'time to be confirmed'"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-04"
+      ],
+      "ticket_id": "7a978705-4be8-412d-8ef9-4364d1f6a629",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "PLANNER-01",
+      "title": "Route planner (walking, 3 options)",
+      "description": "Input start + time window + chosen stops. Output 3 options (fastest, after dark, easy walk) with total time, distance, ordered stops and plain explanation. Events as time windows. Pedestrian graph from OSM. Exact search up to ~12 stops. Missing stop reported, not silently skipped.\n\nCriterios de aceptación:\n  1. 3 options returned for same input\n  2. Deterministic order (weather/parking hints only change summary text)\n  3. Event pinned at 20:00 -> no option arrives after 20:00\n  4. Unreachable stop reported with drop suggestion\n  5. Answers in under 2s for 12 stops\n  6. Walking times from OSM pedestrian graph",
+      "acceptance_criteria": [
+        "3 options returned for same input",
+        "Deterministic order (weather/parking hints only change summary text)",
+        "Event pinned at 20:00 -> no option arrives after 20:00",
+        "Unreachable stop reported with drop suggestion",
+        "Answers in under 2s for 12 stops",
+        "Walking times from OSM pedestrian graph"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-12"
+      ],
+      "ticket_id": "8750a751-7e75-4c24-abc9-60a218951226",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "POSTCARD-01",
+      "title": "Postcard pipeline and UI",
+      "description": "Upload/take photo, pick place, optional message+name -> pixel-art postcard. Vision model describes photo as structured data (no identification). Image model draws person in scene. Frame/title/name/message added in code. PNG download + share. Credit line + date. Daily per-device limit and monthly spending cap. Photo and result not kept unless user opts in. Notice about third-party model.\n\nCriterios de aceptación:\n  1. Photo upload/capture works on mobile\n  2. Place picker from Christmas points\n  3. Vision description is structured, no identification\n  4. Person drawn in scene in pixel style\n  5. Frame/title/name/message added in code, not by model\n  6. PNG download and share\n  7. Daily per-device limit enforced\n  8. Monthly spending cap enforced\n  9. No server-side retention unless opted in\n  10. Notice about third-party model shown",
+      "acceptance_criteria": [
+        "Photo upload/capture works on mobile",
+        "Place picker from Christmas points",
+        "Vision description is structured, no identification",
+        "Person drawn in scene in pixel style",
+        "Frame/title/name/message added in code, not by model",
+        "PNG download and share",
+        "Daily per-device limit enforced",
+        "Monthly spending cap enforced",
+        "No server-side retention unless opted in",
+        "Notice about third-party model shown"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "SCENES-01"
+      ],
+      "ticket_id": "b72f9648-a16d-4131-a048-425e983582fd",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "I18N-01",
+      "title": "Galician/Spanish/English strings",
+      "description": "All UI strings externalised; no hard-coded text.\n\nCriterios de aceptación:\n  1. Strings in gl/es/en\n  2. No hard-coded user-facing strings\n  3. Language switch works",
+      "acceptance_criteria": [
+        "Strings in gl/es/en",
+        "No hard-coded user-facing strings",
+        "Language switch works"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "cd39debf-3d69-425a-b178-f54216a57efc",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-01",
+      "title": "Vitrasa GTFS ingest",
+      "description": "Stops, lines, timetables; 'scheduled' labelling; cross-check with Christmas mobility plan (cancelled stops).\n\nCriterios de aceptación:\n  1. GTFS ingested (stops, lines, timetables)\n  2. Labelled 'scheduled', not live\n  3. Cancelled Christmas stops cross-checked\n  4. No dependency on unofficial real-time wrappers",
+      "acceptance_criteria": [
+        "GTFS ingested (stops, lines, timetables)",
+        "Labelled 'scheduled', not live",
+        "Cancelled Christmas stops cross-checked",
+        "No dependency on unofficial real-time wrappers"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "f39a46e4-68c0-402a-9f5e-31acfe38c1b8",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-02",
+      "title": "Renfe static GTFS ingest",
+      "description": "Ingest long-distance and Cercanias GTFS; check Vigo stops present.\n\nCriterios de aceptación:\n  1. Long-distance GTFS ingested\n  2. Cercanias GTFS ingested\n  3. Vigo-Urzáiz and Vigo-Guixar present\n  4. Stops listed",
+      "acceptance_criteria": [
+        "Long-distance GTFS ingested",
+        "Cercanias GTFS ingested",
+        "Vigo-Urzáiz and Vigo-Guixar present",
+        "Stops listed"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "5d40e61c-8ebc-4e87-803d-d0dd054b86f9",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-03",
+      "title": "Renfe live feasibility check",
+      "description": "Test whether real-time feeds cover Vigo; go/no-go decision.\n\nCriterios de aceptación:\n  1. Trip-update and vehicle-position endpoints tested for Vigo\n  2. Coverage documented\n  3. Go/no-go recorded\n  4. Protobuf decoding handled or noted as blocker",
+      "acceptance_criteria": [
+        "Trip-update and vehicle-position endpoints tested for Vigo",
+        "Coverage documented",
+        "Go/no-go recorded",
+        "Protobuf decoding handled or noted as blocker"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "X-02"
+      ],
+      "ticket_id": "38617de7-9026-4c02-8f5a-eb28b92a8975",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-04",
+      "title": "Transit legs in planner + next departures",
+      "description": "Walking+bus transit legs in planner; next departures at nearest stop/station in point panel.\n\nCriterios de aceptación:\n  1. Transit leg option in planner\n  2. Next departures shown in point panel\n  3. Bus stop and train station layers on map",
+      "acceptance_criteria": [
+        "Transit leg option in planner",
+        "Next departures shown in point panel",
+        "Bus stop and train station layers on map"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "X-01",
+        "X-02"
+      ],
+      "ticket_id": "b7daf91d-54e3-4784-b958-c9d141e79e49",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-05",
+      "title": "Buildings: 3D footprint + height layer",
+      "description": "Read FeatureServer in pages, reproject EPSG:25829->WGS84, check GeoJSON for MultiPatch, altura completeness and licence; export offline footprint+height file; fallback Catastro footprints joined by refcat.\n\nCriterios de aceptación:\n  1. Pagination implemented (<=2000 records/request)\n  2. Reprojection to WGS84 correct\n  3. GeoJSON MultiPatch feasibility documented\n  4. altura completeness measured\n  5. Licence recorded\n  6. Offline file exported\n  7. Fallback documented",
+      "acceptance_criteria": [
+        "Pagination implemented (<=2000 records/request)",
+        "Reprojection to WGS84 correct",
+        "GeoJSON MultiPatch feasibility documented",
+        "altura completeness measured",
+        "Licence recorded",
+        "Offline file exported",
+        "Fallback documented"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "715c81d2-ae46-4d72-88e9-c909511a3cc1",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-06",
+      "title": "Busy-now estimate prototype",
+      "description": "Coarse per-zone busy estimate (quiet/normal/busy) from car park occupancy, traffic, agenda, weekday/holiday, weather, Celta matches. Labelled 'estimate', hides if >=2 inputs missing.\n\nCriterios de aceptación:\n  1. 3 levels per zone\n  2. Inputs combined\n  3. Word 'estimate' always visible\n  4. No person counts shown\n  5. Hides itself if >=2 inputs missing\n  6. Celta home match dates considered",
+      "acceptance_criteria": [
+        "3 levels per zone",
+        "Inputs combined",
+        "Word 'estimate' always visible",
+        "No person counts shown",
+        "Hides itself if >=2 inputs missing",
+        "Celta home match dates considered"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01",
+        "D-05",
+        "D-03"
+      ],
+      "ticket_id": "fa2ae6b6-cd81-421e-8e15-f66a8f5c64e4",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-07",
+      "title": "MITMA OD analysis for Vigo",
+      "description": "Typical December flows into the centre from MITMA mobile data to seed busy estimate.\n\nCriterios de aceptación:\n  1. MITMA CSVs acquired for Vigo\n  2. December flows into centre extracted\n  3. District granularity documented\n  4. Fed into X-06",
+      "acceptance_criteria": [
+        "MITMA CSVs acquired for Vigo",
+        "December flows into centre extracted",
+        "District granularity documented",
+        "Fed into X-06"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "f86fc5ba-a51b-4e5a-b6ff-27754804a19f",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-08",
+      "title": "Traffic layer",
+      "description": "Inspect treal.geojson; render segments or fall back to city-wide indicator.\n\nCriterios de aceptación:\n  1. treal.geojson inspected and usability documented\n  2. Segments rendered if usable, else city-wide indicator\n  3. Source freshness shown",
+      "acceptance_criteria": [
+        "treal.geojson inspected and usability documented",
+        "Segments rendered if usable, else city-wide indicator",
+        "Source freshness shown"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01"
+      ],
+      "ticket_id": "7c067be4-16a8-45ab-b4ec-b2345a8194e1",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-09",
+      "title": "Cameras via server or links only",
+      "description": "Fetch camera images through server if terms allow, else outbound links.\n\nCriterios de aceptación:\n  1. Terms checked\n  2. Either proxied images or links implemented\n  3. 61 cameras with location shown",
+      "acceptance_criteria": [
+        "Terms checked",
+        "Either proxied images or links implemented",
+        "61 cameras with location shown"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-00"
+      ],
+      "ticket_id": "caf1ab4c-770d-4ffe-b8ea-21d5fae3be2e",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-10",
+      "title": "DGT DATEX II incidents",
+      "description": "Road incidents on access roads (AP-9, A-55, A-52) from DGT NAP v3.7.\n\nCriterios de aceptación:\n  1. v3.7 feed parsed\n  2. Incidents shown for access roads\n  3. Refresh every 5 min\n  4. City streets excluded",
+      "acceptance_criteria": [
+        "v3.7 feed parsed",
+        "Incidents shown for access roads",
+        "Refresh every 5 min",
+        "City streets excluded"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01"
+      ],
+      "ticket_id": "71ca062e-e608-4c66-b49c-21e0f0860280",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-11",
+      "title": "Concello notices in alerts list",
+      "description": "t-avisos and t-avisos-transporte notices about closures during events/parades.\n\nCriterios de aceptación:\n  1. Both datasets ingested\n  2. Notices shown in alerts list\n  3.  closures during events highlighted",
+      "acceptance_criteria": [
+        "Both datasets ingested",
+        "Notices shown in alerts list",
+        "closures during events highlighted"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01"
+      ],
+      "ticket_id": "a92f43fa-32c6-4277-ba35-96d0630d5e53",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-12",
+      "title": "Enumerate Concello map services",
+      "description": "Use portal search API one request at a time to list useful services; add to catalogue.\n\nCriterios de aceptación:\n  1. Search run politely (one request at a time, back-off)\n  2. Useful services recorded with URLs\n  3. Catalogue updated",
+      "acceptance_criteria": [
+        "Search run politely (one request at a time, back-off)",
+        "Useful services recorded with URLs",
+        "Catalogue updated"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "83793d25-60b2-4cae-9eae-122b2053a703",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-13",
+      "title": "Weather backups and tides",
+      "description": "AEMET OpenData and MeteoGalicia MeteoSIX with failover; tides for coastal walks.\n\nCriterios de aceptación:\n  1. AEMET failover works\n  2. MeteoSIX failover works\n  3. Active source shown in UI\n  4. Tides shown for coastal walks",
+      "acceptance_criteria": [
+        "AEMET failover works",
+        "MeteoSIX failover works",
+        "Active source shown in UI",
+        "Tides shown for coastal walks"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-10"
+      ],
+      "ticket_id": "8ec74918-2034-4f93-8b15-4244d8cfefb0",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "X-14",
+      "title": "TomTom traffic tiles (optional)",
+      "description": "Flow and incident tiles behind caching; attribution; stay within free tier.\n\nCriterios de aceptación:\n  1. Tiles render with attribution\n  2. Caching proxy keeps within 50k/day\n  3. 429 handled gracefully",
+      "acceptance_criteria": [
+        "Tiles render with attribution",
+        "Caching proxy keeps within 50k/day",
+        "429 handled gracefully"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-01"
+      ],
+      "ticket_id": "9825ff2b-c143-42cb-8031-ffa6203ee030",
+      "raw_status": "FREE"
     }
   ]
 }
