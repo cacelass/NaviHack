@@ -572,3 +572,20 @@ I18N-01 evidencia:
 ```
 
 </details>
+
+## LIC-01 — Licences and attributions audit
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 97 passed in 0.52s
+- **Ticket GEAS:** b5bc2472 · commit_after `55e793a3`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 60b0978: vault/01_PROYECTO/licencias.md con tabla fuente/licencia/atribución/derivados/estado, bloqueados con alternativa y texto para D-17. Capa navideña y Edificios 3D sin licencia declarada: marcados por confirmar.
+```
+
+</details>
