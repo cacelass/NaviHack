@@ -4,6 +4,24 @@
   "project": "NavaHack",
   "features": [
     {
+      "id": "STACK-01",
+      "title": "URGENTE (Jose): migrar web/ a React + TypeScript antes de seguir",
+      "description": "Decisión del equipo (Miguel, 2026-11-14): la web pasa a React + TypeScript. Es lo PRIMERO que hace Jose, antes de cualquier otro ticket de web; todo lo siguiente de web se hace ya en este stack. Mientras dure, nadie más toca web/. Partir de lo que hay: OpenSeadragon con la pirámide de tiles (tiles/current.json + manifest, incluido el caso canvas/offset con new OpenSeadragon.TileSource), botones de zoom y el panel Acerca de (web/js/about.js, D-17). Encaja con elastic-ui y la dirección D de docs/ui-exploraciones.\n\nCriterios de aceptación:\n  1. Vite + React + TypeScript (strict) en web/, sin errores de tsc\n  2. El visor OpenSeadragon y la pirámide de tiles funcionan igual que antes (v3 se ve, zoom +/-)\n  3. El panel Acerca de (D-17) migrado a componente React con las 8 fuentes\n  4. make website arranca el servidor de desarrollo; npm run build genera dist/ estático desplegable\n  5. scripts/serve_web.py y el README explican el nuevo arranque (npm install + npm run dev)\n  6. La CI sigue en verde; si hace falta, job de tsc + build de la web\n  7. Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS",
+      "acceptance_criteria": [
+        "Vite + React + TypeScript (strict) en web/, sin errores de tsc",
+        "El visor OpenSeadragon y la pirámide de tiles funcionan igual que antes (v3 se ve, zoom +/-)",
+        "El panel Acerca de (D-17) migrado a componente React con las 8 fuentes",
+        "make website arranca el servidor de desarrollo; npm run build genera dist/ estático desplegable",
+        "scripts/serve_web.py y el README explican el nuevo arranque (npm install + npm run dev)",
+        "La CI sigue en verde; si hace falta, job de tsc + build de la web",
+        "Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "47a7d6c0-99cd-4a60-b5bd-4d8cf0dc2c37",
+      "raw_status": "FREE"
+    },
+    {
       "id": "GEAS-001",
       "title": "Arrancar GEAS de NavaHack (solo falta la IP/URL)",
       "description": "Dejar el arnés de NavaHack respaldado por GEAS con MongoDB. Ya está todo preparado: harness/geas.json, scripts/geas_setup.py, scripts/geas_setup.sh y el modo GEAS de agents/agents/harness_agent.py. Lo único que falta es sustituir <IP> por la IP/URL real del servidor, poner GEAS_TOKEN en .env y ejecutar el setup. A partir de ahí el backlog vive en tickets: nadie edita featureslist.json a mano y harness start hace commit WIP + pull --rebase + push antes de reclamar.\n\nCriterios de aceptación:\n  1. harness/geas.json tiene la IP/URL real (sin <IP>), org_id y repository_id de NavaHack\n  2. El token está en .env como GEAS_TOKEN y no aparece en harness/geas.json ni en git\n  3. ./scripts/geas_setup.sh <IP> importa el backlog a GEAS y escribe harness/geas_map.json\n  4. run harness status devuelve backend=geas y el conteo real de tickets\n  5. run harness next devuelve un ticket de GEAS, no del espejo local\n  6. run harness start <ID> hace commit WIP, pull --rebase y push antes de start_ticket\n  7. ./init.sh termina con ENTORNO LISTO\n\n[importada desde harness/featureslist.json: GEAS-001]",
@@ -256,13 +274,14 @@
     },
     {
       "id": "R-02",
-      "title": "Landmarks first: verify 6 landmark points",
-      "description": "Verify location and schedule of Porta do Sol tree, Alameda, Garcia Barbon street, Vialia attractions (ferris wheel at new location), Cies Market stalls (new location), new Disney items, with on-site checks. Unlocks the first scenes.\n\nCriterios de aceptación:\n  1. 6 landmark points verified on site with dated photos\n  2. Coordinates placed by hand on satellite with accuracy noted\n  3. Schedule confirmed from official 2026-27 programme\n  4. Scene generation unblocked for these 6",
+      "title": "Landmarks first: verify 6 landmark points and collect reference photos",
+      "description": "Verify location and schedule of Porta do Sol tree, Alameda, Garcia Barbon street, Vialia attractions (ferris wheel at the new location), Cies Market stalls (new location) and the new Disney items, with on-site checks. Collect several reference photos per landmark (shape, orientation, roof, lights). Unlocks the first assets and the tile notes.\n\nCriterios de aceptación:\n  1. 6 landmark points verified on site with dated photos\n  2. At least 3 reference photos per landmark from different angles\n  3. Coordinates placed by hand on the PNOA orthophoto, accuracy noted\n  4. Schedule confirmed from the official 2026-27 programme\n  5. List of the 6 landmarks recorded as input for SCENES-01 and NOTES-01",
       "acceptance_criteria": [
         "6 landmark points verified on site with dated photos",
-        "Coordinates placed by hand on satellite with accuracy noted",
-        "Schedule confirmed from official 2026-27 programme",
-        "Scene generation unblocked for these 6"
+        "At least 3 reference photos per landmark from different angles",
+        "Coordinates placed by hand on the PNOA orthophoto, accuracy noted",
+        "Schedule confirmed from the official 2026-27 programme",
+        "List of the 6 landmarks recorded as input for SCENES-01 and NOTES-01"
       ],
       "status": "pending",
       "depends_on": [
@@ -391,12 +410,12 @@
         "Clock times sourced from points.json, not agenda",
         "Events without time show 'time to be confirmed'"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-00"
       ],
       "ticket_id": "fb6752c1-8180-49a6-a511-0148a3a9272d",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "fb6752c1-d-03-agenda-loader",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -428,24 +447,25 @@
         "Stale car park shown as 'no data'",
         "Detail in point panel (nearest car park)"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "37eb79b5-cd7c-4d05-b134-5604dd84f476",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "37eb79b5-d-05-car-park-layer",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-10",
-      "title": "Weather (Open-Meteo)",
-      "description": "Open-Meteo snapshot, status strip, hourly rain for the planner.\n\nCriterios de aceptación:\n  1. Now + next 6 hours shown\n  2. Rain probability for route window\n  3. Last-good fallback with age\n  4. Strip hides itself if feed fails",
+      "title": "Weather feed (Open-Meteo): current, hourly forecast and sea state",
+      "description": "Open-Meteo snapshot with current conditions and an hourly forecast for the next days: precipitation, weather code, cloud cover (low/mid/high), visibility, wind speed/direction/gusts, temperature. Feeds the status strip, the planner and the map weather overlay. Check Open-Meteo Marine coverage of the ria.\n\nCriterios de aceptación:\n  1. Now plus next 6 hours shown in the status strip\n  2. Hourly forecast for the next days stored with all the listed variables\n  3. Rain probability available for a route window\n  4. Last-good fallback with age; strip hides itself if the feed fails\n  5. Open-Meteo Marine coverage of the ria checked and documented",
       "acceptance_criteria": [
-        "Now + next 6 hours shown",
-        "Rain probability for route window",
-        "Last-good fallback with age",
-        "Strip hides itself if feed fails"
+        "Now plus next 6 hours shown in the status strip",
+        "Hourly forecast for the next days stored with all the listed variables",
+        "Rain probability available for a route window",
+        "Last-good fallback with age; strip hides itself if the feed fails",
+        "Open-Meteo Marine coverage of the ria checked and documented"
       ],
       "status": "pending",
       "depends_on": [
@@ -473,12 +493,12 @@
     {
       "id": "D-12",
       "title": "Planner signals and weights",
-      "description": "Weights for After dark and Easy walk, rain and parking hints in the summary.\n\nCriterios de aceptación:\n  1. After dark uses light hours and avoids unlit stretches\n  2. Easy walk uses slope and benches/cafes\n  3. Rain hint in summary\n  4. Parking hint when occupancy >90%\n  5. Missing signals reported, not fatal",
+      "description": "Weights for After dark and Easy walk. Rain warning when rain is expected during the route and an option to favour covered or indoor stops. Parking hint kept only if the team confirms it (not in the spec).\n\nCriterios de aceptación:\n  1. After dark uses light hours and avoids unlit stretches\n  2. Easy walk uses slope and benches/cafes\n  3. Rain warning in the summary when rain is expected inside the route window\n  4. Planner can favour covered or indoor stops when rain is expected\n  5. Missing signals reported, not fatal",
       "acceptance_criteria": [
         "After dark uses light hours and avoids unlit stretches",
         "Easy walk uses slope and benches/cafes",
-        "Rain hint in summary",
-        "Parking hint when occupancy >90%",
+        "Rain warning in the summary when rain is expected inside the route window",
+        "Planner can favour covered or indoor stops when rain is expected",
         "Missing signals reported, not fatal"
       ],
       "status": "pending",
@@ -526,15 +546,17 @@
     },
     {
       "id": "MAP-01",
-      "title": "Base map: satellite + night, points, lights schedule",
-      "description": "PNOA orthophoto base with pan/zoom. Two base modes (Satellite, Night: darkened+tinted with lights on at real hours). Points as pixel-art sprites. Layers toggle: points, events, car parks (points+events on by default).\n\nCriterios de aceptación:\n  1. Satellite base pans smoothly on mid-range phone\n  2. Night mode darkens and tints, lights on at Concello schedule\n  3. Points rendered as sprites at researched coords\n  4. Layer toggles work\n  5. First view loads under 3s on 4G (to be measured)\n  6. No plain-HTTP or direct city-feed request from browser",
+      "title": "Isometric map viewer: tiles, search, mini-map, layers",
+      "description": "F1. Tile viewer over the tile pyramid with pixelated scaling, pan and zoom, mini-map, search box (places, streets, stations, Christmas points), 'pixel art off' switch that shows the real PNOA photo of the same place, and the toggleable layers: Christmas points, events, buses, trains, parking, cameras, routes (Christmas points and events on by default). Night, shadows and weather are separate tickets.\n\nCriterios de aceptación:\n  1. Viewer renders the pyramid with pixelated scaling; pan, zoom and mini-map work\n  2. Search finds places, streets, stations and Christmas points\n  3. The 7 layers toggle; Christmas points and events are on by default\n  4. A 'pixel art off' switch (also the satellite toggle) shows the real PNOA photo of the same place\n  5. On a mid-range phone the map pans at a steady frame rate (proposed >=30 fps) with default layers\n  6. First view shows something recognisable in under 3 s on 4G, measured and recorded\n  7. First-view tiles are precomputed and downloaded in parallel, the coarsest zoom levels are preloaded and the map data of the first view is baked into the page\n  8. No plain-HTTP or direct city-feed request from the browser",
       "acceptance_criteria": [
-        "Satellite base pans smoothly on mid-range phone",
-        "Night mode darkens and tints, lights on at Concello schedule",
-        "Points rendered as sprites at researched coords",
-        "Layer toggles work",
-        "First view loads under 3s on 4G (to be measured)",
-        "No plain-HTTP or direct city-feed request from browser"
+        "Viewer renders the pyramid with pixelated scaling; pan, zoom and mini-map work",
+        "Search finds places, streets, stations and Christmas points",
+        "The 7 layers toggle; Christmas points and events are on by default",
+        "A 'pixel art off' switch (also the satellite toggle) shows the real PNOA photo of the same place",
+        "On a mid-range phone the map pans at a steady frame rate (proposed >=30 fps) with default layers",
+        "First view shows something recognisable in under 3 s on 4G, measured and recorded",
+        "First-view tiles are precomputed and downloaded in parallel, the coarsest zoom levels are preloaded and the map data of the first view is baked into the page",
+        "No plain-HTTP or direct city-feed request from the browser"
       ],
       "status": "pending",
       "depends_on": [
@@ -545,14 +567,15 @@
     },
     {
       "id": "SCENES-01",
-      "title": "Generate scenes for 6 landmarks",
-      "description": "Prove the look: generate pixel-art scenes for the 6 landmarks using real photo + satellite crop + style reference. Review against photo before shipping.\n\nCriterios de aceptación:\n  1. 6 landmark scenes generated\n  2. Each reviewed against real photo\n  3. Invented/identity-changing elements rejected and redone\n  4. Style matches reference look (warm night, chunky pixels, no thin outlines)\n  5. Scenes stored as images with prompt and source photo",
+      "title": "Christmas assets for the 6 landmarks (pixel art, from photo)",
+      "description": "Prove the asset look: for each of the 6 landmarks make a separate pixel-art asset from its real photo, in the style reference, with its own patch of ground so it covers whatever the base map shows underneath. Placed in code at the real position and a readable size, never painted into base tiles. The close-up night illustration of a landmark is a later bonus, not part of v1.\n\nCriterios de aceptación:\n  1. 6 assets generated from the real photos in the style reference\n  2. Each asset includes its own ground patch\n  3. Each asset reviewed against its photo; invented or identity-changing elements rejected and redone\n  4. Assets placed on the map at real coordinates and readable at default zoom\n  5. Asset stored with prompt and source photo\n  6. No Christmas element present in the base tiles",
       "acceptance_criteria": [
-        "6 landmark scenes generated",
-        "Each reviewed against real photo",
-        "Invented/identity-changing elements rejected and redone",
-        "Style matches reference look (warm night, chunky pixels, no thin outlines)",
-        "Scenes stored as images with prompt and source photo"
+        "6 assets generated from the real photos in the style reference",
+        "Each asset includes its own ground patch",
+        "Each asset reviewed against its photo; invented or identity-changing elements rejected and redone",
+        "Assets placed on the map at real coordinates and readable at default zoom",
+        "Asset stored with prompt and source photo",
+        "No Christmas element present in the base tiles"
       ],
       "status": "pending",
       "depends_on": [
@@ -563,15 +586,15 @@
     },
     {
       "id": "PREVIEW-01",
-      "title": "Point preview panel",
-      "description": "Tap a point: scene, real photo one tap away, schedule today+next days and on-now, story card, walk directions + add-to-route, nearest car park with occupancy and update time, confirmation status and last_verified date.\n\nCriterios de aceptación:\n  1. Panel opens on tap\n  2. Scene and real photo both available\n  3. Schedule and on-now state shown\n  4. Story card shown\n  5. Walk directions and add-to-route button\n  6. Nearest car park occupancy + update time\n  7. Confirmation status and last_verified shown",
+      "title": "Point preview: fly-to and panel",
+      "description": "F3. Tap a point: the map flies to it at full zoom and a panel opens with real photo and pixel sprite side by side, schedule today and next days with on-now state, story card, what is near (events today and points within walking distance, each with a link), how to get there from the user position and an add-to-route button. Points known only from press show 'not yet confirmed by the Concello'.\n\nCriterios de aceptación:\n  1. Tapping a point flies the map to it at full zoom and opens the panel\n  2. Real photo and pixel sprite shown side by side\n  3. Schedule for today and next days, and on-now state\n  4. Story card shown\n  5. What is near: today's events and other points within walking distance, each with its own link\n  6. Walking directions from the user position and add-to-route button\n  7. Confirmation status and last_verified shown",
       "acceptance_criteria": [
-        "Panel opens on tap",
-        "Scene and real photo both available",
-        "Schedule and on-now state shown",
+        "Tapping a point flies the map to it at full zoom and opens the panel",
+        "Real photo and pixel sprite shown side by side",
+        "Schedule for today and next days, and on-now state",
         "Story card shown",
-        "Walk directions and add-to-route button",
-        "Nearest car park occupancy + update time",
+        "What is near: today's events and other points within walking distance, each with its own link",
+        "Walking directions from the user position and add-to-route button",
         "Confirmation status and last_verified shown"
       ],
       "status": "pending",
@@ -604,13 +627,14 @@
     {
       "id": "EVENTS-01",
       "title": "Events UI (list + map layer)",
-      "description": "Daily events list and map layer, date picker for next days, filters (date, time of day, category, free, near me), permanent items and cycles grouped, add-to-route.\n\nCriterios de aceptación:\n  1. Events list and map layer\n  2. Date picker for future days\n  3. Filters work\n  4. Permanent/cycle items grouped\n  5. Add-to-route button\n  6. Events without clock time show 'time to be confirmed'",
+      "description": "F4. Daily events list and map layer, date picker for the next days, filters (date, time of day, category, free entry, near me), permanent items and cycles grouped, add-to-route (added events become fixed-time stops).\n\nCriterios de aceptación:\n  1. Events list and map layer\n  2. Date picker for future days\n  3. Filters work\n  4. Permanent/cycle items grouped\n  5. Each event has a link that opens the map on it\n  6. Add-to-route turns the event into a fixed-time stop\n  7. Events without clock time show 'time to be confirmed'",
       "acceptance_criteria": [
         "Events list and map layer",
         "Date picker for future days",
         "Filters work",
         "Permanent/cycle items grouped",
-        "Add-to-route button",
+        "Each event has a link that opens the map on it",
+        "Add-to-route turns the event into a fixed-time stop",
         "Events without clock time show 'time to be confirmed'"
       ],
       "status": "pending",
@@ -623,14 +647,15 @@
     {
       "id": "PLANNER-01",
       "title": "Route planner (walking, 3 options)",
-      "description": "Input start + time window + chosen stops. Output 3 options (fastest, after dark, easy walk) with total time, distance, ordered stops and plain explanation. Events as time windows. Pedestrian graph from OSM. Exact search up to ~12 stops. Missing stop reported, not silently skipped.\n\nCriterios de aceptación:\n  1. 3 options returned for same input\n  2. Deterministic order (weather/parking hints only change summary text)\n  3. Event pinned at 20:00 -> no option arrives after 20:00\n  4. Unreachable stop reported with drop suggestion\n  5. Answers in under 2s for 12 stops\n  6. Walking times from OSM pedestrian graph",
+      "description": "F5. Input: start (user location, address, or 'I arrive at Vigo-Urzaiz station'), time window, chosen stops, mode. Output: 3 options (fastest, after dark, easy walk) with total time, walking distance, ordered stops and a plain explanation. Events are time windows. Pedestrian graph from OSM. Exact search up to about 12 stops. A stop that cannot be reached in time is named with a drop suggestion. The chosen route is drawn on the map as a line with numbered stops.\n\nCriterios de aceptación:\n  1. 3 options returned for the same input; same input gives the same 3 routes\n  2. Start accepts location, address and a station\n  3. Event pinned at 20:00 -> no option arrives after 20:00\n  4. Unreachable stop reported with a drop suggestion, never silently skipped\n  5. Answers in under 2 s for 12 stops\n  6. Walking times from the OSM pedestrian graph\n  7. Chosen route drawn on the map with numbered stops",
       "acceptance_criteria": [
-        "3 options returned for same input",
-        "Deterministic order (weather/parking hints only change summary text)",
+        "3 options returned for the same input; same input gives the same 3 routes",
+        "Start accepts location, address and a station",
         "Event pinned at 20:00 -> no option arrives after 20:00",
-        "Unreachable stop reported with drop suggestion",
-        "Answers in under 2s for 12 stops",
-        "Walking times from OSM pedestrian graph"
+        "Unreachable stop reported with a drop suggestion, never silently skipped",
+        "Answers in under 2 s for 12 stops",
+        "Walking times from the OSM pedestrian graph",
+        "Chosen route drawn on the map with numbered stops"
       ],
       "status": "pending",
       "depends_on": [
@@ -642,18 +667,17 @@
     {
       "id": "POSTCARD-01",
       "title": "Postcard pipeline and UI",
-      "description": "Upload/take photo, pick place, optional message+name -> pixel-art postcard. Vision model describes photo as structured data (no identification). Image model draws person in scene. Frame/title/name/message added in code. PNG download + share. Credit line + date. Daily per-device limit and monthly spending cap. Photo and result not kept unless user opts in. Notice about third-party model.\n\nCriterios de aceptación:\n  1. Photo upload/capture works on mobile\n  2. Place picker from Christmas points\n  3. Vision description is structured, no identification\n  4. Person drawn in scene in pixel style\n  5. Frame/title/name/message added in code, not by model\n  6. PNG download and share\n  7. Daily per-device limit enforced\n  8. Monthly spending cap enforced\n  9. No server-side retention unless opted in\n  10. Notice about third-party model shown",
+      "description": "F7. Upload or take a photo, pick a Christmas point, optional message and name. A vision model describes the photo as structured data (no identification). An image model gets the person photo, a crop of the map or the point asset, and the style reference, and draws the person in the scene. Frame, title, name, message, credit line and date are added in code. PNG download and share. Per-device daily limit and monthly spending cap. Photo and result are not kept unless the user opts in. Notice that the photo goes to a third-party model.\n\nCriterios de aceptación:\n  1. Photo upload/capture works on mobile\n  2. Place picker from the Christmas points\n  3. Vision description is structured data, no identification of anyone\n  4. Person drawn in the scene in the pixel style from a map crop or point asset plus the style reference\n  5. Frame, title, name, message, credit line and date added in code, never by the model\n  6. PNG download, copy link and the phone's share sheet\n  7. Daily per-device limit and monthly spending cap enforced\n  8. No server-side retention unless the user opts in\n  9. Third-party model notice shown",
       "acceptance_criteria": [
         "Photo upload/capture works on mobile",
-        "Place picker from Christmas points",
-        "Vision description is structured, no identification",
-        "Person drawn in scene in pixel style",
-        "Frame/title/name/message added in code, not by model",
-        "PNG download and share",
-        "Daily per-device limit enforced",
-        "Monthly spending cap enforced",
-        "No server-side retention unless opted in",
-        "Notice about third-party model shown"
+        "Place picker from the Christmas points",
+        "Vision description is structured data, no identification of anyone",
+        "Person drawn in the scene in the pixel style from a map crop or point asset plus the style reference",
+        "Frame, title, name, message, credit line and date added in code, never by the model",
+        "PNG download, copy link and the phone's share sheet",
+        "Daily per-device limit and monthly spending cap enforced",
+        "No server-side retention unless the user opts in",
+        "Third-party model notice shown"
       ],
       "status": "pending",
       "depends_on": [
@@ -671,10 +695,12 @@
         "No hard-coded user-facing strings",
         "Language switch works"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "cd39debf-3d69-425a-b178-f54216a57efc",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "cd39debf-i18n-01-galician-spanish-english",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "X-01",
@@ -730,11 +756,11 @@
     {
       "id": "X-04",
       "title": "Transit legs in planner + next departures",
-      "description": "Walking+bus transit legs in planner; next departures at nearest stop/station in point panel.\n\nCriterios de aceptación:\n  1. Transit leg option in planner\n  2. Next departures shown in point panel\n  3. Bus stop and train station layers on map",
+      "description": "Walking+bus and train legs in the planner from the GTFS schedules, labelled 'scheduled'. Next departures at the nearest stop or station in the point panel. Stops and stations as map icons.\n\nCriterios de aceptación:\n  1. Transit leg option in the planner, legs labelled 'scheduled'\n  2. Next departures shown in the point panel\n  3. Bus stop and train station layers on the map",
       "acceptance_criteria": [
-        "Transit leg option in planner",
-        "Next departures shown in point panel",
-        "Bus stop and train station layers on map"
+        "Transit leg option in the planner, legs labelled 'scheduled'",
+        "Next departures shown in the point panel",
+        "Bus stop and train station layers on the map"
       ],
       "status": "pending",
       "depends_on": [
@@ -767,7 +793,7 @@
     {
       "id": "X-06",
       "title": "Busy-now estimate prototype",
-      "description": "Coarse per-zone busy estimate (quiet/normal/busy) from car park occupancy, traffic, agenda, weekday/holiday, weather, Celta matches. Labelled 'estimate', hides if >=2 inputs missing.\n\nCriterios de aceptación:\n  1. 3 levels per zone\n  2. Inputs combined\n  3. Word 'estimate' always visible\n  4. No person counts shown\n  5. Hides itself if >=2 inputs missing\n  6. Celta home match dates considered",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): Crowd or queue data has no open source and is out of scope for v1 (spec, Out of scope).\n\nCoarse per-zone busy estimate (quiet/normal/busy) from car park occupancy, traffic, agenda, weekday/holiday, weather, Celta matches. Labelled 'estimate', hides if >=2 inputs missing.\n\nCriterios de aceptación:\n  1. 3 levels per zone\n  2. Inputs combined\n  3. Word 'estimate' always visible\n  4. No person counts shown\n  5. Hides itself if >=2 inputs missing\n  6. Celta home match dates considered",
       "acceptance_criteria": [
         "3 levels per zone",
         "Inputs combined",
@@ -776,45 +802,45 @@
         "Hides itself if >=2 inputs missing",
         "Celta home match dates considered"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [
         "D-01",
         "D-05",
         "D-03"
       ],
       "ticket_id": "fa2ae6b6-cd81-421e-8e15-f66a8f5c64e4",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-07",
       "title": "MITMA OD analysis for Vigo",
-      "description": "Typical December flows into the centre from MITMA mobile data to seed busy estimate.\n\nCriterios de aceptación:\n  1. MITMA CSVs acquired for Vigo\n  2. December flows into centre extracted\n  3. District granularity documented\n  4. Fed into X-06",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): Only fed X-06 (busy-now estimate), which is out of scope for v1.\n\nTypical December flows into the centre from MITMA mobile data to seed busy estimate.\n\nCriterios de aceptación:\n  1. MITMA CSVs acquired for Vigo\n  2. December flows into centre extracted\n  3. District granularity documented\n  4. Fed into X-06",
       "acceptance_criteria": [
         "MITMA CSVs acquired for Vigo",
         "December flows into centre extracted",
         "District granularity documented",
         "Fed into X-06"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "f86fc5ba-a51b-4e5a-b6ff-27754804a19f",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-08",
       "title": "Traffic layer",
-      "description": "Inspect treal.geojson; render segments or fall back to city-wide indicator.\n\nCriterios de aceptación:\n  1. treal.geojson inspected and usability documented\n  2. Segments rendered if usable, else city-wide indicator\n  3. Source freshness shown",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): Traffic is not in the F1 layer list; cars on the map are decoration. Revisit if the team wants a traffic layer.\n\nInspect treal.geojson; render segments or fall back to city-wide indicator.\n\nCriterios de aceptación:\n  1. treal.geojson inspected and usability documented\n  2. Segments rendered if usable, else city-wide indicator\n  3. Source freshness shown",
       "acceptance_criteria": [
         "treal.geojson inspected and usability documented",
         "Segments rendered if usable, else city-wide indicator",
         "Source freshness shown"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "7c067be4-16a8-45ab-b4ec-b2345a8194e1",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-09",
@@ -825,92 +851,94 @@
         "Either proxied images or links implemented",
         "61 cameras with location shown"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-00"
       ],
       "ticket_id": "caf1ab4c-770d-4ffe-b8ea-21d5fae3be2e",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "caf1ab4c-x-09-cameras-via-server-or-links",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "X-10",
       "title": "DGT DATEX II incidents",
-      "description": "Road incidents on access roads (AP-9, A-55, A-52) from DGT NAP v3.7.\n\nCriterios de aceptación:\n  1. v3.7 feed parsed\n  2. Incidents shown for access roads\n  3. Refresh every 5 min\n  4. City streets excluded",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): DGT road incidents are not in the spec.\n\nRoad incidents on access roads (AP-9, A-55, A-52) from DGT NAP v3.7.\n\nCriterios de aceptación:\n  1. v3.7 feed parsed\n  2. Incidents shown for access roads\n  3. Refresh every 5 min\n  4. City streets excluded",
       "acceptance_criteria": [
         "v3.7 feed parsed",
         "Incidents shown for access roads",
         "Refresh every 5 min",
         "City streets excluded"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "71ca062e-e608-4c66-b49c-21e0f0860280",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-11",
       "title": "Concello notices in alerts list",
-      "description": "t-avisos and t-avisos-transporte notices about closures during events/parades.\n\nCriterios de aceptación:\n  1. Both datasets ingested\n  2. Notices shown in alerts list\n  3.  closures during events highlighted",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): Concello notices are not in the spec; the cancelled-Christmas-stops cross-check stays inside X-01.\n\nt-avisos and t-avisos-transporte notices about closures during events/parades.\n\nCriterios de aceptación:\n  1. Both datasets ingested\n  2. Notices shown in alerts list\n  3.  closures during events highlighted",
       "acceptance_criteria": [
         "Both datasets ingested",
         "Notices shown in alerts list",
         "closures during events highlighted"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "a92f43fa-32c6-4277-ba35-96d0630d5e53",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-12",
       "title": "Enumerate Concello map services",
-      "description": "Use portal search API one request at a time to list useful services; add to catalogue.\n\nCriterios de aceptación:\n  1. Search run politely (one request at a time, back-off)\n  2. Useful services recorded with URLs\n  3. Catalogue updated",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): The Concello Christmas layer is already identified in the spec; its useful part is absorbed by R-06.\n\nUse portal search API one request at a time to list useful services; add to catalogue.\n\nCriterios de aceptación:\n  1. Search run politely (one request at a time, back-off)\n  2. Useful services recorded with URLs\n  3. Catalogue updated",
       "acceptance_criteria": [
         "Search run politely (one request at a time, back-off)",
         "Useful services recorded with URLs",
         "Catalogue updated"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "83793d25-60b2-4cae-9eae-122b2053a703",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-13",
       "title": "Weather backups and tides",
-      "description": "AEMET OpenData and MeteoGalicia MeteoSIX with failover; tides for coastal walks.\n\nCriterios de aceptación:\n  1. AEMET failover works\n  2. MeteoSIX failover works\n  3. Active source shown in UI\n  4. Tides shown for coastal walks",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): AEMET failover and tides are not in the spec; MeteoGalicia licence check moves to LIC-01, sea state to D-10.\n\nAEMET OpenData and MeteoGalicia MeteoSIX with failover; tides for coastal walks.\n\nCriterios de aceptación:\n  1. AEMET failover works\n  2. MeteoSIX failover works\n  3. Active source shown in UI\n  4. Tides shown for coastal walks",
       "acceptance_criteria": [
         "AEMET failover works",
         "MeteoSIX failover works",
         "Active source shown in UI",
         "Tides shown for coastal walks"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [
         "D-10"
       ],
       "ticket_id": "8ec74918-2034-4f93-8b15-4244d8cfefb0",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "X-14",
       "title": "TomTom traffic tiles (optional)",
-      "description": "Flow and incident tiles behind caching; attribution; stay within free tier.\n\nCriterios de aceptación:\n  1. Tiles render with attribution\n  2. Caching proxy keeps within 50k/day\n  3. 429 handled gracefully",
+      "description": "OUT OF SCOPE for v1 (backlog v4, spec docs/tinyvigo-spec.md): TomTom traffic tiles are not in the spec.\n\nFlow and incident tiles behind caching; attribution; stay within free tier.\n\nCriterios de aceptación:\n  1. Tiles render with attribution\n  2. Caching proxy keeps within 50k/day\n  3. 429 handled gracefully",
       "acceptance_criteria": [
         "Tiles render with attribution",
         "Caching proxy keeps within 50k/day",
         "429 handled gracefully"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "9825ff2b-c143-42cb-8031-ffa6203ee030",
-      "raw_status": "FREE"
+      "raw_status": "CANCELLED"
     },
     {
       "id": "WIN-001",
@@ -1513,10 +1541,10 @@
         "Estado y roadmap enlazados al backlog",
         "Sin restos de la plantilla MeshHarmes"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "9ce3175f-a9bd-464d-b01b-0767f4f81a77",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "9ce3175f-doc-01-readme-completo-y-bonito-",
       "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
