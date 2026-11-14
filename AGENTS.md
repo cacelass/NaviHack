@@ -337,6 +337,19 @@ Un agente no declara que algo funciona: lo demuestra. Cada criterio de
 aceptación se cierra pegando la **salida real** del comando que lo prueba.
 «Los tests pasan» sin la salida de `pytest` es motivo de rechazo automático.
 
+## Interfaz
+
+Toda pantalla, componente o cambio visual sigue [`web/ui/DESIGN.md`](web/ui/DESIGN.md)
+y pasa su **checklist de diez puntos** antes de darse por bueno. No es una guía de
+estilo opcional: es la regla del proyecto, y cualquier agente que dibuje algo (web,
+app, maqueta o experimento) la lee primero.
+
+Lo que no se negocia: **el píxel solo es imagen** (mapa, iconos, matasellos), nunca
+texto; **sin sombras, sin esquinas muy redondeadas, sin píldoras pastel ni
+degradados**; **color solo para estado o para el acento dorado**; controles sobre el
+mapa con **superficie sólida y contraste AA**; objetivos táctiles de **44 px**.
+La composición se adapta al ancho del contenedor, no a un diseño fijo.
+
 ## El arnés se automejora
 
 Estos ficheros son parte del repositorio, así que se corrigen como cualquier

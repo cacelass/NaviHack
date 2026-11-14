@@ -1,77 +1,108 @@
-# DESIGN.md — TinyVigo UI v2 (dirección D ejecutada)
+# Guía de interfaz — obligatoria
 
-Decisiones de esta carpeta, para que el siguiente cambio parta de aquí y no de cero.
+> Toda pantalla, componente o cambio visual de TinyVigo sigue esta guía y pasa su
+> checklist antes de darse por bueno. Si algo de aquí choca con una instrucción
+> suelta, manda esta guía. Fuentes: reglas de Jose (`~/.config/opencode/modes/ui.md`),
+> elastic-ui (`packages/elastic-ui/DECISIONS.md`), Strivon (`frontend/DESIGN.md`) y NN/g.
 
-## Qué es
+## Base
 
-La UI de TinyVigo. El pixel es un **recurso** (el mapa isométrico, los iconos, los
-marcadores y la marca), no el lenguaje de la interfaz. La UI es Inter + vidrio +
-jerarquía por tonos. Nada de fuentes de píxel en paneles, navegación o datos, ni
-biseles pixel, ni esquinas muy redondeadas, ni píldoras pastel, ni sombras, ni
-degradados llamativos.
+- **Fondo blanco y gris de relleno.** La página va en blanco o en un gris cálido; lo
+  que agrupa va en un gris más hundido. Nada de fondos de color para decorar.
+- **Color solo para estado o acento.** El acento es el **dorado de las luces**
+  (`#f4cd80`). Estados: abierto (verde), cerrado/error (rojo), aviso (ámbar). Un color
+  que no signifique nada, fuera.
+- **Separa con espacio y relleno gris, no con filetes.** Sin bordes en reposo; un
+  filo de 1 px solo en lo que flota o donde el tono no basta.
+- **Un solo nivel de tarjeta plana.** No hay tarjetas dentro de tarjetas. Si algo
+  necesita agruparse, se separa con espacio.
+- **Profundidad por tonos, no por sombras.** CERO `box-shadow` decorativas. Lo que
+  flota (popover, hoja) se distingue por el tono elevado y, como mucho, un filo de 1 px.
 
-## Sistema (copiado de Strivon: el sistema, no su identidad)
+## Tipografía
 
-- **5 superficies** por tono, sin sombras: `bg`, `surface`, `sunk`, `raised` y una
-  línea fina (`line`). Neutros cálidos, no grises fríos.
-- **3 niveles de texto**: `fg`, `fg-secondary`, `fg-muted`.
-- **3 estados**: `danger`, `warning`, `ok`. El color solo significa un estado
-  (abierto/cerrado, lluvia, de noche), nunca decora.
-- **Un acento con rampa de 7 pasos** (`accent-1..7`): la luz cálida de la Navidad.
-  Se usa para magnitudes y para "cuánto falta/queda" (progreso de sellos, barra de
-  hora, encendido). Los 7 pasos viven en `css/tokens.css`.
+- **Una familia: Inter.** Sin fuentes de píxel en texto, nunca (ni wordmark ni títulos).
+- **Cinco tamaños fijos:** 28 (título de página), 20 (título de panel), 16 (lectura),
+  14 (línea para actuar o escanear), 12 (meta). Ninguno entre medias.
+- **Tres pesos:** 400 para leer, 500 para actuar, 600 para anunciar.
+- **Títulos en minúscula normal** (sentence case). Nada de mayúsculas decorativas.
+- Cifras tabulares (`tabular-nums`) en horas, cuentas y columnas.
 
-## Tipografía, radios, movimiento
+## Iconos y assets
 
-- Inter, cinco tamaños fijos (28/20/16/14/12) y tres pesos (400/500/600), sin
-  tamaños intermedios. Pixelify Sans solo en la marca y en los números sobre el mapa.
-  Cifras tabulares.
-- Radios 6 / 8 / 12 (16 para el certificado). Profundidad por tonos, **cero sombras**.
-- Movimiento mínimo: una curva `cubic-bezier(.22,1,.36,1)`, 200–500 ms, siempre
-  respetando `prefers-reduced-motion`.
+- **Iconos de interfaz: Lucide, sueltos, de línea (trazo 1,5 px, 20–24 px), un solo
+  color que hereda `currentColor`.** Sin fondo, sin círculo de color.
+- **Píxel solo dentro del mapa:** marcadores, sprites de punto y matasellos. En un
+  mismo componente no se mezclan los dos registros.
+- **Imagen antes que texto**, icono antes que frase. Frases cortas y llanas.
+- **Fotos reales** para los puntos; nunca ilustraciones genéricas de relleno.
 
-## Representación (de Strivon)
+## Controles sobre el mapa
 
-- **Hero de una frase**, "cómo funciona" en 3 pasos, "qué puedes hacer hoy" en
-  tarjetas de icono + título + una línea.
-- **Cifras en tríada**: número grande, etiqueta pequeña, fuente debajo. Lo dudoso
-  lleva "estimación" o "aproximado" y su fuente visible. Nunca se usa una cifra de
-  Caballero como dato: si aparece, es estimación con fuente.
+- **Superficie sólida, no translúcida.** Nada de `backdrop-filter` ni de `rgba(...)`
+  dejando ver el mapa detrás del texto. Panel, chips, zoom y hoja van en su tono
+  sólido.
+- **Contraste AA obligatorio** (4,5:1 en texto normal) en claro y en oscuro, medido
+  sobre el fondo real del control, no sobre el mapa.
+- **Objetivos táctiles de 44 px como mínimo.**
+
+## Tarjetas
+
+Una tarjeta plana con la misma jerarquía siempre; **la imagen se recoloca según el
+ancho del contenedor** (`@container` o breakpoint, un solo componente, no dos):
+
+- **Con sitio** (ficha en panel de escritorio, fila de lista ancha, hoja inferior en
+  tableta): imagen a la izquierda con proporción fija, y a la derecha título arriba,
+  estado, datos con icono y una acción.
+- **Móvil o contenedor estrecho**: imagen arriba a todo el ancho, título debajo (o
+  miniatura pequeña a la izquierda en una fila de lista).
+- **Contextos compactos** (chips, paradas de una ruta, entradas de la agenda,
+  marcadores): sin imagen o con una miniatura mínima; no fuerces una foto donde no cabe.
+
+Lo que no cambia: el contenido y la jerarquía (título primero, estado enseguida,
+acción al final). Lo que cambia es dónde cae la imagen.
+
+## Patrones NN/g que se aplican
+
+- **Estado del sistema visible:** qué está cargado, qué está abierto, si hay conexión.
+- **Reconocer antes que recordar:** el nombre viaja con su icono; no hay códigos.
+- **Deshacer** en vez de confirmar todo; lo que se puede deshacer, se deshace.
+- **Errores con salida:** qué pasó y qué se puede hacer, nunca un callejón.
+- **Consistencia:** lo mismo se ve y se comporta igual en todas las pantallas.
+- **Divulgación progresiva:** el detalle en el panel, no encima del mapa.
 
 ## Tono del copy
 
-Frases cortas en presente, cero adjetivos, se nombra la tecnología real
-(Open-Meteo, GTFS de Vitrasa y Renfe, el mapa por teselas). Nada de
-"revolucionario" ni "impulsado por IA".
+Frases cortas en presente, cero adjetivos, la tecnología real por su nombre
+(Open-Meteo, GTFS, teselas). Nada de "revolucionario" ni "impulsado por IA".
 
-## Puntos de Navidad y mapa
+## Identidad de Vigo (lo que la hace suya)
 
-- La noria y el árbol no son marcadores: son **assets animados integrados en el
-  mapa**. Los marcadores que quedan (bus, tren, parking, cámara) tienen silueta,
-  color y dibujo propios en píxel, nada genérico.
-- Noria y Cíes Market están en **Vialia** (al este, fuera del bloque 3×3 centrado
-  en Porta do Sol). El Belén está en Casa das Artes.
+- **El dorado de las luces** como único acento.
+- **La V** de la marca (logotipo dibujado, no fuente).
+- **A Navideña**: el certificado numerado con matasellos.
+- **Fotos reales** de Porta do Sol, la noria, el mercado.
+- **Textos con voz de calle:** "Encendido ya", "Te queda a 4 min", no "Actualmente
+  se encuentra en funcionamiento".
 
-## Ficheros
+## Lo que NO puede aparecer (AI slop)
 
-- `css/tokens.css` — tokens y temas claro/oscuro (única fuente de valores).
-- `css/base.css` — reset, tipografía, botón, foco, estados de carga.
-- `css/layout.css` — shell de app (mapa, HUD, buscador, hojas, zoom).
-- Un CSS por componente: `panel-lugar`, `tarjeta-evento`, `barra-tiempo`,
-  `chip-filtro`, `lista-ruta`, `aviso`, `tooltip`, `marcadores`, `cifras`,
-  `navidena`.
-- `components.html` — catálogo en claro y oscuro.
-- `navidena.html` — "A Navideña" jugable (43 sellos, certificado numerado).
+- Degradados y brillos decorativos, cristal por moda.
+- Emojis en la interfaz.
+- Iconos dentro de un círculo de color.
+- Tres tarjetas idénticas con un titular genérico ("Descubre", "Explora", "Vive").
+- Hero épico centrado con titular grande y subtítulo de relleno.
+- Texto de relleno que no dice nada.
 
-## Iconos
+## Checklist de revisión (pásalo a cada pantalla)
 
-`assets/iconos.js` es el set propio de 16×16 en píxel (ya validado). Se buscaron
-pixelarticons (MIT), game-icons.net (CC BY 3.0) y NES.css (MIT): no tienen los
-temáticos de Vigo con buenos nombres, así que se mantienen en `assets/vendor/`
-con su licencia en `CREDITOS.md`. No se cargan CDN en tiempo de ejecución.
-
-## Reglas no negociables de Jose
-
-Sin sombras. Sin esquinas muy redondeadas. Sin píldoras pastel. Sin degradados
-llamativos. El pixel solo como recurso. Contraste AA en claro y en oscuro. Objetivos
-táctiles de 44 px o más. El estado (ruta, hora, capas, sellos) vive en la URL.
+1. ¿Ningún texto en fuente de píxel? (ni marca, ni títulos, ni números de interfaz).
+2. ¿Solo Inter y solo tamaños 28/20/16/14/12 con pesos 400/500/600?
+3. ¿Cero sombras decorativas y cero degradados?
+4. ¿Color solo en estado o en el acento dorado, nunca decorativo?
+5. ¿Controles sobre el mapa con superficie sólida y contraste AA medido?
+6. ¿Iconos de interfaz Lucide de línea, y el píxel solo dentro del mapa?
+7. ¿La imagen se recoloca según el ancho (izquierda con sitio, arriba en móvil, o sin ella en compacto) sin cambiar la jerarquía?
+8. ¿Objetivos táctiles de 44 px o más?
+9. ¿Estado visible y divulgación progresiva (detalle en panel, no sobre el mapa)?
+10. ¿Cero elementos de la lista de AI slop?
