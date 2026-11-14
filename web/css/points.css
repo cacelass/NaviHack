@@ -446,3 +446,10 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 @keyframes tv-drift { from { transform: translateX(0); } to { transform: translateX(200vw); } }
 .tv-reduced .tv-glow, .tv-reduced .tv-spark, .tv-reduced .tv-clouds span { animation: none !important; }
 .tv-glow-tree { pointer-events: none; clip-path: polygon(50% 0, 100% 100%, 0 100%); background: radial-gradient(ellipse at 50% 70%, rgba(150, 220, 255, .9) 0%, rgba(120, 160, 255, .55) 35%, rgba(255, 120, 200, .25) 60%, transparent 80%); mix-blend-mode: screen; filter: blur(2px); animation: tv-breathe 2.4s ease-in-out infinite; }
+
+/* botón rápido de hora (Ahora / Noche / Día) junto a Ajustes — Miguel2 */
+.tv-time-quick { position: fixed; z-index: 8; top: 12px; right: 64px; height: var(--tap); display: inline-flex; align-items: center; gap: 6px; padding: 0 var(--sp-3); border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--raised); color: var(--fg); font: var(--w-500) var(--fs-label)/1 var(--f-ui); cursor: pointer; }
+.tv-time-quick.is-forced { background: var(--acc); color: var(--on-acc); border-color: transparent; }
+.tv-time-quick:focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
+body.is-city .tv-time-quick, body:has(.tv-sheet.is-open) .tv-time-quick, body:has(.tv-tour.is-open) .tv-time-quick { display: none; }
+@media (max-width: 700px) { .tv-time-quick { top: 8px; right: 60px; } .tv-time-quick span { display: none; } }

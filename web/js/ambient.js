@@ -105,11 +105,28 @@
 
   function set(next) {
     Object.assign(state, next);
+    if (typeof paintQuick === "function") setTimeout(paintQuick, 0);
     try { localStorage.setItem("tinyvigo.ambient", JSON.stringify(state)); } catch (e) {}
     apply();
   }
 
+  // botón rápido junto a Ajustes: Ahora (hora real) -> Noche -> Día
+  const quick = document.createElement("button");
+  quick.className = "tv-time-quick";
+  const ORDER = ["auto", "night", "day"], ICON = { auto: "clock", night: "moon", day: "sun" };
+  function paintQuick() {
+    const t = window.tinyvigoPoints ? window.tinyvigoPoints.t : (k) => k;
+    const label = { auto: t("tour.now"), night: t("settings.dark"), day: t("settings.light") }[state.time];
+    quick.innerHTML = (window.LU ? LU.svg(ICON[state.time], { size: 20 }) : "") + "<span>" + label + "</span>";
+    quick.setAttribute("aria-label", t("settings.time") + ": " + label);
+    quick.classList.toggle("is-forced", state.time !== "auto");
+  }
+  quick.onclick = () => { set({ time: ORDER[(ORDER.indexOf(state.time) + 1) % ORDER.length] }); paintQuick(); };
+  document.body.append(quick);
+  document.addEventListener("tv:lang", paintQuick);
+
   function init() {
+    paintQuick();
     viewer = window.tinyvigo && window.tinyvigo.viewer;
     if (!viewer) { setTimeout(init, 200); return; }
     fetchLive(); setInterval(fetchLive, 600000); setInterval(apply, 60000);
