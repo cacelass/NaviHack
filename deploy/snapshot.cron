@@ -1,0 +1,9 @@
+# TinyVigo — snapshot publisher (D-01). Intervalos medidos en D-00
+# (vault/01_PROYECTO/fuentes_datos.md, A7). Instalar: crontab deploy/snapshot.cron
+# (ajusta la ruta del checkout).
+CRON_TZ=Europe/Madrid
+# parkings: el origen publica cada 2 min en minuto par +4 s → leemos a los +30 s
+*/2 * * * *  sleep 30; cd $HOME/NaviHack && python3 scripts/snapshot.py parkings >/dev/null
+# agenda: se publica ~07:05 Madrid → 07:30 y reintento 09:00
+30 7 * * *   cd $HOME/NaviHack && python3 scripts/snapshot.py agenda >/dev/null
+0 9 * * *    cd $HOME/NaviHack && python3 scripts/snapshot.py agenda >/dev/null

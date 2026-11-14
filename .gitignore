@@ -95,3 +95,6 @@ graphify-out/
 pip-log.txt
 pip-delete-this-directory.txt
 .python-version
+
+# Snapshots generados por scripts/snapshot.py (D-01)
+data/snapshots/
