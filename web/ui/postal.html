@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TinyVigo · Postal</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/chip-filtro.css">
+<style>
+  .postal { width: 320px; background: var(--raised); border-radius: var(--r-ctl); padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: inset 0 0 0 1px var(--hair); }
+  .postal .pic { height: 190px; border-radius: var(--r-sm); background: url(assets/mapa-escritorio.jpg) center/cover; image-rendering: pixelated; position: relative; }
+  .postal .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(11,16,32,.28)); border-radius: var(--r-sm); }
+  .postal h4 { margin: 0; font: 600 20px/1.2 var(--f-wm); }
+  .postal p { margin: 0; font-size: 14px; color: var(--ink2); }
+  .postal .cr { display: flex; justify-content: space-between; font-size: 12px; color: var(--mute); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font: 500 13px/1.4 var(--f-ui); color: var(--ink2); }
+  .field input, .field textarea { min-height: 44px; padding: 0 14px; border: 0; border-radius: var(--r-ctl); background: var(--sunk); color: var(--ink); font: 400 15px/1 var(--f-ui); outline: 0; resize: vertical; }
+  .field textarea { padding: 10px 14px; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="page" style="max-width:560px">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h1>Postal</h1>
+    <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="ic"></i></button>
+  </div>
+
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+    <div class="field" style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:16px">
+      <div class="field"><label for="foto">Tu foto</label><button class="btn sec" style="justify-content:flex-start"><i class="ic" data-ic="camera" data-size="16"></i>Subir o hacer una foto</button></div>
+      <div class="field"><label for="sitio">Lugar</label><input id="sitio" value="Porta do Sol · Árbol gigante"></div>
+      <div class="field"><label for="msg">Mensaje (opcional)</label><textarea id="msg" rows="2">Con muchas ganas de turrón.</textarea></div>
+      <div class="field"><label for="nombre">Tu nombre</label><input id="nombre" value="Marta"></div>
+      <button class="btn pri" style="align-self:flex-start"><i class="ic" data-ic="postal" data-size="16"></i>Generar postal</button>
+      <p class="lead" style="margin:0;color:var(--mute);font-size:12px">La foto va a un modelo externo y no se guarda. Límite diario por dispositivo.</p>
+    </div>
+
+    <div class="postal">
+      <div class="pic" role="img" aria-label="Postal con tu foto en Porta do Sol"></div>
+      <h4>Navidad en Vigo</h4>
+      <p>Desde la Porta do Sol, con muchas ganas de turrón.</p>
+      <div class="cr"><span>Marta</span><span>14.12.2026 · tinyvigo</span></div>
+    </div>
+  </div>
+</div>
+<script src="assets/iconos.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

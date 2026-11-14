@@ -1,0 +1,55 @@
+/* Panel de lugar (ficha de punto) — componente */
+.panel {
+  background: var(--glass-strong); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-radius: var(--r-panel);
+  box-shadow: inset 0 0 0 1px var(--hair), var(--ov);
+  padding: var(--sp-4); color: var(--ink);
+  display: flex; flex-direction: column; gap: var(--sp-3);
+  width: min(376px, 100%);
+}
+.panel__head { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); position: relative; }
+.panel__photo, .panel__sprite {
+  height: 150px; border-radius: var(--r-ctl); background: var(--sunk) center/cover;
+  display: flex; align-items: center; justify-content: center;
+}
+.panel__sprite { background: var(--panel); }
+.panel__title { grid-column: 1 / 3; }
+.panel__title h2 { margin: 0; font: 600 var(--fs-title)/1.3 var(--f-ui); letter-spacing: -.014em; padding-right: 40px; }
+.panel__type { margin: 2px 0 0; color: var(--ink2); font-size: var(--fs-label); }
+.panel__close { position: absolute; right: -8px; top: -8px; background: transparent; }
+
+/* estado: icono + texto + la hora de cierre en grande. No depende solo del color. */
+.panel__status { display: flex; align-items: center; gap: var(--sp-2); font: 500 var(--fs-label)/1.3 var(--f-ui); }
+.panel__status[data-open="1"] { color: var(--ok); }
+.panel__status[data-open="0"] { color: var(--bad); }
+.panel__status .big { font: 600 var(--fs-title)/1 var(--f-ui); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+
+.panel__hours { margin: 0; color: var(--ink2); font-size: var(--fs-label); }
+.panel__hours small { display: block; color: var(--mute); font-size: var(--fs-meta); margin-top: 2px; }
+
+.panel__actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.panel__actions .btn { flex: 1; }
+
+/* divulgación progresiva: la historia va plegada, se abre si interesa */
+.panel__story { border-top: 1px solid var(--hair); padding-top: var(--sp-2); }
+.panel__story summary {
+  cursor: pointer; list-style: none; display: flex; align-items: center; gap: var(--sp-2);
+  font: 500 var(--fs-label)/1.4 var(--f-ui); color: var(--ink2); min-height: var(--tap);
+}
+.panel__story summary::-webkit-details-marker { display: none; }
+.panel__story summary::after { content: "+"; margin-left: auto; font: 500 18px/1 var(--f-ui); color: var(--mute); }
+.panel__story[open] summary::after { content: "−"; }
+.panel__story p { margin: var(--sp-1) 0 0; font-size: 15px; line-height: 1.6; }
+.panel__story a { color: var(--ink2); font-size: var(--fs-meta); display: inline-block; margin-top: 6px; text-underline-offset: 3px; }
+
+/* cerca de aquí (lista breve, icono + nombre + minutos) */
+.panel__near h3 { margin: 0 0 var(--sp-2); font: 500 var(--fs-label)/1.4 var(--f-ui); color: var(--ink2); }
+
+@media (max-width: 700px) {
+  .panel__head { grid-template-columns: 72px 1fr; gap: var(--sp-3); align-items: center; }
+  .panel__photo { height: 72px; }
+  .panel__sprite { display: none; }
+  .panel__title { grid-column: auto; }
+  .panel { gap: 10px; padding: var(--sp-3) var(--sp-4); }
+  .panel__actions .btn small { display: none; }
+}
