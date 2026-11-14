@@ -913,3 +913,20 @@ commit cc52d2d (CI verde). Isométrico arranca en el núcleo navideño en móvil
 ```
 
 </details>
+
+## PLANNER-01 — Route planner (walking, 3 options)
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 153 passed in 1.59s
+- **Ticket GEAS:** 8750a751 · commit_after `00eebe5a`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 00eebe5. 1) 3 opciones (fastest/after_dark/easy_walk) y misma entrada → mismas rutas (test node); 2) salida: mi ubicación, Porta do Sol, estación Vigo-Urzáiz/Guixar o una calle (1921 calles); 3) eventos como ventanas: fijado a las 20:00 ninguna opción llega después (test); 4) parada inalcanzable nombrada con sugerencia de quitar (test); 5) 12 paradas <2 s (test; en navegador 906 ms con red); 6) tiempos de la API table de OSRM sobre el grafo peatonal OSM (fuente=osm), fallback aproximado marcado; 7) ruta elegida dibujada con paradas numeradas en isométrico y vista ciudad. Held-Karp exacto. 153 tests, batería móvil sin fallos.
+```
+
+</details>
