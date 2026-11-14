@@ -354,3 +354,20 @@ commit 4564ba9. ./init.sh -> 11 passed, ENTORNO LISTO. parkings-ocupacion.json L
 ```
 
 </details>
+
+## D-01 — Snapshot publisher
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 24 passed in 2.19s
+- **Ticket GEAS:** 37c8b711 · commit_after `69e8aec3`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 51b838a. $ pytest tests -> 16 passed (test_snapshot: payload bueno escribe latest.json con fetched_at y source_timestamp; payload malo/HTML/[]/vacío no pisa el último bueno; history.jsonl una fila por pasada; age() marca sin datos pasados 10 min). En vivo: python scripts/snapshot.py parkings -> ok, 12 registros, source_timestamp 2026-11-14 13:17:05. Programación en deploy/snapshot.cron (*/2). La UI de edad la consume D-18 vía age()/stale_after_s.
+```
+
+</details>
