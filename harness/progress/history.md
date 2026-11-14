@@ -411,3 +411,20 @@ commit 5a6ca17. $ pytest tests -> 20 passed (test_weather: tira ahora + 6 h; rai
 ```
 
 </details>
+
+## R-01 — Master research of all Christmas attractions
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 59 passed in 0.47s
+- **Ticket GEAS:** 5cc3fec4 · commit_after `bb865091`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit bb86509. pytest tests 59 passed; ruff/mypy/evals OK. data/points.json: 35 puntos de la capa 2026-27 (7 tipos), cada uno con sources (capa ArcGIS + URL + fecha) y last_verified; overrides separados en data/points_overrides.json; los 5 cambios 2026 esperados de prensa ya están en la capa oficial (noria Vialia, Cíes Market, pista de hielo, caja regalo, Disney+) -> 0 not_confirmed; orden de prioridad y registro en vault/01_PROYECTO/investigacion_puntos.md; todos status official.
+```
+
+</details>
