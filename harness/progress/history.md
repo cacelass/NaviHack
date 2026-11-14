@@ -451,3 +451,20 @@ D-11 evidencia:
 ```
 
 </details>
+
+## R-04 — Collect official 2026-27 programme into points.json
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 82 passed in 0.53s
+- **Ticket GEAS:** 4b410240 · commit_after `12872c49`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 12872c4. pytest tests 74 passed; ruff/mypy/evals OK. data/programme_2026.json + scripts/programme.py: 23 puntos con programa (reglas por día, vísperas/festivos, cierres tras medianoche, toda la noche, fechas 24/31-dic y 5-ene), 12 sin horario oficial listados; show_times con horas (árbol 18:00..21:50, Nadal Bus, barco 20:00); closed_dates registrado (el oficial no publica cierres); last_verified 2026-11-14. test_programme 15 tests. Doc vault/01_PROYECTO/programa_2026.md.
+```
+
+</details>

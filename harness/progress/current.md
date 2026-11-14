@@ -1,31 +1,26 @@
 # Tarea actual
 
-**Feature:** X-02
-**Estado:** in_progress
-**Iniciada:** 2026-11-14
-**Responsable:** implementer
+> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
+> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
+> está el trabajo sin releer el proyecto entero.
+
+**Feature:** _(ninguna)_
+**Estado:** idle
+**Iniciada:** —
+**Responsable:** —
 
 ## Objetivo
 
-Ingest long-distance and Cercanias GTFS; check Vigo stops present.
-
-Criterios de aceptación:
-  1. Long-distance GTFS ingested
-  2. Cercanias GTFS ingested
-  3. Vigo-Urzáiz and Vigo-Guixar present
-  4. Stops listed
+_(sin trabajo en curso)_
 
 ## Criterios de aceptación
 
-- [ ] Long-distance GTFS ingested
-- [ ] Cercanias GTFS ingested
-- [ ] Vigo-Urzáiz and Vigo-Guixar present
-- [ ] Stops listed
+_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
 
 ## Bitácora
 
-_(pendiente)_
+_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
 
 ## Bloqueos
 
-_(ninguno)_
+_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
