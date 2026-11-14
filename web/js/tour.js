@@ -12,6 +12,7 @@
   const FAR_KM = 2.5; // más lejos de Porta do Sol: primero hay que llegar al centro
   const ROUTER = "https://routing.openstreetmap.de/routed-foot/route/v1/foot/";
   const CAR_ROUTER = "https://routing.openstreetmap.de/routed-car/route/v1/driving/";
+  const lu = (name, size = 20) => { const s = document.createElement("span"); s.innerHTML = window.LU ? LU.svg(name, { size }) : ""; return s.firstChild || s; };
   const emit = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
   const PARKINGS = "https://datos.vigo.org/data/trafico/parkings-ocupacion.json";
 
@@ -109,7 +110,7 @@
     const xs = line.map(([lo, la]) => project(la, lo));
     const minX = Math.min(...xs.map((p) => p[0])), maxX = Math.max(...xs.map((p) => p[0]));
     const minY = Math.min(...xs.map((p) => p[1])), maxY = Math.max(...xs.map((p) => p[1]));
-    const pad = 150;
+    const pad = 420; // los paneles tapan los bordes
     viewer.viewport.fitBounds(new OpenSeadragon.Rect((minX - pad) / CANVAS, (minY - pad) / CANVAS, (maxX - minX + 2 * pad) / CANVAS, (maxY - minY + 2 * pad) / CANVAS));
   }
   function clear(viewer) { if (layer) { viewer.removeOverlay(layer); layer = null; } }
@@ -132,10 +133,10 @@
     const gmaps = (mode, dest, way = []) => "https://www.google.com/maps/dir/?api=1&travelmode=" + mode + "&origin=" + startPos.join(",") + "&destination=" + dest.join(",") + (way.length ? "&waypoints=" + way.map((w) => w.join(",")).join("|") : "");
 
     function render() {
-      btn.textContent = t("tour.open");
+      btn.replaceChildren(lu("route"), t("tour.open"));
       box.replaceChildren();
       if (!box.classList.contains("is-open")) return;
-      const close = el("button", "tv-close", "×"); close.onclick = () => { box.classList.remove("is-open"); render(); };
+      const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close")); close.onclick = () => { box.classList.remove("is-open"); render(); };
       const chips = el("div", "tv-chips", ...BUDGETS.map((b) => { const c = el("button", b === budget ? "is-on" : "", t("tour.minutes", { min: b })); c.onclick = () => { budget = b; render(); }; return c; }));
       const from = el("div", "tv-langs tv-from", ...[[true, "tour.from_here"], [false, "tour.from_centre"]].map(([v, k]) => { const c = el("button", v === fromHere ? "is-on" : "", t(k)); c.onclick = () => { fromHere = v; render(); }; return c; }));
       const whenChips = el("div", "tv-chips", ...[["now", t("tour.now")], ["18", "18:00"], ["20", "20:00"], ["22", "22:00"]].map(([v, label]) => { const c = el("button", v === when ? "is-on" : "", label); c.onclick = () => { when = v; render(); }; return c; }));
@@ -215,14 +216,15 @@
       const prev = el("button", "tv-btn tv-btn-quiet", t("walk.prev")); prev.disabled = at === 0; prev.onclick = () => { at--; showStep(); };
       const last = at === st.length - 1;
       const next = el("button", "tv-btn", last ? t("common.close") : t("walk.next")); next.onclick = () => { if (last) { at = -1; } else { at++; } showStep(); };
-      const close = el("button", "tv-close", "×"); close.onclick = () => { at = -1; showStep(); };
+      const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close")); close.onclick = () => { at = -1; showStep(); };
       const dots = el("div", "tv-step-dots", ...st.map((_, i) => el("span", i === at ? "is-on" : i < at ? "is-done" : "")));
-      step.append(...[close,
+      step.append(...[close, el("div", "tv-step-body",
         p.photo ? Object.assign(el("img", "tv-step-photo"), { src: p.photo, alt: txt(p.name) }) : null,
+        el("div", null,
         el("p", "tv-kicker", t("walk.step", { n: at + 1, total: st.length }) + " · " + hhmm(s.arrive)),
         el("h2", null, txt(p.name)),
-        el("p", "tv-step-leg", t("walk.leg", { min: legMin(at), from })),
-        p.short ? el("p", "tv-short", txt(p.short)) : null,
+        el("p", "tv-step-leg", lu("footprints", 16), t("walk.leg", { min: legMin(at), from })),
+        p.short ? el("p", "tv-short", txt(p.short)) : null)),
         dots,
         last ? el("p", "tv-note", t("walk.end")) : null,
         el("div", "tv-actions", prev, next)].filter(Boolean));

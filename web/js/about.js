@@ -25,7 +25,8 @@
     const link = el("a", { href: s.url, target: "_blank", rel: "noopener" }, s.who);
     list.append(el("li", {}, el("strong", {}, s.what), el("span", {}, link), el("em", {}, s.licence)));
   });
-  const close = el("button", { class: "about-close", "aria-label": "Cerrar" }, "×");
+  const close = el("button", { class: "about-close", "aria-label": "Cerrar" });
+  close.innerHTML = window.LU ? LU.svg("x", { size: 20 }) : "×";
   dialog.append(
     close,
     el("h2", { id: "about-title" }, "TinyVigo"),
@@ -35,7 +36,8 @@
     el("p", { class: "about-note" }, "Cada capa de la ciudad muestra su fecha de actualización. Autobuses y trenes: horario programado."),
   );
 
-  const button = el("button", { id: "about-open", "aria-label": "Acerca de y créditos" }, "i");
+  const button = el("button", { id: "about-open", "aria-label": "Acerca de y créditos" });
+  button.innerHTML = window.LU ? LU.svg("info", { size: 20 }) : "i";
   button.onclick = () => dialog.showModal();
   close.onclick = () => dialog.close();
   dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });

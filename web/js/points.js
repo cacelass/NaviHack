@@ -8,6 +8,8 @@
     photocall: "points.filter_exhibits",
   };
   const FILTERS = ["all", "light", "attraction", "market", "santa_kings", "exhibit"];
+  const ICON = { light: "star", attraction: "ferris-wheel", market: "store", santa_kings: "gift", exhibit: "camera", photo_gallery: "camera", photocall: "camera", all: "layers" };
+  const lu = (name, size = 20) => { const s = document.createElement("span"); s.innerHTML = window.LU ? LU.svg(name, { size }) : ""; return s.firstChild || s; };
   const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   const [{ points }, ...cats] = await Promise.all([
@@ -79,7 +81,7 @@
   // marcadores
   const markers = new Map();
   for (const p of points.filter((p) => p.on_map)) {
-    const m = el("button", "tv-marker tv-" + p.type);
+    const m = el("button", "tv-marker" + (status(p) && status(p).open ? " is-open" : ""));
     m.setAttribute("aria-label", txt(p.name));
     m.onclick = (ev) => { ev.stopPropagation(); select(p, false); };
     viewer.addOverlay({ element: m, location: new OpenSeadragon.Point(p.x, p.y), placement: OpenSeadragon.Placement.BOTTOM });
@@ -101,12 +103,12 @@
     sheet.classList.toggle("is-open", !!selected);
     if (!selected) return;
     const p = selected, st = status(p);
-    const close = el("button", "tv-close", "×"); close.setAttribute("aria-label", t("common.close"));
+    const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close"));
     close.onclick = () => { selected = null; markers.forEach((m) => m.classList.remove("is-selected")); renderSheet(); };
-    const dir = el("a", "tv-btn", t("detail.directions"));
+    const dir = el("a", "tv-btn", lu("footprints"), t("detail.directions"));
     dir.href = "https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=" + p.lat + "," + p.lon;
     dir.target = "_blank"; dir.rel = "noopener";
-    const photo = p.image_url ? Object.assign(el("a", "tv-btn tv-btn-quiet", t("detail.real_photo")), { href: p.image_url.replace("._lgjpeg", ".jpeg"), target: "_blank", rel: "noopener" }) : null;
+    const photo = p.image_url ? Object.assign(el("a", "tv-btn tv-btn-quiet", lu("camera"), t("detail.real_photo")), { href: p.image_url.replace("._lgjpeg", ".jpeg"), target: "_blank", rel: "noopener" }) : null;
     const sched = txt(p.schedule_text);
     sheet.append(...[
       close,
@@ -132,14 +134,14 @@
     const search = el("input", "tv-search"); search.type = "search"; search.placeholder = t("points.search"); search.value = query;
     search.oninput = () => { query = search.value; renderList(); };
     const chips = el("div", "tv-chips", ...FILTERS.map((f) => {
-      const b = el("button", f === filter ? "is-on" : "", f === "all" ? t("points.filter_all") : t(TYPE_KEY[f]));
+      const b = el("button", f === filter ? "is-on" : "", lu(ICON[f] || "layers", 16), f === "all" ? t("points.filter_all") : t(TYPE_KEY[f]));
       b.onclick = () => { filter = f; renderPanel(); };
       return b;
     }));
     const list = el("ul", "tv-list");
     const count = el("p", "tv-count");
     const head = el("header", null, el("h1", null, t("points.title")), langs);
-    const toggle = el("button", "tv-toggle", t("points.title"));
+    const toggle = el("button", "tv-toggle", lu("tree-pine"), t("points.title"), lu("chevron-down", 16));
     toggle.onclick = () => panel.classList.toggle("is-collapsed");
     panel.append(toggle, head, search, chips, count, list);
     function renderList() {
@@ -150,7 +152,7 @@
       list.replaceChildren(...shown.map((p) => {
         const st = status(p);
         const li = el("li", null, el("button", null,
-          el("span", "tv-dot tv-" + p.type),
+          p.photo ? Object.assign(el("img", "tv-thumb"), { src: p.photo, alt: "", loading: "lazy" }) : el("span", "tv-thumb", lu(ICON[p.type] || "map-pin")),
           el("span", "tv-name", txt(p.name)),
           st ? el("span", "tv-badge " + (st.open ? "is-open" : ""), st.open ? t("common.open_now") : st.label) : null));
         li.firstChild.onclick = () => select(p);

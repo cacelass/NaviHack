@@ -32,3 +32,20 @@ Verificado con `getComputedStyle` sobre la página servida: zoom `44px`/`rgb(21,
 
 Las correcciones son de estilo puro y no tocan la lógica (puntos, tour, horario).
 El resto se deja como ticket para no cambiar el producto sin revisión.
+
+## Segundo pase (Miguel2, UI-04)
+
+Los tres pendientes estructurales se cierran sin cambiar el producto, y el primer pase
+se mantiene (sin blur, sólido, Inter, 44 px) ahora sobre los tokens de `web/ui/css/tokens.css`:
+
+| Pendiente | Ahora |
+|---|---|
+| 1. Color por tipo | Fuera los cinco colores. Marcadores en el dorado de las luces; el estado abierto aclara el marcador y va en verde (`--ok`) en lista, ficha y pines. |
+| 2. Iconos de interfaz | Lucide de línea (`web/ui/assets/lucide.js`): tipo en chips (`star`, `ferris-wheel`, `store`, `gift`, `camera`), cerrar `x`, zoom `plus`/`minus`, info, tema, `footprints`, `camera`, `route`. En la lista, la miniatura es la **foto real** del punto. |
+| 3. Tarjeta adaptativa | El paso del paseo es una tarjeta con la imagen a la izquierda con sitio y arriba en estrecho (`@container`, un solo componente). |
+| 4. Tema | Se respeta: el visor arranca en **oscuro**. Conmutador claro/oscuro de `theme.js` (recuerda la elección); `#light` para capturas. |
+
+Además: tamaños solo 28/20/16/14/12 y pesos 400/500/600 (fuera los 13 px y 22 px),
+superficies `--raised` con filo de 1 px y cero sombras, controles de Leaflet en
+«Vista ciudad» con la misma superficie sólida y 44 px.
+

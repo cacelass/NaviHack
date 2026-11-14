@@ -26,7 +26,7 @@
     const markers = new Map();
     for (const p of P.points) {
       const src = photo(p);
-      const html = '<div class="tv-pin" style="--c:' + (COLORS[p.type] || "#fff") + '">' +
+      const st = P.status(p); const html = '<div class="tv-pin' + (st && st.open ? " is-open" : "") + '">' +
         (src ? '<img src="' + src + '" alt="" loading="lazy" onerror="this.remove()">' : "") + "</div>";
       const m = L.marker([p.lat, p.lon], { icon: L.divIcon({ className: "", html, iconSize: [46, 54], iconAnchor: [23, 54] }), title: txt(p.name) })
         .on("click", () => P.select(p, false)).addTo(map);
@@ -74,7 +74,7 @@
 
     function setCity(on) {
       document.body.classList.toggle("is-city", on);
-      btn.textContent = on ? "Vigo 3D" : t("app.city_view");
+      btn.innerHTML = (window.LU ? LU.svg(on ? "layers" : "map-pin", { size: 20 }) : "") + "<span>" + (on ? "Vigo 3D" : t("app.city_view")) + "</span>";
       if (on) setTimeout(() => { map.invalidateSize(); if (lastBounds) map.fitBounds(lastBounds); }, 50);
     }
     btn.onclick = () => setCity(!document.body.classList.contains("is-city"));
