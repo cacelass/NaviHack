@@ -35,6 +35,8 @@
     const P = window.tinyvigoPoints, t = P.t, txt = P.txt;
     const btn = el("button", "tv-today-open");
     const box = el("section", "tv-tour tv-events");
+    box.id = "tv-events"; box.setAttribute("role", "dialog"); box.setAttribute("aria-labelledby", "tv-events-title");
+    btn.setAttribute("aria-controls", "tv-events"); btn.setAttribute("aria-haspopup", "dialog");
     document.body.append(btn, box);
     let events = null, error = false, loading = false;
 
@@ -113,10 +115,11 @@
     function render() {
       btn.replaceChildren(lu("calendar-days"), t("events.open"));
       box.replaceChildren();
-      if (!box.classList.contains("is-open")) return;
+      if (!box.classList.contains("is-open")) { btn.setAttribute("aria-expanded", "false"); return; }
       const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close"));
       close.onclick = () => { box.classList.remove("is-open"); render(); };
-      box.append(close, el("h2", null, t("xmas.title")));
+      btn.setAttribute("aria-expanded", "true");
+      box.append(close, Object.assign(el("h2", null, t("xmas.title")), { id: "tv-events-title", tabIndex: -1 }));
       if (!events && !error && !loading) {
         loading = true;
         load(P.points).then((e) => { events = e; }).catch(() => { error = true; }).finally(() => { loading = false; render(); });
@@ -151,6 +154,7 @@
       const open = !box.classList.contains("is-open");
       document.querySelectorAll(".tv-tour.is-open").forEach((b) => b.classList.remove("is-open"));
       box.classList.toggle("is-open", open); render();
+      if (open) setTimeout(() => { const h = document.getElementById("tv-events-title"); if (h) h.focus({ preventScroll: true }); }, 30);
     };
     document.addEventListener("tv:lang", render);
     render();

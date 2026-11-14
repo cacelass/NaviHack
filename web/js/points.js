@@ -183,10 +183,15 @@
     document.body.append(d); d.showModal();
   }
 
+  sheet.setAttribute("role", "dialog"); sheet.setAttribute("aria-labelledby", "tv-sheet-title");
+  let sheetOpener = null;
   function renderSheet() {
+    const wasOpen = sheet.classList.contains("is-open");
     sheet.replaceChildren();
     sheet.classList.toggle("is-open", !!selected);
-    if (!selected) return;
+    sheet.setAttribute("aria-hidden", selected ? "false" : "true");
+    if (!selected) { if (wasOpen && sheetOpener && document.body.contains(sheetOpener)) sheetOpener.focus(); return; }
+    if (!wasOpen) sheetOpener = document.activeElement;
     const p = selected, st = status(p);
     const close = el("button", "tv-close tv-close-float", lu("x")); close.setAttribute("aria-label", t("common.close"));
     close.onclick = () => { selected = null; markers.forEach((m) => m.classList.remove("is-selected")); renderSheet(); };
@@ -206,7 +211,7 @@
     sheet.append(...[
       hero || close,
       el("p", "tv-type", lu(ICON[p.type] || "map-pin", 16), t(TYPE_KEY[p.type] || "points.filter_all")),
-      el("h2", null, txt(p.name)),
+      Object.assign(el("h2", null, txt(p.name)), { id: "tv-sheet-title", tabIndex: -1 }),
       door,
       p.short ? el("p", "tv-short", txt(p.short)) : null,
       el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
@@ -216,6 +221,8 @@
       !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
       freshness(p),
     ].filter(Boolean));
+    // el foco entra en la ficha al abrirla (teclado y lectores de pantalla)
+    if (!wasOpen) setTimeout(() => { const h = document.getElementById("tv-sheet-title"); if (h) h.focus({ preventScroll: true }); }, 60);
   }
 
   function renderPanel() {

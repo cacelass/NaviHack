@@ -333,3 +333,15 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 /* UI-06: «Hoy» con imagen o icono en cada fila */
 .tv-tl-img { width: 40px; height: 40px; }
 .tv-timeline .tv-thumb, .tv-ev > .tv-thumb { width: 40px; height: 40px; }
+
+/* ── A11Y (Miguel2: settings, ficha, Hoy, marcadores) ───────────────────────── */
+.tv-panel :focus-visible, .tv-sheet :focus-visible, .tv-tour :focus-visible, .tv-step :focus-visible, .tv-settings :focus-visible,
+.tv-settings-open:focus-visible, .tv-tour-open:focus-visible, .tv-today-open:focus-visible, .tv-marker:focus-visible, #zoom button:focus-visible, .tv-mini:focus-visible, .tv-hero-zoom:focus-visible {
+  outline: 3px solid var(--acc); outline-offset: 2px;
+}
+.tv-sheet h2:focus, .tv-events h2:focus { outline: none; }
+.tv-sheet h2:focus-visible, .tv-events h2:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.tv-timeline .is-past { opacity: .62; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+}
