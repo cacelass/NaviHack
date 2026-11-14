@@ -14,9 +14,9 @@
   <header class="mk__cab">
     <div>
       <span data-tv="logo" data-tv-size="40"></span>
-      <h1 style="margin-top:20px">La V encendida</h1>
-      <p class="mk__lead">Una V y un punto de luz. La V que se hace con las manos delante del árbol y el punto
-        de luz de Porta do Sol: el gesto de la ciudad y lo que lo enciende, en una sola forma.</p>
+      <h1 style="margin-top:20px">El árbol que se gira</h1>
+      <p class="mk__lead">Delante es un abeto mínimo: dos capas y la luz en la punta. Girado del revés, la falda
+        es la V de Vigo y la luz cae al vértice. Una forma, dos lecturas, y ninguna de las dos se inventa.</p>
     </div>
     <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="lu"></i></button>
   </header>
@@ -24,11 +24,11 @@
   <!-- 01 · CONCEPTO -->
   <section>
     <h2><span class="mk__num">01</span>El concepto</h2>
-    <p>La V es el gesto que todo el mundo repite en Porta do Sol: dos brazos abiertos, punta abajo. El punto es
-      la luz de la plaza. Juntos dan lo que la estrella no daba: se reconoce a 16 px, aguanta una sola tinta y
-      dice algo de Vigo sin explicarlo.</p>
-    <div class="mk__nota">La marca no dibuja el árbol ni la ría: los insinúa. El árbol es un punto encendido; la V,
-      la boca de la ría que entra en la ciudad. El trazo se afina hacia la punta, como la luz que cae del árbol.</div>
+    <p>Dos trazos y un punto: el árbol de Porta do Sol, sin tronco, sin bolas y sin adornos. La luz va en la
+      punta, como la estrella que corona el árbol de la plaza. Si le das la vuelta al móvil, aparece la V.</p>
+    <div class="mk__nota">La V no es un añadido: es la falda del árbol. Por eso la marca aguanta girada, en una
+      tinta y a 16 px sin cambiar de forma. El píxel solo aparece en la versión reducida, para que los bordes
+      caigan en la rejilla.</div>
   </section>
 
   <!-- 02 · VARIANTES -->
@@ -54,6 +54,29 @@
       mismo símbolo a distinta resolución.</div>
   </section>
 
+  <!-- 02b · GIRADA -->
+  <section>
+    <h2><span class="mk__num">02b</span>Gírala</h2>
+    <p>La misma pieza, del derecho y del revés. No hay dos logos: hay uno que se lee de dos maneras.</p>
+    <div class="mk__fila">
+      <figure class="mk__caja base">
+        <span data-tv="simbolo" data-tv-size="96"></span>
+        <figcaption>Del derecho · el árbol</figcaption>
+      </figure>
+      <figure class="mk__caja base">
+        <span data-tv="simbolo" data-tv-size="96" class="tv-girada"></span>
+        <figcaption>Del revés · la V</figcaption>
+      </figure>
+      <figure class="mk__caja noche">
+        <span data-tv="simbolo" data-tv-size="64" class="tv-girada"></span>
+        <figcaption>Sobre noche, girada</figcaption>
+      </figure>
+    </div>
+    <div class="mk__nota" style="margin-top:16px">Para girarla basta con <code>transform: rotate(180deg)</code> en
+      el contenedor del símbolo (clase <code>.tv-girada</code>). La luz se queda en el vértice, así que la marca
+      girada sigue significando lo mismo: la Navidad de Vigo encendida.</div>
+  </section>
+
   <!-- 03 · TAMAÑOS -->
   <section>
     <h2><span class="mk__num">03</span>Tamaños</h2>
@@ -73,12 +96,13 @@
   <!-- 04 · CONSTRUCCIÓN -->
   <section>
     <h2><span class="mk__num">04</span>Construcción</h2>
-    <p>Rejilla de 16. Brazos de 3 celdas que se cierran en una punta de 2, y el punto de luz a 6,7 % del símbolo,
-      separado de la punta por medio punto. El aire mínimo alrededor de la marca es ese mismo medio punto.</p>
+    <p>Rejilla de 16. Dos capas de un píxel de grosor que se abren desde la punta, con una fila de aire entre
+      ellas, y la luz de 2 × 2 en lo alto, separada por otra fila. El aire mínimo alrededor de la marca es el
+      de esas dos filas.</p>
     <div class="mk__fila">
       <figure class="mk__caja base">
         <span data-tv="simbolo" data-tv-size="128"></span>
-        <figcaption>Rejilla 16 · la punta se enciende</figcaption>
+        <figcaption>Rejilla 16 · dos capas y la luz</figcaption>
       </figure>
       <figure class="mk__caja noche">
         <span data-tv="simbolo" data-tv-size="96"></span>
@@ -86,7 +110,7 @@
       </figure>
       <figure class="mk__caja claro">
         <span data-tv="simbolo" data-tv-size="96"></span>
-        <figcaption>Sobre papel, el punto va en oro oscuro</figcaption>
+        <figcaption>Sobre papel, la luz va en oro oscuro</figcaption>
       </figure>
     </div>
   </section>
@@ -192,15 +216,16 @@
           <li>Aire de medio punto alrededor</li>
           <li>Símbolo suelto cuando el nombre ya está cerca</li>
           <li>Invertir sobre noche: trazo papel, luz alta</li>
+          <li>Girarla 180° cuando el soporte lo pida (una postal, un sello)</li>
         </ul>
       </div>
       <div class="mk__no">
         <h3><i class="lu" data-lu="x" data-size="16"></i>No</h3>
         <ul>
-          <li>Estrellas, copos o árboles dibujados: la marca es una V</li>
+          <li>Tronco, bolas, regalos o nieve: la marca son dos trazos y un punto</li>
           <li>El nombre en Pixelify o en cualquier fuente de píxel</li>
           <li>Sombras, degradados, biseles o contornos</li>
-          <li>Rotar, estirar o mover el punto a otro sitio</li>
+          <li>Estirar, inclinar o mover la luz fuera de la punta</li>
         </ul>
       </div>
     </div>
@@ -210,7 +235,7 @@
     <h2><span class="mk__num">10</span>Archivos</h2>
     <table>
       <tbody>
-        <tr><td><code>assets/marca.js</code></td><td>Dibuja símbolo, logotipo y matasellos: <code>MARCA.simbolo()</code>, <code>MARCA.logotipo()</code>, <code>MARCA.matasellos()</code></td></tr>
+        <tr><td><code>assets/marca.js</code></td><td>Dibuja el árbol, el logotipo, la versión girada y el matasellos: <code>MARCA.simbolo()</code>, <code>MARCA.logotipo()</code>, <code>MARCA.matasellos()</code></td></tr>
         <tr><td><code>css/marca.css</code></td><td>Tokens de marca, logotipo y las tres aplicaciones</td></tr>
         <tr><td><code>marca-exploracion.html</code></td><td>Los tres conceptos que se probaron antes de elegir este</td></tr>
       </tbody>

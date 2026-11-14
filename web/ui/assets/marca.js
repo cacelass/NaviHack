@@ -1,6 +1,7 @@
-/* Marca TinyVigo — "la V encendida".
-   Una V (el gesto de la Navidad de Vigo) y, en su punta, el punto de luz de
-   Porta do Sol. Dos dibujos del mismo símbolo:
+/* Marca TinyVigo — "el árbol que se gira".
+   Delante es un abeto mínimo: dos capas y la luz en la punta. Girado 180°, la
+   falda es la V de Vigo y la luz cae al vértice. Un solo dibujo, dos lecturas.
+   Dos dibujos del mismo símbolo:
      · pixel  — rejilla de 16, para 16–32 px (HUD del mapa, favicon, sellos)
      · vector — trazado limpio, para 32 px en adelante (cabeceras, certificado)
      · tinta  — una sola tinta, para impresión en blanco y negro
@@ -11,20 +12,20 @@
   var N = 16;
   var ROWS = [
     '................',
-    '###..........###',
-    '###..........###',
-    '.###........###.',
-    '.###........###.',
-    '..###......###..',
-    '..###......###..',
-    '...###....###...',
-    '...###....###...',
-    '....###..###....',
-    '....###..###....',
-    '.....######.....',
-    '.....######.....',
-    '......aaaa......',
     '.......aa.......',
+    '.......aa.......',
+    '................',
+    '.......##.......',
+    '......#..#......',
+    '......#..#......',
+    '....#......#....',
+    '....#......#....',
+    '.......##.......',
+    '......#..#......',
+    '.....#....#.....',
+    '...#........#...',
+    '..#..........#..',
+    '#..............#',
     '................'
   ];
 
@@ -45,9 +46,10 @@
   }
 
   function vector(attrs) {
-    return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" ' + attrs + '>' +
-      '<path class="tv-pv" d="M2 2.4H6.6L12 17.2L17.4 2.4H22L13.4 22.4H10.6Z"/>' +
-      '<circle class="tv-pl" cx="12" cy="20.8" r="1.6"/>' +
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" ' + attrs + '>' +
+      '<path class="tv-pv" d="M6.2 9.2L12 3.4L17.8 9.2" stroke-width="2.4" stroke-linecap="butt" stroke-linejoin="miter"/>' +
+      '<path class="tv-pv" d="M1.6 19.6L12 10.8L22.4 19.6" stroke-width="2.4" stroke-linecap="butt" stroke-linejoin="miter"/>' +
+      '<circle class="tv-pl" cx="12" cy="1.7" r="1.5" stroke="none"/>' +
       '</svg>';
   }
 
@@ -91,7 +93,9 @@
       '<textPath href="#' + id + '-a" startOffset="50%" text-anchor="middle">VIGO</textPath></text>' +
       '<text class="tv-mat__arco" font-size="7.4" font-weight="500" letter-spacing="1.2">' +
       '<textPath href="#' + id + '-b" startOffset="50%" text-anchor="middle">A NAVIDEÑA</textPath></text>' +
-      '<g transform="translate(37.5 30) scale(.78)"><path class="tv-mat__v" d="M2 2.4H6.6L12 17.2L17.4 2.4H22L13.4 22.4H10.6Z"/><circle class="tv-mat__luz" cx="12" cy="20.8" r="1.6"/></g>' +
+      '<g transform="translate(33.8 27.8) scale(1.35)" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter">' +
+      '<path d="M6.2 9.2L12 3.4L17.8 9.2"/><path d="M1.6 19.6L12 10.8L22.4 19.6"/>' +
+      '<circle class="tv-mat__luz" cx="12" cy="1.7" r="1.5" stroke="none"/></g>' +
       '<text class="tv-mat__fecha" x="50" y="66" text-anchor="middle" font-size="6.6" font-weight="500" letter-spacing=".6">' + fecha + '</text>' +
       '</svg>';
   }
@@ -100,11 +104,12 @@
     '.tv-simbolo{display:inline-block;flex:none;line-height:0}' +
     '.tv-simbolo svg{display:block;width:var(--tv-s,24px);height:var(--tv-s,24px)}' +
     '.tv-pv{fill:currentColor}' +
+    '.tv-vector .tv-pv,.tv-tinta.tv-vector .tv-pv{fill:none;stroke:currentColor}' +
     '.tv-pl{fill:var(--tv-luz,#d9a441)}' +
     '.tv-tinta .tv-pl{fill:currentColor}' +
     '.tv-lockup{display:inline-flex;align-items:center;gap:calc(var(--tv-s,28px) * .34);color:currentColor}' +
     '.tv-nombre{font:600 calc(var(--tv-s,28px) * .86)/1 var(--f-ui,"Inter",system-ui,sans-serif);letter-spacing:-.02em;color:currentColor}' +
-    '.tv-mat__v{fill:currentColor}.tv-mat__luz{fill:var(--tv-luz,#d9a441)}' +
+    '.tv-mat__luz{fill:var(--tv-luz,#d9a441)}' +
     '.tv-mat__arco,.tv-mat__fecha{fill:currentColor;font-family:var(--f-ui,"Inter",system-ui,sans-serif)}';
   var st = document.createElement('style');
   st.textContent = css;
