@@ -23,12 +23,21 @@ BAND = 96
 
 
 def water_mask(render_rgb: np.ndarray) -> np.ndarray:
+    """Agua por geometría, no por color: de la heurística de color nos quedamos solo
+    con las componentes conectadas que tocan el borde superior (la ría al norte).
+    Así las sombras de árboles y edificios, que son oscuras pero no tocan el mar,
+    no cuentan como agua. El mar real es la componente conectada que llega al norte."""
     lum = render_rgb.astype(np.float32) @ np.array([0.299, 0.587, 0.114], np.float32)
     r, b = render_rgb[..., 0].astype(np.int32), render_rgb[..., 2].astype(np.int32)
     m = ((lum < 80) & (b >= r)).astype(np.uint8)
     m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
     m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
-    return m.astype(bool)
+    n, labels = cv2.connectedComponents(m, connectivity=8)
+    keep = np.zeros(n, dtype=bool)
+    for lbl in np.unique(labels[0, :]):  # componentes que tocan el borde norte (mar abierto)
+        if lbl > 0:
+            keep[lbl] = True
+    return keep[labels].astype(bool)
 
 
 def to_lab(rgb: np.ndarray) -> np.ndarray:
@@ -114,9 +123,22 @@ def main() -> None:
         canvas = blend_seams(canvas, land)
     out = to_rgb(canvas)
     if a.flat_sea:
-        sea = np.median(out[wm], axis=0)
+        # mar con gradiente (más claro junto a la costa, profundo al norte) y orilla de arena
+        sea_deep = np.array([27, 41, 59], np.float32)
+        sea_near = np.array([52, 78, 100], np.float32)
+        dist = cv2.distanceTransform((~wm).astype(np.uint8), cv2.DIST_L2, 3)
+        dmax = dist.max() + 1e-3
+        t = np.clip(dist / (dmax * 0.5), 0, 1)[..., None]
+        grad = sea_near[None, None, :] * (1 - t) + sea_deep[None, None, :] * t
+        ripple = (np.sin(np.arange(out.shape[0])[:, None] * 0.02) * 3).astype(np.float32)[..., None]
+        grad = np.clip(grad + ripple, 0, 255)
+        erode = cv2.erode(wm.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=1)
+        shore = cv2.dilate((wm.astype(np.uint8) - erode), np.ones((3, 3), np.uint8), iterations=2).astype(bool)
+        sand = np.array([205, 188, 156], np.float32)
         soft = cv2.GaussianBlur(wm.astype(np.float32), (0, 0), 2.0)[..., None]
-        out = (out * (1 - soft) + sea[None, None, :] * soft).astype(np.uint8)
+        out = (out * (1 - soft) + grad * soft).astype(np.float32)
+        out = np.where(shore[..., None], sand * 0.9 + grad * 0.1, out)
+        out = np.clip(out, 0, 255).astype(np.uint8)
     Image.fromarray(out).save(a.out)
     print("saved", a.out, out.shape, alignment(out, render, wm))
 
