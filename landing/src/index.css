@@ -105,18 +105,25 @@ section[id] {
 
 /* ── Header ── */
 .site-header {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  inset: 0 0 auto 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--color-bg) 78%, transparent);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  background: transparent;
   border-bottom: 1px solid transparent;
-  transition: border-color 300ms var(--ease-soft);
+  transition: background-color 250ms var(--ease-soft), border-color 250ms var(--ease-soft);
 }
 
 .site-header.is-scrolled {
+  background: var(--color-bg);
   border-bottom-color: var(--color-border);
+}
+
+/* sobre el mapa del hero: texto claro hasta que el header se vuelve opaco */
+.site-header:not(.is-scrolled) .brand,
+.site-header:not(.is-scrolled) .brand-sub,
+.site-header:not(.is-scrolled) .nav a:not(.nav-cta),
+.site-header:not(.is-scrolled) .theme-toggle {
+  color: #f6f1e6;
 }
 
 .header-inner {
@@ -216,14 +223,32 @@ section[id] {
   display: none;
 }
 
-/* ── Hero: sin fondo, sobre el color de la página ── */
+/* ── Hero: the map, full bleed, behind a veil ── */
 .hero {
   position: relative;
-  min-height: calc(100svh - var(--header-h));
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding-block: clamp(4rem, 8vh, 7rem);
-  color: var(--color-fg);
+  padding-block: calc(var(--header-h) + clamp(3rem, 8vh, 6rem)) clamp(3rem, 8vh, 6rem);
+  overflow: hidden;
+  color: #f6f1e6;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(9, 13, 19, 0.78) 0%, rgba(9, 13, 19, 0.5) 42%, rgba(9, 13, 19, 0.82) 100%),
+    radial-gradient(ellipse 60% 45% at 18% 18%, rgba(217, 164, 65, 0.16), transparent 60%);
 }
 
 .hero .wrap {
@@ -236,7 +261,7 @@ section[id] {
   line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 700;
-  color: var(--color-fg);
+  color: #fff;
   text-wrap: balance;
   max-width: 18ch;
 }
@@ -249,12 +274,12 @@ section[id] {
   margin-top: 1.25rem;
   font-size: clamp(1rem, 1.4vw, 1.15rem);
   line-height: 1.6;
-  color: var(--color-fg-secondary);
+  color: rgba(246, 241, 230, 0.82);
   max-width: 46ch;
 }
 
 .hero-tagline strong {
-  color: var(--color-fg);
+  color: #fff;
   font-weight: 600;
 }
 
@@ -339,6 +364,16 @@ section[id] {
 .btn-outline:hover {
   background: var(--color-bg-muted);
   color: var(--color-fg);
+}
+
+.hero .btn-outline {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.hero .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
 }
 
 /* ── About cards ── */
@@ -673,4 +708,20 @@ section[id] {
   .footer-links a {
     transition: none;
   }
+}
+
+/* ── Barras de desplazamiento: finas y sin carril, como en el proyecto (web/ui/css/tokens.css) ── */
+:root {
+  --scroll-thumb: color-mix(in srgb, var(--color-fg-muted) 45%, transparent);
+  --scroll-thumb-hover: var(--color-fg-muted);
+}
+@supports selector(::-webkit-scrollbar) {
+  *::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+  *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner { background: transparent; }
+  *::-webkit-scrollbar-thumb { background: var(--scroll-thumb); background-clip: padding-box; border: 2px solid transparent; border-radius: 6px; min-height: 40px; }
+  *::-webkit-scrollbar-thumb:hover, *::-webkit-scrollbar-thumb:active { background: var(--scroll-thumb-hover); background-clip: padding-box; }
+  *::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+}
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) transparent; }
 }

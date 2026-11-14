@@ -1,12 +1,13 @@
+import baseV5 from '../assets/base-v5.webp'
+
 export default function Hero() {
   return (
     <section className="hero" id="top">
+      <img className="hero-bg" src={baseV5} alt="" aria-hidden="true" />
+      <div className="hero-veil" aria-hidden="true" />
+
       <div className="wrap">
-        <h1 className="hero-title">
-          Mapa navideño de
-          <br />
-          Vigo en <span className="gold">pixel art.</span>
-        </h1>
+        <h1 className="hero-title">Conoce la Navidad de Vigo</h1>
 
         <p className="hero-tagline">
           El centro de Vigo dibujado tesela a tesela, con la Navidad del Concello encima:{' '}
