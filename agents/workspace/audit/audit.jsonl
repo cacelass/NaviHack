@@ -1,0 +1,1 @@
+{"timestamp": "2026-11-13T20:23:03+00:00", "agent": "harness", "action": "status", "success": false, "duration_ms": 18.5, "message": "GEAS no disponible: get_organization: get_organization: FORBIDDEN {'actor_id': '19b7dacd-cdce-446e-b850-6e4105f6b5e5', 'permission': 'department:read'}", "warnings": 0, "kwarg_names": []}

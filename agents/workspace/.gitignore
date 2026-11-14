@@ -4,6 +4,12 @@
 # `git add -f`. Cada agente tiene su propia subcarpeta (agents/workspace/<nombre>/),
 # creada automáticamente por SharedContext.agent_workspace() la primera vez
 # que hace falta.
+#
+# Excepciones que SÍ se versionan: la auditoría y la memoria de los agentes.
 *
 !.gitignore
 !README.md
+!audit/
+!audit/**
+!memory/
+!memory/**
