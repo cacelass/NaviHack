@@ -97,7 +97,12 @@ def match_land(
 
 
 def feather(
-    feather_px: int, oy: int, fade: tuple[int, int], cut_top: int = 0, hard_right: bool = False
+    feather_px: int,
+    oy: int,
+    fade: tuple[int, int],
+    cut_top: int = 0,
+    hard_right: bool = False,
+    hard_left: bool = False,
 ) -> np.ndarray:
     """1 dentro, bajando a 0 en los bordes de la ventana.
 
@@ -106,7 +111,14 @@ def feather(
     do Sol, que está pintado en el mapa y la ventana no tiene.
     """
     ramp = np.clip(np.arange(SIZE) / feather_px, 0, 1)
-    across = ramp if hard_right else np.minimum(ramp, ramp[::-1])
+    if hard_left and hard_right:
+        across = np.ones(SIZE, np.float32)
+    elif hard_left:
+        across = ramp[::-1]
+    elif hard_right:
+        across = ramp
+    else:
+        across = np.minimum(ramp, ramp[::-1])
     rows = np.arange(oy, oy + SIZE)
     down = np.clip((fade[1] - rows) / max(fade[1] - fade[0], 1), 0, 1)
     top = np.clip((np.arange(SIZE) - cut_top) / feather_px, 0, 1)
@@ -123,6 +135,7 @@ def compose(
     fade: tuple[int, int],
     cut_top: int = 0,
     hard_right: bool = False,
+    hard_left: bool = False,
 ) -> np.ndarray:
     ox, oy = origin
     wm = get_water(render)
@@ -135,7 +148,7 @@ def compose(
     )[..., None]
     piece = win * (1 - water) + sea * water
 
-    alpha = feather(feather_px, oy, fade, cut_top, hard_right)[..., None]
+    alpha = feather(feather_px, oy, fade, cut_top, hard_right, hard_left)[..., None]
     out = base.astype(np.float32).copy()
     region = out[oy : oy + SIZE, ox : ox + SIZE]
     out[oy : oy + SIZE, ox : ox + SIZE] = region * (1 - alpha) + piece * alpha
@@ -201,6 +214,11 @@ def main(argv: list[str] | None = None) -> int:
         help="sin degradado en el borde derecho (borde del lienzo)",
     )
     ap.add_argument(
+        "--hard-left",
+        action="store_true",
+        help="sin degradado en el borde izquierdo (borde del lienzo)",
+    )
+    ap.add_argument(
         "--extend", action="store_true", help="amplía el mapa al tamaño del render (4096x3072)"
     )
     ap.add_argument(
@@ -225,6 +243,7 @@ def main(argv: list[str] | None = None) -> int:
         tuple(args.fade),
         args.cut_top,
         args.hard_right,
+        args.hard_left,
     )
     if args.drop_floaters:
         out, found = drop_floaters(out, render)
