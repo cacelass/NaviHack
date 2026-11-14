@@ -671,12 +671,14 @@
         "Add-to-route turns the event into a fixed-time stop",
         "Events without clock time show 'time to be confirmed'"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-04"
       ],
       "ticket_id": "7a978705-4be8-412d-8ef9-4364d1f6a629",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "7a978705-events-01-events-ui-list-map-lay",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "PLANNER-01",
@@ -1919,6 +1921,24 @@
       "ticket_id": "d4eaca36-1f4b-4175-8f53-1d1e0cf672cc",
       "raw_status": "IN_PROGRESS",
       "branch": "d4eaca36-mob-01-web-muy-responsive-en-m-v",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
+    },
+    {
+      "id": "MOB-02",
+      "title": "Pulido de UX en móvil: encuadre inicial, vista ciudad, cómo llegar y detalles de interacción",
+      "description": "Seguimiento de MOB-01 pedido por Miguel (optimizar toda la UX, perfección): encuadre inicial del mapa sin medio mar en móvil; vista ciudad usable en móvil (controles, popups, rutas por encima de la hoja); selector de cómo llegar y tramos legibles a 360 px; estados de carga y error claros; sin solapes de la × con contenido; repaso de textos.\n\nCriterios de aceptación:\n  1. El mapa arranca encuadrado en el núcleo navideño en móvil, sin medio mar\n  2. Vista ciudad en móvil: controles accesibles, rutas encuadradas por encima de la hoja\n  3. Cómo llegar y tramos legibles y sin cortes a 360 px\n  4. Estados de carga y error claros en tour y cómo llegar\n  5. Batería de transiciones en 360/390/430 px sin fallos ni errores de consola",
+      "acceptance_criteria": [
+        "El mapa arranca encuadrado en el núcleo navideño en móvil, sin medio mar",
+        "Vista ciudad en móvil: controles accesibles, rutas encuadradas por encima de la hoja",
+        "Cómo llegar y tramos legibles y sin cortes a 360 px",
+        "Estados de carga y error claros en tour y cómo llegar",
+        "Batería de transiciones en 360/390/430 px sin fallos ni errores de consola"
+      ],
+      "status": "in_progress",
+      "depends_on": [],
+      "ticket_id": "4754bf35-2a1e-4cce-83c1-87c69e4d0907",
+      "raw_status": "IN_PROGRESS",
+      "branch": "4754bf35-mob-02-pulido-de-ux-en-m-vil-enc",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     }
   ]

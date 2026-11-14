@@ -1,30 +1,32 @@
 # Tarea actual
 
-**Feature:** MOB-01
+**Feature:** EVENTS-01
 **Estado:** in_progress
 **Iniciada:** 2026-11-14
 **Responsable:** implementer
 
 ## Objetivo
 
-Pedido por Miguel (2026-11-14): en móvil la web es inutilizable. Rediseñar el layout móvil con buena UI/UX: paneles (lista, ficha, tour, cómo llegar, Hoy) como hojas inferiores con asa y altura limitada, sin tapar los controles; botones inferiores en una barra fija con safe-area; objetivos táctiles ≥44 px; tipografía y espaciados de móvil; mapa siempre visible y sin scroll horizontal; probado en 360, 390 y 430 px.
+F4. Daily events list and map layer, date picker for the next days, filters (date, time of day, category, free entry, near me), permanent items and cycles grouped, add-to-route (added events become fixed-time stops).
 
 Criterios de aceptación:
-  1. Sin scroll horizontal ni solapes en 360, 390 y 430 px
-  2. Lista, ficha, tour, cómo llegar y Hoy se abren como hojas inferiores que dejan ver el mapa
-  3. Barra inferior fija con safe-area y objetivos táctiles de al menos 44 px
-  4. Textos legibles (≥14 px) y contenidos sin cortes
-  5. Capturas de las pantallas principales en móvil como evidencia
-  6. Sin errores en consola
+  1. Events list and map layer
+  2. Date picker for future days
+  3. Filters work
+  4. Permanent/cycle items grouped
+  5. Each event has a link that opens the map on it
+  6. Add-to-route turns the event into a fixed-time stop
+  7. Events without clock time show 'time to be confirmed'
 
 ## Criterios de aceptación
 
-- [ ] Sin scroll horizontal ni solapes en 360, 390 y 430 px
-- [ ] Lista, ficha, tour, cómo llegar y Hoy se abren como hojas inferiores que dejan ver el mapa
-- [ ] Barra inferior fija con safe-area y objetivos táctiles de al menos 44 px
-- [ ] Textos legibles (≥14 px) y contenidos sin cortes
-- [ ] Capturas de las pantallas principales en móvil como evidencia
-- [ ] Sin errores en consola
+- [ ] Events list and map layer
+- [ ] Date picker for future days
+- [ ] Filters work
+- [ ] Permanent/cycle items grouped
+- [ ] Each event has a link that opens the map on it
+- [ ] Add-to-route turns the event into a fixed-time stop
+- [ ] Events without clock time show 'time to be confirmed'
 
 ## Bitácora
 
