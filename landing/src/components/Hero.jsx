@@ -11,10 +11,6 @@ export default function Hero() {
 
       <div className="wrap hero-grid">
         <div className="hero-copy">
-          <p className="hero-eyebrow">
-            <span className="hero-eyebrow-dot" aria-hidden="true" />
-            {site.name} · Navidad 2026-27
-          </p>
 
           <h1 className="hero-title">Conoce la Navidad de Vigo</h1>
 

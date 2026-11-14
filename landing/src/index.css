@@ -117,11 +117,29 @@ section[id] {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
+  /* Transparent over the hero; solid once the page scrolls (or the menu opens). */
+  background: transparent;
+  color: #f6f1e6;
+  border-bottom: 1px solid transparent;
+  transition: transform 350ms var(--ease-out), background-color 250ms var(--ease-soft),
+    color 250ms var(--ease-soft), border-color 250ms var(--ease-soft);
+  animation: header-in 600ms var(--ease-out) both;
+}
+
+.site-header.is-scrolled,
+.site-header.is-open {
   background: var(--color-bg);
   color: var(--color-fg);
-  border-bottom: 1px solid var(--color-border);
-  transition: transform 350ms var(--ease-out), border-color 250ms var(--ease-soft);
-  animation: header-in 600ms var(--ease-out) both;
+  border-bottom-color: var(--color-border);
+}
+
+/* Light controls while the bar sits on the dark hero map. */
+.site-header:not(.is-scrolled):not(.is-open) :is(.nav a, .icon-btn) {
+  color: rgba(246, 241, 230, 0.8);
+}
+
+.site-header:not(.is-scrolled):not(.is-open) :is(.nav a:hover, .nav a.is-active, .icon-btn:hover) {
+  color: #f6f1e6;
 }
 
 .site-header.is-hidden {
@@ -425,29 +443,7 @@ section[id] {
   }
 }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  height: 2rem;
-  padding-inline: 0.9rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: #f6f1e6;
-  background: var(--navi-ink);
-  border: 1px solid rgba(246, 241, 230, 0.22);
-  border-radius: 9999px;
-}
 
-.hero-eyebrow-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: var(--navi-gold);
-  animation: twinkle 2.4s ease-in-out infinite;
-}
 
 @keyframes twinkle {
   0%, 100% { opacity: 1; transform: scale(1); }
