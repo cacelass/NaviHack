@@ -125,10 +125,12 @@
         "uv run python -m app hello sigue imprimiendo Hola, mundo. y devuelve 0",
         "make check pasa y ./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "9919c3e2-516f-48ee-929c-58f4a1294830",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "9919c3e2-fix-001-app.__main__-rompe-los-i",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "DESIGN-001",
