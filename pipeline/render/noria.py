@@ -46,12 +46,59 @@ def crop_box(
     return x0, y0, x1, y1
 
 
+def build_mask_thin(
+    src: np.ndarray,
+    dst: np.ndarray,
+    *,
+    thresh: float = 30.0,
+    close_px: int = 25,
+    dilate_px: int = 9,
+    blur: float = 5.0,
+) -> np.ndarray:
+    """Máscara suave para objetos de líneas finas (radios y llanta de una noria).
+
+    ``build_mask`` del árbol abre 5x5 y con eso borra todo lo más fino que 5 px: un árbol macizo
+    aguanta, unos radios de 1-3 px no. Aquí: diferencia real (LAB) > ``thresh`` (30: con 15 el modelo, que retoca todo
+    el recorte un poco, hace que la máscara cubra el 58 % de la imagen; con 30 queda la silueta, 9,7 %), un opening de 3x3 que
+    solo quita el ruido de 1-2 px, un closing grande que une radios y llanta en una silueta, el
+    componente del CENTRO del recorte (el modelo retoca además esquinas y calles; eso no se pega) y el
+    interior relleno. Todo lo que queda fuera sigue bit a bit como estaba.
+    """
+    sl = cv2.cvtColor(src, cv2.COLOR_RGB2LAB).astype(np.float32)
+    dl = cv2.cvtColor(dst, cv2.COLOR_RGB2LAB).astype(np.float32)
+    m = (np.linalg.norm(sl - dl, axis=2) > thresh).astype(np.uint8)
+    m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    m = cv2.morphologyEx(
+        m, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (close_px, close_px))
+    )
+    h, w = m.shape
+    n, labels, stats, cen = cv2.connectedComponentsWithStats(m, connectivity=8)
+    best, best_area = 0, 0
+    for i in range(1, n):
+        cx, cy = cen[i]
+        central = abs(cx - w / 2) < 0.3 * w and abs(cy - h / 2) < 0.3 * h
+        if central and stats[i, cv2.CC_STAT_AREA] > best_area:
+            best, best_area = i, int(stats[i, cv2.CC_STAT_AREA])
+    if not best:
+        return np.zeros((h, w), np.float32)
+    obj = (labels == best).astype(np.uint8)
+    contours, _ = cv2.findContours(obj, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    filled = np.zeros_like(obj)
+    cv2.drawContours(filled, contours, -1, 1, thickness=cv2.FILLED)
+    filled = cv2.dilate(filled, np.ones((dilate_px, dilate_px), np.uint8))
+    return np.clip(cv2.GaussianBlur(filled.astype(np.float32), (0, 0), blur), 0, 1)
+
+
 def upscale(crop: np.ndarray) -> np.ndarray:
     return np.asarray(Image.fromarray(crop).resize((MODEL_SIZE, MODEL_SIZE), Image.LANCZOS))
 
 
 def composite(
-    canvas: np.ndarray, center: tuple[int, int], half: int, answer1024: np.ndarray
+    canvas: np.ndarray,
+    center: tuple[int, int],
+    half: int,
+    answer1024: np.ndarray,
+    mask_fn=None,
 ) -> tuple[np.ndarray, np.ndarray, dict]:
     """Paste the model's 1024 px answer back into canvas, changing only what the mask says.
 
@@ -61,7 +108,7 @@ def composite(
     x0, y0, x1, y1 = crop_box(center, half, (w, h))
     side = 2 * half
     src = canvas[y0:y1, x0:x1]
-    mask1024 = build_mask(upscale(src), answer1024)
+    mask1024 = (mask_fn or build_mask_thin)(upscale(src), answer1024)
     dst = np.asarray(Image.fromarray(answer1024).resize((side, side), Image.LANCZOS))
     mask = cv2.resize(mask1024, (side, side), interpolation=cv2.INTER_AREA)[..., None]
     blended = np.rint(src.astype(np.float32) * (1 - mask) + dst.astype(np.float32) * mask)
@@ -102,6 +149,12 @@ def main() -> None:
         type=Path,
         default=None,
         help="full final map (default: <out-dir>/mapa-con-noria.png)",
+    )
+    ap.add_argument(
+        "--mask",
+        choices=("thin", "solid"),
+        default="thin",
+        help="thin: radios y llanta (noria); solid: la del árbol (objeto macizo)",
     )
     ap.add_argument("--call", action="store_true", help="spend one image call")
     ap.add_argument(
@@ -148,7 +201,13 @@ def main() -> None:
     answer = Image.open(answer_path).convert("RGB")
     if answer.size != (MODEL_SIZE, MODEL_SIZE):
         answer = answer.resize((MODEL_SIZE, MODEL_SIZE), Image.LANCZOS)
-    out, mask1024, stats = composite(canvas, center, a.half, np.asarray(answer))
+    out, mask1024, stats = composite(
+        canvas,
+        center,
+        a.half,
+        np.asarray(answer),
+        build_mask_thin if a.mask == "thin" else build_mask,
+    )
 
     Image.fromarray((mask1024 * 255).astype(np.uint8)).save(a.out_dir / "mascara1024.png")
     bx0, by0, bx1, by1 = stats["box"]
