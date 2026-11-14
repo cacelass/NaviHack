@@ -272,5 +272,7 @@
   "search.none": "Nothing for «{q}». Try another word.",
   "share.button": "Share",
   "share.copied": "Link copied",
-  "share.copy": "Copy the link"
+  "share.copy": "Copy the link",
+  "detail.off_map": "See it in City view",
+  "detail.off_map_note": "It is outside the drawn map of the centre."
 }

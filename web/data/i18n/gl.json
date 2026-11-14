@@ -272,5 +272,7 @@
   "search.none": "Nada para «{q}». Proba con outra palabra.",
   "share.button": "Compartir",
   "share.copied": "Ligazón copiada",
-  "share.copy": "Copia a ligazón"
+  "share.copy": "Copia a ligazón",
+  "detail.off_map": "Velo en Vista cidade",
+  "detail.off_map_note": "Queda fóra do mapa debuxado do centro."
 }

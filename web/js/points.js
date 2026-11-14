@@ -86,7 +86,7 @@
     const m = el("button", "tv-marker" + (status(p) && status(p).open ? " is-open" : ""));
     m.setAttribute("aria-label", txt(p.name));
     m.title = txt(p.name);
-    if (window.PX) m.innerHTML = PX.svg(PXICON[p.type] || "pin", { size: 16 }); // WEB-02: icono pixel por tipo
+    if (window.PX) m.innerHTML = PX.svg(PXICON[p.type] || "pin", { size: 12 }); // WEB-02: icono pixel por tipo
     m.dataset.id = p.id;
     m.onclick = (ev) => { ev.stopPropagation(); const c = +(m.dataset.count || 0); if (c > 1) { viewer.viewport.zoomBy(2.2, new OpenSeadragon.Point(p.x, p.y)); viewer.viewport.applyConstraints(); } else select(p, false); };
     viewer.addOverlay({ element: m, location: new OpenSeadragon.Point(p.x, p.y), placement: OpenSeadragon.Placement.BOTTOM });
@@ -95,7 +95,7 @@
   // WEB-02: los que se solapan en pantalla se agrupan en uno con el número; al pulsarlo se acerca
   const byId = new Map(points.map((p) => [p.id, p]));
   function cluster() {
-    const R = 30, list = [...markers.entries()].map(([id, m]) => {
+    const R = 22, list = [...markers.entries()].map(([id, m]) => {
       const p = byId.get(id), px = viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(p.x, p.y), true);
       return { m, x: px.x, y: px.y, done: false };
     });
@@ -179,7 +179,7 @@
       sched ? el("details", "tv-sched", el("summary", null, t("detail.schedule")), el("p", null, sched)) : null,
       el("div", "tv-actions", dir, photo, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
       parkingBlock(p),
-      !p.on_map ? el("p", "tv-note", t("common.no_data") + " · " + t("app.map_label")) : null,
+      !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
       freshness(p),
     ].filter(Boolean)
     );

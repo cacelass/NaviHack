@@ -272,5 +272,7 @@
   "search.none": "Nada para «{q}». Prueba con otra palabra.",
   "share.button": "Compartir",
   "share.copied": "Enlace copiado",
-  "share.copy": "Copia el enlace"
+  "share.copy": "Copia el enlace",
+  "detail.off_map": "Verlo en Vista ciudad",
+  "detail.off_map_note": "Queda fuera del mapa dibujado del centro."
 }

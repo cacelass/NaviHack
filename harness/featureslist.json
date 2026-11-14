@@ -246,14 +246,12 @@
         "make check pasa (lint + typecheck + test + arnés)",
         "El README documenta cómo ejecutarlo, con la salida esperada"
       ],
-      "status": "in_progress",
+      "status": "pending",
       "depends_on": [
         "DESIGN-001"
       ],
       "ticket_id": "9aacc009-2ac2-42f8-ad96-eb15b678d93e",
-      "raw_status": "IN_PROGRESS",
-      "branch": "9aacc009-core-001-primera-pieza-funcional",
-      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
+      "raw_status": "FREE"
     },
     {
       "id": "BOOT-003",
@@ -1747,10 +1745,10 @@
         "Redimensionar la ventana y girar el móvil reajusta el encuadre sin dejar huecos",
         "Capturas antes y después en web/ui/capturas/"
       ],
-      "status": "done",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "711d514a-c7fa-4bc8-b834-7ce7bbe5fe49",
-      "raw_status": "DONE",
+      "raw_status": "IN_PROGRESS",
       "branch": "711d514a-web-01-el-visor-llena-la-pantall",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -1811,12 +1809,12 @@
         "Las frases son cortas y llanas en los tres idiomas, sin jerga ni frases largas",
         "Capturas de la misma pantalla en gallego, español e inglés en web/ui/capturas/"
       ],
-      "status": "done",
+      "status": "in_progress",
       "depends_on": [
         "I18N-01"
       ],
       "ticket_id": "4937c4ce-2786-4fb6-a09d-b44cecbc8c31",
-      "raw_status": "DONE",
+      "raw_status": "IN_PROGRESS",
       "branch": "4937c4ce-web-04-idioma-por-el-navegador-g",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -1863,23 +1861,6 @@
       "raw_status": "IN_PROGRESS",
       "branch": "db918085-go-01-c-mo-llegar-al-primer-punt",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
-    },
-    {
-      "id": "UI-05",
-      "title": "Ficha del punto rediseñada: foto arriba ampliable, icono, estado y dirección con mapa, bus más claro",
-      "description": "Pedido de Jose (2026-11-14). En la ficha que se abre al pulsar un punto de la lista: la foto va arriba del todo con la X flotante sobre ella (sin fondo); al tocar la foto se ve en grande; sobra el botón 'foto real'. Cabecera con icono del tipo (Luces, etc.), menos texto y mejor estructura: estado 'Cerrado' a un lado y 'Abre 18:00' al otro, estilo puerta cerrada/abierta. Dirección con un mini-mapa. El bloque de bus (parada + próximas salidas + 'horario programado') más personalizado: icono, líneas como chips, distancia clara, nota discreta. Seguir web/ui/DESIGN.md.\n\nCriterios de aceptación:\n  1. Foto arriba del todo con X flotante sin fondo\n  2. Tocar la foto la abre a pantalla completa y se quita el botón foto real\n  3. Cabecera con icono de tipo y estado abierto/cerrado a un lado y hora al otro\n  4. Dirección con mini-mapa\n  5. Bloque de bus rediseñado con icono, chips de línea y nota discreta de horario programado\n  6. Menos texto y sin errores en consola",
-      "acceptance_criteria": [
-        "Foto arriba del todo con X flotante sin fondo",
-        "Tocar la foto la abre a pantalla completa y se quita el botón foto real",
-        "Cabecera con icono de tipo y estado abierto/cerrado a un lado y hora al otro",
-        "Dirección con mini-mapa",
-        "Bloque de bus rediseñado con icono, chips de línea y nota discreta de horario programado",
-        "Menos texto y sin errores en consola"
-      ],
-      "status": "pending",
-      "depends_on": [],
-      "ticket_id": "a8ed664d-02d5-4289-ad10-fa7f63682074",
-      "raw_status": "FREE"
     }
   ]
 }
