@@ -606,3 +606,20 @@ commit e3f2bb7. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Paginació
 ```
 
 </details>
+
+## D-04 — Venue join for agenda events
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 97 passed in 0.53s
+- **Ticket GEAS:** 0753e662 · commit_after `9da086d7`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 94d5fb2. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Cruce id aprendido/nombre/dirección; 14 de 44 eventos en mapa, 24 en unmatched, sin ubicación solo lista. test_venues 6 tests.
+```
+
+</details>
