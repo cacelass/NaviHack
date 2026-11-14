@@ -631,13 +631,15 @@
         "Walking directions from the user position and add-to-route button",
         "Confirmation status and last_verified shown"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "R-02",
         "D-05"
       ],
       "ticket_id": "c6ea584d-584a-4e15-9305-27f2a4984eb8",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "c6ea584d-preview-01-point-preview-fly-to-",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "STORY-01",
@@ -693,12 +695,14 @@
         "Walking times from the OSM pedestrian graph",
         "Chosen route drawn on the map with numbered stops"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-12"
       ],
       "ticket_id": "8750a751-7e75-4c24-abc9-60a218951226",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "8750a751-planner-01-route-planner-walking",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "POSTCARD-01",
@@ -782,12 +786,12 @@
         "Go/no-go recorded",
         "Protobuf decoding handled or noted as blocker"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "X-02"
       ],
       "ticket_id": "38617de7-9026-4c02-8f5a-eb28b92a8975",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "38617de7-x-03-renfe-live-feasibility-chec",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1026,12 +1030,14 @@
         "Christmas points outside the zone are listed and the way they are shown (marker over the PNOA photo) is recorded",
         "Cost estimate in API calls recorded, counting the 429 retries seen in the 3x3 test"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "R-06"
       ],
       "ticket_id": "4c74c76d-a233-441e-8a85-81dbdb51ebb3",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "4c74c76d-zone-01-choose-the-v1-zone-the-c",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "STYLE-01",
@@ -1046,10 +1052,12 @@
         "The rejected look (SimCity with warm light) kept as reference of what to avoid",
         "Calls used counted and recorded"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "248b5f40-c1b3-4efc-ae43-b15943098f41",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "248b5f40-style-01-style-unlit-high-bit-lo",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "IMGAPI-01",
@@ -1063,10 +1071,12 @@
         "Provider terms for commercial use of outputs and for photos of people checked and recorded",
         "No key or credential in any versioned file"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "91a980ab-0b09-459e-b3bb-d3c8fbd83316",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "91a980ab-imgapi-01-image-model-vertex-acc",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "LIC-01",
@@ -1096,13 +1106,15 @@
         "Tile index file lists every tile with its coordinates",
         "Pixel-to-ground conversion tested against 3 known points within an agreed error"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "ZONE-01",
         "X-05"
       ],
       "ticket_id": "483877da-8eae-4a00-a1f5-f48f07d04946",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "483877da-render-01-tile-render-orthograph",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "RENDER-02",
@@ -1133,14 +1145,16 @@
         "Each drawing stored as a new immutable version, never overwritten",
         "Open-sea tile drawn without inventing land, port or boats, checked by CHECK-01"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "STYLE-01",
         "RENDER-01",
         "IMGAPI-01"
       ],
       "ticket_id": "71bae10a-531b-45f2-a131-cbf100d681f5",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "71bae10a-draw-01-draw-a-tile-with-the-ima",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "SEAM-01",
@@ -1154,12 +1168,14 @@
         "Corner handling documented: no AI redraw, tile edges equalised in code",
         "Every seam drawing logged and versioned"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "DRAW-01"
       ],
       "ticket_id": "aa1bec5f-5807-46b6-8ced-36f829386fef",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "aa1bec5f-seam-01-straight-seams-no-ai-cor",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "CHECK-01",
@@ -1262,13 +1278,15 @@
         "Boats and surf kept from the drawing",
         "No building, pier or ship from the model remains on open water in the zone"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "RENDER-01",
         "DRAW-01"
       ],
       "ticket_id": "8505ec19-08b5-45dc-b77e-c8c56293278b",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "8505ec19-water-01-water-in-code",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "WEATHER-01",
@@ -1373,10 +1391,12 @@
         "Each version in its own folder, never overwritten",
         "Tiles served with long, immutable cache headers"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "48bee3f5-0c0b-4a17-a8dc-3ed53c531e76",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "48bee3f5-pyr-01-tile-pyramid-and-publishi",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "MAP-02",
@@ -1636,10 +1656,12 @@
         "Mapa de alturas usado para sombras y foco",
         "Revisado con modelo con visión"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "e099b222-8936-484d-bfcf-708f5811e3a9",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "e099b222-map-03-pulido-visual-del-bloque-",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "ZONE-02",
@@ -1702,10 +1724,12 @@
         "Enlazada desde la app",
         "Sin fuentes de píxel en el texto"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "cf75eff9-41da-4949-a4a8-0efa7ac0fd48",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "cf75eff9-ui-02-p-gina-de-direcciones-de-u",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "UI-03",
@@ -1716,10 +1740,12 @@
         "AGENTS.md (sección Interfaz) enlaza la guía",
         "Incluye un checklist de diez puntos que se puede pasar a una pantalla"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "f64d2852-0086-47c5-b739-b2c2c73352cb",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "f64d2852-ui-03-gu-a-de-interfaz-obligator",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "UI-04",
