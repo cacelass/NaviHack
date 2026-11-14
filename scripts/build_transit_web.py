@@ -87,6 +87,40 @@ def direct_to_centre(
     return dict(out)
 
 
+def compact_trips(
+    trips: dict[str, dict[str, str]],
+    stop_times: dict[str, list[dict[str, str]]],
+    routes: dict[str, str],
+    stop_index: dict[str, int],
+    svc: dict[str, int],
+) -> list[list[Any]]:
+    """Viajes para el «cómo llegar» en bus (GO-01): `[línea, destino, servicio, [parada], [minuto]]`.
+
+    Con esto la web encuentra un bus **directo** entre cualquier parada cercana al
+    usuario y cualquier parada cercana al primer punto del tour.
+    """
+    out: list[list[Any]] = []
+    for trip_id, sts in stop_times.items():
+        trip = trips.get(trip_id)
+        if trip is None or trip["service_id"] not in svc:
+            continue
+        seq = sorted(sts, key=lambda s: int(s["stop_sequence"]))
+        seq = [s for s in seq if s["stop_id"] in stop_index and s.get("departure_time")]
+        if len(seq) < 2:
+            continue
+        out.append(
+            [
+                routes.get(trip["route_id"], trip["route_id"]),
+                trip.get("trip_headsign", ""),
+                svc[trip["service_id"]],
+                [stop_index[s["stop_id"]] for s in seq],
+                [_minutes(s["departure_time"]) for s in seq],
+            ]
+        )
+    out.sort(key=lambda t: t[4][0])
+    return out
+
+
 def nearest_stop(point: dict[str, Any], stops: list[dict[str, Any]]) -> dict[str, Any] | None:
     best = min(
         stops,
@@ -138,10 +172,15 @@ def build(
         for sid in near_ids
         if sid in base["departures"]
     }
+    all_stops = [[s["id"], s["name"], s["lat"], s["lon"]] for s in stops]
+    stop_index = {s[0]: i for i, s in enumerate(all_stops)}
     return {
         "kind": "scheduled",
         "source": base["source"],
+        "all_stops": all_stops,
+        "trips": compact_trips(trips, stop_times, routes, stop_index, svc),
         "format": {
+            "trips": ["línea", "destino", "servicio", "[índice en all_stops]", "[minuto_del_día]"],
             "to_centre": ["minuto_del_día", "línea", "servicio", "minutos_de_viaje"],
             "departures": ["minuto_del_día", "línea", "destino", "servicio", "desvío_navidad"],
         },

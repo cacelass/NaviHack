@@ -59,16 +59,33 @@
     // rutas que calcula el tour
     const routeLayer = L.layerGroup().addTo(map);
     document.addEventListener("tv:route", (e) => {
-      const { line, start, stops, mode } = e.detail;
+      const { start, stops } = e.detail;
       routeLayer.clearLayers();
-      if (!line || !line.length) return;
-      const ll = line.map(([lo, la]) => [la, lo]);
-      L.polyline(ll, { color: "#151b2a", weight: 9, opacity: 0.8 }).addTo(routeLayer);
-      L.polyline(ll, { color: mode === "driving" ? "#4ea3ff" : "#f4cd80", weight: 5, dashArray: mode === "transit" ? "8 8" : null }).addTo(routeLayer);
+      // GO-01: varios tramos (coche/bus/a pie hasta el inicio + tour), cada uno con su estilo
+      const legs = e.detail.legs || (e.detail.line ? [{ line: e.detail.line, mode: e.detail.mode === "driving" ? "car" : "tour" }] : []);
+      const STYLE = {
+        car: { color: "#4ea3ff", weight: 6 },
+        bus: { color: "#34c38f", weight: 6 },
+        walk: { color: "#f4cd80", weight: 4, dashArray: "2 9", lineCap: "round" },
+        tour: { color: "#f4cd80", weight: 5 },
+      };
+      const all = [];
+      for (const leg of legs) {
+        if (!leg.line || !leg.line.length) continue;
+        const ll = leg.line.map(([lo, la]) => [la, lo]);
+        all.push(...ll);
+        L.polyline(ll, { color: "#151b2a", weight: (STYLE[leg.mode] || STYLE.tour).weight + 4, opacity: 0.75 }).addTo(routeLayer);
+        L.polyline(ll, STYLE[leg.mode] || STYLE.tour).addTo(routeLayer);
+        const badge = (pos, cls, label) => L.marker(pos, { zIndexOffset: 900, icon: L.divIcon({ className: "", html: '<div class="tv-legpin ' + cls + '">' + label + "</div>", iconSize: [26, 26], iconAnchor: [13, 13] }) }).addTo(routeLayer);
+        if (leg.parking) badge(leg.parking, "is-park", "P");
+        if (leg.board) badge(leg.board, "is-bus", window.LU ? LU.svg("bus", { size: 14 }) : "B");
+        if (leg.alight) badge(leg.alight, "is-bus", window.LU ? LU.svg("bus", { size: 14 }) : "B");
+      }
+      if (!all.length) return;
       L.circleMarker(start, { radius: 8, color: "#fff", weight: 3, fillColor: "#4ea3ff", fillOpacity: 1 }).addTo(routeLayer);
       (stops || []).forEach((s, i) => L.marker([s.p.lat, s.p.lon], { zIndexOffset: 1000, title: (i + 1) + ". " + txt(s.p.name), icon: L.divIcon({ className: "", html: '<div class="tv-stopnum">' + (i + 1) + "</div>", iconSize: [28, 28], iconAnchor: [14, 82] }) })
         .on("click", () => (window.tinyvigoTour ? tinyvigoTour.startWalk(i) : P.select(s.p, false))).addTo(routeLayer));
-      lastBounds = L.latLngBounds(ll).pad(0.15);
+      lastBounds = L.latLngBounds(all).pad(0.15);
       if (e.detail.showCity) setCity(true);
       else if (document.body.classList.contains("is-city")) map.fitBounds(lastBounds);
     });

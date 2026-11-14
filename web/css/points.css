@@ -129,11 +129,12 @@ body.is-city #city { display: block; }
 body.is-city #zoom { display: none; }
 html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(1.1) hue-rotate(195deg) invert(.92); }
 /* marcador: la foto entera (no recortada) en una tarjeta con punta que señala el sitio exacto */
-.tv-pin { position: relative; width: 84px; height: 56px; border-radius: var(--r-ctl); background: var(--sunk); border: 3px solid var(--acc); box-sizing: border-box; display: grid; place-items: center; color: var(--fg-2); box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
+.tv-pin { position: relative; width: 84px; height: 56px; overflow: visible; border-radius: var(--r-ctl); background: var(--sunk); border: 3px solid var(--acc); box-sizing: border-box; display: grid; place-items: center; color: var(--fg-2); box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
 .tv-pin::after { content: ""; position: absolute; left: 50%; bottom: -11px; transform: translateX(-50%); border: 8px solid transparent; border-top: 9px solid var(--acc); border-bottom: 0; }
 .tv-pin.is-open { border-color: var(--ok); }
 .tv-pin.is-open::after { border-top-color: var(--ok); }
-.tv-pin img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: calc(var(--r-ctl) - 3px); }
+/* Leaflet fuerza width/height:auto en las img del panel de marcadores: hay que ganarle en especificidad */
+.leaflet-container .leaflet-marker-pane .tv-pin img, .tv-pin img { width: 78px !important; height: 50px !important; max-width: none; object-fit: contain; display: block; border-radius: calc(var(--r-ctl) - 3px); }
 .tv-park { display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 0 8px 0 3px; border-radius: var(--r-sm); font: var(--w-600) var(--fs-meta)/1 var(--f-ui); background: var(--raised); color: var(--fg); border: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .tv-park b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 4px; background: #3d6a96; color: #fff; }
 .tv-park-ok { color: var(--ok); } .tv-park-low { color: var(--warning); } .tv-park-full { color: var(--danger); }
@@ -228,3 +229,30 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-parking:not(:empty) { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--line); display: grid; gap: 4px; }
 .tv-parking a { display: flex; align-items: center; gap: var(--sp-2); min-height: var(--tap); padding: 0 var(--sp-2); border-radius: var(--r-ctl); background: var(--surface); color: var(--fg); text-decoration: none; font-weight: var(--w-500); }
 .tv-parking a::before { content: "P"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 4px; background: #3d6a96; color: #fff; font-weight: var(--w-600); font-size: var(--fs-meta); }
+
+/* GO-01: cómo llegar al primer punto */
+.tv-go { display: grid; gap: var(--sp-2); margin-top: var(--sp-3); }
+.tv-go h3 { margin: 0; font-size: var(--fs-copy); font-weight: var(--w-600); }
+.tv-goopts { display: grid; gap: var(--sp-2); }
+.tv-goopt { display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: var(--sp-3); min-height: var(--tap); padding: var(--sp-3); border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); color: var(--fg); text-align: left; cursor: pointer; font: inherit; }
+.tv-goopt:hover:not(:disabled), .tv-goopt:focus-visible { border-color: var(--acc); }
+.tv-goopt.is-off { opacity: .55; cursor: default; }
+.tv-goopt-body { display: grid; gap: 2px; min-width: 0; }
+.tv-goopt-body span { font-size: var(--fs-meta); color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; }
+.tv-leg-icon { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--sunk); color: var(--fg); }
+.tv-leg-time { font-weight: var(--w-600); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tv-legs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.tv-leg { display: grid; grid-template-columns: 36px 1fr auto; gap: var(--sp-3); align-items: start; padding: var(--sp-2) 0; position: relative; }
+.tv-leg + .tv-leg::before { content: ""; position: absolute; left: 17px; top: -6px; height: 12px; border-left: 2px dotted var(--line); }
+.tv-leg-body { display: grid; gap: 2px; min-width: 0; }
+.tv-leg-body span { font-size: var(--fs-meta); color: var(--fg-2); }
+.tv-leg-maps { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-meta); color: var(--acc); text-decoration: none; width: fit-content; }
+.tv-leg-car .tv-leg-icon { background: #4ea3ff; color: #0d1320; }
+.tv-leg-bus .tv-leg-icon { background: #34c38f; color: #0d1320; }
+.tv-leg-walk .tv-leg-icon { background: #f4cd80; color: #0d1320; }
+.tv-go-alt { justify-content: flex-start; gap: 6px; }
+.tv-loading::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; vertical-align: -1px; border: 2px solid var(--fg-3); border-top-color: transparent; border-radius: 50%; animation: tv-spin .8s linear infinite; }
+@keyframes tv-spin { to { transform: rotate(360deg); } }
+.tv-legpin { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .4); color: #0d1320; }
+.tv-legpin.is-park { background: #4ea3ff; }
+.tv-legpin.is-bus { background: #34c38f; }
