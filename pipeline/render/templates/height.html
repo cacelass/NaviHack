@@ -1,0 +1,40 @@
+<!doctype html><meta charset="utf-8"><title>Vigo height · expansión</title>
+<style>body{margin:0;background:#222}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script src="params.js"></script>
+<script src="data.js"></script>
+<script>
+// Mapa de alturas del 3x3 (pipeline/render/original/height.html) sobre el
+// lienzo ampliado: el canal rojo es la altura en metros por 4.
+const SC = SCENE.sc, TILT = SCENE.tiltDeg * Math.PI / 180, HEAD = SCENE.headDeg * Math.PI / 180;
+const K = Math.sin(TILT), KZ = Math.cos(TILT);
+const fx = Math.sin(HEAD), fy = Math.cos(HEAD);
+const rx = Math.cos(HEAD), ry = -Math.sin(HEAD);
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+cv.width = SCENE.width; cv.height = SCENE.height;
+const OX = SCENE.ox, OY = SCENE.oy;
+const proj = (x, y, z = 0) => [OX + SC * (rx * x + ry * y), OY + SC * (-K * (fx * x + fy * y) - KZ * z)];
+
+ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cv.width, cv.height);
+const hc = h => `rgb(${Math.min(255, Math.round(h * 4))},0,0)`;
+const depth = b => b.p.reduce((s, [x, y]) => s + fx * x + fy * y, 0) / b.p.length;
+const bs = DATA.B.map(b => ({ ...b, d: depth(b) })).sort((a, b) => b.d - a.d);
+for (const b of bs) {
+  const p = b.p; let A = 0;
+  for (let i = 0; i < p.length; i++) { const q = p[(i + 1) % p.length]; A += p[i][0] * q[1] - q[0] * p[i][1]; }
+  const sg = A > 0 ? 1 : -1;
+  for (let i = 0; i < p.length; i++) {
+    const a = p[i], c = p[(i + 1) % p.length], ex = c[0] - a[0], ey = c[1] - a[1], len = Math.hypot(ex, ey);
+    if (len < 0.3) continue;
+    const nx = sg * ey / len, ny = -sg * ex / len;
+    if (-(nx * fx + ny * fy) <= 0) continue;
+    const q = [proj(a[0], a[1], 0), proj(c[0], c[1], 0), proj(c[0], c[1], b.h), proj(a[0], a[1], b.h)];
+    const g = ctx.createLinearGradient(q[0][0], q[0][1], q[3][0], q[3][1]); g.addColorStop(0, hc(0)); g.addColorStop(1, hc(b.h));
+    ctx.beginPath(); q.forEach(([u, v], k) => k ? ctx.lineTo(u, v) : ctx.moveTo(u, v)); ctx.closePath(); ctx.fillStyle = g; ctx.fill();
+  }
+  ctx.beginPath(); p.forEach(([x, y], k) => { const [u, v] = proj(x, y, b.h); k ? ctx.lineTo(u, v) : ctx.moveTo(u, v); }); ctx.closePath();
+  ctx.fillStyle = hc(b.h); ctx.fill();
+}
+const SAVE = location.pathname.split('/').pop().replace(/\.html$/, '.png');
+cv.toBlob(b => fetch('/save?name=' + SAVE, { method: 'POST', body: b }).then(() => { document.title = 'READY'; }), 'image/png');
+</script>
