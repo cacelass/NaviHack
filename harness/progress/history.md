@@ -337,3 +337,20 @@ $ uv run python -c 'import app.__main__' → exit 0 (sin output) | $ uv run pyth
 ```
 
 </details>
+
+## D-00 — Measure real refresh rate and terms of Concello feeds
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 20 passed in 0.39s
+- **Ticket GEAS:** 9f20797f · commit_after `5a6ca17c`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 4564ba9. ./init.sh -> 11 passed, ENTORNO LISTO. parkings-ocupacion.json Last-Modified 11:55:04->11:57:04->12:07:04->12:09:04 GMT = cada 2 min; agenda-hoy.json diario 06:05 UTC; CORS * en ambos; ODC-BY; intervalos A7 en vault/01_PROYECTO/fuentes_datos.md
+```
+
+</details>
