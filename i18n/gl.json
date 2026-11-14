@@ -65,7 +65,7 @@
   "home.today_postcard_title": "A postal",
   "home.today_postcard_body": "A túa foto na Porta do Sol, lista para compartir.",
   "points.title": "Puntos de Nadal",
-  "points.search": "Buscar un punto",
+  "points.search": "Buscar puntos, rúas, estacións…",
   "points.filter_all": "Todos",
   "points.filter_lights": "Luces",
   "points.filter_markets": "Mercados",
@@ -233,5 +233,12 @@
   "xmas.agenda": "Na axenda do Concello",
   "xmas.soon": "Proximamente",
   "xmas.from_date": "Desde o {date}",
-  "xmas.source": "Programa oficial de Nadal 2026-27 e axenda do Concello"
+  "xmas.source": "Programa oficial de Nadal 2026-27 e axenda do Concello",
+  "search.g_points": "Puntos de Nadal",
+  "search.g_events": "Eventos",
+  "search.g_stations": "Estacións e paradas",
+  "search.g_streets": "Rúas",
+  "search.recent": "Buscas recentes",
+  "search.hint": "Proba «noria», «Porta do Sol», «Urzáiz» ou «Príncipe».",
+  "search.none": "Nada para «{q}». Proba con outra palabra."
 }

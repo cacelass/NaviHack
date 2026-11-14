@@ -65,7 +65,7 @@
   "home.today_postcard_title": "The postcard",
   "home.today_postcard_body": "Your photo at Porta do Sol, ready to share.",
   "points.title": "Christmas spots",
-  "points.search": "Search for a spot",
+  "points.search": "Search spots, streets, stations…",
   "points.filter_all": "All",
   "points.filter_lights": "Lights",
   "points.filter_markets": "Markets",
@@ -233,5 +233,12 @@
   "xmas.agenda": "On the Concello agenda",
   "xmas.soon": "Coming soon",
   "xmas.from_date": "From {date}",
-  "xmas.source": "Official Christmas 2026-27 programme and Concello agenda"
+  "xmas.source": "Official Christmas 2026-27 programme and Concello agenda",
+  "search.g_points": "Christmas spots",
+  "search.g_events": "Events",
+  "search.g_stations": "Stations and stops",
+  "search.g_streets": "Streets",
+  "search.recent": "Recent searches",
+  "search.hint": "Try «noria», «Porta do Sol», «Urzáiz» or «Príncipe».",
+  "search.none": "Nothing for «{q}». Try another word."
 }

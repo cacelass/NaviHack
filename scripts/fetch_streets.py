@@ -38,7 +38,14 @@ def group(elements: list[dict]) -> list[list]:
         if name and c:
             acc[name].append((c["lat"], c["lon"]))
     return sorted(
-        [[n, round(sum(p[0] for p in ps) / len(ps), 6), round(sum(p[1] for p in ps) / len(ps), 6)] for n, ps in acc.items()]
+        [
+            [
+                n,
+                round(sum(p[0] for p in ps) / len(ps), 6),
+                round(sum(p[1] for p in ps) / len(ps), 6),
+            ]
+            for n, ps in acc.items()
+        ]
     )
 
 
