@@ -75,3 +75,6 @@
 {"t":"2026-11-14T23:27:34.414Z","model":"gemini-3.1-flash-image","label":"estilo2-e2_b2","size":"default","status":"429"}
 {"t":"2026-11-14T23:28:29.765Z","model":"gemini-3.1-flash-image","label":"estilo2-e2_b2","size":"default","status":"OK"}
 {"t":"2026-11-14T23:45:23.288Z","model":"gemini-3.1-flash-image","label":"noria-vialia","size":"default","status":"OK"}
+{"t":"2026-11-14T23:52:20.205Z","model":"gemini-3.1-flash-image","label":"seam-h-r2c0-vialia","size":"default","status":"OK"}
+{"t":"2026-11-14T23:55:06.743Z","model":"gemini-3.1-flash-image","label":"seam2-h-r2c0-anclada","size":"default","status":"OK"}
+{"t":"2026-11-14T23:56:48.978Z","model":"gemini-3.1-flash-image","label":"seamwin-h-r2c0","size":"default","status":"OK"}
