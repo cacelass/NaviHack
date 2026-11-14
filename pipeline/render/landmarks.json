@@ -1,0 +1,29 @@
+{
+  "$comment": "Los cuatro hitos que delimitan la zona nueva del mapa. Cada uno con su fuente, para que el número no salga de la nada.",
+  "landmarks": [
+    {
+      "name": "porta-do-sol",
+      "lat": 42.238072,
+      "lon": -8.725813,
+      "source": "Centro del render 3x3 (cLat/cLon de pipeline/render/original/fetch-area.mjs)"
+    },
+    {
+      "name": "alameda",
+      "lat": 42.23931,
+      "lon": -8.72242,
+      "source": "OSM leisure=park 'Praza de Compostela' (A Alameda), centro del polígono, Overpass 2026-11-14"
+    },
+    {
+      "name": "garcia-barbon",
+      "lat": 42.236867,
+      "lon": -8.7155697,
+      "source": "OSM way 'Rúa García Barbón', centro del tramo oeste (Nominatim 2026-11-14)"
+    },
+    {
+      "name": "vialia",
+      "lat": 42.234,
+      "lon": -8.7135,
+      "source": "Estación de Vialia / Urzáiz, coordenada dada por Jose para esta tarea"
+    }
+  ]
+}

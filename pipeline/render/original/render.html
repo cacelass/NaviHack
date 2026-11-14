@@ -1,0 +1,59 @@
+<!doctype html><meta charset="utf-8"><title>Vigo render · Porta do Sol</title>
+<style>body{margin:0;background:#222}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script src="data.js"></script>
+<script>
+// Orthographic "isometric" render like Yadong Xie's: tilt 45°, heading 15° west of north, 0.5 m/px.
+const SC = 2;                         // px per metre
+const TILT = 45 * Math.PI / 180, HEAD = -15 * Math.PI / 180;
+const K = Math.sin(TILT), KZ = Math.cos(TILT);
+const fx = Math.sin(HEAD), fy = Math.cos(HEAD);   // forward (into the view)
+const rx = Math.cos(HEAD), ry = -Math.sin(HEAD);  // screen right
+const SHOT = 3072;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+cv.width = SHOT; cv.height = SHOT;
+const OX = SHOT / 2, OY = SHOT / 2;
+const proj = (x, y, z = 0) => [OX + SC * (rx * x + ry * y), OY + SC * (-K * (fx * x + fy * y) - KZ * z)];
+
+const img = new Image();
+img.onload = () => {
+  const [hx, hy] = DATA.half, iw = img.width, ih = img.height;
+  const dx = 2 * hx / iw, dy = 2 * hy / ih;       // metres per ortho pixel
+  // Affine map ortho pixel (i,j) -> screen, with the image plane lifted to height z
+  const orthoAt = z => {
+    const a = SC * rx * dx, b = -SC * K * fx * dx, c = -SC * ry * dy, d = SC * K * fy * dy;
+    const [e, f] = proj(-hx, hy, z);
+    ctx.setTransform(a, b, c, d, e, f);
+  };
+  ctx.fillStyle = '#3c4a52'; ctx.fillRect(0, 0, SHOT, SHOT);
+  orthoAt(0); ctx.drawImage(img, 0, 0); ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+  const depth = b => b.p.reduce((s, [x, y]) => s + fx * x + fy * y, 0) / b.p.length;
+  const bs = DATA.B.map(b => ({ ...b, d: depth(b) })).sort((a, b) => b.d - a.d);
+  for (const b of bs) {
+    const p = b.p; let A = 0;
+    for (let i = 0; i < p.length; i++) { const q = p[(i + 1) % p.length]; A += p[i][0] * q[1] - q[0] * p[i][1]; }
+    const sg = A > 0 ? 1 : -1;
+    for (let i = 0; i < p.length; i++) {
+      const a = p[i], c = p[(i + 1) % p.length], ex = c[0] - a[0], ey = c[1] - a[1], len = Math.hypot(ex, ey);
+      if (len < 0.3) continue;
+      const nx = sg * ey / len, ny = -sg * ex / len;
+      const facing = -(nx * fx + ny * fy);               // >0 when the wall faces the camera
+      if (facing <= 0) continue;
+      const side = nx * rx + ny * ry;                     // -1 left .. 1 right
+      const l = 0.62 + 0.25 * facing - 0.12 * side;       // soft afternoon light from the left
+      const col = `rgb(${[214, 204, 188].map(v => Math.min(255, v * l) | 0)})`;
+      const q = [proj(a[0], a[1], 0), proj(c[0], c[1], 0), proj(c[0], c[1], b.h), proj(a[0], a[1], b.h)];
+      ctx.beginPath(); q.forEach(([u, v], k) => k ? ctx.lineTo(u, v) : ctx.moveTo(u, v)); ctx.closePath();
+      ctx.fillStyle = col; ctx.fill();
+      ctx.strokeStyle = 'rgba(60,50,45,.25)'; ctx.lineWidth = 0.6;   // floor lines every 3 m as a scale hint
+      for (let z = 3; z < b.h - 0.5; z += 3) { const [u1, v1] = proj(a[0], a[1], z), [u2, v2] = proj(c[0], c[1], z); ctx.beginPath(); ctx.moveTo(u1, v1); ctx.lineTo(u2, v2); ctx.stroke(); }
+    }
+    ctx.save(); ctx.beginPath(); p.forEach(([x, y], k) => { const [u, v] = proj(x, y, b.h); k ? ctx.lineTo(u, v) : ctx.moveTo(u, v); }); ctx.closePath(); ctx.clip();
+    orthoAt(b.h); ctx.drawImage(img, 0, 0); ctx.restore();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+  cv.toBlob(b=>fetch('/save?name=render.png',{method:'POST',body:b}).then(()=>{document.title='READY'}),'image/png');
+};
+img.src = 'ortho.jpg';
+</script>
