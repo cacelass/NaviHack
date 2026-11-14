@@ -57,28 +57,21 @@
       halo.className = "tv-glow tv-glow-" + p.type;
       halo.style.setProperty("--d", ((i * 0.37) % 3).toFixed(2) + "s");
       // el halo escala con el mapa (~40 m de radio): de lejos es pequeño, de cerca se ve
-      const r = 0.013;
+      const r = 0.0075;
       viewer.addOverlay({ element: halo, location: new OpenSeadragon.Rect(p.x - r, p.y - r * 0.8, 2 * r, 1.6 * r) });
       glows.push(halo);
     });
-    // el Árbol de Porta do Sol, pintado en el bloque: medido sobre v6, base (0.525, 0.523), alto 0.0654
-    if (pts.some((p) => p.id === "concello-2552")) {
-      const cone = document.createElement("span");
-      cone.className = "tv-glow-tree";
-      viewer.addOverlay({ element: cone, location: new OpenSeadragon.Rect(0.525 - 0.0143, 0.523 - 0.0654, 0.0286, 0.0654) });
-      glows.push(cone);
-    }
   }
 
   // lluvia: ≤ 140 gotas, ~30 fps, pausa con la pestaña oculta
   let drops = [], raf = 0, last = 0;
   function rainLoop(ts) {
     raf = requestAnimationFrame(rainLoop);
-    if (document.hidden || ts - last < 33) return;
+    if (document.hidden || ts - last < 50) return;
     last = ts;
     const c = rainCanvas, ctx = c.getContext("2d"), W = innerWidth, H = innerHeight;
     if (c.width !== W || c.height !== H) { c.width = W; c.height = H; drops = []; }
-    if (!drops.length) drops = Array.from({ length: Math.min(140, Math.round((W * H) / 9000)) }, () => ({ x: Math.random() * W, y: Math.random() * H, v: 14 + Math.random() * 10, l: 10 + Math.random() * 12 }));
+    if (!drops.length) drops = Array.from({ length: Math.min(90, Math.round((W * H) / 12000)) }, () => ({ x: Math.random() * W, y: Math.random() * H, v: 14 + Math.random() * 10, l: 10 + Math.random() * 12 }));
     ctx.clearRect(0, 0, W, H);
     ctx.strokeStyle = "rgba(210, 222, 240, .5)"; ctx.lineWidth = 1.2; ctx.beginPath();
     for (const d of drops) {
