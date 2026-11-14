@@ -7,3 +7,5 @@ CRON_TZ=Europe/Madrid
 # agenda: se publica ~07:05 Madrid → 07:30 y reintento 09:00
 30 7 * * *   cd $HOME/NaviHack && python3 scripts/snapshot.py agenda >/dev/null
 0 9 * * *    cd $HOME/NaviHack && python3 scripts/snapshot.py agenda >/dev/null
+# tiempo: Open-Meteo actualiza cada 15 min → cada 30
+*/30 * * * *  cd $HOME/NaviHack && python3 scripts/snapshot.py weather >/dev/null

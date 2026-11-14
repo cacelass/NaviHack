@@ -25,6 +25,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "snapshots"
@@ -49,6 +50,19 @@ def _valid_agenda(payload: object) -> str | None:
     return None
 
 
+def _valid_weather(payload: object) -> str | None:
+    if not isinstance(payload, dict):
+        return "se esperaba un objeto"
+    hourly = payload.get("hourly")
+    if not isinstance(payload.get("current"), dict) or not isinstance(hourly, dict):
+        return "faltan 'current' u 'hourly'"
+    times = hourly.get("time")
+    probs = hourly.get("precipitation_probability")
+    if not isinstance(times, list) or not isinstance(probs, list) or len(times) != len(probs):
+        return "'hourly' incompleto"
+    return None
+
+
 def _ts_parkings(payload: list[dict[str, object]], last_modified: str | None) -> str | None:
     # `fechahora` es hora local de Madrid sin zona (D-00): se guarda tal cual.
     return max(str(r["fechahora"]) for r in payload)
@@ -58,11 +72,15 @@ def _ts_header(payload: list[dict[str, object]], last_modified: str | None) -> s
     return last_modified
 
 
+def _ts_weather(payload: dict[str, dict[str, object]], last_modified: str | None) -> str | None:
+    return str(payload["current"]["time"])  # hora local Europe/Madrid (timezone= en la URL)
+
+
 @dataclass(frozen=True)
 class Feed:
     url: str
     validate: Callable[[object], str | None]
-    source_ts: Callable[[list[dict[str, object]], str | None], str | None]
+    source_ts: Callable[[Any, str | None], str | None]
     stale_after_s: int
 
 
@@ -78,6 +96,16 @@ FEEDS = {
         _valid_agenda,
         _ts_header,
         stale_after_s=36 * 3600,
+    ),
+    # Open-Meteo (CC BY 4.0) actualiza cada 15 min; sondeamos cada 30 y damos 3 h.
+    "weather": Feed(
+        "https://api.open-meteo.com/v1/forecast?latitude=42.2376&longitude=-8.7247"
+        "&hourly=temperature_2m,precipitation_probability,precipitation,weather_code"
+        "&current=temperature_2m,weather_code,precipitation"
+        "&timezone=Europe%2FMadrid&forecast_days=2",
+        _valid_weather,
+        _ts_weather,
+        stale_after_s=3 * 3600,
     ),
 }
 
@@ -135,6 +163,50 @@ def age(snapshot: dict[str, object], now: datetime | None = None) -> tuple[float
     fetched = datetime.fromisoformat(str(snapshot["fetched_at"]))
     seconds = (now - fetched).total_seconds()
     return seconds, seconds > float(str(snapshot["stale_after_s"]))
+
+
+def weather_strip(
+    snapshot: dict[str, Any] | None, now: datetime | None = None, hours: int = 6
+) -> dict[str, Any] | None:
+    """Ahora + próximas `hours` horas para la tira de tiempo.
+
+    `None` si no hay snapshot o está caducado: la tira se oculta (D-10).
+    La hora local se compara como texto ISO `YYYY-MM-DDTHH:00`, igual que la da Open-Meteo.
+    """
+    if not snapshot:
+        return None
+    seconds, stale = age(snapshot, now)
+    if stale:
+        return None
+    data = snapshot["data"]
+    hourly = data["hourly"]
+    local_now = str(data["current"]["time"])[:13] + ":00"
+    start = next((i for i, t in enumerate(hourly["time"]) if t >= local_now), len(hourly["time"]))
+    window = range(start, min(start + hours, len(hourly["time"])))
+    return {
+        "now": data["current"],
+        "next_hours": [
+            {
+                "time": hourly["time"][i],
+                "temperature_2m": hourly["temperature_2m"][i],
+                "precipitation_probability": hourly["precipitation_probability"][i],
+                "weather_code": hourly["weather_code"][i],
+            }
+            for i in window
+        ],
+        "age_s": seconds,
+    }
+
+
+def rain_probability(snapshot: dict[str, Any], start: str, end: str) -> int | None:
+    """Máxima probabilidad de lluvia (%) entre dos horas locales ISO, para el planner."""
+    hourly = snapshot["data"]["hourly"]
+    probs = [
+        p
+        for t, p in zip(hourly["time"], hourly["precipitation_probability"], strict=True)
+        if start[:13] <= t[:13] <= end[:13] and p is not None
+    ]
+    return max(probs) if probs else None
 
 
 def main(argv: list[str] | None = None) -> int:
