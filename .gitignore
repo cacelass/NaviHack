@@ -100,3 +100,4 @@ pip-delete-this-directory.txt
 data/snapshots/
 data/agenda/
 data/layers/
+data/transit/
