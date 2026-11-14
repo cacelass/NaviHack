@@ -797,6 +797,11 @@ commit 15dc2b5. pytest 110 passed; evals PASS; node --check OK + smoke con datos
 - **Cerrada:** 2026-11-14
 - **Verificación:** ./init.sh en verde · 110 passed in 0.54s
 - **Ticket GEAS:** 711d514a · commit_after `2b65f8e0`
+## GO-01 — Cómo llegar al primer punto: a pie, en bus o en coche, con tramos, tiempos y ruta en el mapa
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 110 passed in 0.66s
+- **Ticket GEAS:** db918085 · commit_after `5717dff6`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
 - **Pendiente:** _(nada)_
@@ -822,6 +827,7 @@ WEB-01 (Miguel2, 0c45ef7): visor con homeFillsViewer, visibilityRatio 1, minZoom
 
 ```
 WEB-04 (Miguel2, 0c45ef7): idioma por navigator.languages (gl/es/en y variantes gl-ES/es-419/en-GB), ingles si no coincide; la eleccion manual manda y se recuerda; textos solo de web/data/i18n (tests/test_i18n.py: mismas claves y huecos), Acerca de traducido; prueba en Edge: gl 'Puntos de Nadal', en 'Christmas spots', es 'Puntos de Navidad'.   [32m✔[0m pytest                 110 passed in 0.59s [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+commit 5717dff. pytest 110 passed; evals PASS; prueba en Edge headless (scripts/shot.mjs) desde Samil sin errores de consola: 1) a >5 min de la primera luz pregunta a pie/bus/coche con tiempo total en cada tarjeta; 2) a pie: ruta OSRM y tiempo; 3) coche: Pintor Colmeiro 213/366 libres 'seguro que hay sitio' + alternativa Portugal (7 libres, ajustado), tramos coche 11 min + aparcar 5 + a pie 23 min; 4) bus: viaje directo GTFS C3d 17:34 Avda. Europa 101 -> 17:51 Conde de Torrecedeira 21 (17 paradas) + tramos a pie 3 y 8 min; 5) tramos dibujados en la vista ciudad (coche azul, bus verde, a pie a trazos, P y paradas marcadas); 6) Google Maps por tramo y global; 7) fallbacks: sin router línea recta 'aproximado', sin feed de parkings aviso, sin bus directo tarjeta desactivada con motivo. Tour con horas desplazadas a la llegada.
 ```
 
 </details>
