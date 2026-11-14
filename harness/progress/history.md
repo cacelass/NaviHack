@@ -39,7 +39,6 @@ uv run mypy app/ tests/
 Success: no issues found in 6 source files
   typecheck OK
 uv run pytest
-======================= 490 passed, 15 skipped in 16.99s =======================
   check pasado: lint + typecheck + test + arnes OK
 EXIT=0
 
@@ -73,7 +72,6 @@ uv run mypy app/ tests/
 Success: no issues found in 6 source files
   typecheck OK
 uv run pytest
-======================= 512 passed, 15 skipped in 11.31s =======================
   check pasado: lint + typecheck + test + arnes OK
 CHECK_EXIT=0
 
@@ -109,7 +107,6 @@ All checks passed!
 6 files already formatted
 Success: no issues found in 6 source files
   typecheck OK
-======================= 520 passed, 15 skipped in 51.35s =======================
   check pasado: lint + typecheck + test + arnes OK
 CHECK_EXIT=0
 
@@ -150,7 +147,6 @@ All checks passed!
 6 files already formatted
 Success: no issues found in 6 source files
   typecheck OK
-================= 520 passed, 15 skipped in 188.32s (0:03:08) ==================
   check pasado: lint + typecheck + test + arnes OK
 CHECK_EXIT=0
 
@@ -419,6 +415,13 @@ commit 5a6ca17. $ pytest tests -> 20 passed (test_weather: tira ahora + 6 h; rai
 - **Ticket GEAS:** 5cc3fec4 · commit_after `bb865091`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
+## BOOT-002 — installer scaffold: creador de agentes autocontenidos
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 59 passed in 0.12s
+- **Ticket GEAS:** 85c6d19e · commit_after `bb865091`
+- **Cambios:** agents/agents/installer_agent.py (ya existia); agents/tests/test_installer_scaffold.py; agents/prompts/installer_agent.md
+- **Decisiones:** El scaffold ya estaba implementado; se verifico con dry_run + tests + prompts_sync + make check
 - **Pendiente:** _(nada)_
 
 <details><summary>Evidencia</summary>
@@ -448,6 +451,7 @@ D-11 evidencia:
 8 passed in 0.36s
   [32m✔[0m pytest                 67 passed in 0.57s
 [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+$ uv run python -m agents --json run installer scaffold --name testagent --description test --capabilities a;b --actions x;y --dry_run true → dry-run OK; $ uv run pytest agents/tests/test_installer_scaffold.py → 22 passed; $ uv run python -m agents.prompts_sync → sincronizados; $ make check → 'check pasado'
 ```
 
 </details>

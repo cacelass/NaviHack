@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Installer scaffold: creador de agentes autocontenidos (BOOT-002)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Definir la arquitectura del proyecto (TinyVigo) (DESIGN-001)
 
 ## [Unreleased] — 2026-11-14
