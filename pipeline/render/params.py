@@ -27,6 +27,7 @@ OUT = HERE / "render-params.json"
 
 # Margen que se pide alrededor de los hitos antes de redondear a teselas.
 MARGIN_PX = TILE / 2
+EXTRA_EAST_COLS = 1
 
 
 def _read(name: str) -> str:
@@ -90,6 +91,10 @@ def build() -> dict[str, object]:
         "origin_y": shot / 2 - row0 * TILE,
         "tile_block": [col0, row0, col1, row1],
     }
+    # Una columna más al este, con el mismo origen: la expansión queda pegada a Vialia y la noria
+    # (x≈4276 px) cae a 180 px del borde de la expansión.
+    wide = {**expansion, "width": expansion["width"] + EXTRA_EAST_COLS * TILE}
+    wide["tile_block"] = [col0, row0, col1 + EXTRA_EAST_COLS, row1]
     return {
         "$comment": "Generado por `python3 -m pipeline.render.params` desde pipeline/render/original/. No lo edites a mano.",
         "camera": {"sc": cam.sc, "tilt_deg": cam.tilt_deg, "head_deg": cam.head_deg},
@@ -109,6 +114,7 @@ def build() -> dict[str, object]:
                 "origin_y": shot / 2,
             },
             "expansion": expansion,
+            "wide": wide,
         },
     }
 

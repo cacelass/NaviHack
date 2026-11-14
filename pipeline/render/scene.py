@@ -97,12 +97,13 @@ def layers(out: Path) -> list[dict]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--canvas", default="expansion", help="lienzo a renderizar (expansion, wide)")
     args = ap.parse_args(argv)
 
     params = georef.params()
     out = args.out
     out.mkdir(parents=True, exist_ok=True)
-    gx0, gy0, gx1, gy1 = fetch_ortho.canvas_ground(params)
+    gx0, gy0, gx1, gy1 = fetch_ortho.canvas_ground(params, args.canvas)
     # La caja del 3x3 se mantiene entera: si se recortara a lo que se ve, un
     # edificio alto de fuera del borde podría dejar de tapar lo que tapaba.
     old_half = json.loads((HERE / "render-params.json").read_text(encoding="utf-8"))["ortho"][
@@ -116,7 +117,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     bs = buildings(params, bounds)
 
-    canvas = params.canvas("expansion")
+    canvas = params.canvas(args.canvas)
     scene = {
         "width": canvas.width,
         "height": canvas.height,

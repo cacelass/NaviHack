@@ -48,11 +48,14 @@ def canvas_ground(params: georef.RenderParams, canvas: str = "expansion") -> tup
     return min(xs), min(ys), max(xs), max(ys)
 
 
-def pieces(params: georef.RenderParams, res: float) -> list[dict[str, float]]:
+def pieces(
+    params: georef.RenderParams, res: float, canvas: str = "expansion", from_x: float | None = None
+) -> list[dict[str, float]]:
     """Franja nueva al este de la ortofoto vieja, en trozos de la misma rejilla."""
     old_half_x = float(params_json()["ortho"]["half_m"][0])
-    gx0, gy0, gx1, gy1 = canvas_ground(params)
-    x0 = _snap(max(old_half_x - SOLAPE_M, gx0 - res), res)
+    gx0, gy0, gx1, gy1 = canvas_ground(params, canvas)
+    start = old_half_x if from_x is None else from_x
+    x0 = _snap(max(start - SOLAPE_M, gx0 - res), res)
     x1 = _snap(min(gx1 + 100.0, gx1 + 200.0), res)
     y0 = _snap(gy0 - 20.0, res)
     y1 = _snap(gy1 + 20.0, res)
@@ -71,6 +74,26 @@ def pieces(params: georef.RenderParams, res: float) -> list[dict[str, float]]:
             }
         )
     return out
+
+
+def north_cap(params: georef.RenderParams, res: float, canvas: str = "wide") -> dict[str, float]:
+    """Franja que falta arriba del lienzo: el bloque de la ortofoto vieja y el primer trozo de la
+    ampliación acaban en distintas filas, y entre los dos queda un hueco que el render rellena de gris.
+    """
+    _, _, gx1, gy1 = canvas_ground(params, canvas)
+    old_half_x = float(params_json()["ortho"]["half_m"][0])
+    x0 = _snap(old_half_x - SOLAPE_M, res)
+    x1 = _snap(gx1 + 100.0, res)
+    y_south = _snap(float(params_json()["ortho"]["half_m"][1]) - 40.0, res)
+    y_north = _snap(gy1 + 60.0, res)
+    return {
+        "x0": x0,
+        "x1": x1,
+        "y_south": y_south,
+        "y_north": y_north,
+        "w": round((x1 - x0) / res),
+        "h": round((y_north - y_south) / res),
+    }
 
 
 def _snap(value: float, res: float) -> float:
@@ -128,6 +151,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, required=True, help="carpeta donde dejar los trozos")
     ap.add_argument("--old", type=Path, help="ortho.jpg del 3x3 (se copia como old.jpg)")
     ap.add_argument("--res", type=float, default=0.4, help="metros por píxel de la ortofoto")
+    ap.add_argument("--north-cap", action="store_true", help="añade la franja norte que falta")
+    ap.add_argument("--canvas", default="expansion", help="lienzo a cubrir (expansion, wide)")
+    ap.add_argument("--from-x", type=float, help="metros al este desde donde ya hay ortofoto")
     args = ap.parse_args(argv)
 
     params = georef.params()
@@ -136,7 +162,9 @@ def main(argv: list[str] | None = None) -> int:
         (args.out / "old.jpg").write_bytes(args.old.read_bytes())
         print(f"  old.jpg  {args.old.stat().st_size / 1024:.0f} kB (la del 3x3, sin tocar)")
 
-    chunks = pieces(params, args.res)
+    chunks = pieces(params, args.res, args.canvas, args.from_x)
+    if args.north_cap:
+        chunks.append(north_cap(params, args.res, args.canvas))
     for p in chunks:
         name = f"new_{p['x0']:+.0f}_{p['y_south']:+.0f}.jpg"
         url = _url(params, p)

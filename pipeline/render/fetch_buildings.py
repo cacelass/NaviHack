@@ -32,7 +32,7 @@ LAYER = (
 FIELDS = "refcat,altura,z,ano_antiguedade,ano_reforma,uso_principal_superficie,interes_turismo,superficie_total,habitantes"
 # Caja WGS84 (oeste, sur, este, norte): del borde de la ortofoto vieja hasta pasada
 # la esquina este del lienzo ampliado (suelo hasta x = 1517 m y y = -1248 m).
-BBOX = (-8.7150, 42.2255, -8.7050, 42.2515)
+BBOX = (-8.7150, 42.2255, -8.6980, 42.2535)
 PAGE = 1000
 
 
