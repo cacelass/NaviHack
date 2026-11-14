@@ -9,3 +9,5 @@ CRON_TZ=Europe/Madrid
 0 9 * * *    cd $HOME/NaviHack && python3 scripts/snapshot.py agenda >/dev/null
 # tiempo: Open-Meteo actualiza cada 15 min → cada 30
 */30 * * * *  cd $HOME/NaviHack && python3 scripts/snapshot.py weather >/dev/null
+35 7 * * *   cd $HOME/NaviHack && python3 scripts/agenda.py >/dev/null
+5 9 * * *    cd $HOME/NaviHack && python3 scripts/agenda.py >/dev/null
