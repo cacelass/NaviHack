@@ -589,3 +589,20 @@ commit 60b0978: vault/01_PROYECTO/licencias.md con tabla fuente/licencia/atribuc
 ```
 
 </details>
+
+## X-05 — Buildings: 3D footprint + height layer
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 97 passed in 0.59s
+- **Ticket GEAS:** 715c81d2 · commit_after `285b4537`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit e3f2bb7. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Paginación <=2000, reproyección verificada (0,03 mm vs servidor), MultiPatch aplanado documentado, altura 98,4% ciudad / 99,6% núcleo, año por barrio, data/render/buildings.geojson (2975 edificios), fallback Catastro.
+```
+
+</details>
