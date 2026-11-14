@@ -420,12 +420,14 @@
         "Stale car park shown as 'no data'",
         "Detail in point panel (nearest car park)"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "37eb79b5-cd7c-4d05-b134-5604dd84f476",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "37eb79b5-d-05-car-park-layer",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-10",
