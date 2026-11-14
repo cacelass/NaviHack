@@ -16,10 +16,16 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 .tv-panel, .tv-sheet, .tv-tour, .tv-step { background: var(--raised); border: 1px solid var(--line); border-radius: var(--r-panel); box-sizing: border-box; font-size: var(--fs-label); line-height: 1.4; }
 
 /* panel de lista */
-.tv-panel { position: fixed; z-index: 6; top: 12px; left: 12px; bottom: 76px; width: 340px; padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-3); }
+.tv-panel { position: fixed; z-index: 6; top: 12px; left: 12px; bottom: 12px; width: var(--panel-w, 380px); container-type: inline-size; padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-3); }
 .tv-panel header { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
 .tv-panel h1 { margin: 0; font-size: var(--fs-title); font-weight: var(--w-600); }
 .tv-toggle { display: none; }
+.tv-panel.is-collapsed { bottom: auto; width: auto; min-width: 220px; padding: var(--sp-2); }
+.tv-panel.is-collapsed > :not(.tv-toggle) { display: none; }
+.tv-panel.is-collapsed .tv-toggle { display: flex; align-items: center; gap: var(--sp-2); width: 100%; min-height: var(--tap); border: 0; background: none; text-align: left; font-weight: var(--w-600); font-size: var(--fs-copy); padding: 0 var(--sp-2); cursor: pointer; }
+.tv-toggle-t { flex: 1; }
+.tv-min { flex: none; width: var(--tap); height: var(--tap); margin-right: calc(-1 * var(--sp-2)); display: grid; place-items: center; border: 0; background: none; color: var(--fg-2); cursor: pointer; }
+.tv-min:hover { color: var(--fg); }
 .tv-langs { display: flex; gap: 2px; background: var(--sunk); border-radius: var(--r-ctl); padding: 2px; }
 .tv-langs button { border: 0; background: none; border-radius: var(--r-sm); min-height: 40px; padding: 0 var(--sp-2); font-size: var(--fs-meta); font-weight: var(--w-500); cursor: pointer; color: var(--fg-2); }
 .tv-langs .is-on { background: var(--raised); color: var(--fg); }
@@ -28,7 +34,8 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 .tv-search:focus-visible { outline: 2px solid var(--acc); }
 .tv-chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: none; }
 .tv-chips button { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; border: 0; border-radius: var(--r-ctl); padding: 0 var(--sp-3); background: var(--sunk); cursor: pointer; color: var(--fg-2); font-size: var(--fs-label); font-weight: var(--w-500); }
-.tv-chips .is-on { background: var(--fg); color: var(--raised); }
+.tv-chips .is-on { background: var(--accent-2); color: var(--accent-7); }
+html[data-theme="dark"] .tv-chips .is-on { background: var(--accent-3); }
 .tv-count { margin: 0; font-size: var(--fs-meta); color: var(--fg-3); }
 .tv-list { list-style: none; margin: 0 calc(-1 * var(--sp-2)); padding: 0; overflow-y: auto; flex: 1; }
 .tv-list button { width: 100%; display: flex; align-items: center; gap: var(--sp-3); min-height: 52px; border: 0; border-radius: var(--r-ctl); background: none; padding: 4px var(--sp-2); text-align: left; cursor: pointer; }
@@ -38,18 +45,7 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 .tv-badge { font-size: var(--fs-meta); color: var(--fg-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .tv-badge.is-open { color: var(--ok); font-weight: var(--w-500); }
 
-/* marcador sobre el mapa (píxel: aquí sí). WEB-02: icono pixel por tipo, grupo con número */
-.tv-marker { width: 30px; height: 36px; padding: 0; border: 0; cursor: pointer; background: none; position: relative; display: grid; justify-items: center; align-content: start; image-rendering: pixelated; --i-a: #f4cd80; --i-x: #fff3c4; --i-w: #efe3c8; --i-r: #d9715a; --i-b: #6a9bd1; --i-g: #86ad52; color: #f4ecd9; }
-.tv-marker::before { content: ""; position: absolute; left: 0; top: 0; width: 30px; height: 30px; background: #1b1f2c; box-shadow: inset 0 0 0 2px #f4cd80; }
-.tv-marker::after { content: ""; position: absolute; left: 11px; top: 30px; border: 4px solid transparent; border-top: 6px solid #f4cd80; }
-.tv-marker svg { position: relative; z-index: 1; margin-top: 7px; }
-.tv-marker.is-open::before { box-shadow: inset 0 0 0 2px #97c46f; }
-.tv-marker.is-open::after { border-top-color: #97c46f; }
-.tv-marker:hover::before, .tv-marker.is-selected::before { background: #2c3244; transform: scale(1.15); transition: transform .3s var(--ease); }
-.tv-marker.is-group[data-count]:not([data-count="1"]) > span.tv-count-badge { display: none; }
-.tv-marker.is-group::after { border-top-color: #f4cd80; }
-.tv-marker.is-group > svg { margin-top: 7px; }
-.tv-marker.is-group { counter-reset: n; }
+/* marcador sobre el mapa. WEB-02: icono Lucide por tipo, grupo con número */
 
 /* ficha de un punto */
 .tv-sheet { position: fixed; z-index: 7; right: 12px; top: 12px; width: 380px; max-height: calc(100vh - 24px); overflow: auto; padding: var(--sp-4); transform: translateX(calc(100% + 24px)); transition: transform .5s var(--ease); }
@@ -88,7 +84,7 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 .tv-mode span { font-size: var(--fs-meta); color: var(--fg-2); font-weight: var(--w-400); }
 
 /* tira «vas a ver» */
-.tv-story { list-style: none; margin: 0; padding: 0 0 4px; display: flex; gap: var(--sp-2); overflow-x: auto; scrollbar-width: thin; }
+.tv-story { list-style: none; margin: 0; padding: 0 0 4px; display: flex; gap: var(--sp-2); overflow-x: auto; }
 .tv-story li { flex: none; width: 132px; }
 .tv-story button { width: 100%; display: grid; gap: 4px; padding: 0 0 var(--sp-2); border: 0; border-radius: var(--r-ctl); background: var(--surface); cursor: pointer; text-align: left; position: relative; overflow: hidden; }
 .tv-story img, .tv-story-ph { width: 100%; height: 86px; object-fit: cover; display: block; background: var(--sunk); }
@@ -149,9 +145,7 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 /* móvil */
 @media (max-width: 700px) {
   .tv-panel { top: 8px; left: 8px; right: 60px; bottom: auto; width: auto; max-height: 58vh; padding: var(--sp-3); }
-  .tv-panel.is-collapsed > :not(.tv-toggle) { display: none; }
-  .tv-toggle { display: flex; align-items: center; gap: 6px; min-height: 28px; border: 0; background: none; text-align: left; font-weight: var(--w-600); font-size: var(--fs-copy); padding: 0; cursor: pointer; }
-  .tv-panel:not(.is-collapsed) .tv-toggle { display: none; }
+
   .tv-sheet, .tv-tour { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; max-height: 72vh; }
   .tv-sheet { transform: translateY(calc(100% + 16px)); }
   .tv-sheet.is-open { transform: none; }
@@ -258,16 +252,10 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-legpin.is-bus { background: #34c38f; }
 
 /* fotos completas, sin recorte ni zoom, aunque queden pequeñas (fondo neutro alrededor) */
-.tv-pin img, .tv-thumb, .tv-sheet img.tv-photo, .tv-story img, .tv-step-photo { object-fit: contain; background: var(--sunk); }
+.tv-pin img, .tv-sheet img.tv-photo, .tv-story img, .tv-step-photo { object-fit: contain; background: var(--sunk); }
 .tv-pin { background: var(--sunk); }
 
 /* marcadores del isométrico a 2/3 del tamaño */
-.tv-marker { width: 20px; height: 25px; }
-.tv-marker::before { width: 20px; height: 20px; box-shadow: inset 0 0 0 1.5px #f4cd80; }
-.tv-marker.is-open::before { box-shadow: inset 0 0 0 1.5px #97c46f; }
-.tv-marker::after { left: 7px; top: 20px; border-width: 3px; border-top-width: 5px; }
-.tv-marker svg { margin-top: 4px; }
-.tv-marker.is-group > svg { margin-top: 4px; }
 .tv-marker.is-group .tv-grp { top: -7px; right: -9px; min-width: 16px; height: 16px; font-size: 12px; }
 .tv-offmap { display: grid; gap: 6px; margin-top: var(--sp-3); justify-items: start; }
 
@@ -278,11 +266,6 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-sheet .tv-hero img.tv-photo { width: 100%; height: 210px; margin: 0; border-radius: 0; object-fit: contain; }
 .tv-close-float { position: absolute; top: 10px; right: 10px; float: none; margin: 0; background: rgba(16, 18, 26, .72); color: #fff; }
 .tv-hero.is-empty { display: none; }
-.tv-type { margin: 0; display: flex; align-items: center; gap: 6px; font-size: var(--fs-meta); font-weight: var(--w-500); color: var(--fg-2); }
-.tv-door { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin: var(--sp-2) 0 var(--sp-3); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
-.tv-door-state { display: inline-flex; align-items: center; gap: 6px; font-weight: var(--w-600); color: var(--danger); }
-.tv-door.is-open .tv-door-state { color: var(--ok); }
-.tv-door-time { font-weight: var(--w-500); color: var(--fg-2); font-variant-numeric: tabular-nums; }
 .tv-sched summary { display: flex; align-items: center; gap: 6px; }
 .tv-addr { display: grid; gap: var(--sp-2); margin-top: var(--sp-3); }
 .tv-addr-line { margin: 0; display: flex; align-items: center; gap: 6px; font-size: var(--fs-label); color: var(--fg-2); }
@@ -290,7 +273,7 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-mini-tiles { position: absolute; left: 0; top: 0; width: 768px; display: grid; grid-template-columns: repeat(3, 256px); }
 .tv-mini-tiles img { width: 256px; height: 256px; display: block; }
 html[data-theme="dark"] .tv-mini-tiles { filter: brightness(.62) saturate(.7) contrast(1.1) hue-rotate(195deg) invert(.92); }
-.tv-mini-pin { position: absolute; left: 50%; top: 60px; width: 18px; height: 18px; margin: -18px 0 0 -9px; background: var(--danger); border: 2px solid #fff; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+.tv-mini-pin { position: absolute; left: 50%; top: 60px; width: 26px; height: 32px; margin: -32px 0 0 -13px; }
 .tv-lightbox { padding: 0; border: 0; background: transparent; max-width: 96vw; max-height: 92vh; }
 .tv-lightbox::backdrop { background: rgba(8, 10, 16, .88); }
 .tv-lightbox img { display: block; max-width: 96vw; max-height: 88vh; object-fit: contain; border-radius: var(--r-ctl); cursor: zoom-out; }
@@ -322,13 +305,6 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 @media (max-width: 700px) { .tv-settings-open { top: 8px; right: 8px; } .tv-settings { top: 60px; left: 8px; right: 8px; width: auto; } }
 
 /* UI-06: marcadores del isométrico con forma de pin de mapa */
-.tv-marker { width: 24px; height: 30px; }
-.tv-marker::before { width: 24px; height: 24px; left: 0; top: 0; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #1b1f2c; box-shadow: inset 0 0 0 2px #f4cd80; }
-.tv-marker.is-open::before { box-shadow: inset 0 0 0 2px #97c46f; }
-.tv-marker::after { display: none; }
-.tv-marker svg { margin-top: 6px; }
-.tv-marker.is-group > svg { margin-top: 6px; }
-.tv-marker:hover::before, .tv-marker.is-selected::before { transform: rotate(-45deg) scale(1.15); background: #2c3244; }
 
 /* UI-06: «Hoy» con imagen o icono en cada fila */
 .tv-tl-img { width: 40px; height: 40px; }
@@ -346,6 +322,89 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
   *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
 
+/* UI-07: imágenes con proporción fija (aspect-ratio + object-fit) y datos sobre la imagen, como en una red social */
+:root { --chip-ok: #2f7a41; --chip-bad: #b53a26; --chip-dark: #1b1f2c; --chip-gold: #f4cd80; }
+.tv-thumb { width: 84px; height: auto; aspect-ratio: 3 / 2; flex: none; border-radius: var(--r-ctl); object-fit: cover; background: var(--sunk); display: grid; place-items: center; color: var(--fg-3); }
+.tv-list button { min-height: 72px; align-items: center; }
+.tv-row { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.tv-row .tv-name { flex: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+.tv-sub, .tv-row .tv-badge { display: flex; align-items: center; gap: 4px; font-size: var(--fs-meta); color: var(--fg-2); white-space: normal; }
+.tv-row .tv-badge.is-open { color: var(--ok); }
+.tv-row .tv-badge.is-closed { color: var(--danger); }
+.tv-sub svg { color: var(--accent-5); }
+.tv-timeline .tv-thumb, .tv-ev > .tv-thumb { width: 60px; height: auto; aspect-ratio: 3 / 2; }
+
+/* hero de la ficha: marco 3:2; la foto va entera (contain) sobre su propio desenfoque, sin barras vacías ni recorte */
+.tv-hero { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--r-panel) var(--r-panel) 0 0; background: var(--sunk); isolation: isolate; }
+.tv-hero::before { content: ""; position: absolute; inset: -24px; z-index: -1; background: var(--photo, none) center / cover; filter: blur(22px); }
+.tv-hero-zoom { position: absolute; inset: 0; border-radius: 0; background: none; }
+.tv-sheet .tv-hero img.tv-photo { width: 100%; height: 100%; object-fit: contain; display: block; background: transparent; }
+.tv-hero.is-empty { display: none; }
+.tv-hero.is-ph { aspect-ratio: 3 / 1; display: grid; place-items: center; }
+.tv-hero.is-ph::before { display: none; }
+.tv-hero-ic { color: var(--fg-3); }
+.tv-chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 var(--sp-3) 0 var(--sp-2); border-radius: var(--r-ctl); font-size: var(--fs-meta); font-weight: var(--w-600); color: #fff; background: var(--chip-dark); }
+.tv-chip-type { top: 10px; left: 10px; }
+.tv-chip-type svg { color: var(--chip-gold); }
+.tv-chip-state { bottom: 10px; left: 10px; font-variant-numeric: tabular-nums; }
+.tv-chip-state.is-open { background: var(--chip-ok); }
+.tv-chip-state.is-closed { background: var(--chip-bad); }
+.tv-hero.is-ph .tv-chip-state { bottom: 10px; }
+.tv-hero .tv-close-float { z-index: 3; background: var(--chip-dark); color: #fff; }
+@media (max-width: 700px) { .tv-hero:not(.is-ph) { aspect-ratio: 16 / 9; } }
+
+/* UI-07: acciones a todo el ancho; compartir es solo el icono */
+.tv-actions { flex-wrap: nowrap; align-items: stretch; width: 100%; }
+.tv-actions > .tv-btn { flex: 1 1 0; min-width: 0; text-align: center; }
+.tv-actions > .tv-btn-icon { flex: 0 0 var(--tap); width: var(--tap); padding: 0; }
+.tv-sheet > :not(.tv-hero), .tv-tour > * { max-width: 100%; box-sizing: border-box; }
+.tv-sheet .tv-btn-quiet:not(.tv-btn-icon) { width: 100%; }
+.tv-offmap { justify-items: stretch; }
+
+/* Scroll sin romper al padre: el desplazamiento no se encadena al mapa y la lista puede encoger dentro del flex */
+.tv-list, .tv-sheet, .tv-tour, .tv-results, .tv-settings, .tv-step, .about-dialog, dialog { overscroll-behavior: contain; }
+.tv-list { min-height: 0; scrollbar-gutter: stable; }
+.tv-chips, .tv-story { overscroll-behavior-x: contain; }
+
+/* Marcadores de ubicación: pin de Lucide (map-pin) con relleno amarillo y el icono del tipo dentro.
+   Oscuro: amarillo claro con icono casi negro. Claro: amarillo dorado con icono casi negro (el blanco sobre amarillo no llega a AA). */
+:root, html[data-theme="light"] { --pin-fill: #f0bf4c; --pin-ink: #1d1d1d; }
+html[data-theme="dark"] { --pin-fill: #f4cd80; --pin-ink: #1d1d1d; }
+.tv-marker { width: 26px; height: 32px; padding: 0; border: 0; background: none; cursor: pointer; position: relative; display: block; color: var(--pin-ink); transition: transform .25s var(--ease); transform-origin: 50% 100%; }
+.tv-marker:hover, .tv-marker.is-selected { transform: scale(1.18); }
+.tv-pin-shape { position: absolute; inset: 0; width: 26px; height: 32px; fill: var(--pin-fill); stroke: none; }
+.tv-marker > svg.lu { position: absolute; left: 6px; top: 6px; width: 14px; height: 14px; z-index: 1; }
+.tv-mini-pin .tv-pin-shape { width: 26px; height: 32px; }
+.tv-mini-pin::after { content: ""; position: absolute; left: 10px; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--pin-ink); }
+
+/* UI-07: panel redimensionable, imágenes grandes que crecen con el ancho (container query) */
+.tv-grip { position: absolute; top: 0; right: -6px; width: 12px; height: 100%; cursor: ew-resize; touch-action: none; z-index: 2; }
+.tv-grip::after { content: ""; position: absolute; top: 50%; left: 5px; width: 3px; height: 40px; margin-top: -20px; border-radius: 2px; background: var(--fg-3); opacity: 0; transition: opacity .2s; }
+.tv-panel:hover .tv-grip::after, .tv-grip:focus-visible::after, .tv-panel.is-resizing .tv-grip::after { opacity: .6; }
+.tv-panel.is-resizing { user-select: none; }
+.tv-panel.is-collapsed .tv-grip { display: none; }
+.tv-thumb { width: 112px; }
+.tv-list button { min-height: 96px; }
+@container (min-width: 440px) {
+  .tv-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--sp-3); align-content: start; padding: 0 var(--sp-2); }
+  .tv-list button { flex-direction: column; align-items: stretch; gap: var(--sp-2); padding: 0 0 var(--sp-2); min-height: 0; height: 100%; }
+  .tv-list .tv-thumb { width: 100%; }
+  .tv-list .tv-row { padding: 0 var(--sp-1); }
+}
+@media (max-width: 700px) { .tv-grip { display: none; } .tv-panel { width: auto; } }
+
+/* Hoy: a toda la altura, y «ver en el mapa» sin fondo, con el icono en color */
+:root, html[data-theme="light"] { --link: var(--accent-6); }
+html[data-theme="dark"] { --link: var(--accent-5); }
+.tv-events.is-open { height: calc(100vh - 24px); max-height: none; }
+.tv-ev .tv-ev-go { background: none; color: var(--fg) !important; padding: 0 var(--sp-2); gap: 6px; font-weight: var(--w-500); }
+.tv-ev .tv-ev-go svg { color: var(--link); }
+.tv-ev .tv-ev-go:hover { text-decoration: underline; text-underline-offset: 3px; }
+.tv-timeline .tv-thumb, .tv-ev > .tv-thumb { width: 84px; }
+
+/* hero sin marco: la foto llena el hueco; el desenfoque solo asoma en fotos muy verticales */
+.tv-hero { background: none; }
+@media (max-width: 700px) { .tv-hero:not(.is-ph) { aspect-ratio: auto; } }
 /* tiempo en «Navidad hoy» (D-10, Open-Meteo) — Miguel2 */
 .tv-wx { display: grid; gap: var(--sp-2); padding: var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
 .tv-wx-now { display: flex; align-items: center; gap: var(--sp-2); }
@@ -486,6 +545,9 @@ body.is-city .tv-night { display: none !important; }
 body.tv-fog #map::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(225, 230, 236, .55), rgba(225, 230, 236, .3) 60%, rgba(225, 230, 236, .45)); }
 .tv-story-card p { white-space: pre-line; }
 
+/* la × sticky de MOB-01 va primero; el hero sube hasta el borde de la hoja */
+.tv-sheet > .tv-close + .tv-hero { margin-top: calc(-16px - var(--tap)); }
+.tv-sheet > .tv-close { box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--chip-dark); }
 /* PLANNER-01: salida y 3 opciones de ruta */
 .tv-from { display: grid; gap: 6px; }
 .tv-from label { margin: 0; }

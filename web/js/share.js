@@ -25,8 +25,10 @@
   }
   function button(title) {
     const b = document.createElement("button");
-    b.className = "tv-btn tv-btn-quiet";
-    b.append(lu("arrow-up-right"), window.tinyvigoPoints.t("share.button"));
+    b.className = "tv-btn tv-btn-quiet tv-btn-icon";
+    const label = window.tinyvigoPoints.t("share.button");
+    b.setAttribute("aria-label", label); b.title = label;
+    b.append(lu("share-2", 20));
     b.onclick = () => share(title);
     return b;
   }

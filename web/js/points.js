@@ -8,9 +8,10 @@
     photocall: "points.filter_exhibits",
   };
   const FILTERS = ["all", "light", "attraction", "market", "santa_kings", "exhibit"];
-  const ICON = { light: "star", attraction: "ferris-wheel", market: "store", santa_kings: "gift", exhibit: "camera", photo_gallery: "camera", photocall: "camera", all: "layers" };
+  const ICON = { light: "lightbulb", attraction: "ferris-wheel", market: "store", santa_kings: "gift", exhibit: "camera", photo_gallery: "camera", photocall: "camera", all: "layers" };
+  // forma del icono map-pin de Lucide, rellena: el relleno y el trazo salen del CSS (--pin-fill / --pin-line)
+  const PIN = '<svg class="tv-pin-shape" viewBox="3.8 1.8 16.4 20.4" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/></svg>';
   const lu = (name, size = 20) => { const s = document.createElement("span"); s.innerHTML = window.LU ? LU.svg(name, { size }) : ""; return s.firstChild || s; };
-  const PXICON = { light: "star", attraction: "wheel", market: "market", santa_kings: "gift", exhibit: "camera", photo_gallery: "camera", photocall: "camera" };
   const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   const [{ points }, ...cats] = await Promise.all([
@@ -74,6 +75,19 @@
   const sheet = el("section", "tv-sheet");
   document.body.append(panel, sheet);
   let filter = "all", query = "", selected = null;
+  // ancho del panel: se arrastra el borde derecho (o flechas con el foco) y se recuerda
+  const MINW = 300, maxW = () => Math.min(720, innerWidth - 120);
+  const setW = (w) => { w = Math.max(MINW, Math.min(maxW(), Math.round(w))); panel.style.setProperty("--panel-w", w + "px"); return w; };
+  try { const w = +localStorage.getItem("tinyvigo.panelw"); if (w) setW(w); } catch (e) {}
+  const grip = el("div", "tv-grip"); grip.setAttribute("role", "separator"); grip.setAttribute("aria-orientation", "vertical"); grip.tabIndex = 0;
+  grip.onpointerdown = (e) => {
+    e.preventDefault(); grip.setPointerCapture(e.pointerId); panel.classList.add("is-resizing");
+    const move = (m) => setW(m.clientX - panel.getBoundingClientRect().left);
+    const up = () => { grip.removeEventListener("pointermove", move); grip.removeEventListener("pointerup", up); panel.classList.remove("is-resizing"); try { localStorage.setItem("tinyvigo.panelw", panel.offsetWidth); } catch (e) {} };
+    grip.addEventListener("pointermove", move); grip.addEventListener("pointerup", up);
+  };
+  grip.onkeydown = (e) => { if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); const w = setW(panel.offsetWidth + (e.key === "ArrowRight" ? 24 : -24)); try { localStorage.setItem("tinyvigo.panelw", w); } catch (x) {} } };
+  grip.ondblclick = () => { panel.style.removeProperty("--panel-w"); try { localStorage.removeItem("tinyvigo.panelw"); } catch (e) {} };
 
   function waitViewer() {
     return new Promise((res) => { const f = () => (window.tinyvigo && window.tinyvigo.viewer.world.getItemCount() ? res(window.tinyvigo.viewer) : setTimeout(f, 100)); f(); });
@@ -87,7 +101,7 @@
     const m = el("button", "tv-marker" + (status(p) && status(p).open ? " is-open" : ""));
     m.setAttribute("aria-label", txt(p.name));
     m.title = txt(p.name);
-    if (window.PX) m.innerHTML = PX.svg(PXICON[p.type] || "pin", { size: 12 }); // WEB-02: icono pixel por tipo
+    if (window.LU) m.innerHTML = PIN + LU.svg(ICON[p.type] || "map-pin", { size: 14 }); // pin Lucide + icono del tipo
     m.dataset.id = p.id;
     m.onclick = (ev) => { ev.stopPropagation(); const c = +(m.dataset.count || 0); if (c > 1) { viewer.viewport.zoomBy(2.2, new OpenSeadragon.Point(p.x, p.y)); viewer.viewport.applyConstraints(); } else select(p, false); };
     viewer.addOverlay({ element: m, location: new OpenSeadragon.Point(p.x, p.y), placement: OpenSeadragon.Placement.BOTTOM });
@@ -169,7 +183,7 @@
       const im = el("img"); im.alt = ""; im.loading = "lazy"; im.src = "https://tile.openstreetmap.org/" + Z + "/" + (tx + i) + "/" + (ty + j) + ".png";
       tiles.append(im);
     }
-    const box = el("button", "tv-mini", tiles, el("span", "tv-mini-pin"));
+    const box = el("button", "tv-mini", tiles, Object.assign(el("span", "tv-mini-pin"), { innerHTML: PIN }));
     box.setAttribute("aria-label", t("detail.off_map"));
     box.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 18), 120); } };
     return box;
@@ -200,21 +214,24 @@
     dir.href = "https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=" + p.lat + "," + p.lon;
     dir.target = "_blank"; dir.rel = "noopener";
     const sched = txt(p.schedule_text);
-    let hero = null;
+    // la imagen manda: chip del tipo arriba a la izquierda, estado abajo a la izquierda, cerrar arriba a la derecha
+    const hero = el("div", "tv-hero" + (p.photo ? "" : " is-ph"));
+    const typeChip = el("span", "tv-chip tv-chip-type is-" + p.type, lu(ICON[p.type] || "map-pin", 16), t(TYPE_KEY[p.type] || "points.filter_all"));
+    const stateChip = st ? el("span", "tv-chip tv-chip-state " + (st.open ? "is-open" : "is-closed"), lu(st.open ? "circle-check" : "ban", 16), st.word + " · " + st.label) : null;
     if (p.photo) {
-      const img = Object.assign(el("img", "tv-photo"), { src: p.photo, alt: txt(p.name), onerror() { hero.classList.add("is-empty"); this.remove(); } });
+      hero.style.setProperty("--photo", "url(" + new URL(p.photo, location.href).href + ")");
+      const img = Object.assign(el("img", "tv-photo"), { src: p.photo, alt: txt(p.name), width: 480, height: 320, decoding: "async", onerror() { hero.classList.add("is-ph"); this.remove(); } });
+      // el marco toma la proporción real de la foto (entre 1,3 y 2,2): sin franjas alrededor
+      const fit = () => { if (img.naturalWidth) hero.style.aspectRatio = String(Math.min(2.2, Math.max(1.3, img.naturalWidth / img.naturalHeight)).toFixed(3)); };
+      img.addEventListener("load", fit); if (img.complete) fit();
       const zoom = el("button", "tv-hero-zoom", img); zoom.setAttribute("aria-label", t("detail.real_photo")); zoom.onclick = () => zoomPhoto(p);
-      hero = el("div", "tv-hero", zoom);
-    }
-    const door = st ? el("div", "tv-door " + (st.open ? "is-open" : ""),
-      el("span", "tv-door-state", window.PX ? Object.assign(el("span"), { innerHTML: PX.svg(st.open ? "open" : "closed", { size: 16, mono: true }) }) : null, st.word),
-      el("span", "tv-door-time", st.label)) : null;
+      hero.append(zoom);
+    } else hero.append(el("span", "tv-hero-ic", lu(ICON[p.type] || "map-pin", 40)));
+    hero.append(typeChip, stateChip);
     sheet.append(...[
       close, // MOB-01: primer hijo de la ficha y «sticky»: sigue a la vista al hacer scroll
       hero,
-      el("p", "tv-type", lu(ICON[p.type] || "map-pin", 16), t(TYPE_KEY[p.type] || "points.filter_all")),
       Object.assign(el("h2", null, txt(p.name)), { id: "tv-sheet-title", tabIndex: -1 }),
-      door,
       p.short ? el("p", "tv-short", txt(p.short)) : null,
       el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
       sched ? el("details", "tv-sched", el("summary", null, lu("clock", 16), t("detail.schedule")), el("p", null, sched)) : null,
@@ -244,10 +261,13 @@
     }));
     const list = el("ul", "tv-list");
     const count = el("p", "tv-count");
-    const head = el("header", null, el("h1", null, t("points.title")), langs);
-    const toggle = el("button", "tv-toggle", lu("tree-pine"), t("points.title"), lu("chevron-down", 16));
-    toggle.onclick = () => panel.classList.toggle("is-collapsed");
-    panel.append(toggle, head, search, chips, count, list);
+    const min = el("button", "tv-min", lu("minus")); min.setAttribute("aria-label", t("points.minimize")); min.title = t("points.minimize");
+    min.onclick = () => panel.classList.add("is-collapsed");
+    const head = el("header", null, el("h1", null, t("points.title")), langs, min);
+    const toggle = el("button", "tv-toggle", lu("tree-pine"), el("span", "tv-toggle-t", t("points.title")), lu("plus", 16));
+    toggle.setAttribute("aria-label", t("points.expand"));
+    toggle.onclick = () => panel.classList.remove("is-collapsed");
+    panel.append(toggle, head, search, chips, count, list, grip);
     function renderList() {
       const q = query.trim().toLowerCase();
       const shown = points.filter((p) => (filter === "all" || p.type === filter || (filter === "exhibit" && ["photo_gallery", "photocall"].includes(p.type)))
@@ -256,9 +276,10 @@
       list.replaceChildren(...shown.map((p) => {
         const st = status(p);
         const li = el("li", null, el("button", null,
-          p.photo ? Object.assign(el("img", "tv-thumb"), { src: p.photo, alt: "", loading: "lazy" }) : el("span", "tv-thumb", lu(ICON[p.type] || "map-pin")),
-          el("span", "tv-name", txt(p.name)),
-          st ? el("span", "tv-badge " + (st.open ? "is-open" : ""), st.open ? st.word : st.label) : null));
+          p.photo ? Object.assign(el("img", "tv-thumb"), { src: p.photo, alt: "", loading: "lazy", decoding: "async", width: 84, height: 56 }) : el("span", "tv-thumb", lu(ICON[p.type] || "map-pin")),
+          el("span", "tv-row", el("span", "tv-name", txt(p.name)),
+            el("span", "tv-sub", lu(ICON[p.type] || "map-pin", 14), t(TYPE_KEY[p.type] || "points.filter_all")),
+            st ? el("span", "tv-badge " + (st.open ? "is-open" : "is-closed"), lu(st.open ? "circle-check" : "ban", 14), st.open ? st.word + " · " + st.label : st.label) : null)));
         li.firstChild.onclick = () => select(p);
         return li;
       }));

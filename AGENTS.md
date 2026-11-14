@@ -344,7 +344,7 @@ y pasa su **checklist de diez puntos** antes de darse por bueno. No es una guía
 estilo opcional: es la regla del proyecto, y cualquier agente que dibuje algo (web,
 app, maqueta o experimento) la lee primero.
 
-Lo que no se negocia: **el píxel solo es imagen** (mapa, iconos, matasellos), nunca
+Lo que no se negocia: **el píxel solo es imagen** (el mapa ilustrado y el matasellos; todos los iconos son Lucide), nunca
 texto; **sin sombras, sin esquinas muy redondeadas, sin píldoras pastel ni
 degradados**; **color solo para estado o para el acento dorado**; controles sobre el
 mapa con **superficie sólida y contraste AA**; objetivos táctiles de **44 px**.
