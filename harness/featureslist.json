@@ -243,10 +243,12 @@
         "points.json and research log committed",
         "Every shown point has status above 'unverified'"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "5cc3fec4-bc72-4731-b8aa-e0b34537eab3",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "5cc3fec4-r-01-master-research-of-all-chri",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "R-02",
@@ -381,12 +383,14 @@
         "Clock times sourced from points.json, not agenda",
         "Events without time show 'time to be confirmed'"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-00"
       ],
       "ticket_id": "fb6752c1-8180-49a6-a511-0148a3a9272d",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "fb6752c1-d-03-agenda-loader",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-04",
@@ -1451,10 +1455,12 @@
         "Published as a new pyramid version in web/tiles, never overwriting another version",
         "A screenshot of the web at the local URL was looked at and its failures are listed"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "54b8c486-9bd9-432f-9a0b-d8519a0a88b0",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "54b8c486-base-01-provisional-base-image-o",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
     {
       "id": "LIGHT-02",
