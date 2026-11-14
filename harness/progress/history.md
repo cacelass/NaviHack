@@ -831,3 +831,20 @@ commit 5717dff. pytest 110 passed; evals PASS; prueba en Edge headless (scripts/
 ```
 
 </details>
+
+## UI-06 — Ajustes en un botón, pines tipo mapa y Hoy en Vigo más trabajado
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 143 passed in 1.38s
+- **Ticket GEAS:** a950c82f · commit_after `e5de49c1`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+UI-06 (c41c9e4): web/js/settings.js engranaje con idioma, vista 3D/ciudad, tema y creditos; ocultos #about-open, .tv-theme, .tv-view y GL/ES/EN del panel; pines en gota; Hoy con foto/icono por fila. Prueba en Edge: gl->Puntos de Nadal/Axustes, vista ciudad true, tema light.   [32m✔[0m pytest                 110 passed in 0.59s [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+```
+
+</details>
