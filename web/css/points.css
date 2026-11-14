@@ -427,3 +427,22 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 @media (max-width: 700px) {
   .tv-sheet > .tv-close, .tv-tour > .tv-close, .tv-settings > .tv-close { top: 10px; }
 }
+
+/* ── ambiente: noche, luces, lluvia y nubes (Miguel2, ambient.js) ─────────── */
+.tv-night { pointer-events: none; background: #4b5a9c; mix-blend-mode: multiply; opacity: 0; transition: opacity 1.2s var(--ease); }
+.tv-night::after { content: ""; position: absolute; inset: 0; background: rgba(20, 30, 80, .35); mix-blend-mode: multiply; }
+.tv-glow { pointer-events: none; width: 90px; height: 90px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 120, .95) 0%, rgba(255, 190, 80, .55) 22%, rgba(255, 160, 40, .18) 50%, transparent 70%); mix-blend-mode: screen; animation: tv-breathe 3.2s ease-in-out var(--d, 0s) infinite; }
+.tv-glow-attraction { background: radial-gradient(circle, rgba(255, 140, 200, .9) 0%, rgba(150, 120, 255, .5) 25%, rgba(80, 160, 255, .15) 52%, transparent 70%); }
+.tv-glow-market { background: radial-gradient(circle, rgba(255, 240, 200, .9) 0%, rgba(255, 200, 120, .5) 25%, transparent 66%); }
+.tv-glow-santa_kings { background: radial-gradient(circle, rgba(255, 120, 100, .9) 0%, rgba(255, 90, 60, .45) 25%, transparent 66%); }
+.tv-spark { pointer-events: none; width: 7px; height: 7px; border-radius: 50%; background: hsl(calc(40deg + var(--h, 0deg) * .15) 100% 78%); box-shadow: 0 0 6px 2px rgba(255, 220, 140, .85); mix-blend-mode: screen; animation: tv-twinkle var(--t, 1.6s) ease-in-out var(--d, 0s) infinite; }
+@keyframes tv-breathe { 0%, 100% { opacity: .75; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes tv-twinkle { 0%, 100% { opacity: .15; transform: scale(.6); } 45% { opacity: 1; transform: scale(1.15); } 60% { opacity: .55; } }
+.tv-rain { position: fixed; inset: 0; z-index: 3; pointer-events: none; display: none; }
+.tv-clouds { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.5s var(--ease); }
+.tv-clouds.is-on { opacity: 1; }
+.tv-clouds span { position: absolute; top: calc(var(--i) * 22% - 10%); left: -60%; width: 70vw; height: 45vh; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(30, 40, 60, .30) 0%, rgba(30, 40, 60, .14) 45%, transparent 70%); filter: blur(30px); animation: tv-drift calc(70s + var(--i) * 18s) linear calc(var(--i) * -19s) infinite; }
+.tv-clouds.is-rain span { background: radial-gradient(ellipse at center, rgba(20, 28, 45, .42) 0%, rgba(20, 28, 45, .2) 45%, transparent 70%); }
+@keyframes tv-drift { from { transform: translateX(0); } to { transform: translateX(200vw); } }
+.tv-reduced .tv-glow, .tv-reduced .tv-spark, .tv-reduced .tv-clouds span { animation: none !important; }
+.tv-glow-tree { pointer-events: none; clip-path: polygon(50% 0, 100% 100%, 0 100%); background: radial-gradient(ellipse at 50% 70%, rgba(150, 220, 255, .9) 0%, rgba(120, 160, 255, .55) 35%, rgba(255, 120, 200, .25) 60%, transparent 80%); mix-blend-mode: screen; filter: blur(2px); animation: tv-breathe 2.4s ease-in-out infinite; }

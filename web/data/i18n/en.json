@@ -157,7 +157,7 @@
   "settings.day_night": "Day / night",
   "settings.time": "Time",
   "settings.weather": "Weather",
-  "settings.weather_real": "Live (Open-Meteo)",
+  "settings.weather_real": "Live",
   "settings.weather_clear": "Clear",
   "settings.weather_fog": "Fog",
   "settings.weather_rain": "Rain",
