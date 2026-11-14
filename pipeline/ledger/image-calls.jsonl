@@ -36,3 +36,8 @@
 {"t":"2026-11-14T17:31:28.094Z","model":"gemini-3.1-flash-image","label":"zona-c2_c","size":"default","status":"OK"}
 {"t":"2026-11-14T17:32:22.340Z","model":"gemini-3.1-flash-image","label":"zona-c1_b","size":"default","status":"OK"}
 {"t":"2026-11-14T17:32:30.246Z","model":"gemini-3.1-flash-image","label":"zona-c1_c","size":"default","status":"OK"}
+{"t":"2026-11-14T17:50:07.416Z","model":"gemini-3.1-flash-image","label":"zona-c2_b2","size":"default","status":"NETERR","msg":"fetch failed"}
+{"t":"2026-11-14T17:50:07.504Z","model":"gemini-3.1-flash-image","label":"zona-c1_b2","size":"default","status":"NETERR","msg":"fetch failed"}
+{"t":"2026-11-14T17:50:33.100Z","model":"gemini-3.1-flash-image","label":"zona-c1_b2","size":"default","status":"OK"}
+{"t":"2026-11-14T17:50:36.961Z","model":"gemini-3.1-flash-image","label":"zona-c2_b2","size":"default","status":"OK"}
+{"t":"2026-11-14T17:52:14.780Z","model":"gemini-3.1-flash-image","label":"zona-c2_c2-sinagua","size":"default","status":"OK"}
