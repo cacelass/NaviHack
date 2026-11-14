@@ -1,0 +1,633 @@
+{
+ "$comment": "Programa 2026-27 estructurado a mano desde horario_atencion de la capa ArcGIS del Concello (R-04, 2026-11-14). Días: mon..sun, 'eve' = víspera de festivo, 'holiday' = festivo. Una regla con close < open cierra al día siguiente. Las excepciones por fecha ganan a las reglas. Ver vault/01_PROYECTO/programa_2026.md. Las reglas con 'eve'/'holiday' van antes que las de día de la semana: la primera que encaja gana.",
+ "source": "Concello de Vigo — capa ArcGIS «Puntos interés Navidad 2026 2027», campo horario_atencion",
+ "verified": "2026-11-14",
+ "holidays": [
+  "2026-12-08",
+  "2026-12-25",
+  "2027-01-01",
+  "2027-01-06"
+ ],
+ "templates": {
+  "lights": {
+   "kind": "lights",
+   "season": {
+    "from": "2026-11-14",
+    "to": null
+   },
+   "rules": [
+    {
+     "days": [
+      "thu",
+      "fri",
+      "sat",
+      "eve",
+      "holiday"
+     ],
+     "open": "18:00",
+     "close": "03:00"
+    },
+    {
+     "days": [
+      "sun",
+      "mon",
+      "tue",
+      "wed"
+     ],
+     "open": "18:00",
+     "close": "01:00"
+    }
+   ],
+   "all_night": [
+    "2026-12-23",
+    "2026-12-24",
+    "2026-12-25",
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01",
+    "2027-01-05",
+    "2027-01-06"
+   ]
+  },
+  "vialia_noria": {
+   "kind": "attraction",
+   "season": {
+    "from": null,
+    "to": null
+   },
+   "rules": [
+    {
+     "days": [
+      "fri",
+      "sat",
+      "eve"
+     ],
+     "open": "11:00",
+     "close": "00:30"
+    },
+    {
+     "days": [
+      "sun",
+      "holiday"
+     ],
+     "open": "11:00",
+     "close": "00:00"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "17:00",
+     "close": "23:30",
+     "from": "2026-12-21",
+     "to": "2027-01-12"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "17:00",
+     "close": "22:30"
+    }
+   ],
+   "dates": {
+    "2026-12-24": [
+     [
+      "11:00",
+      "20:00"
+     ]
+    ],
+    "2026-12-31": [
+     [
+      "11:00",
+      "20:00"
+     ]
+    ],
+    "2027-01-05": [
+     [
+      "11:00",
+      "22:00"
+     ]
+    ]
+   }
+  },
+  "vialia_park": {
+   "kind": "attraction",
+   "season": {
+    "from": null,
+    "to": null
+   },
+   "rules": [
+    {
+     "days": [
+      "fri",
+      "sat",
+      "eve"
+     ],
+     "open": "11:00",
+     "close": "00:30"
+    },
+    {
+     "days": [
+      "sun",
+      "holiday"
+     ],
+     "open": "11:00",
+     "close": "00:00"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "17:00",
+     "close": "23:30",
+     "from": "2026-12-21",
+     "to": "2027-01-16"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "17:00",
+     "close": "22:30"
+    }
+   ],
+   "dates": {
+    "2026-12-24": [
+     [
+      "11:00",
+      "20:00"
+     ]
+    ],
+    "2026-12-31": [
+     [
+      "11:00",
+      "20:00"
+     ]
+    ],
+    "2027-01-05": [
+     [
+      "11:00",
+      "22:00"
+     ]
+    ]
+   }
+  },
+  "market": {
+   "kind": "market",
+   "season": {
+    "from": null,
+    "to": null
+   },
+   "rules": [
+    {
+     "days": [
+      "fri",
+      "sat",
+      "eve"
+     ],
+     "open": "11:00",
+     "close": "00:30"
+    },
+    {
+     "days": [
+      "sun",
+      "holiday"
+     ],
+     "open": "11:00",
+     "close": "23:30"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "17:00",
+     "close": "23:00",
+     "from": "2026-12-21",
+     "to": "2027-01-16"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "17:00",
+     "close": "22:30"
+    }
+   ],
+   "dates": {
+    "2026-12-24": [
+     [
+      "11:00",
+      "20:00"
+     ]
+    ],
+    "2026-12-31": [
+     [
+      "11:00",
+      "20:00"
+     ]
+    ],
+    "2027-01-05": [
+     [
+      "11:00",
+      "22:00"
+     ]
+    ]
+   }
+  },
+  "ice_rink": {
+   "kind": "attraction",
+   "season": {
+    "from": null,
+    "to": null
+   },
+   "rules": [
+    {
+     "days": [
+      "sat",
+      "sun",
+      "holiday"
+     ],
+     "open": "11:00",
+     "close": "22:30"
+    },
+    {
+     "days": [
+      "fri"
+     ],
+     "open": "16:30",
+     "close": "22:30"
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "open": "14:30",
+     "close": "22:00"
+    }
+   ],
+   "dates": {
+    "2026-12-24": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "2026-12-31": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "2027-01-05": [
+     [
+      "11:00",
+      "19:00"
+     ]
+    ],
+    "2026-12-25": [
+     [
+      "16:30",
+      "22:30"
+     ]
+    ],
+    "2027-01-01": [
+     [
+      "16:30",
+      "22:30"
+     ]
+    ],
+    "2027-01-06": [
+     [
+      "16:30",
+      "22:30"
+     ]
+    ]
+   }
+  }
+ },
+ "points": {
+  "concello-2552": {
+   "template": "lights",
+   "shows": [
+    {
+     "label": "animación musical",
+     "times": [
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "21:50"
+     ],
+     "minutes": 10
+    }
+   ]
+  },
+  "concello-2553": {
+   "template": "lights"
+  },
+  "concello-2566": {
+   "template": "lights",
+   "conflict": "El texto en gallego dice 18:30–00:30 (dom–mié) y 18:30–02:00 (jue–sáb, festivos y vísperas); el castellano, 18:00–01:00/03:00. Se usa el castellano (igual que el resto de luces) hasta confirmarlo in situ (R-02/R-03)."
+  },
+  "concello-2567": {
+   "template": "lights"
+  },
+  "concello-3516": {
+   "template": "lights"
+  },
+  "concello-3713": {
+   "template": "lights"
+  },
+  "concello-3714": {
+   "template": "lights"
+  },
+  "concello-3715": {
+   "template": "lights"
+  },
+  "concello-3720": {
+   "template": "lights"
+  },
+  "concello-3721": {
+   "template": "lights"
+  },
+  "concello-4873": {
+   "template": "lights"
+  },
+  "concello-3494": {
+   "template": "vialia_noria"
+  },
+  "concello-3554": {
+   "template": "vialia_park"
+  },
+  "concello-3496": {
+   "template": "market"
+  },
+  "concello-3508": {
+   "template": "market"
+  },
+  "concello-3513": {
+   "template": "market"
+  },
+  "concello-3731": {
+   "template": "market"
+  },
+  "concello-3512": {
+   "template": "ice_rink"
+  },
+  "concello-3502": {
+   "kind": "santa_kings",
+   "season": {
+    "from": "2026-12-25",
+    "to": "2027-01-05"
+   },
+   "rules": [
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat",
+      "sun"
+     ],
+     "slots": [
+      [
+       "11:00",
+       "14:00"
+      ],
+      [
+       "17:00",
+       "21:00"
+      ]
+     ]
+    }
+   ],
+   "dates": {
+    "2026-12-31": [
+     [
+      "11:00",
+      "14:00"
+     ],
+     [
+      "17:00",
+      "19:00"
+     ]
+    ],
+    "2027-01-01": [
+     [
+      "17:00",
+      "21:00"
+     ]
+    ]
+   }
+  },
+  "concello-3701": {
+   "kind": "santa_kings",
+   "season": {
+    "from": null,
+    "to": null
+   },
+   "rules": [
+    {
+     "days": [
+      "sat",
+      "sun",
+      "holiday"
+     ],
+     "slots": [
+      [
+       "11:00",
+       "14:00"
+      ],
+      [
+       "17:00",
+       "21:00"
+      ]
+     ]
+    },
+    {
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+     ],
+     "slots": [
+      [
+       "17:00",
+       "21:00"
+      ]
+     ]
+    }
+   ]
+  },
+  "concello-3503": {
+   "kind": "attraction",
+   "season": {
+    "from": "2026-12-04",
+    "to": "2027-01-10"
+   },
+   "hours_unknown": "Horarios en la taquilla externa (ticketrona.com); el Concello no los publica.",
+   "booking_url": "https://ticketrona.com/evento/circo-de-nadal-en-vigo-presenta-o-maxico-reino-dos-xoguetes"
+  },
+  "concello-3534": {
+   "kind": "attraction",
+   "departures": [
+    {
+     "from": "2026-11-16",
+     "to": "2026-11-30",
+     "days": [
+      "fri",
+      "sat",
+      "eve"
+     ],
+     "times": [
+      "18:30",
+      "19:30",
+      "20:30"
+     ]
+    },
+    {
+     "from": "2026-11-16",
+     "to": "2026-11-30",
+     "days": [
+      "sun"
+     ],
+     "times": [
+      "18:30"
+     ]
+    },
+    {
+     "from": "2026-12-01",
+     "to": "2026-12-19",
+     "days": [
+      "fri",
+      "sat",
+      "eve"
+     ],
+     "times": [
+      "18:30",
+      "19:30",
+      "20:30"
+     ]
+    },
+    {
+     "from": "2026-12-01",
+     "to": "2026-12-19",
+     "days": [
+      "sun",
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "times": [
+      "18:30"
+     ]
+    },
+    {
+     "from": "2026-12-20",
+     "to": "2027-01-06",
+     "days": [
+      "fri",
+      "sat",
+      "eve"
+     ],
+     "times": [
+      "18:30",
+      "19:30",
+      "20:30"
+     ]
+    },
+    {
+     "from": "2026-12-20",
+     "to": "2027-01-06",
+     "days": [
+      "sun",
+      "mon",
+      "tue",
+      "wed",
+      "thu"
+     ],
+     "times": [
+      "18:30",
+      "19:30"
+     ]
+    }
+   ],
+   "meeting_point": "Urzáiz-Príncipe (A Farola)",
+   "booking_url": "https://www.woutick.es/",
+   "note": "El texto oficial dice «Fecha inicio ventas: 16/11/2025»: errata probable por 2026."
+  },
+  "concello-3535": {
+   "kind": "attraction",
+   "season": {
+    "from": "2026-11-20",
+    "to": "2027-01-04"
+   },
+   "departures": [
+    {
+     "from": "2026-11-20",
+     "to": "2027-01-04",
+     "days": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat",
+      "sun"
+     ],
+     "times": [
+      "20:00"
+     ]
+    }
+   ],
+   "duration_min": 90,
+   "prices_eur": {
+    "over_12": 25,
+    "2_to_12": 12,
+    "under_2": 0
+   },
+   "booking_url": "https://www.mardeons.es"
+  }
+ },
+ "no_schedule": [
+  "concello-3499",
+  "concello-3527",
+  "concello-3703",
+  "concello-3709",
+  "concello-3711",
+  "concello-3712",
+  "concello-3729",
+  "concello-3730",
+  "concello-4872",
+  "concello-4876",
+  "concello-4940",
+  "concello-4941"
+ ]
+}

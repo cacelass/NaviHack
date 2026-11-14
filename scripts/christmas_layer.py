@@ -212,6 +212,10 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     overrides = json.loads(OVERRIDES.read_text(encoding="utf-8")) if OVERRIDES.exists() else []
     out = build(raw, overrides)
+    from scripts import programme  # R-04: horarios estructurados
+
+    if programme.PROGRAMME.exists():
+        programme.attach(out["points"], programme.load())
     POINTS.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(out['points'])} puntos (copia del {raw['fetched_at']}) en data/points.json")
     return 0

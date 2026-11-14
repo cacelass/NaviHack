@@ -42,8 +42,66 @@
     336
    ],
    "show_times": [
-    "18:00"
-   ]
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "21:50"
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "shows": [
+     {
+      "label": "animación musical",
+      "times": [
+       "18:00",
+       "19:00",
+       "20:00",
+       "21:00",
+       "21:50"
+      ],
+      "minutes": 10
+     }
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-2553",
@@ -84,7 +142,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-2566",
@@ -125,7 +224,49 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "conflict": "El texto en gallego dice 18:30–00:30 (dom–mié) y 18:30–02:00 (jue–sáb, festivos y vísperas); el castellano, 18:00–01:00/03:00. Se usa el castellano (igual que el resto de luces) hasta confirmarlo in situ (R-02/R-03).",
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-2567",
@@ -166,7 +307,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3494",
@@ -205,7 +387,76 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "attraction",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "open": "11:00",
+      "close": "00:30"
+     },
+     {
+      "days": [
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "00:00"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "23:30",
+      "from": "2026-12-21",
+      "to": "2027-01-12"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "22:30"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "22:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3496",
@@ -244,7 +495,76 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "market",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "open": "11:00",
+      "close": "00:30"
+     },
+     {
+      "days": [
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "23:30"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "23:00",
+      "from": "2026-12-21",
+      "to": "2027-01-16"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "22:30"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "22:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3499",
@@ -283,7 +603,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3502",
@@ -322,7 +643,56 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "santa_kings",
+    "season": {
+     "from": "2026-12-25",
+     "to": "2027-01-05"
+    },
+    "rules": [
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu",
+       "fri",
+       "sat",
+       "sun"
+      ],
+      "slots": [
+       [
+        "11:00",
+        "14:00"
+       ],
+       [
+        "17:00",
+        "21:00"
+       ]
+      ]
+     }
+    ],
+    "dates": {
+     "2026-12-31": [
+      [
+       "11:00",
+       "14:00"
+      ],
+      [
+       "17:00",
+       "19:00"
+      ]
+     ],
+     "2027-01-01": [
+      [
+       "17:00",
+       "21:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3503",
@@ -361,7 +731,17 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "attraction",
+    "season": {
+     "from": "2026-12-04",
+     "to": "2027-01-10"
+    },
+    "hours_unknown": "Horarios en la taquilla externa (ticketrona.com); el Concello no los publica.",
+    "booking_url": "https://ticketrona.com/evento/circo-de-nadal-en-vigo-presenta-o-maxico-reino-dos-xoguetes",
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3508",
@@ -400,7 +780,76 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "market",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "open": "11:00",
+      "close": "00:30"
+     },
+     {
+      "days": [
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "23:30"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "23:00",
+      "from": "2026-12-21",
+      "to": "2027-01-16"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "22:30"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "22:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3512",
@@ -439,7 +888,81 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "attraction",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "sat",
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "22:30"
+     },
+     {
+      "days": [
+       "fri"
+      ],
+      "open": "16:30",
+      "close": "22:30"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "14:30",
+      "close": "22:00"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "19:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "19:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "19:00"
+      ]
+     ],
+     "2026-12-25": [
+      [
+       "16:30",
+       "22:30"
+      ]
+     ],
+     "2027-01-01": [
+      [
+       "16:30",
+       "22:30"
+      ]
+     ],
+     "2027-01-06": [
+      [
+       "16:30",
+       "22:30"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3513",
@@ -478,7 +1001,76 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "market",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "open": "11:00",
+      "close": "00:30"
+     },
+     {
+      "days": [
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "23:30"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "23:00",
+      "from": "2026-12-21",
+      "to": "2027-01-16"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "22:30"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "22:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3516",
@@ -519,7 +1111,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3527",
@@ -558,7 +1191,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3534",
@@ -597,7 +1231,97 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "attraction",
+    "departures": [
+     {
+      "from": "2026-11-16",
+      "to": "2026-11-30",
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "times": [
+       "18:30",
+       "19:30",
+       "20:30"
+      ]
+     },
+     {
+      "from": "2026-11-16",
+      "to": "2026-11-30",
+      "days": [
+       "sun"
+      ],
+      "times": [
+       "18:30"
+      ]
+     },
+     {
+      "from": "2026-12-01",
+      "to": "2026-12-19",
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "times": [
+       "18:30",
+       "19:30",
+       "20:30"
+      ]
+     },
+     {
+      "from": "2026-12-01",
+      "to": "2026-12-19",
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "times": [
+       "18:30"
+      ]
+     },
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-06",
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "times": [
+       "18:30",
+       "19:30",
+       "20:30"
+      ]
+     },
+     {
+      "from": "2026-12-20",
+      "to": "2027-01-06",
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "times": [
+       "18:30",
+       "19:30"
+      ]
+     }
+    ],
+    "meeting_point": "Urzáiz-Príncipe (A Farola)",
+    "booking_url": "https://www.woutick.es/",
+    "note": "El texto oficial dice «Fecha inicio ventas: 16/11/2025»: errata probable por 2026.",
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3535",
@@ -636,7 +1360,40 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "attraction",
+    "season": {
+     "from": "2026-11-20",
+     "to": "2027-01-04"
+    },
+    "departures": [
+     {
+      "from": "2026-11-20",
+      "to": "2027-01-04",
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu",
+       "fri",
+       "sat",
+       "sun"
+      ],
+      "times": [
+       "20:00"
+      ]
+     }
+    ],
+    "duration_min": 90,
+    "prices_eur": {
+     "over_12": 25,
+     "2_to_12": 12,
+     "under_2": 0
+    },
+    "booking_url": "https://www.mardeons.es",
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3554",
@@ -675,7 +1432,76 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "attraction",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "open": "11:00",
+      "close": "00:30"
+     },
+     {
+      "days": [
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "00:00"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "23:30",
+      "from": "2026-12-21",
+      "to": "2027-01-16"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "22:30"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "22:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3701",
@@ -714,7 +1540,49 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "santa_kings",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "sat",
+       "sun",
+       "holiday"
+      ],
+      "slots": [
+       [
+        "11:00",
+        "14:00"
+       ],
+       [
+        "17:00",
+        "21:00"
+       ]
+      ]
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu",
+       "fri"
+      ],
+      "slots": [
+       [
+        "17:00",
+        "21:00"
+       ]
+      ]
+     }
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3703",
@@ -753,7 +1621,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3709",
@@ -792,7 +1661,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3711",
@@ -831,7 +1701,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3712",
@@ -870,7 +1741,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3713",
@@ -911,7 +1783,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3714",
@@ -952,7 +1865,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3715",
@@ -993,7 +1947,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3720",
@@ -1034,7 +2029,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3721",
@@ -1075,7 +2111,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-3729",
@@ -1114,7 +2191,8 @@
    "position": "approximate",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3730",
@@ -1153,7 +2231,8 @@
    "position": "approximate",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-3731",
@@ -1192,7 +2271,76 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": {
+    "kind": "market",
+    "season": {
+     "from": null,
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "fri",
+       "sat",
+       "eve"
+      ],
+      "open": "11:00",
+      "close": "00:30"
+     },
+     {
+      "days": [
+       "sun",
+       "holiday"
+      ],
+      "open": "11:00",
+      "close": "23:30"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "23:00",
+      "from": "2026-12-21",
+      "to": "2027-01-16"
+     },
+     {
+      "days": [
+       "mon",
+       "tue",
+       "wed",
+       "thu"
+      ],
+      "open": "17:00",
+      "close": "22:30"
+     }
+    ],
+    "dates": {
+     "2026-12-24": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2026-12-31": [
+      [
+       "11:00",
+       "20:00"
+      ]
+     ],
+     "2027-01-05": [
+      [
+       "11:00",
+       "22:00"
+      ]
+     ]
+    },
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-4872",
@@ -1231,7 +2379,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-4873",
@@ -1272,7 +2421,48 @@
    "agenda_ids": [],
    "show_times": [
     "18:00"
-   ]
+   ],
+   "programme": {
+    "kind": "lights",
+    "season": {
+     "from": "2026-11-14",
+     "to": null
+    },
+    "rules": [
+     {
+      "days": [
+       "thu",
+       "fri",
+       "sat",
+       "eve",
+       "holiday"
+      ],
+      "open": "18:00",
+      "close": "03:00"
+     },
+     {
+      "days": [
+       "sun",
+       "mon",
+       "tue",
+       "wed"
+      ],
+      "open": "18:00",
+      "close": "01:00"
+     }
+    ],
+    "all_night": [
+     "2026-12-23",
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-05",
+     "2027-01-06"
+    ],
+    "closed_dates": []
+   }
   },
   {
    "id": "concello-4876",
@@ -1311,7 +2501,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-4940",
@@ -1350,7 +2541,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   },
   {
    "id": "concello-4941",
@@ -1389,7 +2581,8 @@
    "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [],
+   "programme": null
   }
  ]
 }
