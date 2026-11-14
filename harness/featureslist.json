@@ -1745,10 +1745,12 @@
         "Redimensionar la ventana y girar el móvil reajusta el encuadre sin dejar huecos",
         "Capturas antes y después en web/ui/capturas/"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "711d514a-c7fa-4bc8-b834-7ce7bbe5fe49",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "711d514a-web-01-el-visor-llena-la-pantall",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "WEB-02",

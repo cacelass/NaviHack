@@ -1,32 +1,40 @@
 # Tarea actual
 
-**Feature:** GO-01
+**Feature:** WEB-01
 **Estado:** in_progress
 **Iniciada:** 2026-11-14
 **Responsable:** implementer
 
 ## Objetivo
 
-Pedido por Miguel (2026-11-14). Si el usuario está a más de ~5 min a pie del primer punto del tour, la app pregunta cómo quiere ir: andando, en bus o en coche. A pie: ruta normal. Coche: de su ubicación a un parking cercano al primer punto que esté libre o que previsiblemente lo esté al llegar (D-05), y del parking a pie al primer punto. Bus: parada cercana con bus directo hasta cerca del primer punto (GTFS programado, X-04) y ruta a pie desde la parada de bajada. Cada tramo con su tiempo, todo dibujado en el mapa integrado y botón para abrir exactamente esa ruta en Google Maps. Aspecto profesional, sin bugs.
+En la web real (web/index.html y web/js/app.js, servida con `python3 -m http.server` desde web/) el bloque 3x3 se ve como un rectángulo pequeño pegado a la izquierda, cortado por la derecha y flotando sobre un fondo azul oscuro vacío. El visor (OpenSeadragon) no se ajusta al bloque: el encuadre inicial y los límites de paneo y zoom no coinciden con el tamaño real del bloque que describe manifest.json, tampoco en las variantes que traen `canvas` y `offset`.
+
+Qué se espera: al abrir, el bloque ocupa la pantalla entera sin franjas de fondo; no se puede arrastrar ni alejar hasta dejar hueco vacío; el zoom mínimo es el encuadre del bloque; al llegar al borde se ve mar continuo y no el azul de fondo; y cuando ZONE-02 publique el bloque ampliado hacia Vialia, el encuadre y los límites se recalculan desde el manifiesto, sin anchos ni altos escritos a mano.
+
+Va en web/css/app.css y web/js/app.js. Pensado para Miguel.
 
 Criterios de aceptación:
-  1. A más de 5 min a pie del primer punto se pregunta cómo ir: a pie, bus o coche
-  2. A pie: ruta y tiempo hasta el primer punto
-  3. Coche: ruta hasta un parking cercano al primer punto con plazas libres (o previsión al llegar) y tramo a pie parking-primer punto, cada uno con su tiempo
-  4. Bus: parada de subida cercana con bus directo, hora programada, parada de bajada y tramo a pie hasta el primer punto, cada uno con su tiempo
-  5. Todos los tramos dibujados en el mapa integrado con estilo distinto por modo
-  6. Botón que abre en Google Maps exactamente esa ruta
-  7. Sin errores en consola y con alternativa si falla la geolocalización, el router o un feed
+  1. En escritorio (1400x900) y en móvil (390x844) el bloque ocupa todo el viewport, sin franjas de fondo vacío a los lados, arriba ni abajo
+  2. No se puede arrastrar el mapa hasta dejar hueco vacío en ningún borde; en el zoom mínimo el bloque sigue llenando la pantalla
+  3. El zoom mínimo es el encuadre del bloque y no se puede alejar más; el máximo mantiene el pixelado nítido, sin suavizado
+  4. Con un manifest.json de otro tamaño (bloque 4x4 sintético o el de ZONE-02) encuadre y límites se recalculan solos, sin tocar JS: no hay ancho ni alto del bloque escrito a mano
+  5. Al salir del bloque se ve mar continuo, nunca el azul de fondo de la página
+  6. Redimensionar la ventana y girar el móvil reajusta el encuadre sin dejar huecos
+  7. Capturas antes y después en web/ui/capturas/
+
+Solapa con MAP-01 (visor de teselas, búsqueda, minimapa y capas), que sigue libre: coordinar con quien lo coja para no hacerlo dos veces.
+
+BUENA UX QUE YA EXISTE Y HAY QUE CONSERVAR (se amplía, no se rehace): la Vista ciudad (todo Vigo en un mapa real con fotos de cada punto y parkings), el tour a pie contado parada a parada dentro de la web ("primero la Bola...") y "¿Cuándo vas?" (ahora, 18:00, 20:00, 22:00), que planifica el paseo según la hora. Son lo mejor de la web actual: cualquier cambio de este ticket tiene que dejarlos igual de claros o mejor. Sigue web/ui/DESIGN.md (UI-03).
 
 ## Criterios de aceptación
 
-- [ ] A más de 5 min a pie del primer punto se pregunta cómo ir: a pie, bus o coche
-- [ ] A pie: ruta y tiempo hasta el primer punto
-- [ ] Coche: ruta hasta un parking cercano al primer punto con plazas libres (o previsión al llegar) y tramo a pie parking-primer punto, cada uno con su tiempo
-- [ ] Bus: parada de subida cercana con bus directo, hora programada, parada de bajada y tramo a pie hasta el primer punto, cada uno con su tiempo
-- [ ] Todos los tramos dibujados en el mapa integrado con estilo distinto por modo
-- [ ] Botón que abre en Google Maps exactamente esa ruta
-- [ ] Sin errores en consola y con alternativa si falla la geolocalización, el router o un feed
+- [ ] En escritorio (1400x900) y en móvil (390x844) el bloque ocupa todo el viewport, sin franjas de fondo vacío a los lados, arriba ni abajo
+- [ ] No se puede arrastrar el mapa hasta dejar hueco vacío en ningún borde; en el zoom mínimo el bloque sigue llenando la pantalla
+- [ ] El zoom mínimo es el encuadre del bloque y no se puede alejar más; el máximo mantiene el pixelado nítido, sin suavizado
+- [ ] Con un manifest.json de otro tamaño (bloque 4x4 sintético o el de ZONE-02) encuadre y límites se recalculan solos, sin tocar JS: no hay ancho ni alto del bloque escrito a mano
+- [ ] Al salir del bloque se ve mar continuo, nunca el azul de fondo de la página
+- [ ] Redimensionar la ventana y girar el móvil reajusta el encuadre sin dejar huecos
+- [ ] Capturas antes y después en web/ui/capturas/
 
 ## Bitácora
 
