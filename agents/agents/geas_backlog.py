@@ -131,6 +131,10 @@ def _merged_env(root: Path) -> dict[str, str]:
     for key in ("GEAS_URL", "GEAS_TOKEN", "GEAS_ACTOR", "GEAS_ACTOR_ID", "GEAS_ORG_ID"):
         if os.environ.get(key):
             env[key] = os.environ[key]
+    # Si hay actor explícito (repo o entorno), el token global (client.env)
+    # no debe silenciarlo: el token viene de un proxy que aquí no existe.
+    if env.get("GEAS_ACTOR") or env.get("GEAS_ACTOR_ID"):
+        env.pop("GEAS_TOKEN", None)
     return env
 
 
