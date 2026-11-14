@@ -110,7 +110,7 @@
     const sched = txt(p.schedule_text);
     sheet.append(...[
       close,
-      p.image_url ? Object.assign(el("img", "tv-photo"), { src: p.image_url.replace("._lgjpeg", ".jpeg"), alt: txt(p.name), loading: "lazy", onerror() { this.remove(); } }) : null,
+      p.photo ? Object.assign(el("img", "tv-photo"), { src: p.photo, alt: txt(p.name), loading: "lazy", onerror() { this.remove(); } }) : null,
       el("p", "tv-kicker", t(TYPE_KEY[p.type] || "points.filter_all") + (p.address ? " · " + p.address : "")),
       el("h2", null, txt(p.name)),
       st ? el("p", "tv-state " + (st.open ? "is-open" : ""), (st.open ? t("common.open_now") : t("common.closed")) + " · " + st.label) : null,

@@ -64,6 +64,9 @@ def web_points(
                 "schedule_text": p.get("schedule_text"),
                 "address": p.get("address"),
                 "image_url": p.get("image_url"),
+                "photo": f"data/photos/{p['id']}.webp"
+                if (OUT / "photos" / f"{p['id']}.webp").exists()
+                else None,
                 "lat": p["lat"],
                 "lon": p["lon"],
                 "x": round(cx / CANVAS, 5),

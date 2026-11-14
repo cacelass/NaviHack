@@ -202,5 +202,13 @@
   "go.free_n": "{n} libres",
   "go.route_to": "Ir a este parking",
   "go.live_traffic": "Google Maps evita los atascos en directo",
-  "app.city_view": "Vista ciudad"
+  "app.city_view": "Vista ciudad",
+  "walk.start": "Empezar el paseo",
+  "walk.next": "Siguiente",
+  "walk.prev": "Anterior",
+  "walk.step": "Parada {n} de {total}",
+  "walk.leg": "{min} min andando desde {from}",
+  "walk.you": "tu punto de salida",
+  "walk.end": "Fin del paseo. ¡Feliz Navidad!",
+  "walk.story": "Vas a ver"
 }

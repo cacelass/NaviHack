@@ -22,7 +22,7 @@
     L.control.zoom({ position: "bottomright" }).addTo(map);
 
     // puntos: la foto real del Concello como marcador
-    const photo = (p) => (p.image_url ? p.image_url.replace("._lgjpeg", ".jpeg") : "");
+    const photo = (p) => p.photo || "";
     const markers = new Map();
     for (const p of P.points) {
       const src = photo(p);

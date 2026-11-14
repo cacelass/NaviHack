@@ -166,11 +166,16 @@
     function renderResult() {
       const { stops, later, closed, line, km } = result;
       if (!stops.length) return el("p", "tv-note", t("tour.nothing"));
-      const ol = el("ol", "tv-stops", ...stops.map((s, i) => {
-        const b = el("button", null, el("span", "tv-num", String(i + 1)), el("span", "tv-name", txt(s.p.name)), el("span", "tv-badge", t("tour.stop_at", { time: hhmm(s.arrive), stay: s.stay })));
-        b.onclick = () => P.select(s.p);
+      const ol = el("ol", "tv-story", ...stops.map((s, i) => {
+        const b = el("button", null,
+          s.p.photo ? Object.assign(el("img"), { src: s.p.photo, alt: "", loading: "lazy" }) : el("span", "tv-story-ph"),
+          el("span", "tv-num", String(i + 1)),
+          el("span", "tv-story-name", txt(s.p.name)),
+          el("span", "tv-badge", t("tour.stop_at", { time: hhmm(s.arrive), stay: s.stay })));
+        b.onclick = () => startWalk(i);
         return el("li", null, b);
       }));
+      const walk = el("button", "tv-btn tv-go", t("walk.start")); walk.onclick = () => startWalk(0);
       const gm = el("a", "tv-btn", t("tour.open_gmaps"));
       const dest = stops[stops.length - 1].p;
       gm.href = gmaps("walking", [dest.lat, dest.lon], stops.slice(0, -1).map((s) => [s.p.lat, s.p.lon]).slice(0, 9));
@@ -178,12 +183,56 @@
       const clr = el("button", "tv-btn tv-btn-quiet", t("tour.clear")); clr.onclick = () => { result = null; clear(viewer); emit("tv:clear-route"); render(); };
       return el("div", "tv-result",
         el("p", "tv-summary", t("tour.summary", { min: budget, n: stops.length, km })),
-        ol, el("div", "tv-actions", gm, clr),
+        el("p", "tv-note", t("walk.story")), ol, walk, el("div", "tv-actions", gm, clr),
         later.length ? el("details", "tv-later", el("summary", null, t("tour.later") + " · " + later.length),
           el("ul", null, ...later.slice(0, 12).map((l) => { const b = el("button", null, el("span", "tv-name", txt(l.p.name)), el("span", "tv-badge", t("tour.later_item", { km: l.km.toFixed(1), min: l.min }))); b.onclick = () => P.select(l.p); return el("li", null, b); }))) : null,
         closed.length ? el("details", "tv-later", el("summary", null, t("tour.closed_now") + " · " + closed.length),
           el("ul", null, ...closed.map((c) => el("li", null, el("button", null, el("span", "tv-name", txt(c.p.name)), el("span", "tv-badge", c.st.label)))))) : null);
     }
+
+    // ── paseo paso a paso: «primero la Bola, luego la Noria…» ──────────────
+    const step = document.createElement("section");
+    step.className = "tv-step";
+    document.body.append(step);
+    let at = -1;
+    function legMin(i) {
+      const st = result.stops;
+      return Math.max(1, Math.round(i === 0 ? st[0].arrive : st[i].arrive - st[i - 1].arrive - st[i - 1].stay));
+    }
+    function startWalk(i) {
+      at = i;
+      box.classList.remove("is-open"); render();
+      showStep();
+    }
+    function showStep() {
+      step.replaceChildren();
+      step.classList.toggle("is-open", at >= 0 && !!result);
+      if (at < 0 || !result) return;
+      const st = result.stops, s = st[at], p = s.p;
+      const from = at === 0 ? t("walk.you") : txt(st[at - 1].p.name);
+      const prev = el("button", "tv-btn tv-btn-quiet", t("walk.prev")); prev.disabled = at === 0; prev.onclick = () => { at--; showStep(); };
+      const last = at === st.length - 1;
+      const next = el("button", "tv-btn", last ? t("common.close") : t("walk.next")); next.onclick = () => { if (last) { at = -1; } else { at++; } showStep(); };
+      const close = el("button", "tv-close", "×"); close.onclick = () => { at = -1; showStep(); };
+      const dots = el("div", "tv-step-dots", ...st.map((_, i) => el("span", i === at ? "is-on" : i < at ? "is-done" : "")));
+      step.append(...[close,
+        p.photo ? Object.assign(el("img", "tv-step-photo"), { src: p.photo, alt: txt(p.name) }) : null,
+        el("p", "tv-kicker", t("walk.step", { n: at + 1, total: st.length }) + " · " + hhmm(s.arrive)),
+        el("h2", null, txt(p.name)),
+        el("p", "tv-step-leg", t("walk.leg", { min: legMin(at), from })),
+        p.short ? el("p", "tv-short", txt(p.short)) : null,
+        dots,
+        last ? el("p", "tv-note", t("walk.end")) : null,
+        el("div", "tv-actions", prev, next)].filter(Boolean));
+      // el mapa acompaña: isométrico si el punto está dibujado, ciudad si no
+      if (p.on_map && !document.body.classList.contains("is-city")) {
+        viewer.viewport.panTo(new OpenSeadragon.Point(p.x, p.y));
+        viewer.viewport.zoomTo(Math.max(viewer.viewport.getZoom(), viewer.viewport.getHomeZoom() * 2.2));
+      }
+      document.dispatchEvent(new CustomEvent("tv:select", { detail: p }));
+      document.querySelectorAll(".tv-marker").forEach((m) => m.classList.toggle("is-selected", m.getAttribute("aria-label") === txt(p.name)));
+    }
+    document.addEventListener("tv:lang", showStep);
 
     function locate() {
       return new Promise((res) => {
@@ -232,7 +281,7 @@
     btn.onclick = () => { box.classList.toggle("is-open"); render(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, run, setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
+    window.tinyvigoTour = { plan, project, run, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
   }
 
   if (window.tinyvigoPoints) init();

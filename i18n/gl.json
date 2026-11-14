@@ -202,5 +202,13 @@
   "go.free_n": "{n} libres",
   "go.route_to": "Ir a este aparcadoiro",
   "go.live_traffic": "Google Maps evita os atascos en directo",
-  "app.city_view": "Vista cidade"
+  "app.city_view": "Vista cidade",
+  "walk.start": "Comezar o paseo",
+  "walk.next": "Seguinte",
+  "walk.prev": "Anterior",
+  "walk.step": "Parada {n} de {total}",
+  "walk.leg": "{min} min a pé desde {from}",
+  "walk.you": "o teu punto de saída",
+  "walk.end": "Fin do paseo. Bo Nadal!",
+  "walk.story": "Vas ver"
 }

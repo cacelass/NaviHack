@@ -111,3 +111,28 @@ body.is-city #zoom { display: none; }
 .leaflet-container { font: 13px Inter, system-ui, sans-serif; }
 @media (max-width: 700px) { .tv-view { bottom: 72px; right: 8px; } }
 .tv-osm { filter: brightness(.62) saturate(.7) contrast(1.1) hue-rotate(195deg) invert(.92); }
+
+/* itinerario: tira de tarjetas y paseo paso a paso */
+.tv-story { list-style: none; margin: 0; padding: 0 0 4px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; }
+.tv-story li { flex: none; width: 128px; }
+.tv-story button { width: 100%; display: grid; gap: 4px; padding: 0 0 6px; border: 0; border-radius: 8px; background: var(--tv-sunk); cursor: pointer; text-align: left; position: relative; overflow: hidden; color: var(--tv-text); }
+.tv-story img, .tv-story-ph { width: 100%; height: 84px; object-fit: cover; display: block; background: var(--tv-raised); }
+.tv-story .tv-num { position: absolute; top: 6px; left: 6px; }
+.tv-story-name { padding: 0 8px; font-size: 13px; font-weight: 500; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tv-story .tv-badge { padding: 0 8px; }
+.tv-step { position: fixed; z-index: 9; left: 50%; bottom: 12px; width: min(440px, calc(100vw - 16px)); transform: translate(-50%, calc(100% + 24px)); transition: transform .5s var(--tv-ease); box-sizing: border-box; border-radius: 12px; padding: 16px; overflow: hidden; font: 14px/1.4 Inter, system-ui, sans-serif; color: var(--tv-text); background: var(--tv-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.tv-step.is-open { transform: translate(-50%, 0); }
+.tv-step button { font: inherit; color: inherit; }
+.tv-step .tv-btn { border: 0; cursor: pointer; color: #151b2a; }
+.tv-step .tv-btn-quiet { color: var(--tv-text); }
+.tv-step .tv-btn:disabled { opacity: .4; cursor: default; }
+.tv-step h2 { margin: 2px 0 4px; font-size: 20px; font-weight: 600; }
+.tv-step-photo { width: calc(100% + 32px); margin: -16px -16px 12px; height: 170px; object-fit: cover; display: block; }
+.tv-step-leg { margin: 0 0 6px; color: var(--tv-gold); font-weight: 500; }
+.tv-step .tv-short { margin: 0 0 10px; }
+.tv-step-dots { display: flex; gap: 4px; margin: 4px 0 10px; }
+.tv-step-dots span { flex: 1; height: 4px; border-radius: 2px; background: var(--tv-raised); }
+.tv-step-dots .is-done { background: rgba(244, 205, 128, .5); } .tv-step-dots .is-on { background: var(--tv-gold); }
+.tv-step .tv-actions { justify-content: space-between; }
+@media (max-width: 700px) { .tv-step-photo { height: 130px; } }
+.tv-step .tv-close { position: absolute; top: 10px; right: 10px; margin: 0; z-index: 1; background: rgba(21, 27, 42, .7); }

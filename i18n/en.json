@@ -202,5 +202,13 @@
   "go.free_n": "{n} free",
   "go.route_to": "Drive to this car park",
   "go.live_traffic": "Google Maps avoids live traffic jams",
-  "app.city_view": "City view"
+  "app.city_view": "City view",
+  "walk.start": "Start the walk",
+  "walk.next": "Next",
+  "walk.prev": "Previous",
+  "walk.step": "Stop {n} of {total}",
+  "walk.leg": "{min} min walk from {from}",
+  "walk.you": "your starting point",
+  "walk.end": "End of the walk. Merry Christmas!",
+  "walk.story": "You will see"
 }
