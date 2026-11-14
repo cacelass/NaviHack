@@ -714,11 +714,21 @@ commits 5a6ca17, fbaea3e, 17e8df5. pytest 89 passed; ruff/mypy/evals OK. test_we
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
 - **Pendiente:** _(nada)_
+## UI-04 — Aplicar la guía a la web real
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 100 passed in 0.54s
+- **Ticket GEAS:** 773b34d3 · commit_after `c2a2f945`
+- **Cambios:** web/css, web/js, web/index.html, docs/investigacion/auditoria-ui.md
+- **Decisiones:** Visor oscuro por defecto (decision de Jose)
+- **Pendiente:** web/app (React) sin auditar
 
 <details><summary>Evidencia</summary>
 
 ```
 commit 7cbdf4c. pytest tests 100 passed; evals PASS; node --check OK. 1) Cada capa muestra su última actualización: parkings con fechahora en el popup y 'Sin datos' gris si >10 min (D-00); 2) cada punto muestra last_verified y estado en la ficha ('Verificado el 2026-11-14 · Fuente: Concello' / 'Aún sin confirmar por el Concello'); 3) caducado (>7 días, R-05) o sin confirmar en color de peligro con ⚠; parking caducado en gris. Textos en gl/es/en (i18n/).
+UI-04 (Miguel2), sobre el primer pase de Jose b07fede: web/index.html, web/js y web/css usan web/ui/css/tokens.css; superficies solidas (getComputedStyle panel oscuro rgb(34,38,52), claro rgb(255,255,255); 0 backdrop-filter en web/css); Inter local en todo; tamanos 28/20/16/14/12; iconos Lucide; color solo estado/dorado; 44 px; tarjeta del paseo con @container. Auditoria actualizada en docs/investigacion/auditoria-ui.md (pendientes 1-3 cerrados, tema oscuro por defecto respetado). Capturas escritorio claro/oscuro. web/app (React de Jose) fuera de este pase.   [32m✔[0m pytest                 100 passed in 0.61s
+[1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
 ```
 
 </details>
