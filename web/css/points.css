@@ -122,9 +122,12 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 body.is-city #city { display: block; }
 body.is-city #zoom { display: none; }
 html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(1.1) hue-rotate(195deg) invert(.92); }
-.tv-pin { width: 48px; height: 48px; border-radius: var(--r-ctl); background: var(--raised); border: 3px solid var(--acc); box-sizing: border-box; overflow: hidden; display: grid; place-items: center; color: var(--fg-2); }
+/* marcador: la foto entera (no recortada) en una tarjeta con punta que señala el sitio exacto */
+.tv-pin { position: relative; width: 84px; height: 56px; border-radius: var(--r-ctl); background: var(--sunk); border: 3px solid var(--acc); box-sizing: border-box; display: grid; place-items: center; color: var(--fg-2); box-shadow: 0 2px 6px rgba(0, 0, 0, .35); }
+.tv-pin::after { content: ""; position: absolute; left: 50%; bottom: -11px; transform: translateX(-50%); border: 8px solid transparent; border-top: 9px solid var(--acc); border-bottom: 0; }
 .tv-pin.is-open { border-color: var(--ok); }
-.tv-pin img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tv-pin.is-open::after { border-top-color: var(--ok); }
+.tv-pin img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: calc(var(--r-ctl) - 3px); }
 .tv-park { display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 0 8px 0 3px; border-radius: var(--r-sm); font: var(--w-600) var(--fs-meta)/1 var(--f-ui); background: var(--raised); color: var(--fg); border: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .tv-park b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 4px; background: #3d6a96; color: #fff; }
 .tv-park-ok { color: var(--ok); } .tv-park-low { color: var(--warning); } .tv-park-full { color: var(--danger); }

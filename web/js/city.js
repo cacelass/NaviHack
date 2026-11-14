@@ -28,7 +28,7 @@
       const src = photo(p);
       const st = P.status(p); const html = '<div class="tv-pin' + (st && st.open ? " is-open" : "") + '">' +
         (src ? '<img src="' + src + '" alt="" loading="lazy" onerror="this.remove()">' : "") + "</div>";
-      const m = L.marker([p.lat, p.lon], { icon: L.divIcon({ className: "", html, iconSize: [46, 54], iconAnchor: [23, 54] }), title: txt(p.name) })
+      const m = L.marker([p.lat, p.lon], { icon: L.divIcon({ className: "", html, iconSize: [84, 67], iconAnchor: [42, 67] }), title: txt(p.name) })
         .on("click", () => P.select(p, false)).addTo(map);
       markers.set(p.id, m);
     }
@@ -66,7 +66,7 @@
       L.polyline(ll, { color: "#151b2a", weight: 9, opacity: 0.8 }).addTo(routeLayer);
       L.polyline(ll, { color: mode === "driving" ? "#4ea3ff" : "#f4cd80", weight: 5, dashArray: mode === "transit" ? "8 8" : null }).addTo(routeLayer);
       L.circleMarker(start, { radius: 8, color: "#fff", weight: 3, fillColor: "#4ea3ff", fillOpacity: 1 }).addTo(routeLayer);
-      (stops || []).forEach((s, i) => L.marker([s.p.lat, s.p.lon], { zIndexOffset: 1000, title: (i + 1) + ". " + txt(s.p.name), icon: L.divIcon({ className: "", html: '<div class="tv-stopnum">' + (i + 1) + "</div>", iconSize: [28, 28], iconAnchor: [14, 66] }) })
+      (stops || []).forEach((s, i) => L.marker([s.p.lat, s.p.lon], { zIndexOffset: 1000, title: (i + 1) + ". " + txt(s.p.name), icon: L.divIcon({ className: "", html: '<div class="tv-stopnum">' + (i + 1) + "</div>", iconSize: [28, 28], iconAnchor: [14, 82] }) })
         .on("click", () => (window.tinyvigoTour ? tinyvigoTour.startWalk(i) : P.select(s.p, false))).addTo(routeLayer));
       lastBounds = L.latLngBounds(ll).pad(0.15);
       if (e.detail.showCity) setCity(true);
