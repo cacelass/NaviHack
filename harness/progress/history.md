@@ -732,3 +732,37 @@ UI-04 (Miguel2), sobre el primer pase de Jose b07fede: web/index.html, web/js y 
 ```
 
 </details>
+
+## D-12 — Planner signals and weights
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 107 passed in 0.63s
+- **Ticket GEAS:** 88638b5e · commit_after `3031c561`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 46353ff. pytest tests 107 passed; ruff/mypy/evals OK. scripts/signals.py: 1) After dark: tras la puesta de sol (NOAA) penaliza tramos lejos (>40 m) de luces encendidas a esa hora según horario R-04; 2) Easy walk: pendiente MDT05 (D-11) + recargo sin bancos/cafés OSM (62+52 en el núcleo); 3) aviso planner.rain_warning si lluvia >=50 % en la ventana (D-10); 4) stop_factor 0,7 para paradas covered con lluvia; 5) señales ausentes en notes/missing con factor neutro. test_signals 7 tests. Parking hint fuera hasta confirmación del equipo (doc vault/01_PROYECTO/senales_planner.md).
+```
+
+</details>
+
+## D-04 — Venue join for agenda events
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 107 passed in 0.54s
+- **Ticket GEAS:** 0753e662 · commit_after `3031c561`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 94d5fb2. Cruce por id aprendido/nombre/dirección; 14 de 44 eventos en mapa, 24 unmatched registrados, sin ubicación solo lista. test_venues 6 tests.
+```
+
+</details>
