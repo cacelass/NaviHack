@@ -32,7 +32,7 @@
   }
 
   function init() {
-    const P = window.tinyvigoPoints, t = P.t;
+    const P = window.tinyvigoPoints, t = P.t, txt = P.txt;
     const btn = el("button", "tv-today-open");
     const box = el("section", "tv-tour tv-events");
     document.body.append(btn, box);
@@ -62,35 +62,88 @@
         go);
     }
 
-    async function render() {
+    const XMAS = /nadal|navidad|navide|luces|luzes|bel[eé]n|papa noel|pap[aá] noel|reyes|reis|cabalgata|disney|mercado de navidad|c[ií]es market|[aá]rbol|noria|pista de hielo|patinaxe|nadal bus|cartero real|turr[oó]n|villancico|panxoliña/i;
+    const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+    const iso = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    const hm = (d) => String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    const timeIn = (label) => ((label || "").match(/(\d{1,2}:\d{2})/) || [])[1];
+    function classes(day, holidays) {
+      const c = new Set([DAYS[day.getDay()]]), next = new Date(day); next.setDate(day.getDate() + 1);
+      if ((holidays || []).includes(iso(day))) c.add("holiday");
+      if ((holidays || []).includes(iso(next))) c.add("eve");
+      return c;
+    }
+    // la Navidad de hoy, con horas: luces, pases, salidas, abierto ahora y lo navideño de la agenda
+    function christmasToday(agenda) {
+      const now = new Date(), today = iso(now);
+      const timeline = [], openNow = [], soon = [];
+      const lights = P.points.filter((p) => p.type === "light" && p.programme);
+      if (lights.length) {
+        const tree = P.points.find((p) => p.id === "concello-2552") || lights[0];
+        const st = P.status(tree, now);
+        const on = st && st.open ? null : timeIn(st && st.label);
+        const off = st && st.open ? timeIn(st.label) : null;
+        timeline.push({ time: on || hm(now), title: on ? t("xmas.lights_on") : t("xmas.lights_lit"), sub: t("xmas.lights_sub", { n: lights.length }) + (off ? " · " + t("common.closes_at", { time: off }) : ""), p: tree });
+      }
+      for (const p of P.points) {
+        const e = p.programme;
+        if (!e) continue;
+        const st = P.status(p, now);
+        for (const sh of e.shows || []) {
+          if (st === null) continue;
+          for (const tm of sh.times) timeline.push({ time: tm, title: sh.label.charAt(0).toUpperCase() + sh.label.slice(1) + " · " + sh.minutes + " min", sub: txt(p.name), p });
+        }
+        for (const dep of e.departures || []) {
+          if (dep.from <= today && today <= dep.to && dep.days.some((d) => classes(now, e.holidays).has(d))) dep.times.forEach((tm) => timeline.push({ time: tm, title: txt(p.name), sub: t("xmas.departure"), p }));
+          else if (dep.from > today && !soon.some((x) => x.p === p)) soon.push({ p, date: dep.from });
+        }
+        if (st && st.open && ["attraction", "market", "santa_kings"].includes(p.type)) openNow.push({ p, label: st.label });
+      }
+      const nowHM = hm(now);
+      timeline.sort((a, b) => a.time.localeCompare(b.time));
+      timeline.forEach((x) => (x.past = x.time < nowHM && !/^0[0-5]/.test(x.time)));
+      const agendaX = (agenda || []).filter((e) => e.today && XMAS.test(e.titulo + " " + (e.direccion || "")));
+      return { timeline, openNow, soon: soon.sort((a, b) => a.date.localeCompare(b.date)), agendaX };
+    }
+    const pick = (p) => { P.select(p); if (window.matchMedia("(max-width: 700px)").matches) { box.classList.remove("is-open"); render(); } };
+    const dateFmt = (d) => new Date(d + "T12:00").toLocaleDateString(P.lang() === "en" ? "en-GB" : P.lang() === "gl" ? "gl-ES" : "es-ES", { day: "numeric", month: "long" });
+    const thumb = (p) => (p.photo ? Object.assign(el("img", "tv-thumb"), { src: p.photo, alt: "" }) : null);
+
+    function render() {
       btn.replaceChildren(lu("calendar-days"), t("events.open"));
       box.replaceChildren();
       if (!box.classList.contains("is-open")) return;
       const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close"));
       close.onclick = () => { box.classList.remove("is-open"); render(); };
-      box.append(close, el("h2", null, t("events.title")));
-      if (!events && !error) {
-        box.append(el("p", "tv-note", t("state.loading") + "…"));
-        if (!loading) {
-          loading = true;
-          try { events = await load(P.points); } catch (e) { error = true; }
-          loading = false; render();
-        }
-        return;
+      box.append(close, el("h2", null, t("xmas.title")));
+      if (!events && !error && !loading) {
+        loading = true;
+        load(P.points).then((e) => { events = e; }).catch(() => { error = true; }).finally(() => { loading = false; render(); });
       }
-      if (error) {
-        const retry = el("button", "tv-btn", lu("rotate-ccw", 16), t("common.retry"));
-        retry.onclick = () => { error = false; render(); };
-        box.append(el("p", null, t("state.error_title")), retry);
-        return;
+      const x = christmasToday(events);
+      box.append(x.timeline.length
+        ? el("ol", "tv-timeline", ...x.timeline.map((it) => {
+            const b = el("button", it.past ? "is-past" : "", el("span", "tv-time", it.time), el("span", "tv-tl-main", el("span", "tv-ev-title", it.title), el("span", "tv-ev-place", it.sub)));
+            b.onclick = () => pick(it.p);
+            return el("li", null, b);
+          }))
+        : el("p", "tv-note", t("state.no_events_body")));
+      if (x.openNow.length) {
+        box.append(el("h3", null, t("xmas.open_now")), el("ul", "tv-evlist tv-open-list", ...x.openNow.map((o) => {
+          const b = el("button", null, thumb(o.p), el("span", "tv-name", txt(o.p.name)), el("span", "tv-badge is-open", o.label));
+          b.onclick = () => pick(o.p); return el("li", null, b);
+        })));
       }
-      const dated = events.filter((e) => e.today), perm = events.filter((e) => e.permanente);
-      box.append(dated.length
-        ? el("ul", "tv-evlist", ...dated.map(row))
-        : el("div", null, el("h3", null, t("state.no_events_title")), el("p", "tv-note", t("state.no_events_body"))));
-      if (perm.length) box.append(el("details", "tv-later", el("summary", null, t("events.permanent") + " · " + perm.length), el("ul", "tv-evlist", ...perm.map(row))));
+      if (x.agendaX.length) box.append(el("h3", null, t("xmas.agenda")), el("ul", "tv-evlist", ...x.agendaX.map(row)));
+      else if (loading) box.append(el("p", "tv-note", t("state.loading") + "…"));
+      if (x.soon.length) {
+        box.append(el("h3", null, t("xmas.soon")), el("ul", "tv-evlist tv-open-list", ...x.soon.map((o) => {
+          const b = el("button", null, thumb(o.p), el("span", "tv-name", txt(o.p.name)), el("span", "tv-badge", t("xmas.from_date", { date: dateFmt(o.date) })));
+          b.onclick = () => pick(o.p); return el("li", null, b);
+        })));
+      }
       const src = el("a", null, t("common.see_source")); src.href = "https://datos.vigo.org/"; src.target = "_blank"; src.rel = "noopener";
-      box.append(el("p", "tv-note", t("events.source_note") + " · ", src));
+      box.append(el("p", "tv-note", t("xmas.source") + " · ", src));
     }
 
     btn.onclick = () => {

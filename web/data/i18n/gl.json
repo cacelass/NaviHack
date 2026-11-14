@@ -223,5 +223,15 @@
   "tour.when": "Cando vas?",
   "tour.now": "Agora",
   "events.open": "Hoxe",
-  "events.on_map": "Ver no mapa"
+  "events.on_map": "Ver no mapa",
+  "xmas.title": "Nadal hoxe",
+  "xmas.lights_on": "Acéndense as luces",
+  "xmas.lights_lit": "As luces están acendidas",
+  "xmas.lights_sub": "{n} puntos de luz no centro",
+  "xmas.departure": "Saída",
+  "xmas.open_now": "Aberto agora",
+  "xmas.agenda": "Na axenda do Concello",
+  "xmas.soon": "Proximamente",
+  "xmas.from_date": "Desde o {date}",
+  "xmas.source": "Programa oficial de Nadal 2026-27 e axenda do Concello"
 }

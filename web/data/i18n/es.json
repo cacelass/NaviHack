@@ -223,5 +223,15 @@
   "tour.when": "¿Cuándo vas?",
   "tour.now": "Ahora",
   "events.open": "Hoy",
-  "events.on_map": "Ver en el mapa"
+  "events.on_map": "Ver en el mapa",
+  "xmas.title": "Navidad hoy",
+  "xmas.lights_on": "Se encienden las luces",
+  "xmas.lights_lit": "Las luces están encendidas",
+  "xmas.lights_sub": "{n} puntos de luz en el centro",
+  "xmas.departure": "Salida",
+  "xmas.open_now": "Abierto ahora",
+  "xmas.agenda": "En la agenda del Concello",
+  "xmas.soon": "Próximamente",
+  "xmas.from_date": "Desde el {date}",
+  "xmas.source": "Programa oficial de Navidad 2026-27 y agenda del Concello"
 }

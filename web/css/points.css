@@ -185,3 +185,14 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
   .tv-panel.is-collapsed { right: auto; }
   .tv-today-open, .tv-tour-open { min-height: 48px; }
 }
+
+/* Navidad hoy: línea de tiempo con horas reales */
+.tv-timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.tv-timeline button { width: 100%; display: flex; align-items: center; gap: var(--sp-3); min-height: var(--tap); padding: 6px var(--sp-2); border: 0; border-radius: var(--r-ctl); background: none; text-align: left; cursor: pointer; color: var(--fg); }
+.tv-timeline button:hover { background: var(--surface); }
+.tv-timeline .is-past { opacity: .5; }
+.tv-time { flex: none; width: 52px; font-size: var(--fs-label); font-weight: var(--w-600); font-variant-numeric: tabular-nums; }
+.tv-tl-main { display: grid; gap: 1px; min-width: 0; }
+.tv-open-list { gap: 0; }
+.tv-open-list button { width: 100%; display: flex; align-items: center; gap: var(--sp-3); min-height: 52px; padding: 4px var(--sp-2); border: 0; border-radius: var(--r-ctl); background: none; text-align: left; cursor: pointer; color: var(--fg); }
+.tv-open-list button:hover { background: var(--surface); }

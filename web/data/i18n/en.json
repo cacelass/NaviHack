@@ -223,5 +223,15 @@
   "tour.when": "When are you going?",
   "tour.now": "Now",
   "events.open": "Today",
-  "events.on_map": "Show on map"
+  "events.on_map": "Show on map",
+  "xmas.title": "Christmas today",
+  "xmas.lights_on": "The lights come on",
+  "xmas.lights_lit": "The lights are on",
+  "xmas.lights_sub": "{n} light displays in the centre",
+  "xmas.departure": "Departure",
+  "xmas.open_now": "Open now",
+  "xmas.agenda": "On the Concello agenda",
+  "xmas.soon": "Coming soon",
+  "xmas.from_date": "From {date}",
+  "xmas.source": "Official Christmas 2026-27 programme and Concello agenda"
 }
