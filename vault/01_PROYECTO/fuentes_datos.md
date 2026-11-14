@@ -151,3 +151,14 @@ Open-Meteo.com (CC BY 4.0)».
   year_reformed, use, barrio`. Otra zona: `python -m scripts.buildings --bbox …`.
 - **Fallback:** huellas de Catastro (INSPIRE, WFS de edificios) unidas por
   `refcat`; la altura saldría de plantas × 3 m, peor que la del Concello.
+
+## Renfe en vivo (X-03) — comprobado 2026-11-14 17:33
+
+| Endpoint | Formato | Cobertura Vigo | Frescura | Veredicto |
+|---|---|---|---|---|
+| `gtfsrt.renfe.com/trip_updates_LD.json` | GTFS-RT en **JSON** (no hace falta protobuf) | sí: 12 viajes del día cruzan con el GTFS de X-02 (p. ej. Vigo–Barcelona +20 min) | cabecera a 15 s | **GO** para retrasos (`scripts/renfe_live.py`, solo si la cabecera tiene < 5 min) |
+| `gtfsrt.renfe.com/vehicle_positions_LD.json` | JSON | 3 trenes a < 60 km | cabecera **1 h atrasada**, entidades del día anterior | **NO-GO** para mover trenes en el mapa |
+| `gtfsrt.renfe.com/trip_updates.json`, `vehicle_positions.json` | JSON | ninguna (son Cercanías) | — | no aplica |
+
+Hasta nueva comprobación, los trenes del mapa (TRANSIT-02) van con horario programado
+y etiqueta «programado»; los retrasos se pueden mostrar como texto en el tablero.
