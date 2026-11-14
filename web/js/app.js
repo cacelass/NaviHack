@@ -7,6 +7,9 @@
   const base = "tiles/" + current.version + "/";
   const m = await (await fetch(base + "manifest.json")).json();
 
+  // el mapa es pixel art: dibujarlo a la densidad de la pantalla (2x, 3x) multiplica el trabajo de
+  // cada fotograma sin ganar nitidez (se escala con image-rendering: pixelated). Se dibuja a 1x.
+  OpenSeadragon.pixelDensityRatio = 1;
   const viewer = OpenSeadragon({
     id: "map",
     showNavigationControl: false,

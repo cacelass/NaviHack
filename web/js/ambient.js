@@ -48,9 +48,11 @@
   function build() {
     if (built || !viewer || !window.tinyvigoPoints) return;
     built = true;
+    // tinte fijo sobre la pantalla (no una capa pegada al mapa que se recoloca en cada fotograma)
     tint = document.createElement("div");
     tint.className = "tv-night";
-    viewer.addOverlay({ element: tint, location: new OpenSeadragon.Rect(-0.5, -0.5, 2, 2) });
+    const cv = viewer.drawer && viewer.drawer.canvas; // encima del dibujo, debajo de luces y marcadores
+    if (cv && cv.parentNode) cv.parentNode.insertBefore(tint, cv.nextSibling); else document.getElementById("map").after(tint);
     const pts = window.tinyvigoPoints.points.filter((p) => p.on_map && ["light", "attraction", "market", "santa_kings"].includes(p.type));
     pts.forEach((p, i) => {
       const halo = document.createElement("span");

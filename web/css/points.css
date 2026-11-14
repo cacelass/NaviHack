@@ -429,7 +429,7 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 }
 
 /* ── ambiente (ambient.js): estático y barato. --night 0..1 marca la intensidad. ─────────── */
-.tv-night { pointer-events: none; background: #0a1030; opacity: calc(var(--night, 0) * .42); }
+.tv-night { position: absolute; inset: 0; pointer-events: none; background: #0a1030; opacity: calc(var(--night, 0) * .55); }
 /* luces: un resplandor cálido pequeño por punto y dos bombillas, sin animación */
 .tv-glow { pointer-events: none; position: relative; border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 205, 120, .55) 0%, rgba(255, 180, 80, .18) 38%, transparent 70%);
@@ -479,3 +479,5 @@ body.is-city .tv-time-quick, body:has(.tv-sheet.is-open) .tv-time-quick, body:ha
 .tv-z-far .tv-pin::before { content: ""; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #151b2a; }
 /* el resumen plegado del tour no se pega a la × */
 .tv-tour-head { padding-right: calc(var(--tap) + var(--sp-3)); }
+
+body.is-city .tv-night { display: none !important; }
