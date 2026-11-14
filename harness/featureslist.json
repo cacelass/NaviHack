@@ -267,12 +267,14 @@
         "uv run python -m agents.prompts_sync sale en verde",
         "make check pasa y ./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "BOOT-002"
       ],
       "ticket_id": "6e86eb88-006b-4dd2-9060-0005a7c85c13",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "6e86eb88-boot-003-protocolo-de-arranque-e",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "R-01",
@@ -452,12 +454,12 @@
         "Unmatched events logged",
         "Events without location shown in list only"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-03"
       ],
       "ticket_id": "0753e662-0daf-4237-a7ff-bc6c45f079c1",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "0753e662-d-04-venue-join-for-agenda-event",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -792,13 +794,13 @@
         "Next departures shown in the point panel",
         "Bus stop and train station layers on the map"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "X-01",
         "X-02"
       ],
       "ticket_id": "b7daf91d-54e3-4784-b958-c9d141e79e49",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "b7daf91d-x-04-transit-legs-in-planner-nex",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1835,6 +1837,26 @@
       ],
       "ticket_id": "47691fa2-b371-4fdf-8102-c9889b3a318d",
       "raw_status": "FREE"
+    },
+    {
+      "id": "GO-01",
+      "title": "Cómo llegar al primer punto: a pie, en bus o en coche, con tramos, tiempos y ruta en el mapa",
+      "description": "Pedido por Miguel (2026-11-14). Si el usuario está a más de ~5 min a pie del primer punto del tour, la app pregunta cómo quiere ir: andando, en bus o en coche. A pie: ruta normal. Coche: de su ubicación a un parking cercano al primer punto que esté libre o que previsiblemente lo esté al llegar (D-05), y del parking a pie al primer punto. Bus: parada cercana con bus directo hasta cerca del primer punto (GTFS programado, X-04) y ruta a pie desde la parada de bajada. Cada tramo con su tiempo, todo dibujado en el mapa integrado y botón para abrir exactamente esa ruta en Google Maps. Aspecto profesional, sin bugs.\n\nCriterios de aceptación:\n  1. A más de 5 min a pie del primer punto se pregunta cómo ir: a pie, bus o coche\n  2. A pie: ruta y tiempo hasta el primer punto\n  3. Coche: ruta hasta un parking cercano al primer punto con plazas libres (o previsión al llegar) y tramo a pie parking-primer punto, cada uno con su tiempo\n  4. Bus: parada de subida cercana con bus directo, hora programada, parada de bajada y tramo a pie hasta el primer punto, cada uno con su tiempo\n  5. Todos los tramos dibujados en el mapa integrado con estilo distinto por modo\n  6. Botón que abre en Google Maps exactamente esa ruta\n  7. Sin errores en consola y con alternativa si falla la geolocalización, el router o un feed",
+      "acceptance_criteria": [
+        "A más de 5 min a pie del primer punto se pregunta cómo ir: a pie, bus o coche",
+        "A pie: ruta y tiempo hasta el primer punto",
+        "Coche: ruta hasta un parking cercano al primer punto con plazas libres (o previsión al llegar) y tramo a pie parking-primer punto, cada uno con su tiempo",
+        "Bus: parada de subida cercana con bus directo, hora programada, parada de bajada y tramo a pie hasta el primer punto, cada uno con su tiempo",
+        "Todos los tramos dibujados en el mapa integrado con estilo distinto por modo",
+        "Botón que abre en Google Maps exactamente esa ruta",
+        "Sin errores en consola y con alternativa si falla la geolocalización, el router o un feed"
+      ],
+      "status": "in_progress",
+      "depends_on": [],
+      "ticket_id": "db918085-457d-4796-b783-3c67087e63b1",
+      "raw_status": "IN_PROGRESS",
+      "branch": "db918085-go-01-c-mo-llegar-al-primer-punt",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     }
   ]
 }
