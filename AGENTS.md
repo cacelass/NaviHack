@@ -212,6 +212,13 @@ Dos garantías del modo GEAS:
    Se niega a commitear `.env`, `*.pem`, `*.key` o `secrets/`. Sin remoto
    configurado no hay claim: el ticket no puede ser atómico entre dispositivos.
 
+**Nunca se commitean marcadores de conflicto** (`<<<<<<<` / `>>>>>>>`). Un
+`featureslist.json` con marcadores es JSON inválido y tumba la CI de todo el
+equipo. Los espejos (`harness/featureslist.json`, `harness/progress/current.md`)
+no se resuelven a mano: `harness start` toma la versión del remoto, y si te
+pasa en otro rebase, `git checkout origin/main -- <espejo>`. El commit WIP de
+`harness start` se niega a incluir marcadores y la CI los rechaza en su primer paso.
+
 `harness record` sigue escribiendo el informe del subagente en
 `harness/progress/`. Al tercer rechazo del reviewer, además de bloquear el
 espejo, bloquea el ticket en GEAS.

@@ -23,6 +23,10 @@ from pathlib import Path
 
 FORBIDDEN_NAMES = (".env", "id_rsa", "id_ed25519")
 FORBIDDEN_SUFFIXES = (".pem", ".key", ".p12", ".pfx")
+# Espejos que el arnés regenera desde GEAS: en un conflicto vale la versión del
+# remoto, porque el siguiente `harness status/start` los reescribe igualmente.
+MIRRORS = ("harness/featureslist.json", "harness/progress/current.md")
+CONFLICT_MARKERS = ("<<<<<<< ", ">>>>>>> ")
 
 
 class GitSyncError(RuntimeError):
@@ -117,8 +121,58 @@ def _forbidden(root: Path, lines: list[str]) -> list[str]:
     return bad
 
 
+def conflict_markers(root: Path) -> list[str]:
+    """Ficheros del índice con marcadores de conflicto (`<<<<<<< ` / `>>>>>>> `)."""
+    diff = _run(root, "diff", "--cached", "-U0", "--no-color").stdout
+    bad: list[str] = []
+    current = ""
+    for line in diff.splitlines():
+        if line.startswith("+++ b/"):
+            current = line[6:]
+        elif line.startswith("+") and line[1:].startswith(CONFLICT_MARKERS) and current not in bad:
+            bad.append(current)
+    return bad
+
+
+def _resolve_mirror_conflicts(root: Path) -> bool:
+    """Durante un rebase parado: si solo chocan espejos, toma la versión del remoto y sigue.
+
+    Devuelve True si el rebase terminó; False si hay conflictos en ficheros reales
+    (el llamador aborta). Nunca deja marcadores en el árbol.
+    """
+    for _ in range(50):  # un paso por commit rebasado
+        conflicted = _run(root, "diff", "--name-only", "--diff-filter=U").stdout.split()
+        if not conflicted:
+            return True
+        if any(path not in MIRRORS for path in conflicted):
+            return False
+        for path in conflicted:
+            # En un rebase, «ours» es la rama de destino: la del remoto.
+            _run(root, "checkout", "--ours", "--", path)
+            _run(root, "add", "--", path)
+        proc = subprocess.run(
+            ["git", "-c", "core.editor=true", "rebase", "--continue"],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            timeout=120,
+        )
+        if proc.returncode == 0 and not _run(root, "diff", "--name-only", "--diff-filter=U").stdout:
+            return True
+    return False
+
+
 def _commit_wip(root: Path, message: str) -> None:
     _git(root, "add", "-A")
+    markers = conflict_markers(root)
+    if markers:
+        _run(root, "reset", "-q")
+        raise GitSyncError(
+            "Hay marcadores de conflicto sin resolver en: "
+            + ", ".join(markers)
+            + ". No se commitean: resuélvelos (o restaura los espejos con "
+            "`git checkout origin/main -- harness/featureslist.json`) y reintenta."
+        )
     proc = _run(root, "commit", "-m", message)
     if proc.returncode != 0:
         detail = (proc.stderr or proc.stdout).strip()
@@ -216,7 +270,7 @@ def sync_before_claim(
                     ],
                 )
             pull = _run(root, "pull", "--rebase", remote, branch)
-            if pull.returncode != 0:
+            if pull.returncode != 0 and not _resolve_mirror_conflicts(root):
                 _run(root, "rebase", "--abort")
                 return SyncResult(
                     ok=False,
@@ -225,8 +279,9 @@ def sync_before_claim(
                     committed=committed,
                     pulled=False,
                     needs=[
-                        "Resuelve el conflicto a mano, haz commit del resultado y "
-                        "vuelve a lanzar `harness start`."
+                        "El conflicto está en código, no en los espejos del arnés. "
+                        "Resuélvelo a mano SIN dejar marcadores (<<<<<<< / >>>>>>>), "
+                        "haz commit y vuelve a lanzar `harness start`."
                     ],
                     warnings=[(pull.stderr or pull.stdout).strip()[-800:]],
                 )

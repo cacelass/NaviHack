@@ -128,3 +128,64 @@ def test_guard_detecta_ficheros_sensibles(tmp_path: Path, linea: str, path: str)
 
 def test_guard_permite_env_example(tmp_path: Path):
     assert git_sync._forbidden(tmp_path, ["?? .env.example"]) == []
+
+
+def _otro_clon(tmp_path: Path, remote: Path) -> Path:
+    other = tmp_path / "otro"
+    subprocess.run(["git", "clone", "-q", "-b", "main", str(remote), str(other)], check=True)
+    _git(other, "config", "user.email", "otro@example.com")
+    _git(other, "config", "user.name", "Otro")
+    return other
+
+
+def _con_espejo(tmp_path: Path) -> tuple[Path, Path]:
+    root, remote = _repo(tmp_path)
+    mirror = root / "harness" / "featureslist.json"
+    mirror.parent.mkdir()
+    mirror.write_text('{"features": [{"id": "A", "status": "pending"}]}\n')
+    _git(root, "add", ".")
+    _git(root, "commit", "-q", "-m", "espejo")
+    _git(root, "push", "-q", "origin", "main")
+    return root, remote
+
+
+def test_conflicto_solo_en_el_espejo_se_resuelve_con_la_version_del_remoto(tmp_path: Path):
+    root, remote = _con_espejo(tmp_path)
+    other = _otro_clon(tmp_path, remote)
+    (other / "harness" / "featureslist.json").write_text(
+        '{"features": [{"id": "A", "status": "done"}]}\n'
+    )
+    _git(other, "commit", "-qam", "otro cierra A")
+    _git(other, "push", "-q", "origin", "main")
+
+    (root / "harness" / "featureslist.json").write_text(
+        '{"features": [{"id": "A", "status": "in_progress"}]}\n'
+    )
+    result = git_sync.sync_before_claim(root, ticket="B-001")
+
+    assert result.ok, result.message
+    text = (root / "harness" / "featureslist.json").read_text()
+    assert "<<<<<<<" not in text and '"done"' in text
+    assert _git(root, "status", "--porcelain") == ""
+
+
+def test_conflicto_en_codigo_aborta_sin_marcadores(tmp_path: Path):
+    root, remote = _repo(tmp_path)
+    other = _otro_clon(tmp_path, remote)
+    (other / "README.md").write_text("# del otro\n")
+    _git(other, "commit", "-qam", "otro")
+    _git(other, "push", "-q", "origin", "main")
+
+    (root / "README.md").write_text("# mío\n")
+    result = git_sync.sync_before_claim(root, ticket="B-001")
+
+    assert not result.ok and "código" in result.needs[0]
+    assert "<<<<<<<" not in (root / "README.md").read_text()
+
+
+def test_no_commitea_marcadores_de_conflicto(tmp_path: Path):
+    root, _ = _repo(tmp_path)
+    (root / "roto.json").write_text("<<<<<<< HEAD\n{}\n=======\n[]\n>>>>>>> abc (x)\n")
+    with pytest.raises(git_sync.GitSyncError, match="roto.json"):
+        git_sync._commit_wip(root, "wip")
+    assert _git(root, "log", "-1", "--pretty=%s") == "chore: inicial"

@@ -26,6 +26,13 @@ jobs:
       - name: Install dependencies
         run: uv sync --extra dev --frozen
 
+      - name: No conflict markers
+        run: |
+          if git grep -nE '^(<<<<<<<|>>>>>>>) ' -- . ':!*.lock'; then
+            echo "::error::Marcadores de conflicto sin resolver (arriba). Restaura los espejos con: git checkout origin/main -- harness/featureslist.json harness/progress/current.md"
+            exit 1
+          fi
+
       - name: Lint
         run: |
           uv run ruff check app/ tests/ agents/

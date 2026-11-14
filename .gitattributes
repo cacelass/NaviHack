@@ -27,3 +27,9 @@ agents/workspace/ linguist-generated=true
 .gitignore export-ignore
 .editorconfig export-ignore
 .env.example export-ignore
+
+# Espejos del arnés que se regeneran desde GEAS: git nunca escribe marcadores
+# de conflicto dentro (conserva una versión entera); `harness start` toma la
+# del remoto (agents/tools/git_sync.py). Ver AGENTS.md, «Backlog en GEAS».
+harness/featureslist.json merge=binary
+harness/progress/current.md merge=binary
