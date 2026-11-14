@@ -740,6 +740,13 @@ UI-04 (Miguel2), sobre el primer pase de Jose b07fede: web/index.html, web/js y 
 - **Ticket GEAS:** 88638b5e · commit_after `3031c561`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
+## BOOT-003 — Protocolo de arranque en frio en el lider + documentacion
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 100 passed in 0.08s
+- **Ticket GEAS:** 6e86eb88 · commit_after `097daa98`
+- **Cambios:** Ninguno — todos los criterios ya estaban implementados por sesiones anteriores
+- **Decisiones:** BOOT-003 es la documentación del arranque en frío que ya se implementó durante el ciclo de onboarding. El lider.md tiene paso 0, AGENTS.md lo documenta, vault/05_AGENTES/BootstrapAgent.md existe, prompts_sync verde, init.sh ENTONRO LISTO. Cierro sin cambios.
 - **Pendiente:** _(nada)_
 
 <details><summary>Evidencia</summary>
@@ -780,6 +787,7 @@ commit 94d5fb2. Cruce por id aprendido/nombre/dirección; 14 de 44 eventos en ma
 
 ```
 commit 15dc2b5. pytest 110 passed; evals PASS; node --check OK + smoke con datos reales (Samil→centro 15B 18:23→18:40; próximas salidas junto al árbol; tablero Renfe). 1) Opción bus en el planner: bus directo al centro desde la parada cercana, etiquetado 'horario programado'; 2) próximas salidas en la ficha del punto (parada a ≤400 m); 3) capas de paradas Vitrasa (desvío Navidad en dorado) y estaciones Urzaiz/Guixar en la vista ciudad. test_build_transit_web 3 tests.
+1) .opencode/agents/lider.md: 'Paso 0 — arranque en frío' (línea 46) | 2) .claude/agents/lider.md: regenerado con assistants-sync, tiene paso 0 | 3) bootstrap status: onboarding_tickets_seeded=True, description_pending=False | 4) agents/README.md: 2 menciones de bootstrap | 5) AGENTS.md: 'arranque en frío' presente | 6) vault/05_AGENTES/BootstrapAgent.md existe | 7) prompts_sync: ✔ sincronizados | 8) ./init.sh: ENTORNO LISTO
 ```
 
 </details>

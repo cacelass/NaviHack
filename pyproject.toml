@@ -1,6 +1,6 @@
 [project]
 name = "app"
-version = "0.1.12"
+version = "0.1.13"
 description = "TinyVigo: mapa web de Vigo en Navidad con puntos navidenos, escenas pixel-art, eventos del dia y rutas a pie."
 authors = [
   { name = "cacelass" }

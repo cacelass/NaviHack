@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Cerrar BOOT-003 (arranque en frio verificado) (BOOT-003)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Verificar ubicacion de los 6 landmarks de Navidad (R-02)
 
 ## [Unreleased] — 2026-11-14
