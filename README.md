@@ -7,6 +7,9 @@
 > pixel art a partir de una foto propia. Mobile-first, una sola ciudad, un solo
 > mapa dibujado una vez.
 
+**Web:** [navihack.vercel.app](https://navihack.vercel.app) (landing) · [demo](https://navihack.vercel.app/demo/).
+La landing está en [`landing/`](landing/); se publica con `landing/deploy.sh`, que copia `web/` como `demo/`.
+
 **Para quién:** personas que pasean por el centro de Vigo con el móvil, de día y
 sobre todo por la tarde-noche (vecinos y turistas), y quien planifica una visita
 corta y quiere saber qué le cabe en 1–3 horas. Uso con una mano, a la
