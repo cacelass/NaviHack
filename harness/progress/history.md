@@ -808,3 +808,20 @@ WEB-01 (Miguel2, 0c45ef7): visor con homeFillsViewer, visibilityRatio 1, minZoom
 ```
 
 </details>
+
+## WEB-04 — Idioma por el navegador (gl, es, en) y ningún texto sin traducir
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 110 passed in 0.74s
+- **Ticket GEAS:** 4937c4ce · commit_after `a18e0f04`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+WEB-04 (Miguel2, 0c45ef7): idioma por navigator.languages (gl/es/en y variantes gl-ES/es-419/en-GB), ingles si no coincide; la eleccion manual manda y se recuerda; textos solo de web/data/i18n (tests/test_i18n.py: mismas claves y huecos), Acerca de traducido; prueba en Edge: gl 'Puntos de Nadal', en 'Christmas spots', es 'Puntos de Navidad'.   [32m✔[0m pytest                 110 passed in 0.59s [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+```
+
+</details>

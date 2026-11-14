@@ -1811,12 +1811,12 @@
         "Las frases son cortas y llanas en los tres idiomas, sin jerga ni frases largas",
         "Capturas de la misma pantalla en gallego, español e inglés en web/ui/capturas/"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "I18N-01"
       ],
       "ticket_id": "4937c4ce-2786-4fb6-a09d-b44cecbc8c31",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "4937c4ce-web-04-idioma-por-el-navegador-g",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
