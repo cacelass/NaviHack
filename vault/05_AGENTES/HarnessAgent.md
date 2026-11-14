@@ -12,11 +12,11 @@ tags:
 ## Contrato
 
 - **Rol:** Dueño mecánico del arnés: mantiene el backlog y el progreso, y ejecuta la puerta init.sh.
-- **Capacidades:** leer y actualizar harness/featureslist.json (abrir, cerrar, bloquear y añadir features); escribir harness/progress/current.md y añadir entradas a harness/progress/history.md; guardar los informes de los subagentes en harness/progress/<agente>-<FEATURE-ID>.md; ejecutar ./init.sh y devolver el veredicto estructurado; rechazar el cierre de una feature si la puerta no pasa o si no hay evidencia
-- **Límites:** decidir QUÉ feature toca ni cómo implementarla → eso lo razonan los agentes markdown del arnés (lider, explorer, implementer, reviewer); escribir código del producto → 'refactor' y el implementer; ejecutar los tests por su cuenta → los ejecuta init.sh, o el agente 'test'; cerrar una feature sin evidencia → devuelve needs, nunca la da por buena
-- **Necesita:** el id de la feature; la evidencia real de verificación para cerrarla
+- **Capacidades:** leer y actualizar harness/featureslist.json (espejo de GEAS: abrir, cerrar, bloquear y añadir features); hablar con GEAS para listar, reclamar, cerrar y bloquear tickets; sincronizar git antes de reclamar (commit WIP, fetch, pull --rebase y push); escribir harness/progress/current.md y añadir entradas a harness/progress/history.md; guardar los informes de los subagentes en harness/progress/<agente>-<FEATURE-ID>.md; ejecutar ./init.sh y devolver el veredicto estructurado; rechazar el cierre de una feature si la puerta no pasa o si no hay evidencia
+- **Límites:** decidir QUÉ feature toca ni cómo implementarla → eso lo razonan los agentes markdown del arnés (lider, explorer, implementer, reviewer); escribir código del producto → 'refactor' y el implementer; ejecutar los tests por su cuenta → los ejecuta init.sh, o el agente 'test'; cerrar una feature sin evidencia → devuelve needs, nunca la da por buena; seguir trabajando si GEAS no responde → fail-closed, no inventa trabajo local; commitear secretos (.env, *.pem, *.key, secrets/) en el WIP previo al claim
+- **Necesita:** el id de la feature o el UUID del ticket; la evidencia real de verificación para cerrarla; GEAS_URL/GEAS_TOKEN y un remoto git configurado para reclamar
 - **Recursos:** `harness/featureslist.json`, `harness/progress/`, `harness/memory.md`
-- **Colabora con:** [[PlanAgent|plan]], [[TestAgent|test]], [[ReviewAgent|review]], [[MemoryAgent|memory]]
+- **Colabora con:** [[PlanAgent|plan]], [[TestAgent|test]], [[ReviewAgent|review]], [[MemoryAgent|memory]], [[GitAgent|git]]
 
 ## Acciones
 

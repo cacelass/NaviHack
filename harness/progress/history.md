@@ -303,3 +303,20 @@ $ uv run python -m agents --json run bootstrap describe --yes --description '...
 ```
 
 </details>
+
+## BOOT-004 — knowledge sync_agent_cards: las fichas del vault desde los contratos
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.09s
+- **Ticket GEAS:** a659501f · commit_after `7b2d43ef`
+- **Cambios:** vault/05_AGENTES/*.md (24 fichas, 1 actualizada); agents/workspace/audit/audit.jsonl
+- **Decisiones:** sync_agent_cards regenera las fichas desde all_contracts(); dry_run por defecto, se ejecuto con --dry_run false --yes
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ uv run python -m agents --json run knowledge sync_agent_cards --dry_run false --yes → '24 ficha(s) sincronizadas: 0 nuevas, 1 actualizada, 23 sin cambios' | $ uv run pytest agents/tests/test_knowledge_agent.py → 18 passed | $ make check → 'check pasado'
+```
+
+</details>

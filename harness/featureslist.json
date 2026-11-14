@@ -108,10 +108,10 @@
         "hay tests sobre tmp_path que no tocan el vault real del repo",
         "make check pasa y prompts_sync sigue en verde"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "a659501f-3282-4210-b43c-828b3b0fa415",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "a659501f-boot-004-knowledge-sync_agent_ca",
       "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
