@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import math
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -99,13 +101,14 @@ def test_bloque_minimo_de_teselas_con_medio_de_margen() -> None:
     assert georef.tile_block([(1024, 1024)], 512) == (0, 0, 1, 1)
 
 
-def test_los_puntos_del_concello_caen_sobre_su_edificio_en_el_render() -> None:
-    """Contra el mapa de alturas del render 3x3, no contra la fórmula.
+def test_geometria_y_render_cuentan_lo_mismo() -> None:
+    """Coherencia interna: la altura que predice la geometría es la que pinta el render.
 
-    ``fixtures/points-3x3.json`` guarda, por punto, lo que predice la geometría
-    (cámara + edificios del Concello) y lo que pinta el render. Este test vuelve
-    a predecir con el código actual y exige que siga cuadrando con el render:
-    si la proyección se mueve un píxel, el punto cae sobre otro edificio.
+    OJO con lo que prueba y lo que no. ``fixtures/points-3x3.json`` guarda, por
+    punto, lo que predice la cámara con los edificios del Concello y lo que pinta
+    el mapa de alturas del render 3x3. Si la proyección se moviera un píxel, el
+    punto caería sobre otro edificio y esto fallaría. Pero no dice nada sobre si
+    las coordenadas del punto son buenas: eso lo miran los tests de OSM de abajo.
     """
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     p = georef.params()
@@ -126,3 +129,86 @@ def test_los_puntos_del_concello_caen_sobre_su_edificio_en_el_render() -> None:
         if not ok:
             failures.append((row["id"], pred.kind, pred.height, seen))
     assert not failures, failures
+
+
+# ── Comprobaciones con una fuente independiente: OpenStreetMap ───────────────
+# Coordenadas de OSM (Nominatim, 2026-11-14), no del Concello ni nuestras.
+OSM_PORTA_DO_SOL = (42.2379083, -8.7251412)  # vía peatonal «Porta do Sol»
+OSM_ESTACION_URZAIZ = (42.2349579, -8.7114407)  # edificio de la estación Vigo-Urzáiz
+CONCELLO_ARBOL = (42.238072, -8.725813)  # punto 2552 de data/points.json
+
+
+def _footprints() -> list[silhouette.Building]:
+    return silhouette.load_buildings(georef.params(), east=True)
+
+
+def test_porta_do_sol_de_osm_cae_en_espacio_abierto() -> None:
+    """Un hito conocido tiene que caer en la plaza, no dentro de un edificio."""
+    p = georef.params()
+    x, y = p.geo.metres(*OSM_PORTA_DO_SOL)
+    assert silhouette.contains(_footprints(), x, y) is None
+    assert p.tile_of(*p.to_pixel(*OSM_PORTA_DO_SOL)) == (1, 1)
+
+
+def test_estacion_urzaiz_de_osm_cae_en_la_tesela_de_vialia() -> None:
+    """Contraste de la zona nueva: la estación cae en la tesela (2, 3), en suelo."""
+    p = georef.params()
+    x, y = p.geo.metres(*OSM_ESTACION_URZAIZ)
+    assert silhouette.contains(_footprints(), x, y) is None
+    assert p.tile_of(*p.to_pixel(*OSM_ESTACION_URZAIZ, canvas="expansion")) == (2, 3)
+
+
+def test_el_punto_del_concello_del_arbol_esta_lejos_de_la_plaza() -> None:
+    """Discrepancia conocida: no coloques el árbol con la coordenada del Concello.
+
+    Dista unos 58 m de la vía peatonal de Porta do Sol en OSM; el árbol pintado en
+    el mapa (v6) está a ~20 m de esa vía. Si el Concello corrige el punto, este
+    test avisa para que se revise.
+    """
+    p = georef.params()
+    a = p.geo.metres(*CONCELLO_ARBOL)
+    b = p.geo.metres(*OSM_PORTA_DO_SOL)
+    assert 40 < math.dist(a, b) < 80
+
+
+def test_osd_normaliza_por_el_ancho() -> None:
+    p = georef.params()
+    x, y = p.to_osd(p.geo.lat0, p.geo.lon0)
+    assert (x, y) == (0.5, 0.5)  # el centro del lienzo cuadrado
+    # En el lienzo ancho la y también se divide por el ANCHO: 1536 / 4096.
+    x, y = p.to_osd(p.geo.lat0, p.geo.lon0, canvas="expansion")
+    assert (x, y) == (pytest.approx(1536 / 4096), pytest.approx(1536 / 4096))
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="hace falta node para el helper TS")
+def test_el_helper_ts_da_lo_mismo_que_python() -> None:
+    """georef.ts es un espejo: mismos números que el módulo Python en los cuatro hitos."""
+    p = georef.params()
+    cases = [(lat, lon, z) for lat, lon, *_ in KNOWN.values() for z in (0.0, 30.0)]
+    script = (
+        "import { toPixel, toLatLon, toOsd } from './pipeline/georef.ts';"
+        f"const cases = {json.dumps(cases)};"
+        "console.log(JSON.stringify(cases.map(([lat, lon, z]) => {"
+        "const p = toPixel(lat, lon, z, 'expansion');"
+        "return [p.x, p.y, ...Object.values(toLatLon(p.x, p.y, z, 'expansion')),"
+        "...Object.values(toOsd(lat, lon, z, 'expansion'))]; })));"
+    )
+    root = Path(__file__).resolve().parents[1]
+    run = subprocess.run(
+        [
+            "node",
+            "--experimental-strip-types",
+            "--no-warnings",
+            "--input-type=module",
+            "-e",
+            script,
+        ],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    for (lat, lon, z), got in zip(cases, json.loads(run.stdout), strict=True):
+        px, py = p.to_pixel(lat, lon, z, "expansion")
+        ox, oy = p.to_osd(lat, lon, z, "expansion")
+        assert got == pytest.approx([px, py, lat, lon, ox, oy], abs=1e-9)
