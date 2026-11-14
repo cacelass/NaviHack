@@ -167,12 +167,14 @@
         "hay tests de todo lo anterior",
         "make check pasa"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "BOOT-001"
       ],
       "ticket_id": "85c6d19e-257e-4f94-870f-f25decb7419e",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "85c6d19e-boot-002-installer-scaffold-crea",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "ONBOARD-002",
@@ -243,10 +245,10 @@
         "points.json and research log committed",
         "Every shown point has status above 'unverified'"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "5cc3fec4-bc72-4731-b8aa-e0b34537eab3",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "5cc3fec4-r-01-master-research-of-all-chri",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -455,10 +457,12 @@
         "Consumed by planner's Easy walk option",
         "Missing data handled gracefully"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "d2bedd01-70e1-4c04-b9be-766708ed6001",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "d2bedd01-d-11-elevation-mdt05-slope-layer",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "D-12",

@@ -1,26 +1,24 @@
 # Tarea actual
 
-**Feature:** D-05
+**Feature:** D-11
 **Estado:** in_progress
 **Iniciada:** 2026-11-14
 **Responsable:** implementer
 
 ## Objetivo
 
-Snapshot, stale detection, map layer and detail in point panel.
+CNIG MDT05 slope layer for 'Easy walk' route.
 
 Criterios de aceptación:
-  1. 12 car parks shown with free spaces and percent
-  2. Last update time shown
-  3. Stale car park shown as 'no data'
-  4. Detail in point panel (nearest car park)
+  1. Slope data loaded for Vigo centre
+  2. Consumed by planner's Easy walk option
+  3. Missing data handled gracefully
 
 ## Criterios de aceptación
 
-- [ ] 12 car parks shown with free spaces and percent
-- [ ] Last update time shown
-- [ ] Stale car park shown as 'no data'
-- [ ] Detail in point panel (nearest car park)
+- [ ] Slope data loaded for Vigo centre
+- [ ] Consumed by planner's Easy walk option
+- [ ] Missing data handled gracefully
 
 ## Bitácora
 
