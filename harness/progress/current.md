@@ -1,26 +1,33 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** D-12
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Weights for After dark and Easy walk. Rain warning when rain is expected during the route and an option to favour covered or indoor stops. Parking hint kept only if the team confirms it (not in the spec).
+
+Criterios de aceptación:
+  1. After dark uses light hours and avoids unlit stretches
+  2. Easy walk uses slope and benches/cafes
+  3. Rain warning in the summary when rain is expected inside the route window
+  4. Planner can favour covered or indoor stops when rain is expected
+  5. Missing signals reported, not fatal
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] After dark uses light hours and avoids unlit stretches
+- [ ] Easy walk uses slope and benches/cafes
+- [ ] Rain warning in the summary when rain is expected inside the route window
+- [ ] Planner can favour covered or indoor stops when rain is expected
+- [ ] Missing signals reported, not fatal
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_

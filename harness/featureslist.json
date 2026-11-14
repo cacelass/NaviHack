@@ -34,10 +34,12 @@
         "Los 35 puntos de points.json proyectados y comprobados sobre el mapa con una captura",
         "Tests de ida y vuelta y de un punto de control conocido"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "a418fcba-f908-45e7-9e73-ecc0f2e71b5c",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "a418fcba-geo-01-georreferencia-del-mapa-i",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
     {
       "id": "GEAS-001",
@@ -489,12 +491,12 @@
         "Last-good fallback with age; strip hides itself if the feed fails",
         "Open-Meteo Marine coverage of the ria checked and documented"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "66ad58ab-90c3-4724-b997-14de71842058",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "66ad58ab-d-10-weather-feed-open-meteo-cur",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -525,7 +527,7 @@
         "Planner can favour covered or indoor stops when rain is expected",
         "Missing signals reported, not fatal"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R-04",
         "D-05",
@@ -533,7 +535,9 @@
         "D-11"
       ],
       "ticket_id": "88638b5e-d722-4dd6-ae97-c7f8ea9c2d81",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "88638b5e-d-12-planner-signals-and-weights",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-17",
@@ -560,13 +564,15 @@
         "Each point shows last_verified and status",
         "Stale state visually distinct"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-05",
         "R-01"
       ],
       "ticket_id": "15ffa301-87c3-43e1-9216-b109cea5fef3",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "15ffa301-d-18-freshness-ui",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "MAP-01",
@@ -1602,10 +1608,12 @@
         "Máximo 4 llamadas Flash; contadas en pipeline/ledger",
         "Revisado por un modelo con visión"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "b8821781-3351-4481-8dbb-d3ed7c11df71",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "b8821781-assets-03-rbol-y-noria-como-imag",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
     {
       "id": "MAP-03",
@@ -1687,6 +1695,141 @@
       "status": "pending",
       "depends_on": [],
       "ticket_id": "cf75eff9-41da-4949-a4a8-0efa7ac0fd48",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "UI-03",
+      "title": "Guía de interfaz obligatoria (DESIGN.md)",
+      "description": "Guía obligatoria en web/ui/DESIGN.md, enlazada desde AGENTS.md. Recoge las reglas de Jose (ui.md), elastic-ui, Strivon y NN/g: fondo blanco y gris de relleno; color solo para estado o acento (el dorado de las luces); sin sombras, ni esquinas muy redondeadas, ni píldoras pastel, ni degradados; una familia (Inter) con pocos pesos y títulos en minúscula; iconos Lucide de interfaz y píxel solo dentro del mapa; controles sobre el mapa con superficie sólida y contraste AA; tarjeta plana con la imagen recolocándose según el ancho; 44 px táctiles; NN/g (estado visible, reconocer antes que recordar, deshacer, errores con salida, consistencia, divulgación progresiva); lista de AI slop; identidad de Vigo (dorado, la V, A Navideña, fotos reales, «Encendido ya»); checklist de 10 puntos.\n\nCriterios de aceptación:\n  1. web/ui/DESIGN.md existe y recoge las reglas\n  2. AGENTS.md (sección Interfaz) enlaza la guía\n  3. Incluye un checklist de diez puntos que se puede pasar a una pantalla",
+      "acceptance_criteria": [
+        "web/ui/DESIGN.md existe y recoge las reglas",
+        "AGENTS.md (sección Interfaz) enlaza la guía",
+        "Incluye un checklist de diez puntos que se puede pasar a una pantalla"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "f64d2852-0086-47c5-b739-b2c2c73352cb",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "UI-04",
+      "title": "Aplicar la guía a la web real",
+      "description": "Aplicar la guía de web/ui/DESIGN.md a la web real (web/index.html, web/js, web/css, web/app): fuentes, sombras, radios, iconos, separadores y controles sobre el mapa. Lo estructural que no sea de estilo puro se deja como ticket aparte. Comprobar por DOM y getComputedStyle.\n\nCriterios de aceptación:\n  1. web/index.html, web/js, web/css y web/app pasan el checklist de UI-03\n  2. Controles sobre el mapa con superficie sólida y contraste AA medido\n  3. Sin fuente de píxel en texto; iconos Lucide en la interfaz\n  4. Auditoría en docs/investigacion/auditoria-ui.md con las desviaciones y su estado",
+      "acceptance_criteria": [
+        "web/index.html, web/js, web/css y web/app pasan el checklist de UI-03",
+        "Controles sobre el mapa con superficie sólida y contraste AA medido",
+        "Sin fuente de píxel en texto; iconos Lucide en la interfaz",
+        "Auditoría en docs/investigacion/auditoria-ui.md con las desviaciones y su estado"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "773b34d3-a45a-4137-a32d-5fa093082c22",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEB-01",
+      "title": "El visor llena la pantalla con el mapa y no deja fondo vacío",
+      "description": "En la web real (web/index.html y web/js/app.js, servida con `python3 -m http.server` desde web/) el bloque 3x3 se ve como un rectángulo pequeño pegado a la izquierda, cortado por la derecha y flotando sobre un fondo azul oscuro vacío. El visor (OpenSeadragon) no se ajusta al bloque: el encuadre inicial y los límites de paneo y zoom no coinciden con el tamaño real del bloque que describe manifest.json, tampoco en las variantes que traen `canvas` y `offset`.\n\nQué se espera: al abrir, el bloque ocupa la pantalla entera sin franjas de fondo; no se puede arrastrar ni alejar hasta dejar hueco vacío; el zoom mínimo es el encuadre del bloque; al llegar al borde se ve mar continuo y no el azul de fondo; y cuando ZONE-02 publique el bloque ampliado hacia Vialia, el encuadre y los límites se recalculan desde el manifiesto, sin anchos ni altos escritos a mano.\n\nVa en web/css/app.css y web/js/app.js. Pensado para Miguel.\n\nCriterios de aceptación:\n  1. En escritorio (1400x900) y en móvil (390x844) el bloque ocupa todo el viewport, sin franjas de fondo vacío a los lados, arriba ni abajo\n  2. No se puede arrastrar el mapa hasta dejar hueco vacío en ningún borde; en el zoom mínimo el bloque sigue llenando la pantalla\n  3. El zoom mínimo es el encuadre del bloque y no se puede alejar más; el máximo mantiene el pixelado nítido, sin suavizado\n  4. Con un manifest.json de otro tamaño (bloque 4x4 sintético o el de ZONE-02) encuadre y límites se recalculan solos, sin tocar JS: no hay ancho ni alto del bloque escrito a mano\n  5. Al salir del bloque se ve mar continuo, nunca el azul de fondo de la página\n  6. Redimensionar la ventana y girar el móvil reajusta el encuadre sin dejar huecos\n  7. Capturas antes y después en web/ui/capturas/\n\nSolapa con MAP-01 (visor de teselas, búsqueda, minimapa y capas), que sigue libre: coordinar con quien lo coja para no hacerlo dos veces.\n\nBUENA UX QUE YA EXISTE Y HAY QUE CONSERVAR (se amplía, no se rehace): la Vista ciudad (todo Vigo en un mapa real con fotos de cada punto y parkings), el tour a pie contado parada a parada dentro de la web (\"primero la Bola...\") y \"¿Cuándo vas?\" (ahora, 18:00, 20:00, 22:00), que planifica el paseo según la hora. Son lo mejor de la web actual: cualquier cambio de este ticket tiene que dejarlos igual de claros o mejor. Sigue web/ui/DESIGN.md (UI-03).",
+      "acceptance_criteria": [
+        "En escritorio (1400x900) y en móvil (390x844) el bloque ocupa todo el viewport, sin franjas de fondo vacío a los lados, arriba ni abajo",
+        "No se puede arrastrar el mapa hasta dejar hueco vacío en ningún borde; en el zoom mínimo el bloque sigue llenando la pantalla",
+        "El zoom mínimo es el encuadre del bloque y no se puede alejar más; el máximo mantiene el pixelado nítido, sin suavizado",
+        "Con un manifest.json de otro tamaño (bloque 4x4 sintético o el de ZONE-02) encuadre y límites se recalculan solos, sin tocar JS: no hay ancho ni alto del bloque escrito a mano",
+        "Al salir del bloque se ve mar continuo, nunca el azul de fondo de la página",
+        "Redimensionar la ventana y girar el móvil reajusta el encuadre sin dejar huecos",
+        "Capturas antes y después en web/ui/capturas/"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "711d514a-c7fa-4bc8-b834-7ce7bbe5fe49",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEB-02",
+      "title": "Marcadores georreferenciados, dentro del bloque y con icono propio por tipo",
+      "description": "Los 35 puntos de Navidad (data/points.json, pintados por web/js/points.js) salen como cuadrados planos de color y dos se salen del bloque, uno por encima del todo y otro abajo a la derecha: la conversión lat/lon a píxel está hecha con constantes a mano y no encaja con el mapa dibujado.\n\nQué se espera: colocar los puntos con pipeline/georef.py, el módulo de GEO-01 que publica la misma transformación para Python y TypeScript (nada de constantes ni de coeficientes copiados); comprobar que los 35 caen dentro del bloque; dar a cada tipo su icono, atracciones, luces, mercados, Papá Noel y Reyes, photocalls y exposiciones, con silueta y color propios y legible a poca escala; agrupar los que se solapan; y no poner marcador en la noria ni en el árbol, que son assets pintados en el mapa por ASSETS-03.\n\nVa en web/js/points.js y web/css/points.css, con los iconos en web/ui/assets/. Pensado para Miguel.\n\nCriterios de aceptación:\n  1. Ningún marcador cae fuera del bloque: los 35 puntos se proyectan con pipeline/georef.py y se revisan sobre una captura del mapa\n  2. La web no guarda ninguna constante de georreferencia propia: usa el helper de GEO-01 y una prueba comprueba que da el mismo píxel que Python para 3 puntos de control\n  3. Cada tipo (atracciones, luces, mercados, Papá Noel y Reyes, photocalls, exposiciones) tiene icono propio, con silueta y color distintos, legible entre 16 y 24 px\n  4. Los marcadores que se solapan se agrupan con su número y se abren al tocar el grupo\n  5. La noria y el árbol no llevan marcador encima, porque son assets pintados en el bloque (ASSETS-03)\n  6. El color de estado (abierto, cerrado, sin horario) es el único color de énfasis; el resto sigue web/ui/DESIGN.md\n  7. Al publicar el bloque ampliado de ZONE-02 los marcadores siguen cuadrando sin tocar código\n  8. Capturas del bloque completo con los 35 puntos y de un tipo de icono de cerca en web/ui/capturas/\n\nBUENA UX QUE YA EXISTE Y HAY QUE CONSERVAR (se amplía, no se rehace): la Vista ciudad (todo Vigo en un mapa real con fotos de cada punto y parkings), el tour a pie contado parada a parada dentro de la web (\"primero la Bola...\") y \"¿Cuándo vas?\" (ahora, 18:00, 20:00, 22:00), que planifica el paseo según la hora. Son lo mejor de la web actual: cualquier cambio de este ticket tiene que dejarlos igual de claros o mejor. Sigue web/ui/DESIGN.md (UI-03).",
+      "acceptance_criteria": [
+        "Ningún marcador cae fuera del bloque: los 35 puntos se proyectan con pipeline/georef.py y se revisan sobre una captura del mapa",
+        "La web no guarda ninguna constante de georreferencia propia: usa el helper de GEO-01 y una prueba comprueba que da el mismo píxel que Python para 3 puntos de control",
+        "Cada tipo (atracciones, luces, mercados, Papá Noel y Reyes, photocalls, exposiciones) tiene icono propio, con silueta y color distintos, legible entre 16 y 24 px",
+        "Los marcadores que se solapan se agrupan con su número y se abren al tocar el grupo",
+        "La noria y el árbol no llevan marcador encima, porque son assets pintados en el bloque (ASSETS-03)",
+        "El color de estado (abierto, cerrado, sin horario) es el único color de énfasis; el resto sigue web/ui/DESIGN.md",
+        "Al publicar el bloque ampliado de ZONE-02 los marcadores siguen cuadrando sin tocar código",
+        "Capturas del bloque completo con los 35 puntos y de un tipo de icono de cerca en web/ui/capturas/"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "GEO-01"
+      ],
+      "ticket_id": "fa28dcc4-f2b2-4627-9e74-b5a893dd278b",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEB-03",
+      "title": "Búsqueda de puntos, calles, estaciones y eventos que funcione",
+      "description": "La búsqueda actual queda regular: no está claro qué encuentra, no perdona tildes ni erratas y elegir un resultado no lleva a ningún sitio concreto. La spec F1 pide buscar puntos de Navidad, calles, estaciones y eventos desde el mismo cuadro.\n\nQué se espera: una búsqueda que encuentre esas cuatro cosas; tolerante a tildes, mayúsculas y erratas pequeñas; resultados agrupados por tipo y con su icono; usable con teclado y con el dedo; un estado vacío que sugiera algo; que al elegir un resultado el mapa vuele al sitio y abra su ficha; y que recuerde las búsquedas recientes.\n\nVa en un módulo nuevo dentro de web/js/ y su hoja en web/css/. Pensado para Miguel.\n\nCriterios de aceptación:\n  1. Una lista de 10 consultas de prueba con su resultado esperado queda escrita en docs/ o junto al módulo, y las 10 pasan\n  2. Tildes y mayúsculas dan igual: «noria», «NÓRIA» y «Porta Do Sol» encuentran lo mismo que «Noria» y «porta do sol»\n  3. Una errata pequeña sigue encontrando el sitio: «noriaa» encuentra la noria y «garcia barbon» encuentra García Barbón\n  4. Los resultados salen agrupados por tipo (punto, calle, estación, evento) con su icono y cuántos hay en cada grupo\n  5. Con teclado: flechas para moverse, Enter para elegir, Esc para cerrar y foco visible; con el dedo: cada resultado tiene 44 px de alto\n  6. Sin resultados hay un estado vacío con una sugerencia («Prueba con árbol o Vialia») y nunca una lista rota o vacía sin explicación\n  7. Elegir un punto o un evento vuela el mapa al sitio y abre su ficha; elegir una calle o una estación centra el mapa y la marca\n  8. Las últimas 5 búsquedas se recuerdan y aparecen al enfocar el campo, con opción de borrarlas\n  9. La búsqueda es local, sin peticiones de red, y responde en menos de 100 ms con el dataset actual\n\nSolapa con MAP-01 (incluye la búsqueda): coordinar con quien lo coja.\n\nBUENA UX QUE YA EXISTE Y HAY QUE CONSERVAR (se amplía, no se rehace): la Vista ciudad (todo Vigo en un mapa real con fotos de cada punto y parkings), el tour a pie contado parada a parada dentro de la web (\"primero la Bola...\") y \"¿Cuándo vas?\" (ahora, 18:00, 20:00, 22:00), que planifica el paseo según la hora. Son lo mejor de la web actual: cualquier cambio de este ticket tiene que dejarlos igual de claros o mejor. Sigue web/ui/DESIGN.md (UI-03).",
+      "acceptance_criteria": [
+        "Una lista de 10 consultas de prueba con su resultado esperado queda escrita en docs/ o junto al módulo, y las 10 pasan",
+        "Tildes y mayúsculas dan igual: «noria», «NÓRIA» y «Porta Do Sol» encuentran lo mismo que «Noria» y «porta do sol»",
+        "Una errata pequeña sigue encontrando el sitio: «noriaa» encuentra la noria y «garcia barbon» encuentra García Barbón",
+        "Los resultados salen agrupados por tipo (punto, calle, estación, evento) con su icono y cuántos hay en cada grupo",
+        "Con teclado: flechas para moverse, Enter para elegir, Esc para cerrar y foco visible; con el dedo: cada resultado tiene 44 px de alto",
+        "Sin resultados hay un estado vacío con una sugerencia («Prueba con árbol o Vialia») y nunca una lista rota o vacía sin explicación",
+        "Elegir un punto o un evento vuela el mapa al sitio y abre su ficha; elegir una calle o una estación centra el mapa y la marca",
+        "Las últimas 5 búsquedas se recuerdan y aparecen al enfocar el campo, con opción de borrarlas",
+        "La búsqueda es local, sin peticiones de red, y responde en menos de 100 ms con el dataset actual"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "GEO-01"
+      ],
+      "ticket_id": "77bdb10e-e4ec-442c-ad3c-b158b2e68b1c",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEB-04",
+      "title": "Idioma por el navegador (gl, es, en) y ningún texto sin traducir",
+      "description": "El idioma de la web se elige por el idioma del navegador, no fijo. Hoy el panel lateral dice «Christmas spots» en inglés aunque el visitante esté en español, y quedan textos sueltos sin traducir.\n\nQué se espera: detectar navigator.languages y elegir el primer idioma que sea gl, es o en, aceptando variantes como gl-ES, es-ES, es-419 o en-GB; si ninguno coincide, inglés. El conmutador GL/ES/EN sigue visible y la elección manual manda por encima de la detección y se recuerda. Todos los textos de la interfaz salen en el idioma activo, sin ninguno sin traducir, empezando por «Christmas spots». Las cadenas viven en un solo sitio: se reutilizan las de I18N-01 en web/data/i18n/{gl,es,en}.json, sin textos nuevos escritos a mano en el HTML o el JS. Frases cortas y llanas en los tres idiomas, del tipo «Encendido ya» o «11 min andando».\n\nVa en web/index.html, web/js/ y web/data/i18n/. Pensado para Miguel.\n\nCriterios de aceptación:\n  1. Con el navegador en gallego la web arranca en gallego; con el navegador en español, en español; con el navegador en inglés, en inglés\n  2. Con el navegador en francés, o sin ninguno de los tres, la web arranca en inglés\n  3. Las variantes gl-ES, es-419, en-GB y es-ES se resuelven a su idioma base\n  4. Elegir GL, ES o EN a mano cambia el idioma en el momento y se recuerda en la siguiente visita, por encima de lo que diga el navegador\n  5. Ningún texto visible queda sin traducir en los tres idiomas, revisadas las 12 pantallas y el panel lateral: «Christmas spots» ya no aparece en español ni en gallego\n  6. Todo el texto sale de web/data/i18n/{gl,es,en}.json: una búsqueda en HTML y JS no encuentra cadenas de interfaz escritas a mano\n  7. Las frases son cortas y llanas en los tres idiomas, sin jerga ni frases largas\n  8. Capturas de la misma pantalla en gallego, español e inglés en web/ui/capturas/\n\nBUENA UX QUE YA EXISTE Y HAY QUE CONSERVAR (se amplía, no se rehace): la Vista ciudad (todo Vigo en un mapa real con fotos de cada punto y parkings), el tour a pie contado parada a parada dentro de la web (\"primero la Bola...\") y \"¿Cuándo vas?\" (ahora, 18:00, 20:00, 22:00), que planifica el paseo según la hora. Son lo mejor de la web actual: cualquier cambio de este ticket tiene que dejarlos igual de claros o mejor. Sigue web/ui/DESIGN.md (UI-03).",
+      "acceptance_criteria": [
+        "Con el navegador en gallego la web arranca en gallego; con el navegador en español, en español; con el navegador en inglés, en inglés",
+        "Con el navegador en francés, o sin ninguno de los tres, la web arranca en inglés",
+        "Las variantes gl-ES, es-419, en-GB y es-ES se resuelven a su idioma base",
+        "Elegir GL, ES o EN a mano cambia el idioma en el momento y se recuerda en la siguiente visita, por encima de lo que diga el navegador",
+        "Ningún texto visible queda sin traducir en los tres idiomas, revisadas las 12 pantallas y el panel lateral: «Christmas spots» ya no aparece en español ni en gallego",
+        "Todo el texto sale de web/data/i18n/{gl,es,en}.json: una búsqueda en HTML y JS no encuentra cadenas de interfaz escritas a mano",
+        "Las frases son cortas y llanas en los tres idiomas, sin jerga ni frases largas",
+        "Capturas de la misma pantalla en gallego, español e inglés en web/ui/capturas/"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "I18N-01"
+      ],
+      "ticket_id": "4937c4ce-2786-4fb6-a09d-b44cecbc8c31",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEB-05",
+      "title": "Conectar los datos reales a la interfaz nueva (ficha, eventos, transporte, rutas)",
+      "description": "Las pantallas de web/ui/ (ficha, eventos, transporte, rutas, lista de puntos) se apoyan todavía en datos de ejemplo o en copias sueltas, y la web del mapa se carga los suyos por su lado en web/js/points.js. Los datos reales ya existen: los 35 puntos de data/points.json, la agenda de D-03, los parkings de D-05 y los horarios de Vitrasa y Renfe de X-01 y X-02.\n\nQué se espera: una sola fuente por dato y que las pantallas nuevas se alimenten de esos ficheros publicados, sin arrays inventados dentro del HTML. Cuando un dato no existe (sin horario, sin precio) la pantalla lo dice, del tipo «Hora por confirmar», en vez de rellenarlo con un ejemplo.\n\nVa entre web/ui/, web/data/ y los scripts que generan los datos de la web (empezando por scripts/build_web_data.py). Pensado para quien quiera enlazar datos con diseño.\n\nCriterios de aceptación:\n  1. Ficha, lista de puntos, eventos, transporte y rutas leen de los ficheros publicados (points.json, agenda, parkings, GTFS) y no de arrays de ejemplo dentro del HTML o el JS\n  2. Los 35 puntos aparecen en la lista y en la ficha con nombre, tipo, horario y estado reales; ninguno inventado\n  3. Los eventos salen de la agenda de D-03 con fecha, hora y lugar, y los que no tienen hora dicen «Hora por confirmar»\n  4. Transporte muestra próximas salidas y líneas de Vitrasa y Renfe desde X-01 y X-02, con la fecha de los datos a la vista\n  5. Parkings muestra los de D-05 con plazas o estado si el dato existe; si no, se oculta el campo en lugar de inventarlo\n  6. Los puntos y eventos que se pueden añadir a una ruta salen del mismo dataset, sin listas paralelas\n  7. Un script regenera todo web/data/ y la web funciona solo con esos ficheros, sin pedir nada a APIs de terceros desde el navegador\n  8. Si un fichero falta o viene vacío, la pantalla muestra un error claro y no una tabla vacía sin explicación\n\nBUENA UX QUE YA EXISTE Y HAY QUE CONSERVAR (se amplía, no se rehace): la Vista ciudad (todo Vigo en un mapa real con fotos de cada punto y parkings), el tour a pie contado parada a parada dentro de la web (\"primero la Bola...\") y \"¿Cuándo vas?\" (ahora, 18:00, 20:00, 22:00), que planifica el paseo según la hora. Son lo mejor de la web actual: cualquier cambio de este ticket tiene que dejarlos igual de claros o mejor. Sigue web/ui/DESIGN.md (UI-03).",
+      "acceptance_criteria": [
+        "Ficha, lista de puntos, eventos, transporte y rutas leen de los ficheros publicados (points.json, agenda, parkings, GTFS) y no de arrays de ejemplo dentro del HTML o el JS",
+        "Los 35 puntos aparecen en la lista y en la ficha con nombre, tipo, horario y estado reales; ninguno inventado",
+        "Los eventos salen de la agenda de D-03 con fecha, hora y lugar, y los que no tienen hora dicen «Hora por confirmar»",
+        "Transporte muestra próximas salidas y líneas de Vitrasa y Renfe desde X-01 y X-02, con la fecha de los datos a la vista",
+        "Parkings muestra los de D-05 con plazas o estado si el dato existe; si no, se oculta el campo en lugar de inventarlo",
+        "Los puntos y eventos que se pueden añadir a una ruta salen del mismo dataset, sin listas paralelas",
+        "Un script regenera todo web/data/ y la web funciona solo con esos ficheros, sin pedir nada a APIs de terceros desde el navegador",
+        "Si un fichero falta o viene vacío, la pantalla muestra un error claro y no una tabla vacía sin explicación"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-03",
+        "D-05",
+        "X-01",
+        "X-02"
+      ],
+      "ticket_id": "47691fa2-b371-4fdf-8102-c9889b3a318d",
       "raw_status": "FREE"
     }
   ]
