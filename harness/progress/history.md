@@ -518,3 +518,20 @@ commit 8e4d08f. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. test_parki
 ```
 
 </details>
+
+## X-01 — Vitrasa GTFS ingest
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 86 passed in 1.05s
+- **Ticket GEAS:** f39a46e4 · commit_after `866582b8`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit c945dca. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. GTFS oficial: 1165 paradas, 59 líneas, 132672 salidas, kind=scheduled; cruce aviso DESVÍOS NADAL 2026/2027 (22 líneas, Policarpo Sanz); sin wrappers.
+```
+
+</details>
