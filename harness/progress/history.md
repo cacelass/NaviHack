@@ -428,3 +428,26 @@ commit bb86509. pytest tests 59 passed; ruff/mypy/evals OK. data/points.json: 35
 ```
 
 </details>
+
+## D-11 — Elevation: MDT05 slope layer
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 67 passed in 0.46s
+- **Ticket GEAS:** d2bedd01 · commit_after `7a862397`
+- **Cambios:** scripts/elevation.py, tests/test_elevation.py, data/elevation/mdt05_core.asc.gz
+- **Decisiones:** WCS ArcGrid (stdlib, sin GDAL) en vez de descarga manual CNIG; sin datos = llano + señal ausente
+- **Pendiente:** D-12 cablear easy_walk_factor; LIC-01 añadir atribución IGN
+
+<details><summary>Evidencia</summary>
+
+```
+D-11 evidencia:
+1. Slope data loaded for Vigo centre: python -m scripts.elevation -> 533x266 celdas, cota 0.0-146.0 m -> data/elevation/mdt05_core.asc.gz (157 KB). WCS IGN Elevacion4258_5 (MDT05, CC BY 4.0 scne.es). Alameda 5.0 m (4.9 %), Praza America 74.0 m (6.3 %); tramo Alameda->Porta do Sol 345 m, +14.5 m, max 11.5 %.
+2. Consumed by planner Easy walk: API Grid.grade(a,b) + easy_walk_factor() (1.0 <=6 %, lineal hasta 12 %, 4.0 por encima), lista para D-12 (el planner aun no existe; D-12 depende de D-11).
+3. Missing data: fuera del recorte / NODATA -> None; easy_walk_factor(None)=1.0; load() sin fichero -> None. 31/35 puntos de points.json con cota, 4 (Samil) fuera -> None sin error.
+8 passed in 0.36s
+  [32m✔[0m pytest                 67 passed in 0.57s
+[1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+```
+
+</details>

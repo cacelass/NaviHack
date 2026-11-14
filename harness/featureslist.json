@@ -459,10 +459,10 @@
         "Consumed by planner's Easy walk option",
         "Missing data handled gracefully"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "d2bedd01-70e1-4c04-b9be-766708ed6001",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "d2bedd01-d-11-elevation-mdt05-slope-layer",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
