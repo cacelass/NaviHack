@@ -201,3 +201,20 @@ $ ./init.sh                                            ->  ENTORNO LISTO  0 avis
 ```
 
 </details>
+
+## GEAS-001 — Arrancar GEAS de NavaHack (solo falta la IP/URL)
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.01s
+- **Ticket GEAS:** d583a304 · commit_after `398532e4`
+- **Cambios:** harness/geas.json; harness/geas_map.json (nuevo); .geas.yml (nuevo); harness/featureslist.json (espejo regenerado); pyproject.toml (pythonpath=.)
+- **Decisiones:** Actor propio 'lider' (agent, rol agent) en vez de la identidad humana; GEAS_DB es la URI de Atlas, backend MongoStorage nuevo en ~/Proyectos/geas; sin token ni proxy: el servidor acepta X-Geas-Actor directo; se retiró ~/.config/geas/client.env (IP muerta 192.168.1.145:8787) que secuestraba el actor; criterio 2 (GEAS_TOKEN) se cumple con GEAS_ACTOR en .env, que no está en git
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ ./init.sh → ✔ pytest 7 passed in 0.01s / ━━ ENTORNO LISTO ━━ (1 aviso: venv 3.13 vs project.yml 3.12) | $ uv run python -m agents --json run harness status → success=true backend=geas '12 tickets GEAS · 12 pending' | $ uv run ... harness next → 'Siguiente: GEAS-001 (GEAS d583a304)' | Atlas db=geas: organizations 1 · repositories 1 · roles 5 · tickets 12 · ticket_dependencies 5 | $ curl -X POST http://10.20.26.2:9000/api/tools/get_available_tasks -H 'X-Geas-Actor: c58cace2-…' -d '{}' → success=true, 7 tareas disponibles
+```
+
+</details>

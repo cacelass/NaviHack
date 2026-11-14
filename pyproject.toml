@@ -1,6 +1,6 @@
 [project]
 name = "app"
-version = "0.1.1"
+version = "0.1.2"
 description = "Arnés de agentes e infraestructura de proyecto para trabajo general en Python."
 authors = [
   { name = "cacelass" }
@@ -72,6 +72,9 @@ ignore_missing_imports = true
 disallow_untyped_defs = true
 
 [tool.pytest.ini_options]
+# `uv run pytest` ejecuta el console script, cuyo sys.path[0] es .venv/bin:
+# sin esto, `from app import ...` falla aunque el paquete exista en la raíz.
+pythonpath = ["."]
 testpaths = ["tests", "agents/tests"]
 python_files = ["test_*.py"]
 markers = [
