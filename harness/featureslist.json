@@ -1895,10 +1895,10 @@
         "Marcadores con forma de pin de mapa",
         "Hoy en Vigo con imagen e icono por fila"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "a950c82f-c217-4003-b728-8fe2162c5a2b",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "a950c82f-ui-06-ajustes-en-un-bot-n-pines-",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -1914,10 +1914,12 @@
         "Capturas de las pantallas principales en móvil como evidencia",
         "Sin errores en consola"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "d4eaca36-1f4b-4175-8f53-1d1e0cf672cc",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "d4eaca36-mob-01-web-muy-responsive-en-m-v",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     }
   ]
 }
