@@ -485,3 +485,16 @@ body.is-city .tv-night { display: none !important; }
 /* niebla: velo estático claro sobre el mapa (sin animación) */
 body.tv-fog #map::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(225, 230, 236, .55), rgba(225, 230, 236, .3) 60%, rgba(225, 230, 236, .45)); }
 .tv-story-card p { white-space: pre-line; }
+
+/* PLANNER-01: salida y 3 opciones de ruta */
+.tv-from { display: grid; gap: 6px; }
+.tv-from label { margin: 0; }
+.tv-start, .tv-street { width: 100%; min-height: var(--tap); padding: 0 var(--sp-3); border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--sunk); color: var(--fg); font: var(--w-500) var(--fs-copy)/1.2 var(--f-ui); box-sizing: border-box; }
+.tv-start:focus-visible, .tv-street:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.tv-btn:disabled { opacity: .45; cursor: not-allowed; }
+.tv-planmodes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.tv-planmodes button { display: grid; justify-items: center; gap: 2px; min-height: 56px; padding: 6px 4px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--sunk); color: var(--fg); font: var(--w-500) var(--fs-label)/1.2 var(--f-ui); cursor: pointer; }
+.tv-planmodes button small { font-size: var(--fs-meta); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.tv-planmodes button.is-on { border-color: var(--acc); background: var(--surface); box-shadow: inset 0 0 0 1px var(--acc); }
+.tv-why { margin: 0; }
+.tv-from { width: 100%; }
