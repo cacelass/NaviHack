@@ -4,7 +4,7 @@
 ![Version](https://img.shields.io/badge/Version-0.1.8-green)
 ![Author](https://img.shields.io/badge/Author-cacelass-blueviolet)
 
-> TinyVigo: un mapa web de Vigo en Navidad con puntos navideños investigados, escenas pixel-art, eventos del día y rutas a pie que se adaptan a tu tiempo.
+> TinyVigo: un mapa isométrico pixel art de todo el centro de Vigo, con la Navidad encima (puntos con su horario real, eventos del día, rutas a pie, autobuses y trenes) y postales pixel art a partir de una foto propia.
 
 Un repositorio para empezar proyectos donde el trabajo lo hace —en parte— un
 agente de IA, con las reglas del juego escritas **en código** y no en un
