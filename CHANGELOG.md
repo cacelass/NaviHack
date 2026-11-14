@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Definir el objetivo del proyecto (TinyVigo) (SCOPE-001)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Conectar el arnés a GEAS sobre MongoDB Atlas (GEAS-001)
 
 ## [Unreleased] — 2026-08-04

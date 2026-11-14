@@ -218,3 +218,20 @@ $ ./init.sh → ✔ pytest 7 passed in 0.01s / ━━ ENTORNO LISTO ━━ (1 av
 ```
 
 </details>
+
+## SCOPE-001 — Definir qué se quiere resolver
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.01s
+- **Ticket GEAS:** 46b195ef · commit_after `a272dcd1`
+- **Cambios:** vault/01_PROYECTO/objetivo.md (nuevo); README.md
+- **Decisiones:** El spec TinyVigo v3 Part A es la fuente del objetivo; el criterio de hecho se verifica con init.sh verde + demo end-to-end + capturas de los 6 hitos de A10
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ ./init.sh → ENTORNO LISTO, pytest 7 passed in 0.01s. Creado vault/01_PROYECTO/objetivo.md con 4 apartados (problema, usuario/consumidor, criterio de hecho verificable, fuera de alcance con 7 exclusiones). README actualizado con la frase propia del objetivo.
+```
+
+</details>
