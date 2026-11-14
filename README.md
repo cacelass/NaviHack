@@ -1,4 +1,4 @@
-# TinyVigo
+<img src="web/favicon.svg" width="32" height="32" alt=""> TinyVigo
 
 ![TinyVigo](docs/img/web-desktop-1400.png)
 
@@ -183,6 +183,15 @@ Criterio de «hecho» del v1 (resumen; texto completo en
 
 Fuera de alcance del v1: área metropolitana, GPS real de buses, afluencia,
 venta de entradas, cuentas, juegos, LoRA propia.
+
+## Marca
+
+<img src="web/favicon.svg" width="48" height="48" alt="El árbol de TinyVigo, que girado 180° es la V de Vigo">
+
+El árbol que se gira: dos capas y una luz en la punta. Del derecho es el árbol
+de Porta do Sol; girado 180°, la falda es la V de Vigo. Guía completa (concepto,
+variantes, paleta, tipografía y aplicaciones) en
+[`web/ui/marca.html`](web/ui/marca.html).
 
 ## Licencia
 
