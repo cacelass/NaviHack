@@ -862,6 +862,11 @@ $ uv run python -m app points → 'Puntos navidenos de Vigo (35):' con lista de 
 - **Cerrada:** 2026-11-14
 - **Verificación:** ./init.sh en verde · 152 passed in 1.95s
 - **Ticket GEAS:** 7a978705 · commit_after `94dc0d4d`
+## X-03 — Renfe live feasibility check
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 152 passed in 1.47s
+- **Ticket GEAS:** 38617de7 · commit_after `31e87a30`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
 - **Pendiente:** _(nada)_
@@ -870,6 +875,7 @@ $ uv run python -m app points → 'Puntos navidenos de Vigo (35):' con lista de 
 
 ```
 EVENTS-01 (8873230, 7db066a, c41c9e4): Navidad hoy con linea de tiempo del programa oficial (luces, pases, salidas), abierto ahora, agenda navidena en vivo situada en el mapa (Ver en el mapa), permanentes agrupados, proximamente; sin hora en el feed -> Hora por confirmar; filas con foto/icono.   [32m✔[0m pytest                 110 passed in 0.59s [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+commit 42cbd25. Endpoints Renfe RT probados (LD y Cercanías); cobertura Vigo 12/12 viajes; GO retrasos (JSON, cabecera 15 s), NO-GO posiciones (1 h atrasadas); protobuf no necesario. scripts/renfe_live.py + 2 tests + fuentes_datos.md.
 ```
 
 </details>
