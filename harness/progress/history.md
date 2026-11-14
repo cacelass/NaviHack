@@ -495,3 +495,20 @@ Estilo segun docs/ui-exploraciones (direccion D): sin box-shadow, sin mayusculas
 ```
 
 </details>
+
+## R-05 — Weekly re-verification during the season
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 86 passed in 0.54s
+- **Ticket GEAS:** e186d96f · commit_after `9ecb24cb`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 9ecb24c. pytest tests 86 passed; ruff/mypy/evals OK. Cadencia documentada (lunes 06:00, cron en deploy/snapshot.cron) en vault/01_PROYECTO/investigacion_puntos.md; scripts/reverify.py: diff altas/bajas/nombre/tipo/horario/movido>15m, registro append-only data/raw/concello_navidad/changes.jsonl, reconstruye points.json (horario y last_verified al día), needs_review para programas estructurados, stale() a 7 días. Primera pasada 2026-11-14: 0 cambios. test_reverify 4 tests.
+```
+
+</details>

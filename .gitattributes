@@ -33,3 +33,5 @@ agents/workspace/ linguist-generated=true
 # del remoto (agents/tools/git_sync.py). Ver AGENTS.md, «Backlog en GEAS».
 harness/featureslist.json merge=binary
 harness/progress/current.md merge=binary
+# Histórico append-only: dos cierres a la vez se suman, sin marcadores.
+harness/progress/history.md merge=union
