@@ -66,7 +66,8 @@
       L.polyline(ll, { color: "#151b2a", weight: 9, opacity: 0.8 }).addTo(routeLayer);
       L.polyline(ll, { color: mode === "driving" ? "#4ea3ff" : "#f4cd80", weight: 5, dashArray: mode === "transit" ? "8 8" : null }).addTo(routeLayer);
       L.circleMarker(start, { radius: 8, color: "#fff", weight: 3, fillColor: "#4ea3ff", fillOpacity: 1 }).addTo(routeLayer);
-      (stops || []).forEach((s, i) => L.marker([s.p.lat, s.p.lon], { icon: L.divIcon({ className: "", html: '<div class="tv-stopnum">' + (i + 1) + "</div>", iconSize: [26, 26], iconAnchor: [13, 40] }) }).addTo(routeLayer));
+      (stops || []).forEach((s, i) => L.marker([s.p.lat, s.p.lon], { zIndexOffset: 1000, title: (i + 1) + ". " + txt(s.p.name), icon: L.divIcon({ className: "", html: '<div class="tv-stopnum">' + (i + 1) + "</div>", iconSize: [28, 28], iconAnchor: [14, 66] }) })
+        .on("click", () => (window.tinyvigoTour ? tinyvigoTour.startWalk(i) : P.select(s.p, false))).addTo(routeLayer));
       lastBounds = L.latLngBounds(ll).pad(0.15);
       if (e.detail.showCity) setCity(true);
       else if (document.body.classList.contains("is-city")) map.fitBounds(lastBounds);

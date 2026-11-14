@@ -82,7 +82,7 @@
   // ── dibujo sobre el mapa ─────────────────────────────────────────────────
   const SVG = "http://www.w3.org/2000/svg";
   let layer = null;
-  function draw(viewer, line, start, stops) {
+  function draw(viewer, line, start, stops, onPick) {
     clear(viewer);
     layer = document.createElementNS(SVG, "svg");
     layer.setAttribute("viewBox", "0 0 " + CANVAS + " " + CANVAS);
@@ -103,7 +103,13 @@
       g.setAttribute("class", "tv-route-stop");
       const c = document.createElementNS(SVG, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", y - 40); c.setAttribute("r", 20);
       const tx = document.createElementNS(SVG, "text"); tx.setAttribute("x", x); tx.setAttribute("y", y - 33); tx.textContent = i + 1;
-      g.append(c, tx); layer.append(g);
+      const hit = document.createElementNS(SVG, "circle"); hit.setAttribute("cx", x); hit.setAttribute("cy", y - 40); hit.setAttribute("r", 34); hit.setAttribute("class", "tv-route-hit");
+      const title = document.createElementNS(SVG, "title"); title.textContent = (i + 1) + ". " + (onPick ? onPick.name(st.p) : "");
+      g.append(c, tx, hit, title); layer.append(g);
+      if (onPick) {
+        g.addEventListener("pointerdown", (e) => e.stopPropagation());
+        new OpenSeadragon.MouseTracker({ element: g, clickHandler: (e) => { e.preventDefaultAction = true; onPick.pick(i); } });
+      }
     });
     viewer.addOverlay({ element: layer, location: new OpenSeadragon.Rect(0, 0, 1, 1) });
     // encuadra la ruta
@@ -277,7 +283,7 @@
       }
       result = { ...planned, line, km: (meters / 1000).toFixed(1).replace(".", P.lang() === "en" ? "." : ",") };
       busy = "";
-      draw(viewer, line, startPos, planned.stops);
+      draw(viewer, line, startPos, planned.stops, { name: (p) => txt(p.name), pick: (i) => startWalk(i) });
       emit("tv:route", { line, start: startPos, stops: planned.stops, mode: "walking", showCity: planned.stops.some((s) => !s.p.on_map) || distM(startPos, ORIGIN) > 900 });
       render();
     }
