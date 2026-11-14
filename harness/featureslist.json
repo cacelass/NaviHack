@@ -671,12 +671,12 @@
         "Add-to-route turns the event into a fixed-time stop",
         "Events without clock time show 'time to be confirmed'"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-04"
       ],
       "ticket_id": "7a978705-4be8-412d-8ef9-4364d1f6a629",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "7a978705-events-01-events-ui-list-map-lay",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
