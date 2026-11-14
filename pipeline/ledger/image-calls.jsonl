@@ -1,2 +1,11 @@
 {"t":"2026-11-14T12:46:43.351Z","model":"gemini-3-pro-image","label":"base-a-neutral-4K","size":"4K","status":"OK"}
 {"t":"2026-11-14T12:48:27.334Z","model":"gemini-3.1-flash-image","label":"tile-r1c0","size":"default","status":"OK"}
+{"t":"2026-11-14T12:48:37.932Z","model":"gemini-3.1-flash-image","label":"tile-r1c2","size":"default","status":"OK"}
+{"t":"2026-11-14T12:48:50.549Z","model":"gemini-3.1-flash-image","label":"tile-r0c1","size":"default","status":"OK"}
+{"t":"2026-11-14T12:48:58.850Z","model":"gemini-3.1-flash-image","label":"tile-r2c1","size":"default","status":"429"}
+{"t":"2026-11-14T12:49:52.789Z","model":"gemini-3.1-flash-image","label":"tile-r2c1","size":"default","status":"OK"}
+{"t":"2026-11-14T12:50:00.728Z","model":"gemini-3.1-flash-image","label":"tile-r0c0","size":"default","status":"429"}
+{"t":"2026-11-14T12:51:17.096Z","model":"gemini-3.1-flash-image","label":"single-v1-light","size":"2K","status":"429"}
+{"t":"2026-11-14T12:52:18.255Z","model":"gemini-3.1-flash-image","label":"single-v1-light","size":"2K","status":"OK"}
+{"t":"2026-11-14T12:52:36.665Z","model":"gemini-3.1-flash-image","label":"single-v2-chunky","size":"2K","status":"OK"}
+{"t":"2026-11-14T12:53:21.723Z","model":"gemini-3.1-flash-image","label":"single-v2-chunky-4K","size":"4K","status":"OK"}
