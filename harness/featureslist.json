@@ -695,12 +695,12 @@
         "Walking times from the OSM pedestrian graph",
         "Chosen route drawn on the map with numbered stops"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-12"
       ],
       "ticket_id": "8750a751-7e75-4c24-abc9-60a218951226",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "8750a751-planner-01-route-planner-walking",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1011,12 +1011,14 @@
         "Out of scope no longer excludes painting the city and no longer defers buses and trains",
         "The README objective sentence agrees with it"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "SCOPE-001"
       ],
       "ticket_id": "6189b86a-73bb-47c7-b6c2-35fd19b0cd86",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "6189b86a-scope-002-rewrite-objetivo.md-fo",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "ZONE-01",
@@ -1864,7 +1866,7 @@
         "Un script regenera todo web/data/ y la web funciona solo con esos ficheros, sin pedir nada a APIs de terceros desde el navegador",
         "Si un fichero falta o viene vacío, la pantalla muestra un error claro y no una tabla vacía sin explicación"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-03",
         "D-05",
@@ -1872,7 +1874,9 @@
         "X-02"
       ],
       "ticket_id": "47691fa2-b371-4fdf-8102-c9889b3a318d",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "47691fa2-web-05-conectar-los-datos-reales",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "GO-01",
@@ -1942,10 +1946,10 @@
         "Capturas de las pantallas principales en móvil como evidencia",
         "Sin errores en consola"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "d4eaca36-1f4b-4175-8f53-1d1e0cf672cc",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "d4eaca36-mob-01-web-muy-responsive-en-m-v",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1960,10 +1964,10 @@
         "Estados de carga y error claros en tour y cómo llegar",
         "Batería de transiciones en 360/390/430 px sin fallos ni errores de consola"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "4754bf35-2a1e-4cce-83c1-87c69e4d0907",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "4754bf35-mob-02-pulido-de-ux-en-m-vil-enc",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     }
