@@ -246,12 +246,12 @@
         "make check pasa (lint + typecheck + test + arnés)",
         "El README documenta cómo ejecutarlo, con la salida esperada"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "DESIGN-001"
       ],
       "ticket_id": "9aacc009-2ac2-42f8-ad96-eb15b678d93e",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "9aacc009-core-001-primera-pieza-funcional",
       "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
@@ -1895,9 +1895,28 @@
         "Marcadores con forma de pin de mapa",
         "Hoy en Vigo con imagen e icono por fila"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "a950c82f-c217-4003-b728-8fe2162c5a2b",
+      "raw_status": "IN_PROGRESS",
+      "branch": "a950c82f-ui-06-ajustes-en-un-bot-n-pines-",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
+    },
+    {
+      "id": "MOB-01",
+      "title": "Web muy responsive en móvil: paneles como hojas inferiores, áreas seguras, objetivos táctiles y sin solapes",
+      "description": "Pedido por Miguel (2026-11-14): en móvil la web es inutilizable. Rediseñar el layout móvil con buena UI/UX: paneles (lista, ficha, tour, cómo llegar, Hoy) como hojas inferiores con asa y altura limitada, sin tapar los controles; botones inferiores en una barra fija con safe-area; objetivos táctiles ≥44 px; tipografía y espaciados de móvil; mapa siempre visible y sin scroll horizontal; probado en 360, 390 y 430 px.\n\nCriterios de aceptación:\n  1. Sin scroll horizontal ni solapes en 360, 390 y 430 px\n  2. Lista, ficha, tour, cómo llegar y Hoy se abren como hojas inferiores que dejan ver el mapa\n  3. Barra inferior fija con safe-area y objetivos táctiles de al menos 44 px\n  4. Textos legibles (≥14 px) y contenidos sin cortes\n  5. Capturas de las pantallas principales en móvil como evidencia\n  6. Sin errores en consola",
+      "acceptance_criteria": [
+        "Sin scroll horizontal ni solapes en 360, 390 y 430 px",
+        "Lista, ficha, tour, cómo llegar y Hoy se abren como hojas inferiores que dejan ver el mapa",
+        "Barra inferior fija con safe-area y objetivos táctiles de al menos 44 px",
+        "Textos legibles (≥14 px) y contenidos sin cortes",
+        "Capturas de las pantallas principales en móvil como evidencia",
+        "Sin errores en consola"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "d4eaca36-1f4b-4175-8f53-1d1e0cf672cc",
       "raw_status": "FREE"
     }
   ]
