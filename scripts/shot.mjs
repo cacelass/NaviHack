@@ -1,4 +1,5 @@
 // Screenshot a page with headless Brave over the DevTools protocol (Node 22+, no dependencies).
+// SHOT_BROWSER=<path> picks another Chromium (e.g. msedge.exe on Windows).
 // usage: node scripts/shot.mjs <url> <out.png> [width=1400] [height=900] [waitMs=4000] [mobile=0] [js-to-run-before-shot]
 import { spawn } from "node:child_process";
 import fs from "node:fs";
@@ -8,7 +9,7 @@ import path from "node:path";
 const [url, out, w = "1400", h = "900", wait = "4000", mobile = "0", js = ""] = process.argv.slice(2);
 const port = 9300 + Math.floor(Math.random() * 500);
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), "shot-"));
-const brave = spawn("brave-browser", [
+const brave = spawn(process.env.SHOT_BROWSER || "brave-browser", [
   "--headless=new", "--disable-gpu", "--no-sandbox", `--remote-debugging-port=${port}`,
   `--user-data-dir=${profile}`, "about:blank",
 ], { stdio: "ignore" });

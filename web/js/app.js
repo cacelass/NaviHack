@@ -27,7 +27,7 @@
       };
       // An image that covers only part of the georeferenced canvas is placed at its real position.
       if (!m.canvas) return source;
-      return { tileSource: source, x: m.offset.x / m.canvas.width, y: m.offset.y / m.canvas.width, width: m.width / m.canvas.width };
+      return { tileSource: new OpenSeadragon.TileSource(source), x: m.offset.x / m.canvas.width, y: m.offset.y / m.canvas.width, width: m.width / m.canvas.width };
     })(),
   });
   // The home view covers the whole screen; it is also the farthest you can zoom out.
