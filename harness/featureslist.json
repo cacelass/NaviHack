@@ -6,7 +6,7 @@
     {
       "id": "STACK-01",
       "title": "URGENTE (Jose): migrar web/ a React + TypeScript antes de seguir",
-      "description": "Decisión del equipo (Miguel, 2026-11-14): la web pasa a React + TypeScript. Es lo PRIMERO que hace Jose, antes de cualquier otro ticket de web; todo lo siguiente de web se hace ya en este stack. Mientras dure, nadie más toca web/. Partir de lo que hay: OpenSeadragon con la pirámide de tiles (tiles/current.json + manifest, incluido el caso canvas/offset con new OpenSeadragon.TileSource), botones de zoom y el panel Acerca de (web/js/about.js, D-17). Encaja con elastic-ui y la dirección D de docs/ui-exploraciones.\n\nCriterios de aceptación:\n  1. Vite + React + TypeScript (strict) en web/, sin errores de tsc\n  2. El visor OpenSeadragon y la pirámide de tiles funcionan igual que antes (v3 se ve, zoom +/-)\n  3. El panel Acerca de (D-17) migrado a componente React con las 8 fuentes\n  4. make website arranca el servidor de desarrollo; npm run build genera dist/ estático desplegable\n  5. scripts/serve_web.py y el README explican el nuevo arranque (npm install + npm run dev)\n  6. La CI sigue en verde; si hace falta, job de tsc + build de la web\n  7. Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS",
+      "description": "Decisión del equipo (Miguel, 2026-11-14): la web pasa a React + TypeScript. Es lo PRIMERO que hace Jose, antes de cualquier otro ticket de web; todo lo siguiente de web se hace ya en este stack. Mientras dure, nadie más toca web/. Partir de lo que hay: OpenSeadragon con la pirámide de tiles (tiles/current.json + manifest, incluido el caso canvas/offset con new OpenSeadragon.TileSource), botones de zoom y el panel Acerca de (web/js/about.js, D-17). Encaja con elastic-ui y la dirección D de docs/ui-exploraciones.\n\nCriterios de aceptación:\n  1. Vite + React + TypeScript (strict) en web/, sin errores de tsc\n  2. El visor OpenSeadragon y la pirámide de tiles funcionan igual que antes (v3 se ve, zoom +/-)\n  3. El panel Acerca de (D-17) migrado a componente React con las 8 fuentes\n  4. make website arranca el servidor de desarrollo; npm run build genera dist/ estático desplegable\n  5. scripts/serve_web.py y el README explican el nuevo arranque (npm install + npm run dev)\n  6. La CI sigue en verde; si hace falta, job de tsc + build de la web\n  7. Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS\n  8. Todos los textos de la interfaz salen de i18n/ (t() de i18n/i18n.ts, catálogos gl/es/en de I18N-01) y hay selector de idioma en Ajustes",
       "acceptance_criteria": [
         "Vite + React + TypeScript (strict) en web/, sin errores de tsc",
         "El visor OpenSeadragon y la pirámide de tiles funcionan igual que antes (v3 se ve, zoom +/-)",
@@ -14,7 +14,8 @@
         "make website arranca el servidor de desarrollo; npm run build genera dist/ estático desplegable",
         "scripts/serve_web.py y el README explican el nuevo arranque (npm install + npm run dev)",
         "La CI sigue en verde; si hace falta, job de tsc + build de la web",
-        "Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS"
+        "Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS",
+        "Todos los textos de la interfaz salen de i18n/ (t() de i18n/i18n.ts, catálogos gl/es/en de I18N-01) y hay selector de idioma en Ajustes"
       ],
       "status": "pending",
       "depends_on": [],
@@ -695,10 +696,10 @@
         "No hard-coded user-facing strings",
         "Language switch works"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "cd39debf-3d69-425a-b178-f54216a57efc",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "cd39debf-i18n-01-galician-spanish-english",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -712,10 +713,10 @@
         "Cancelled Christmas stops cross-checked",
         "No dependency on unofficial real-time wrappers"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "f39a46e4-68c0-402a-9f5e-31acfe38c1b8",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "f39a46e4-x-01-vitrasa-gtfs-ingest",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -729,10 +730,10 @@
         "Vigo-Urzáiz and Vigo-Guixar present",
         "Stops listed"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "5d40e61c-8ebc-4e87-803d-d0dd054b86f9",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "5d40e61c-x-02-renfe-static-gtfs-ingest",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -851,12 +852,12 @@
         "Either proxied images or links implemented",
         "61 cameras with location shown"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "D-00"
       ],
       "ticket_id": "caf1ab4c-770d-4ffe-b8ea-21d5fae3be2e",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "caf1ab4c-x-09-cameras-via-server-or-links",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -1038,10 +1039,10 @@
         "Anything blocked has a named alternative",
         "Attribution text ready for D-17"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "b5bc2472-21e3-4c1e-bbb5-5b4209787b6f",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "b5bc2472-lic-01-licences-and-attributions",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },

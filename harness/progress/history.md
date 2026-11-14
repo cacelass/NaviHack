@@ -549,12 +549,26 @@ commit c945dca. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. GTFS ofici
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
 - **Pendiente:** _(nada)_
+## I18N-01 — Galician/Spanish/English strings
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 97 passed in 0.50s
+- **Ticket GEAS:** cd39debf · commit_after `ea92f5e6`
+- **Cambios:** i18n/gl.json, i18n/es.json, i18n/en.json, i18n/i18n.ts, tests/test_i18n.py
+- **Decisiones:** Fuera de web/ para no chocar con STACK-01; 'A Navideña' no se traduce (nombre propio)
+- **Pendiente:** Jose cablea t() y el selector de idioma en React (STACK-01 criterio 8)
 
 <details><summary>Evidencia</summary>
 
 ```
 commit 5496341. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Renfe AV/LD/MD CC BY 4.0: Vigo Urzaiz 08223 y Vigo-Guixar 22308 presentes; 185 movimientos (84 salidas); test_gtfs_renfe 4 tests.
 commit 9c18ff8. pytest tests 89 passed; ruff/mypy/evals OK. Términos: dataset t-camaras ODC-BY cubre posiciones/URLs; imágenes de camaras.vigo.org sin licencia de redistribución -> enlaces + img en directo, sin proxy ni copias (vault/01_PROYECTO/licencias.md). Implementado scripts/cameras.py: http->https (contenido mixto), crédito, sondeo --probe 1 req/s. En vivo: 61 cámaras con posición, 61 con imagen. test_cameras 3 tests.
+I18N-01 evidencia:
+1. Strings in gl/es/en: i18n/{gl,es,en}.json, 174 claves cada uno, sacadas de las 12 pantallas de web/ui (UI-01) + Acerca de. tests/test_i18n.py: 8 passed in 0.29s (mismas claves, mismos huecos {x}, sin vacios, sin guion largo, gl no es copia de es)
+2. No hard-coded strings: helper i18n/i18n.ts t(key, vars) tipado (Key = keyof es.json, error de tsc si la clave no existe). El cableado en la UI va dentro de STACK-01 (criterio 8 anadido en GEAS): la web se esta migrando a React+TS ahora.
+3. Language switch: setLang() guarda en localStorage, actualiza <html lang> y avisa via onLangChange; detectLang: ?lang= > guardado > navigator.languages > es. Probado con node 24 (TS nativo): navegador gl-ES -> 'gl' ('11 min a pé'); setLang('en') -> 'Noria cannot be reached in time', oyente recibe 'en', guardado 'en'.
+  [32m✔[0m pytest                 97 passed in 0.49s
+[1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
 ```
 
 </details>
