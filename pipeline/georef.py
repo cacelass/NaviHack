@@ -136,6 +136,18 @@ class RenderParams:
         v = (-w - self.camera.kz * z) / self.camera.k
         return rx * u + fx * v, ry * u + fy * v
 
+    def to_osd(
+        self, lat: float, lon: float, z: float = 0.0, canvas: str = "3x3"
+    ) -> tuple[float, float]:
+        """(lat, lon, z) -> coordenadas de viewport de OpenSeadragon.
+
+        OSD normaliza las dos coordenadas por el **ancho** de la imagen (la esquina
+        superior izquierda es 0,0 y la derecha es 1,0, también en vertical).
+        """
+        px, py = self.to_pixel(lat, lon, z, canvas)
+        width = self.canvas(canvas).width
+        return px / width, py / width
+
     def tile_of(self, px: float, py: float) -> tuple[int, int]:
         """Píxel -> (fila, columna) de tesela de 1024, contando desde el lienzo."""
         return int(py // TILE), int(px // TILE)
