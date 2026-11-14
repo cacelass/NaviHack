@@ -326,10 +326,12 @@
         "If not found: documented as not blocking v1",
         "No dependency created on this layer"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "822d9147-9765-4b80-9441-4e9f3d21f4f1",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "822d9147-r-06-locate-concello-christmas-l",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "D-00",
