@@ -1,34 +1,32 @@
 # Tarea actual
 
-**Feature:** ONBOARD-002
+**Feature:** DOC-01
 **Estado:** in_progress
 **Iniciada:** 2026-11-14
 **Responsable:** implementer
 
 ## Objetivo
 
-Con el objetivo escrito, dos preguntas antes de construir nada: qué ha publicado ya alguien sobre este problema (papers y fuentes que aporten al repo, indexadas para poder consultarlas después) y qué trabajo de este proyecto no cubre ningún agente actual. Lo segundo se resuelve creando los agentes que falten con `installer scaffold`, no improvisando scripts sueltos.
+El README sigue siendo el de la plantilla MeshHarmes. Reescribirlo para TinyVigo: qué es y para quién, captura de la web, cómo se arranca (make website / python -m scripts.serve_web), arquitectura en un diagrama (feeds -> snapshots -> web; pipeline de render), fuentes de datos con licencias, cómo se trabaja con el arnés y GEAS, y estado/roadmap.
 
 Criterios de aceptación:
-  1. uv run python -m agents run research find_papers devuelve success=true con al menos 3 referencias relevantes
-  2. Las URLs útiles quedan indexadas (run rag index_urls --urls ...) y run rag search las encuentra
-  3. vault/01_PROYECTO/estado-del-arte.md resume cada fuente en 2-3 líneas: qué se toma y qué se descarta
-  4. uv run python -m agents run bootstrap suggest_agents devuelve la lista de huecos de capacidad
-  5. Cada hueco aceptado tiene su agente creado con installer scaffold, con contrato, prompt y test
-  6. uv run python -m agents.prompts_sync sale en verde (todo agente registrado tiene prompt y contrato)
-  7. ./init.sh termina con ENTORNO LISTO
-
-[importada desde harness/featureslist.json: ONBOARD-002]
+  1. Abre con qué es TinyVigo y una captura actual de la web
+  2. Sección Arrancar en local con make website y la alternativa sin make (Windows)
+  3. Diagrama de arquitectura y del pipeline de datos y de render
+  4. Tabla de fuentes de datos con licencia y atribución (enlaza licencias.md)
+  5. Cómo se trabaja: arnés, GEAS, un actor por dispositivo, claim antes de tocar
+  6. Estado y roadmap enlazados al backlog
+  7. Sin restos de la plantilla MeshHarmes
 
 ## Criterios de aceptación
 
-- [ ] uv run python -m agents run research find_papers devuelve success=true con al menos 3 referencias relevantes
-- [ ] Las URLs útiles quedan indexadas (run rag index_urls --urls ...) y run rag search las encuentra
-- [ ] vault/01_PROYECTO/estado-del-arte.md resume cada fuente en 2-3 líneas: qué se toma y qué se descarta
-- [ ] uv run python -m agents run bootstrap suggest_agents devuelve la lista de huecos de capacidad
-- [ ] Cada hueco aceptado tiene su agente creado con installer scaffold, con contrato, prompt y test
-- [ ] uv run python -m agents.prompts_sync sale en verde (todo agente registrado tiene prompt y contrato)
-- [ ] ./init.sh termina con ENTORNO LISTO
+- [ ] Abre con qué es TinyVigo y una captura actual de la web
+- [ ] Sección Arrancar en local con make website y la alternativa sin make (Windows)
+- [ ] Diagrama de arquitectura y del pipeline de datos y de render
+- [ ] Tabla de fuentes de datos con licencia y atribución (enlaza licencias.md)
+- [ ] Cómo se trabaja: arnés, GEAS, un actor por dispositivo, claim antes de tocar
+- [ ] Estado y roadmap enlazados al backlog
+- [ ] Sin restos de la plantilla MeshHarmes
 
 ## Bitácora
 

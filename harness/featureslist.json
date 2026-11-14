@@ -317,12 +317,12 @@
         "Log of changes kept",
         "Schedule changes reflected in points.json"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "e186d96f-8306-409d-8a62-786f586b4f47",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "e186d96f-r-05-weekly-re-verification-duri",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -500,10 +500,10 @@
         "Licences shown",
         "Reachable from main UI"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "d1049a58-68a3-4d2e-8dab-bddc0cede2cf",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "d1049a58-d-17-about-screen-with-attributi",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -1477,10 +1477,10 @@
         "Published as a new pyramid version in web/tiles, never overwriting another version",
         "A screenshot of the web at the local URL was looked at and its failures are listed"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "54b8c486-9bd9-432f-9a0b-d8519a0a88b0",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "54b8c486-base-01-provisional-base-image-o",
       "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
@@ -1513,10 +1513,12 @@
         "Estado y roadmap enlazados al backlog",
         "Sin restos de la plantilla MeshHarmes"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "9ce3175f-a9bd-464d-b01b-0767f4f81a77",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "9ce3175f-doc-01-readme-completo-y-bonito-",
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
     {
       "id": "UI-01",
