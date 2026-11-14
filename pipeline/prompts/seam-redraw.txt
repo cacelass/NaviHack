@@ -1,0 +1,10 @@
+This is a 1024x1024 crop of an isometric pixel-art map of Vigo, Galicia, in the modern high-bit style
+(like Eastward or Octopath Traveler): granite facades, white glass galleries, terracotta and dark grey
+slate roofs, rich lighting, fine pixel detail, hard pixel edges, no text or labels.
+
+The outer quarters of this image are shaded in transparent red: that is context, not to touch. It shows
+two halves of the map that were drawn separately and do not quite agree at the seam between them — a
+street that shifts, a roof that is cut, a colour that jumps. Redraw ONLY the clean centre strip (the
+part that is not red) so that it joins both red sides smoothly: continue every street, roof, building
+and colour exactly as the red context on each side already shows it. Do not invent new buildings, do
+not move anything that is outside the centre strip, do not add text or borders.
