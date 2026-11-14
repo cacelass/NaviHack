@@ -168,6 +168,7 @@
       })) : null;
       return el("div", "tv-far",
         el("h3", null, t("tour.far_title")), el("p", null, t("tour.far_body", { km: far.toFixed(1) })), links,
+        window.tinyvigoTransit ? tinyvigoTransit.renderToCentre(startPos, startTime()) : null, // X-04
         parkings ? el("h3", null, t("go.parkings")) : null,
         parkings && cap ? el("p", "tv-note", t("go.parking_chance", { pct: Math.round((100 * total) / cap) })) : null, list);
     }
