@@ -61,12 +61,14 @@
     const near = data && data.near[p.id];
     if (!near) return null;
     const s = stopById()[near.stop_id], deps = nextDepartures(near.stop_id);
+    const ic = document.createElement("span"); ic.className = "tv-transit-ic"; ic.innerHTML = window.LU ? LU.svg("bus", { size: 18 }) : "";
+    const walk = Math.max(1, Math.round((near.distance_m * 1.3) / 75));
     const box = el("div", "tv-transit",
-      el("p", "tv-kicker", t("transit.nearest_stop", { stop: s ? s.name : near.stop_id, m: near.distance_m })),
+      el("div", "tv-transit-head", ic, el("div", "tv-transit-stop", el("strong", null, s ? s.name : near.stop_id), el("span", null, near.distance_m + " m · " + t("common.walk_min", { min: walk })))),
       deps.length
-        ? el("ul", "tv-deps", ...deps.map((x) => el("li", null, el("b", null, x.time), " " + x.line + " → " + x.headsign + (x.detour ? " ⚠" : ""))))
+        ? el("ul", "tv-deps", ...deps.map((x) => el("li", null, el("b", "tv-dep-time", x.time), el("span", "tv-line", x.line), el("span", "tv-dep-to", x.headsign), x.detour ? el("span", "tv-badge", "⚠") : null)))
         : el("p", "tv-note", t("transit.no_more_today")),
-      el("p", "tv-note", t("transit.scheduled")));
+      el("p", "tv-note tv-transit-note", t("transit.scheduled")));
     return box;
   }
 

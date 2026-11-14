@@ -157,32 +157,65 @@
     return box;
   }
 
+  // mini-mapa de la dirección: 3x3 teselas de OpenStreetMap con el punto en el centro (UI-05)
+  function miniMap(p) {
+    const Z = 17, n = 2 ** Z, x = ((p.lon + 180) / 360) * n;
+    const lat = (p.lat * Math.PI) / 180, y = ((1 - Math.log(Math.tan(lat) + 1 / Math.cos(lat)) / Math.PI) / 2) * n;
+    const tx = Math.floor(x), ty = Math.floor(y), fx = (x - tx) * 256, fy = (y - ty) * 256;
+    const tiles = el("div", "tv-mini-tiles");
+    tiles.style.left = "calc(50% - " + Math.round(256 + fx) + "px)"; tiles.style.top = Math.round(60 - 256 - fy) + "px";
+    for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) {
+      const im = el("img"); im.alt = ""; im.loading = "lazy"; im.src = "https://tile.openstreetmap.org/" + Z + "/" + (tx + i) + "/" + (ty + j) + ".png";
+      tiles.append(im);
+    }
+    const box = el("button", "tv-mini", tiles, el("span", "tv-mini-pin"));
+    box.setAttribute("aria-label", t("detail.off_map"));
+    box.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 18), 120); } };
+    return box;
+  }
+  // la foto en grande al tocarla
+  function zoomPhoto(p) {
+    const d = el("dialog", "tv-lightbox", Object.assign(el("img"), { src: p.image_url ? p.image_url.replace("._lgjpeg", ".jpeg") : p.photo, alt: txt(p.name) }));
+    const x = el("button", "tv-close", lu("x")); x.setAttribute("aria-label", t("common.close")); x.onclick = () => d.close();
+    d.prepend(x);
+    d.addEventListener("click", (e) => { if (e.target === d || e.target.tagName === "IMG") d.close(); });
+    d.addEventListener("close", () => d.remove());
+    document.body.append(d); d.showModal();
+  }
+
   function renderSheet() {
     sheet.replaceChildren();
     sheet.classList.toggle("is-open", !!selected);
     if (!selected) return;
     const p = selected, st = status(p);
-    const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close"));
+    const close = el("button", "tv-close tv-close-float", lu("x")); close.setAttribute("aria-label", t("common.close"));
     close.onclick = () => { selected = null; markers.forEach((m) => m.classList.remove("is-selected")); renderSheet(); };
     const dir = el("a", "tv-btn", lu("footprints"), t("detail.directions"));
     dir.href = "https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=" + p.lat + "," + p.lon;
     dir.target = "_blank"; dir.rel = "noopener";
-    const photo = p.image_url ? Object.assign(el("a", "tv-btn tv-btn-quiet", lu("camera"), t("detail.real_photo")), { href: p.image_url.replace("._lgjpeg", ".jpeg"), target: "_blank", rel: "noopener" }) : null;
     const sched = txt(p.schedule_text);
+    let hero = null;
+    if (p.photo) {
+      const img = Object.assign(el("img", "tv-photo"), { src: p.photo, alt: txt(p.name), onerror() { hero.classList.add("is-empty"); this.remove(); } });
+      const zoom = el("button", "tv-hero-zoom", img); zoom.setAttribute("aria-label", t("detail.real_photo")); zoom.onclick = () => zoomPhoto(p);
+      hero = el("div", "tv-hero", zoom, close);
+    }
+    const door = st ? el("div", "tv-door " + (st.open ? "is-open" : ""),
+      el("span", "tv-door-state", window.PX ? Object.assign(el("span"), { innerHTML: PX.svg(st.open ? "open" : "closed", { size: 16, mono: true }) }) : null, st.open ? t("common.open_now") : t("common.closed")),
+      el("span", "tv-door-time", st.label)) : null;
     sheet.append(...[
-      close,
-      p.photo ? Object.assign(el("img", "tv-photo"), { src: p.photo, alt: txt(p.name), loading: "lazy", onerror() { this.remove(); } }) : null,
-      el("p", "tv-kicker", t(TYPE_KEY[p.type] || "points.filter_all") + (p.address ? " · " + p.address : "")),
+      hero || close,
+      el("p", "tv-type", lu(ICON[p.type] || "map-pin", 16), t(TYPE_KEY[p.type] || "points.filter_all")),
       el("h2", null, txt(p.name)),
-      st ? el("p", "tv-state " + (st.open ? "is-open" : ""), (st.open ? t("common.open_now") : t("common.closed")) + " · " + st.label) : null,
+      door,
       p.short ? el("p", "tv-short", txt(p.short)) : null,
-      sched ? el("details", "tv-sched", el("summary", null, t("detail.schedule")), el("p", null, sched)) : null,
-      el("div", "tv-actions", dir, photo, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
+      el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
+      sched ? el("details", "tv-sched", el("summary", null, lu("clock", 16), t("detail.schedule")), el("p", null, sched)) : null,
+      p.address ? el("div", "tv-addr", el("p", "tv-addr-line", lu("map-pin", 16), p.address), miniMap(p)) : null,
       parkingBlock(p),
       !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
       freshness(p),
-    ].filter(Boolean)
-    );
+    ].filter(Boolean));
   }
 
   function renderPanel() {

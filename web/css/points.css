@@ -270,3 +270,39 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-marker.is-group > svg { margin-top: 4px; }
 .tv-marker.is-group .tv-grp { top: -7px; right: -9px; min-width: 16px; height: 16px; font-size: 12px; }
 .tv-offmap { display: grid; gap: 6px; margin-top: var(--sp-3); justify-items: start; }
+
+/* UI-05: ficha rediseñada */
+.tv-sheet { padding-top: var(--sp-4); }
+.tv-hero { position: relative; margin: -16px -16px var(--sp-3); }
+.tv-hero-zoom { display: block; width: 100%; padding: 0; border: 0; background: var(--sunk); cursor: zoom-in; border-radius: var(--r-panel) var(--r-panel) 0 0; overflow: hidden; }
+.tv-sheet .tv-hero img.tv-photo { width: 100%; height: 210px; margin: 0; border-radius: 0; object-fit: contain; }
+.tv-close-float { position: absolute; top: 10px; right: 10px; float: none; margin: 0; background: rgba(16, 18, 26, .72); color: #fff; }
+.tv-hero.is-empty { display: none; }
+.tv-type { margin: 0; display: flex; align-items: center; gap: 6px; font-size: var(--fs-meta); font-weight: var(--w-500); color: var(--fg-2); }
+.tv-door { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin: var(--sp-2) 0 var(--sp-3); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
+.tv-door-state { display: inline-flex; align-items: center; gap: 6px; font-weight: var(--w-600); color: var(--danger); }
+.tv-door.is-open .tv-door-state { color: var(--ok); }
+.tv-door-time { font-weight: var(--w-500); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.tv-sched summary { display: flex; align-items: center; gap: 6px; }
+.tv-addr { display: grid; gap: var(--sp-2); margin-top: var(--sp-3); }
+.tv-addr-line { margin: 0; display: flex; align-items: center; gap: 6px; font-size: var(--fs-label); color: var(--fg-2); }
+.tv-mini { position: relative; height: 120px; padding: 0; border: 1px solid var(--line); border-radius: var(--r-ctl); overflow: hidden; background: var(--sunk); cursor: pointer; }
+.tv-mini-tiles { position: absolute; left: 0; top: 0; width: 768px; display: grid; grid-template-columns: repeat(3, 256px); }
+.tv-mini-tiles img { width: 256px; height: 256px; display: block; }
+html[data-theme="dark"] .tv-mini-tiles { filter: brightness(.62) saturate(.7) contrast(1.1) hue-rotate(195deg) invert(.92); }
+.tv-mini-pin { position: absolute; left: 50%; top: 60px; width: 18px; height: 18px; margin: -18px 0 0 -9px; background: var(--danger); border: 2px solid #fff; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+.tv-lightbox { padding: 0; border: 0; background: transparent; max-width: 96vw; max-height: 92vh; }
+.tv-lightbox::backdrop { background: rgba(8, 10, 16, .88); }
+.tv-lightbox img { display: block; max-width: 96vw; max-height: 88vh; object-fit: contain; border-radius: var(--r-ctl); cursor: zoom-out; }
+.tv-lightbox .tv-close { position: fixed; top: 12px; right: 12px; float: none; margin: 0; background: rgba(255, 255, 255, .14); color: #fff; }
+/* bus en la ficha: icono, línea como chip, distancia clara, «programado» discreto */
+.tv-transit-head { display: flex; align-items: center; gap: var(--sp-3); }
+.tv-transit-ic { width: 36px; height: 36px; flex: none; display: grid; place-items: center; border-radius: var(--r-ctl); background: var(--surface); color: var(--fg); }
+.tv-transit-stop { display: grid; gap: 1px; min-width: 0; }
+.tv-transit-stop strong { font-size: var(--fs-label); font-weight: var(--w-500); }
+.tv-transit-stop span { font-size: var(--fs-meta); color: var(--fg-2); }
+.tv-deps li { display: flex; align-items: center; gap: var(--sp-2); min-height: 32px; }
+.tv-dep-time { width: 44px; font-variant-numeric: tabular-nums; }
+.tv-line { display: inline-grid; place-items: center; min-width: 32px; height: 22px; padding: 0 6px; border-radius: var(--r-sm); background: #3d6a96; color: #fff; font-size: var(--fs-meta); font-weight: var(--w-600); }
+.tv-dep-to { font-size: var(--fs-meta); color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tv-transit-note { font-size: var(--fs-meta); opacity: .8; }
