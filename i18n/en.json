@@ -35,6 +35,8 @@
   "common.zoom_in": "Zoom in",
   "common.zoom_out": "Zoom out",
   "common.updated": "Updated {when}",
+  "planner.rain_warning": "Rain likely during the route ({probability}%)",
+  "planner.missing_signals": "No data for: {signals}",
   "common.verified": "Checked on {date}",
   "common.stale_since": "Not checked since {date}",
   "common.not_confirmed": "Not yet confirmed by the City Council",

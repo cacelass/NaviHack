@@ -35,6 +35,8 @@
   "common.zoom_in": "Acercar",
   "common.zoom_out": "Alejar",
   "common.updated": "Actualizado {when}",
+  "planner.rain_warning": "Puede llover durante la ruta ({probability} %)",
+  "planner.missing_signals": "Sin datos de: {signals}",
   "common.verified": "Verificado el {date}",
   "common.stale_since": "Sin verificar desde el {date}",
   "common.not_confirmed": "Aún sin confirmar por el Concello",
