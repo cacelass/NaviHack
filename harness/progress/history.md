@@ -869,6 +869,13 @@ $ uv run python -m app points → 'Puntos navidenos de Vigo (35):' con lista de 
 - **Ticket GEAS:** 38617de7 · commit_after `31e87a30`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
+## SCOPE-002 — Rewrite objetivo.md for the isometric map (spec v4)
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 152 passed in 0.58s
+- **Ticket GEAS:** 6189b86a · commit_after `47ccc42a`
+- **Cambios:** Ninguno — ya implementado en commit 83db40d (squash de docs/tinyvigo-backlog-v4)
+- **Decisiones:** SCOPE-002 se cerro de facto cuando se importo la spec v4 y el backlog v4 (commit 83db40d). objetivo.md ya tiene las cuatro secciones, el criterio de hecho es verificable y el README coincide. Solo falta marcarlo como done.
 - **Pendiente:** _(nada)_
 
 <details><summary>Evidencia</summary>
@@ -927,6 +934,7 @@ commit cc52d2d (CI verde). Isométrico arranca en el núcleo navideño en móvil
 
 ```
 commit 00eebe5. 1) 3 opciones (fastest/after_dark/easy_walk) y misma entrada → mismas rutas (test node); 2) salida: mi ubicación, Porta do Sol, estación Vigo-Urzáiz/Guixar o una calle (1921 calles); 3) eventos como ventanas: fijado a las 20:00 ninguna opción llega después (test); 4) parada inalcanzable nombrada con sugerencia de quitar (test); 5) 12 paradas <2 s (test; en navegador 906 ms con red); 6) tiempos de la API table de OSRM sobre el grafo peatonal OSM (fuente=osm), fallback aproximado marcado; 7) ruta elegida dibujada con paradas numeradas en isométrico y vista ciudad. Held-Karp exacto. 153 tests, batería móvil sin fallos.
+$ head -8 vault/01_PROYECTO/objetivo.md → 'Reescrito (SCOPE-002). Fuente de verdad: docs/tinyvigo-spec.md (mapa isometrico pixel art de todo el centro de Vigo)' | secciones presentes: Problema, Usuario/consumidor, Criterio de hecho, Fuera de alcance | criterio de hecho verificable: './init.sh en verde, informe de estado de teselas, informe de comprobaciones por tesela, demo de punta a punta' | fuera de alcance ya no excluye pintar la ciudad ni aplaza buses/trenes (transporte esta en Criterio de hecho punto 5) | README: 'Mapa isometrico pixel art del centro de Vigo, con la Navidad encima' | $ ./init.sh → ENTORNO LISTO
 ```
 
 </details>

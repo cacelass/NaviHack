@@ -158,3 +158,14 @@
 {"timestamp": "2026-11-14T16:51:14+00:00", "agent": "harness", "action": "finish", "success": true, "duration_ms": 431007.4, "message": "CORE-001 cerrada en GEAS (9aacc009). Histórico actualizado y current.md en idle.", "warnings": 1, "kwarg_names": ["changes", "decisions", "evidence", "id"]}
 {"timestamp": "2026-11-14T16:53:53+00:00", "agent": "documentation", "action": "bump_version", "success": true, "duration_ms": 0.6, "message": "Versión actualizada a '0.1.14' en: pyproject.toml.", "warnings": 2, "kwarg_names": ["new_version"]}
 {"timestamp": "2026-11-14T16:53:53+00:00", "agent": "documentation", "action": "update_changelog", "success": true, "duration_ms": 0.2, "message": "CHANGELOG.md actualizado.", "warnings": 0, "kwarg_names": ["dry_run", "feature_id", "feature_title"]}
+<<<<<<< HEAD
+=======
+>>>>>>> 0e3b18c (feat(CORE-001): Primer vertical slice: CLI points carga data/points.json)
+{"timestamp": "2026-11-14T17:03:15+00:00", "agent": "harness", "action": "next", "success": false, "duration_ms": 207819.6, "message": "excepción no controlada", "warnings": 0, "kwarg_names": [], "error": "TimeoutError: timed out"}
+{"timestamp": "2026-11-14T17:11:06+00:00", "agent": "harness", "action": "next", "success": true, "duration_ms": 153803.9, "message": "Siguiente: R-03 — On-site visit: dated photos and GPS of every point (GEAS b8eb94fc)", "warnings": 0, "kwarg_names": []}
+{"timestamp": "2026-11-14T17:23:46+00:00", "agent": "harness", "action": "start", "success": false, "duration_ms": 173796.2, "message": "'DOC-01' está en DONE, no en FREE: ya lo está trabajando otra persona o ya está cerrado.", "warnings": 0, "kwarg_names": ["id"]}
+{"timestamp": "2026-11-14T17:26:20+00:00", "agent": "harness", "action": "start", "success": false, "duration_ms": 127266.1, "message": "'D-17' está en DONE, no en FREE: ya lo está trabajando otra persona o ya está cerrado.", "warnings": 0, "kwarg_names": ["id"]}
+{"timestamp": "2026-11-14T17:34:53+00:00", "agent": "harness", "action": "finish", "success": true, "duration_ms": 196173.2, "message": "SCOPE-002 cerrada en GEAS (6189b86a). Histórico actualizado y current.md en idle.", "warnings": 1, "kwarg_names": ["changes", "decisions", "evidence", "id"]}
+{"timestamp": "2026-11-14T17:35:41+00:00", "agent": "documentation", "action": "bump_version", "success": true, "duration_ms": 1.6, "message": "Versión actualizada a '0.1.15' en: pyproject.toml.", "warnings": 2, "kwarg_names": ["new_version"]}
+{"timestamp": "2026-11-14T17:35:41+00:00", "agent": "documentation", "action": "update_changelog", "success": true, "duration_ms": 0.2, "message": "CHANGELOG.md actualizado.", "warnings": 0, "kwarg_names": ["dry_run", "feature_id", "feature_title"]}
+>>>>>>> b4d091e (feat(SCOPE-002): Cerrar SCOPE-002: objetivo.md alineado con spec v4)

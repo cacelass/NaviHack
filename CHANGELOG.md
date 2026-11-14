@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Cerrar SCOPE-002: objetivo.md alineado con spec v4 (SCOPE-002)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Primer vertical slice: CLI points carga data/points.json (CORE-001)
 
 ## [Unreleased] — 2026-11-14
