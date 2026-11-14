@@ -7,11 +7,7 @@ export default function Hero() {
       <div className="hero-veil" aria-hidden="true" />
 
       <div className="wrap">
-        <h1 className="hero-title">
-          Conoce la Navidad
-          <br />
-          de <span className="gold">Vigo</span>
-        </h1>
+        <h1 className="hero-title">Conoce la Navidad de Vigo</h1>
 
         <p className="hero-tagline">
           Las luces, los sitios y los planes de esta Navidad, sobre un mapa pixel art del centro.{' '}
