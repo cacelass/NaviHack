@@ -2,11 +2,11 @@
   <img src="docs/img/banner.jpg" alt="TinyVigo: la Navidad de Vigo en un mapa dibujado a mano" width="100%">
 </p>
 
-<p align="center"><b>Web en vivo: <a href="https://navihack.vercel.app">navihack.vercel.app</a></b> · <a href="https://navihack.vercel.app/demo/">probar la demo</a></p>
+<p align="center"><b>Web en vivo: <a href="https://navivigo.vercel.app">navivigo.vercel.app</a></b> · <a href="https://navivigo.vercel.app/demo/">probar la demo</a></p>
 
 <p align="center">
-  <a href="https://navihack.vercel.app"><b>Web</b></a> ·
-  <a href="https://navihack.vercel.app/demo/"><b>Demo</b></a> ·
+  <a href="https://navivigo.vercel.app"><b>Web</b></a> ·
+  <a href="https://navivigo.vercel.app/demo/"><b>Demo</b></a> ·
   <a href="#qué-hace-la-web">Qué hace</a> ·
   <a href="#arrancar-en-local">Arrancar</a> ·
   <a href="#equipo">Equipo</a>
