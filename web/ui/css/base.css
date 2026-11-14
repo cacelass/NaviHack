@@ -14,8 +14,17 @@ body {
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 ::selection { background: var(--hi); color: var(--bg); }
 
-/* la marca es el único texto con fuente pixel */
-.wm { font: 600 22px/1 var(--f-wm); letter-spacing: 0; color: var(--ink); }
+/* marca: texto en Inter, nunca en fuente de píxel */
+.wm { font: 600 22px/1 var(--f-ui); letter-spacing: -.01em; color: var(--ink); }
+
+/* iconos de interfaz: Lucide, línea fina, heredan el color del texto */
+.lu { display: block; flex: none; }
+.lu svg, svg.lu { display: block; flex: none; stroke-width: 1.5; }
+
+/* marca: el símbolo isométrico se dibuja en SVG (assets/marca.js) */
+.marca, .marca__sym { display: block; flex: none; }
+.marca { display: inline-flex; align-items: center; gap: 8px; }
+.marca__wm { font: 600 22px/1 var(--f-ui); letter-spacing: -.02em; color: var(--ink); }
 
 /* vidrio: la única forma de panel que flota sobre el mapa */
 .glass {

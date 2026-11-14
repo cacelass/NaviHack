@@ -14,14 +14,14 @@
     document.querySelectorAll("[data-theme-toggle]").forEach(function (b) {
       b.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
       b.setAttribute("aria-label", theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro");
-      var ic = b.querySelector(".ic");
-      if (ic) { ic.innerHTML = PX.svg(theme === "dark" ? "moon" : "sun", { size: 20 }); ic.dataset.cur = theme === "dark" ? "moon" : "sun"; }
+      var ic = b.querySelector(".lu");
+      if (ic) { ic.innerHTML = LU.svg(theme === "dark" ? "moon" : "sun", { size: 20 }); ic.dataset.cur = theme === "dark" ? "moon" : "sun"; }
     });
   }
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("[data-theme-toggle]").forEach(function (b) {
-      var ic = b.querySelector(".ic");
-      if (ic) { ic.dataset.size = 20; ic.innerHTML = PX.svg(theme === "dark" ? "moon" : "sun", { size: 20 }); ic.dataset.cur = theme === "dark" ? "moon" : "sun"; }
+      var ic = b.querySelector(".lu");
+      if (ic) { ic.dataset.size = 20; ic.innerHTML = LU.svg(theme === "dark" ? "moon" : "sun", { size: 20 }); ic.dataset.cur = theme === "dark" ? "moon" : "sun"; }
       b.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
       b.addEventListener("click", toggle);
     });

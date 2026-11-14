@@ -27,7 +27,7 @@ html[data-theme="dark"] .map__tint { background: rgba(20, 28, 58, .38); mix-blen
   background: var(--glass); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
   position: relative; transition: width .35s var(--ease), background .25s;
 }
-.search input { flex: 1; min-width: 0; height: var(--tap); border: 0; background: transparent; color: var(--ink); font: 400 16px/1 var(--f-ui); outline: 0; padding-left: var(--sp-3); }
+.search input { flex: 1; min-width: 0; height: var(--tap); border: 0; background: transparent; color: var(--ink); font: 400 16px/1 var(--f-ui); outline: 0; padding-left: calc(var(--tap) + 4px); }
 .search input::placeholder { color: var(--mute); }
 .search__btn { position: absolute; left: 4px; background: transparent; }
 .search.is-collapsed input { opacity: 0; pointer-events: none; }

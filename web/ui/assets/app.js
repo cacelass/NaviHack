@@ -18,7 +18,7 @@
       b.addEventListener("click", function () {
         var added = b.dataset.added !== "1"; b.dataset.added = added ? "1" : "0";
         var lb = b.querySelector(".lb"); if (lb) lb.textContent = added ? "En la ruta" : (b.dataset.label || "Añadir a la ruta");
-        var bi = b.querySelector(".bi"); if (bi) bi.innerHTML = PX.svg(added ? "check" : "route", { size: 16 });
+        var bi = b.querySelector(".bi"); if (bi) bi.innerHTML = LU.svg(added ? "check" : "route", { size: 16 });
         b.classList.toggle("is-added", added);
       });
     });

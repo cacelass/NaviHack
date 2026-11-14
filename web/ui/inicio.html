@@ -5,13 +5,14 @@
 <title>TinyVigo · Inicio</title>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/cifras.css">
 </head>
 <body>
 <div class="page" style="max-width:880px">
   <div style="display:flex;justify-content:space-between;align-items:center">
-    <div class="nv-brand" style="display:flex;gap:8px;align-items:center"><i class="ic" data-ic="star" data-size="20"></i><span class="wm">TinyVigo</span></div>
-    <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="ic"></i></button>
+    <div class="nv-brand" style="display:flex;gap:8px;align-items:center"><i class="marca" data-marca data-size="22"></i><span class="wm">TinyVigo</span></div>
+    <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="lu"></i></button>
   </div>
 
   <div class="hero">
@@ -42,14 +43,15 @@
 
   <h2 style="font:500 14px/1.4 var(--f-ui);color:var(--fg-3);margin:8px 0 0">Qué puedes hacer hoy</h2>
   <div class="haz">
-    <div class="haz__card"><i class="ic" data-ic="tree" data-size="28"></i><h3>Ver las luces</h3><p>43 puntos con horario y si están encendidos ahora.</p></div>
-    <div class="haz__card"><i class="ic" data-ic="calendar" data-size="28"></i><h3>Eventos de hoy</h3><p>Pases de luz, desfiles y conciertos con hora y sitio.</p></div>
-    <div class="haz__card"><i class="ic" data-ic="postal" data-size="28"></i><h3>La postal</h3><p>Tu foto en Porta do Sol, lista para compartir.</p></div>
+    <div class="haz__card"><i class="lu" data-lu="tree-pine" data-size="28"></i><h3>Ver las luces</h3><p>43 puntos con horario y si están encendidos ahora.</p></div>
+    <div class="haz__card"><i class="lu" data-lu="calendar-days" data-size="28"></i><h3>Eventos de hoy</h3><p>Pases de luz, desfiles y conciertos con hora y sitio.</p></div>
+    <div class="haz__card"><i class="lu" data-lu="mail" data-size="28"></i><h3>La postal</h3><p>Tu foto en Porta do Sol, lista para compartir.</p></div>
   </div>
 
   <p style="color:var(--fg-3);font-size:12px">Las luces se encienden el 14 de noviembre de 2026 a las 20:00. Horario: de 18:00 a 01:00 (domingo a miércoles) y hasta las 03:00 (jueves a sábado). Fuente: Concello de Vigo.</p>
 </div>
-<script src="assets/iconos.js"></script>
+<script src="assets/marca.js"></script>
+<script src="assets/lucide.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/app.js"></script>
 </body>

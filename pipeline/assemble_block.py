@@ -94,6 +94,17 @@ def alignment(out_rgb: np.ndarray, render_rgb: np.ndarray, wm: np.ndarray) -> di
     return {"offset_px": [round(float(dx), 2), round(float(dy), 2)], "phase_response": round(float(resp), 3), "water_mask_iou": round(iou, 3)}
 
 
+def finish_filters(rgb: np.ndarray, contrast: float, sat: float) -> np.ndarray:
+    """Filtros finales (el 'se ve plano' de Marcelo): contraste y saturación suaves sobre todo el mapa."""
+    lab = cv2.cvtColor(rgb, cv2.COLOR_RGB2LAB).astype(np.float32)
+    L = lab[..., 0]
+    L = (L - L.mean()) * contrast + L.mean()
+    lab[..., 1] = (lab[..., 1] - 128) * sat + 128
+    lab[..., 2] = (lab[..., 2] - 128) * sat + 128
+    lab[..., 0] = L
+    return cv2.cvtColor(np.clip(lab, 0, 255).astype(np.uint8), cv2.COLOR_LAB2RGB)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--tiles", required=True)
@@ -101,6 +112,9 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     ap.add_argument("--flat-sea", action="store_true")
     ap.add_argument("--no-blend", action="store_true")
+    ap.add_argument("--finish", action="store_true", help="aplicar filtros finales (contraste + saturación)")
+    ap.add_argument("--contrast", type=float, default=1.06)
+    ap.add_argument("--sat", type=float, default=1.08)
     a = ap.parse_args()
 
     render = np.asarray(Image.open(a.render).convert("RGB"))
@@ -130,8 +144,9 @@ def main() -> None:
         dmax = dist.max() + 1e-3
         t = np.clip(dist / (dmax * 0.5), 0, 1)[..., None]
         grad = sea_near[None, None, :] * (1 - t) + sea_deep[None, None, :] * t
-        ripple = (np.sin(np.arange(out.shape[0])[:, None] * 0.02) * 3).astype(np.float32)[..., None]
-        grad = np.clip(grad + ripple, 0, 255)
+        yy, xx = np.mgrid[0:out.shape[0], 0:out.shape[1]]
+        wave = (np.sin((yy + xx) * 0.035) * 2.2 + np.sin(yy * 0.05 + xx * 0.02) * 1.6).astype(np.float32)[..., None]
+        grad = np.clip(grad + wave, 0, 255)
         erode = cv2.erode(wm.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=1)
         shore = cv2.dilate((wm.astype(np.uint8) - erode), np.ones((3, 3), np.uint8), iterations=2).astype(bool)
         sand = np.array([205, 188, 156], np.float32)
@@ -139,6 +154,8 @@ def main() -> None:
         out = (out * (1 - soft) + grad * soft).astype(np.float32)
         out = np.where(shore[..., None], sand * 0.9 + grad * 0.1, out)
         out = np.clip(out, 0, 255).astype(np.uint8)
+    if a.finish:
+        out = finish_filters(out, a.contrast, a.sat)
     Image.fromarray(out).save(a.out)
     print("saved", a.out, out.shape, alignment(out, render, wm))
 

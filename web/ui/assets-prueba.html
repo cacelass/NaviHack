@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es" data-theme="dia">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinyVigo · Assets del mapa — prueba de tratamiento</title>
+<style>
+  /* Autocontenido. Los dos objetos gordos del mapa (árbol y noria) a escala real
+     sobre el mapa isométrico, con tres tratamientos y conmutador día/noche.
+     Escala: 2 px/metro y la cámara comprime la altura por cos 45° ≈ 0,707.
+       árbol 45 m → 45 × 2 × 0,707 = 64 px
+       noria 60 m → 60 × 2 × 0,707 = 85 px */
+  @font-face { font-family: "Inter"; src: url(assets/fonts/Inter.ttf); font-weight: 100 900; font-display: swap; }
+  :root {
+    --f-ui: "Inter", system-ui, sans-serif;
+    --bg: #f8f7f4; --surface: #efeee9; --sunk: #e6e4dd; --raised: #fff;
+    --line: rgba(29,29,29,.12); --fg: #1d1d1d; --fg-2: #51554c; --fg-3: #686d62;
+    --accent-4: #d9a441; --accent-5: #a9760f; --accent-6: #7a4a00;
+    --r: 12px;
+    --arbol: 64px; --noria: 85px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--fg); font: 400 16px/1.55 var(--f-ui); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px 72px; display: flex; flex-direction: column; gap: 32px; }
+
+  header { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+  header h1 { margin: 0 0 6px; font: 600 28px/1.15 var(--f-ui); letter-spacing: -.025em; }
+  header p { margin: 0; max-width: 66ch; color: var(--fg-2); font-size: 14px; }
+  .datos { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 12px; }
+  .datos div { font-size: 12px; color: var(--fg-3); }
+  .datos b { display: block; font: 600 20px/1.2 var(--f-ui); color: var(--fg); font-variant-numeric: tabular-nums; }
+
+  .conmutador { display: inline-flex; background: var(--sunk); border-radius: 8px; padding: 2px; gap: 2px; }
+  .conmutador button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 6px; background: transparent; color: var(--fg-2); font: 500 14px/1 var(--f-ui); cursor: pointer; }
+  .conmutador button[aria-pressed="true"] { background: var(--raised); color: var(--fg); font-weight: 600; box-shadow: inset 0 0 0 1px var(--line); }
+
+  .bloque { display: flex; flex-direction: column; gap: 12px; }
+  .bloque > h2 { margin: 0; font: 600 20px/1.2 var(--f-ui); letter-spacing: -.015em; }
+  .tri { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 760px) { .tri { grid-template-columns: 1fr; } }
+
+  figure { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  figcaption { font-size: 12px; color: var(--fg-3); line-height: 1.45; }
+  figcaption b { display: block; font: 600 14px/1.3 var(--f-ui); color: var(--fg); }
+
+  /* ——— el escenario: un recorte del mapa real ——— */
+  .tile { position: relative; height: 240px; border-radius: var(--r); overflow: hidden; background: url(assets/mapa-escritorio.jpg) center/cover; box-shadow: inset 0 0 0 1px var(--line); }
+  .tile::before { content: ""; position: absolute; inset: 0; background: rgba(14, 22, 54, .5); mix-blend-mode: multiply; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 2; }
+  html[data-theme="noche"] .tile::before { opacity: 1; }
+
+  /* el objeto va anclado al suelo del recorte, a su tamaño real */
+  .obj { position: absolute; left: 50%; bottom: 52px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 3; }
+  .suelo { width: 100%; height: 9px; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(12, 12, 16, .5), rgba(12, 12, 16, 0) 70%); margin-top: -2px; }
+  .escala { position: absolute; left: 12px; bottom: 10px; z-index: 4; font: 500 10px/1 var(--f-ui); color: #f8f7f4; letter-spacing: .04em; text-shadow: 0 1px 2px rgba(0,0,0,.65); }
+  .escala::before { content: ""; display: block; width: 20px; height: 5px; border: 1px solid #f8f7f4; border-top: 0; margin-bottom: 4px; }
+
+  /* A · la foto recortada como marcador (lo que devolvería el modelo) */
+  .corte { display: block; object-fit: cover; }
+  .corte-arbol { width: var(--arbol); height: calc(var(--arbol) * 1.3); clip-path: polygon(50% 0, 61% 18%, 69% 36%, 78% 55%, 87% 72%, 97% 88%, 100% 100%, 0 100%, 3% 88%, 13% 72%, 22% 55%, 31% 36%, 39% 18%); }
+  .corte-noria { width: var(--noria); height: var(--noria); clip-path: circle(47%); }
+
+  /* B · dibujo por código */
+  .sprite { display: block; overflow: visible; }
+  .sprite-arbol { width: var(--arbol); height: calc(var(--arbol) * 1.3); }
+  .sprite-noria { width: var(--noria); height: calc(var(--noria) * 1.18); }
+  .luz { transition: opacity .3s; }
+  html[data-theme="dia"] .parpadeo { opacity: .18; }
+  html[data-theme="noche"] .parpadeo { animation: parpadea 2.2s infinite ease-in-out; }
+  @keyframes parpadea { 0%, 62%, 100% { opacity: 1; } 78% { opacity: .3; } }
+
+  /* C · híbrido: forma de la foto, luz por código */
+  .hibrido { position: relative; display: block; line-height: 0; }
+  .hibrido::before {
+    content: ""; position: absolute; left: -18%; top: -12%; right: -18%; bottom: -6%;
+    border-radius: 50%; background: radial-gradient(circle, rgba(244, 205, 128, .5), rgba(244, 205, 128, 0) 68%);
+    opacity: 0; transition: opacity .3s; pointer-events: none;
+  }
+  html[data-theme="noche"] .hibrido::before { opacity: 1; }
+  .destellos { position: absolute; inset: -6% -10%; width: 120%; height: 112%; pointer-events: none; }
+
+  .nota { margin: 0; padding: 14px 16px; border-radius: 8px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: 13px; color: var(--fg-2); }
+  .nota b { color: var(--fg); }
+  footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--fg-3); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>Los dos objetos gordos del mapa</h1>
+      <p>El árbol y la noria no son marcadores: son piezas del mapa. Aquí van a escala real, sobre el mapa de verdad, con los tres tratamientos posibles para decidir uno. Mismo encuadre en los tres.</p>
+      <div class="datos">
+        <div><b>2 px/m</b>escala del render</div>
+        <div><b>0,707</b>cos 45° · compresión de altura</div>
+        <div><b>64 px</b>árbol de 45 m</div>
+        <div><b>85 px</b>noria de 60 m</div>
+      </div>
+    </div>
+    <div class="conmutador" role="group" aria-label="Día o noche">
+      <button data-tema="dia" aria-pressed="true">Día</button>
+      <button data-tema="noche" aria-pressed="false">Noche</button>
+    </div>
+  </header>
+
+  <!-- ÁRBOL -->
+  <section class="bloque">
+    <h2>Árbol de Porta do Sol · 45 m</h2>
+    <div class="tri">
+
+      <figure>
+        <div class="tile">
+          <div class="obj" style="width:var(--arbol)">
+            <img class="corte corte-arbol" src="assets/foto-arbol.jpg" alt="Árbol de luces recortado de la foto, como marcador">
+            <span class="suelo"></span>
+          </div>
+          <span class="escala">10 m</span>
+        </div>
+        <figcaption><b>A · Foto recortada</b>Lo que devolvería el modelo con fondo transparente. El recorte trae la perspectiva y el fondo de la foto: no encaja del todo con el isométrico.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tile">
+          <div class="obj" style="width:var(--arbol)">
+            <svg class="sprite sprite-arbol" viewBox="0 0 100 130" aria-label="Árbol dibujado en SVG">
+              <path d="M50 90 10 118h80Z" fill="#1e2a15" opacity=".92"/>
+              <path d="M50 58 20 96h60Z" fill="#22301a" opacity=".94"/>
+              <path d="M50 26 30 72h40Z" fill="#26361d" opacity=".95"/>
+              <path d="M50 2 42 30h16Z" fill="#2b3d22"/>
+              <g class="parpadeo">
+                <rect x="47" y="10" width="6" height="3" fill="#fff3c4"/>
+                <rect x="40" y="34" width="5" height="3" fill="#f4cd80"/><rect x="55" y="34" width="5" height="3" fill="#fff3c4"/>
+                <rect x="34" y="50" width="5" height="3" fill="#fff3c4"/><rect x="61" y="50" width="5" height="3" fill="#f4cd80"/>
+                <rect x="26" y="68" width="5" height="3" fill="#f4cd80"/><rect x="69" y="68" width="5" height="3" fill="#fff3c4"/>
+                <rect x="18" y="86" width="5" height="3" fill="#fff3c4"/><rect x="77" y="86" width="5" height="3" fill="#f4cd80"/>
+                <rect x="12" y="104" width="5" height="3" fill="#f4cd80"/><rect x="83" y="104" width="5" height="3" fill="#fff3c4"/>
+              </g>
+              <rect x="46" y="114" width="8" height="14" fill="#4a2d00"/>
+              <rect x="30" y="126" width="40" height="3" fill="#4a2d00" opacity=".8"/>
+            </svg>
+            <span class="suelo"></span>
+          </div>
+          <span class="escala">10 m</span>
+        </div>
+        <figcaption><b>B · Dibujo por código</b>Cono de luces en SVG: tres tramos, puntos que parpadean de noche. Silueta limpia, encaja con el isométrico y pesa nada.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tile">
+          <div class="obj" style="width:var(--arbol)">
+            <span class="hibrido">
+              <img class="corte corte-arbol" src="assets/foto-arbol.jpg" alt="Árbol híbrido: forma de la foto con luz de código">
+              <svg class="destellos" viewBox="0 0 100 130" aria-hidden="true">
+                <g class="parpadeo">
+                  <rect x="47" y="12" width="6" height="3" fill="#fff3c4"/>
+                  <rect x="40" y="32" width="5" height="3" fill="#f4cd80"/>
+                  <rect x="56" y="42" width="5" height="3" fill="#fff3c4"/>
+                  <rect x="32" y="58" width="5" height="3" fill="#f4cd80"/>
+                  <rect x="62" y="66" width="5" height="3" fill="#fff3c4"/>
+                  <rect x="24" y="84" width="5" height="3" fill="#fff3c4"/>
+                  <rect x="70" y="92" width="5" height="3" fill="#f4cd80"/>
+                </g>
+              </svg>
+            </span>
+            <span class="suelo"></span>
+          </div>
+          <span class="escala">10 m</span>
+        </div>
+        <figcaption><b>C · Híbrido</b>La forma sale de la foto y la luz se añade por código: halo cálido y destellos que encienden de noche. Conserva el realismo y responde al tiempo.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- NORIA -->
+  <section class="bloque">
+    <h2>Noria gigante · 60 m</h2>
+    <div class="tri">
+
+      <figure>
+        <div class="tile">
+          <div class="obj" style="width:var(--noria)">
+            <img class="corte corte-noria" src="assets/foto-noria.jpg" alt="Noria recortada de la foto, como marcador">
+            <span class="suelo"></span>
+          </div>
+          <span class="escala">10 m</span>
+        </div>
+        <figcaption><b>A · Foto recortada</b>Recorte circular de la foto. La noria real se ve casi de frente en la foto; el mapa la pide inclinada, así que canta.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tile">
+          <div class="obj" style="width:var(--noria)">
+            <svg class="sprite sprite-noria" viewBox="0 0 100 118" aria-label="Noria dibujada en SVG">
+              <g id="rueda">
+                <g fill="none" stroke-linejoin="round">
+                  <ellipse cx="50" cy="46" rx="39" ry="26.5"/>
+                  <ellipse cx="50" cy="46" rx="33" ry="22.4"/>
+                  <path d="M50 46 50 19.5M50 46 50 72.5M50 46 11 46M50 46 89 46M50 46 24 27.2M50 46 76 27.2M50 46 24 64.8M50 46 76 64.8"/>
+                  <path d="M50 12 24 108M50 12l26 96M28 96h44"/>
+                </g>
+              </g>
+              <use href="#rueda" stroke="#26190a" stroke-width="3.4" opacity=".55"/>
+              <use href="#rueda" stroke="#f4cd80" stroke-width="1.5"/>
+              <g class="parpadeo">
+                <rect x="8" y="43" width="6" height="6" fill="#f4cd80"/><rect x="86" y="43" width="6" height="6" fill="#f4cd80"/>
+                <rect x="17" y="62" width="6" height="6" fill="#fff3c4"/><rect x="77" y="62" width="6" height="6" fill="#fff3c4"/>
+                <rect x="47" y="8" width="6" height="6" fill="#fff3c4"/>
+                <rect x="21" y="25" width="5" height="5" fill="#fff3c4"/><rect x="74" y="25" width="5" height="5" fill="#fff3c4"/>
+                <rect x="33" y="73" width="5" height="5" fill="#f4cd80"/><rect x="62" y="73" width="5" height="5" fill="#f4cd80"/>
+              </g>
+              <circle cx="50" cy="46" r="3.5" fill="#fff3c4"/>
+            </svg>
+            <span class="suelo"></span>
+          </div>
+          <span class="escala">10 m</span>
+        </div>
+        <figcaption><b>B · Dibujo por código</b>Rueda en elipse (la cámara la inclina), radios, cabinas y patas. Es la lectura que el mapa ya usa en el resto de piezas.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="tile">
+          <div class="obj" style="width:var(--noria)">
+            <span class="hibrido">
+              <img class="corte corte-noria" src="assets/foto-noria.jpg" alt="Noria híbrida: forma de la foto con luz de código">
+              <svg class="destellos" viewBox="0 0 100 100" aria-hidden="true">
+                <g class="parpadeo">
+                  <rect x="12" y="44" width="6" height="6" fill="#fff3c4"/>
+                  <rect x="40" y="10" width="6" height="6" fill="#f4cd80"/>
+                  <rect x="82" y="44" width="6" height="6" fill="#fff3c4"/>
+                  <rect x="28" y="74" width="6" height="6" fill="#f4cd80"/>
+                  <rect x="66" y="72" width="6" height="6" fill="#fff3c4"/>
+                </g>
+              </svg>
+            </span>
+            <span class="suelo"></span>
+          </div>
+          <span class="escala">10 m</span>
+        </div>
+        <figcaption><b>C · Híbrido</b>La foto da la textura de las luces y el código añade halo y parpadeo. Funciona de noche; de día se queda como una noria apagada.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <p class="nota"><b>Lectura:</b> a 64 y 85 px el detalle de la foto se pierde y ensucia el mapa, mientras que el dibujo por código mantiene la silueta legible a tamaño de punto. El híbrido gana en noche y pierde en día. Ninguna de las tres lleva borde rectangular: el recorte y la sombra de contacto son lo que las pega al suelo.</p>
+
+  <footer>TinyVigo · prueba de assets. Escala 2 px/m, altura comprimida por cos 45°. Fotos de trabajo del proyecto (assets/foto-arbol.jpg, assets/foto-noria.jpg) y mapa isométrico del centro de Vigo.</footer>
+
+</div>
+
+<script>
+  var btns = document.querySelectorAll(".conmutador button");
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.documentElement.setAttribute("data-theme", b.dataset.tema);
+      btns.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    });
+  });
+</script>
+</body>
+</html>

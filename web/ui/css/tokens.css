@@ -5,7 +5,6 @@
 :root {
   /* tipografía única: Inter, 5 tamaños fijos, 3 pesos, nada entre medias */
   --f-ui: "Inter", system-ui, sans-serif;
-  --f-wm: "Pixelify Sans", "Inter", sans-serif;  /* solo marca y números de mapa */
   --fs-display: 28px; --fs-title: 20px; --fs-copy: 16px; --fs-label: 14px; --fs-meta: 12px;
   --w-400: 400; --w-500: 500; --w-600: 600;
   /* radios pequeños */
@@ -32,6 +31,11 @@
   --fg: #1d1d1d;
   --fg-2: #51554c;
   --fg-3: #686d62;
+  /* vidrio: lo único que flota sobre el mapa. Sin sombra: el filo hace el trabajo */
+  --glass: rgba(255, 255, 255, .72);
+  --glass-strong: rgba(251, 250, 246, .9);
+  --ov: 0 0 0 0 transparent;
+  --stage: #f1efe9;
   /* estados (3) */
   --danger: #c4452f;
   --warning: #b7791f;
@@ -60,6 +64,9 @@ html[data-theme="dark"] {
   --fg: #f4ecd9;
   --fg-2: #bcb6a6;
   --fg-3: #9a9484;
+  --glass: rgba(23, 26, 36, .72);
+  --glass-strong: rgba(26, 30, 42, .9);
+  --stage: #14161f;
   --danger: #f09078;
   --warning: #e0b06a;
   --ok: #97c46f;

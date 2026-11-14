@@ -13,10 +13,10 @@
     <div class="nv__title">A Navideña</div>
     <div class="nv__headrow">
       <div class="nv__view" role="group" aria-label="Vista">
-        <button class="on" data-view="lista" aria-pressed="true"><i class="ic" data-ic="layers" data-size="16"></i>Lista</button>
-        <button data-view="mapa" aria-pressed="false"><i class="ic" data-ic="pin" data-size="16" data-mono></i>Mapa</button>
+        <button class="on" data-view="lista" aria-pressed="true"><i class="lu" data-lu="layers" data-size="16"></i>Lista</button>
+        <button data-view="mapa" aria-pressed="false"><i class="lu" data-lu="map-pin" data-size="16"></i>Mapa</button>
       </div>
-      <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="ic"></i></button>
+      <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="lu"></i></button>
       <button class="btn sec nv__reset" aria-label="Reiniciar">Reiniciar</button>
     </div>
   </header>
@@ -24,7 +24,7 @@
   <div class="nv__prog">
     <div class="nv__count"><b>0</b><small>/ 43 sellos</small></div>
     <div class="nv__bar"><i></i></div>
-    <button class="btn pri nv__gen" style="display:none"><i class="ic" data-ic="postal" data-size="16"></i>Generar certificado</button>
+    <button class="btn pri nv__gen" style="display:none"><i class="lu" data-lu="mail" data-size="16"></i>Generar certificado</button>
   </div>
 
   <p class="nv__empty">Todavía no tienes sellos. Toca un punto para empezar.</p>
@@ -36,8 +36,8 @@
 
   <section class="cert" hidden aria-label="Certificado">
     <div class="cert__inner">
-      <button class="btn ic cert__close" aria-label="Cerrar"><i class="ic" data-ic="x" data-size="16"></i></button>
-      <div class="cert__mark"><i class="ic" data-ic="star" data-size="40"></i></div>
+      <button class="btn ic cert__close" aria-label="Cerrar"><i class="lu" data-lu="x" data-size="16"></i></button>
+      <div class="cert__mark"><i class="marca" data-marca data-size="40"></i></div>
       <h2 class="cert__title">A Navideña</h2>
       <div class="cert__form" hidden>
         <label for="cert-nombre">Tu nombre</label>
@@ -47,13 +47,15 @@
       <div class="cert__result" hidden>
         <p class="cert__sub">Certifica que <span class="cert__nombre">—</span> visitó las 43 instalaciones de la Navidad de Vigo.</p>
         <div class="cert__meta"><span class="cert__numero">N.º 00000/2026</span><span class="cert__fecha">—</span></div>
-        <button class="btn sec cert__share"><i class="ic" data-ic="share" data-size="16"></i>Copiar enlace</button>
+        <button class="btn sec cert__share"><i class="lu" data-lu="share-2" data-size="16"></i>Copiar enlace</button>
       </div>
     </div>
   </section>
 </div>
 
 <script src="assets/iconos.js"></script>
+<script src="assets/marca.js"></script>
+<script src="assets/lucide.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/navidena.js"></script>
 </body>

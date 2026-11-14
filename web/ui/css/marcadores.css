@@ -16,6 +16,9 @@
 .mk[data-kind="camara"] { box-shadow: inset 0 0 0 1px var(--hair), inset 0 0 0 2px var(--ink2); }
 /* estados */
 .mk[data-state="sel"] { transform: scale(1.25); box-shadow: inset 0 0 0 2px var(--ink); }
+/* dentro del mapa, el punto se centra en sus coordenadas */
+.map__mks .mk { position: absolute; transform: translate(-50%, -50%); }
+.map__mks .mk[data-state="sel"] { transform: translate(-50%, -50%) scale(1.25); }
 .mk[data-state="open"]::after {
   content: ""; position: absolute; right: -3px; top: -3px; width: 8px; height: 8px;
   background: var(--hi); border-radius: 2px; box-shadow: 0 0 0 2px var(--panel);
@@ -25,6 +28,7 @@
    En la maqueta se usa el sprite grande sobre un recorte del mapa. */
 .asset {
   display: inline-flex; align-items: center; justify-content: center;
+  border: 0; padding: 0; background: transparent; color: var(--ink);
   pointer-events: auto; cursor: pointer;
   filter: drop-shadow(0 0 0 transparent);
 }

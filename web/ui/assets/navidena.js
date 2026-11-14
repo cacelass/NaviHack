@@ -80,7 +80,7 @@
       '<circle cx="50" cy="50" r="47" fill="none" stroke-width="2.4"/>' +
       '<circle cx="50" cy="50" r="43" fill="none" stroke-width="0.8" opacity=".55"/>' +
       '<text class="stxt" font-size="8" letter-spacing="1.1"><textPath href="#' + id + '-ring" startOffset="0">' + txt.repeat(rep) + '</textPath></text>' +
-      '<g class="sico" transform="translate(34,34) scale(2)">' + icon + '</g>' +
+      '<g class="sico" transform="translate(38,38) scale(1.5)">' + icon + '</g>' +
       '</g></svg>';
   }
 

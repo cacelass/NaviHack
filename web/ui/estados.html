@@ -5,6 +5,7 @@
 <title>TinyVigo · Estados</title>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/aviso.css">
 <style>
   .est { background: var(--surface); border-radius: var(--r-panel); padding: 20px; display: flex; flex-direction: column; gap: 10px; max-width: 460px; }
@@ -18,18 +19,18 @@
 <div class="page" style="max-width:680px">
   <div style="display:flex;justify-content:space-between;align-items:center">
     <h1>Estados</h1>
-    <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="ic"></i></button>
+    <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="lu"></i></button>
   </div>
 
   <div class="est"><span class="shimmer">Cargando el mapa de Vigo</span><div style="display:flex;flex-direction:column;gap:8px;width:220px"><div class="skel" style="width:60%"></div><div class="skel"></div><div class="skel" style="width:80%"></div></div></div>
 
-  <div class="est est--empty"><i class="ic" data-ic="calendar" data-size="32" data-mono></i><h3>Hoy no hay eventos</h3><p>La agenda del Concello no tiene nada para esta fecha. Prueba otro día.</p></div>
+  <div class="est est--empty"><i class="lu" data-lu="calendar-days" data-size="32"></i><h3>Hoy no hay eventos</h3><p>La agenda del Concello no tiene nada para esta fecha. Prueba otro día.</p></div>
 
-  <div class="est est--offline"><i class="ic" data-ic="cloud" data-size="32" data-mono></i><h3>Sin conexión</h3><p>No se pudo cargar el mapa. Lo que ya habías abierto sigue aquí.</p><button class="btn sec">Reintentar</button></div>
+  <div class="est est--offline"><i class="lu" data-lu="cloud" data-size="32"></i><h3>Sin conexión</h3><p>No se pudo cargar el mapa. Lo que ya habías abierto sigue aquí.</p><button class="btn sec">Reintentar</button></div>
 
-  <div class="est"><i class="ic" data-ic="closed" data-size="32"></i><h3>Algo salió mal</h3><p>No se pudieron cargar los puntos de Navidad. Vuelve a intentarlo o usa el mapa sin esa capa.</p><button class="btn sec">Reintentar</button></div>
+  <div class="est"><i class="lu" data-lu="circle-x" data-size="32"></i><h3>Algo salió mal</h3><p>No se pudieron cargar los puntos de Navidad. Vuelve a intentarlo o usa el mapa sin esa capa.</p><button class="btn sec">Reintentar</button></div>
 </div>
-<script src="assets/iconos.js"></script>
+<script src="assets/lucide.js"></script>
 <script src="assets/theme.js"></script>
 <script src="assets/app.js"></script>
 </body>
