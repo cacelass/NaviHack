@@ -83,7 +83,8 @@ def main() -> int:
     if snapshot is None:
         print("sin snapshot de agenda: ejecuta antes `python scripts/snapshot.py agenda`")
         return 1
-    events = merge(_load(OUT, []), snapshot, _load(POINTS, []))
+    points = _load(POINTS, {"points": []})["points"]  # escrito por scripts/christmas_layer.py
+    events = merge(_load(OUT, []), snapshot, points)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(events, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(events)} eventos en {OUT.relative_to(ROOT)}")

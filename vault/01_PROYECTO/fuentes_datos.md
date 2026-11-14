@@ -73,3 +73,35 @@ genera snapshot nuevo, solo actualiza `checked_at`.
   SST 15,6–15,9 °C (2026-11-14). Sirve como indicativo de «estado del mar en
   la boca», **no** como dato por punto dentro de la ría. No se usa en v1 más
   allá de, como mucho, un icono en la capa de tiempo.
+
+## Capa navideña del Concello (R-06)
+
+- **Item:** ArcGIS Online `41caae2067564a92a79d91f5a08c00f6`, «Puntos interés
+  Navidad 2026 2027», dueño `concellovigo`, acceso público. Modificado
+  **2026-11-13 14:25** → **la edición 2026-27 ya está publicada**, no hace
+  falta esperar a la 2025-26 + overrides que suponía el spec.
+- **FeatureServer:** `https://services9.arcgis.com/ss3qikvq575kYKRJ/arcgis/rest/services/Puntos_interés_Navidad_2023_2024/FeatureServer/0`
+  (el nombre del servicio es de 2023-24: el Concello reutiliza el mismo cada
+  temporada). Puntos, `maxRecordCount` 2000.
+- **35 puntos** (no 43 como decía el spec para 2025-26): 16 elementos
+  lumínicos, 8 atracciones, 4 expositivos, 2 mercados, 2 Papá Noel/Reyes,
+  2 galerías de fotos, 1 photocall.
+- **Campos:** `id, nombre, nombre_gl, descripcion_corta(_gl), descripcion_larga(_gl)`
+  (HTML), `horario_atencion(_gl)` (HTML con horas de encendido/apagado),
+  `tipologia(_gl)`, `image_url`, `imagen`, `dir_*` (vía, número, texto
+  alternativo, CP, parroquia, barrio, distrito, sección), `telefono1/2, web,
+  email, lon, lat`. Mapeo a `points.json` en `scripts/christmas_layer.py`.
+- **Otras capas del mismo dueño** (para R-01/histórico): «Nadal Puntos de
+  Interés_Pública» (36 puntos, 2019, campos `tipo, elemento, descripcion`),
+  «Puntos interés Navidad 2021», «puntos_interese_2020», «Zonas Nadal 2021»,
+  «Encendido 2024 Accesos», web scene «Navidad 2026-2027 3D» (`ed9c99f2…`).
+- **Licencia:** el item no declara `licenseInfo` ni `accessInformation`. Se
+  aplican las condiciones generales de datos.vigo.org (citar fuente y fecha de
+  actualización, ver arriba). Pendiente confirmar por el canal del Concello si
+  se va a redistribuir texto o fotos (`image_url`) tal cual → `LIC-01`.
+- **Fallback:** cada descarga guarda la copia cruda en
+  `data/raw/concello_navidad/<UTC>.json` (versionada en git). Si la capa
+  desaparece o falla, `python -m scripts.christmas_layer` sigue con la última
+  copia; `--offline` lo fuerza. Los cambios que el Concello aún no publique van
+  a `data/points_overrides.json` (`{"id", ...campos}` parchea, un id nuevo se
+  añade como `status: not_confirmed`, `"remove": true` lo quita).
