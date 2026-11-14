@@ -105,19 +105,18 @@ export const features = {
 
 export const origin = {
   id: 'origin',
-  eyebrow: 'Cómo nació',
   title: 'Nació en 1Hack',
-  text: 'Empezamos NaviVigo en 1Hack, en A Coruña, el 14 de noviembre de 2026. Seguimos desarrollándolo y mejorándolo: esto es solo el principio.',
-  chips: [
-    { icon: 'calendar', label: '14/11/2026' },
-    { icon: 'pin', label: 'A Coruña' },
-    { icon: 'code', label: '1Hack' },
+  text: 'Hecho por tres jóvenes de Vigo en un solo día, en 1Hack, en A Coruña, el 14 de noviembre de 2026: un mapa para enseñar la Navidad de su ciudad.',
+  facts: [
+    { value: '14 de noviembre de 2026' },
+    { value: 'A Coruña' },
+    { value: '1Hack' },
   ],
 }
 
 export const team = {
   id: 'team',
-  title: 'Quiénes lo hicimos',
+  title: 'Hecho por',
   intro: 'Tres personas y un solo proyecto. Todo vive en un único sitio, navivigo.vercel.app: una web, un mapa y una demo.',
   items: [
     {
@@ -125,18 +124,21 @@ export const team = {
       handle: '@cacelass',
       github: 'cacelass',
       portfolio: 'https://cacelass.github.io/',
+      linkedin: 'https://www.linkedin.com/in/cacelas/',
     },
     {
       name: 'Miguel Fernández',
       handle: '@miguelfdezparis',
       github: 'miguelfdezparis',
       portfolio: 'https://miguelparis.com',
+      linkedin: 'https://www.linkedin.com/in/miguel-fernandez-de-la-cigona-paris/',
     },
     {
       name: 'Jose Estévez',
       handle: '@JoseEstevez520',
       github: 'JoseEstevez520',
       portfolio: 'https://joseestevez.vercel.app/',
+      linkedin: 'https://www.linkedin.com/in/jose-est%C3%A9vez-b9b761388',
     },
   ],
 }
@@ -162,7 +164,7 @@ export const footer = {
     { label: 'Renfe', note: 'GTFS de Renfe Operadora (CC BY 4.0)', href: 'https://data.renfe.com' },
     { label: 'Open-Meteo', note: 'Weather data by Open-Meteo.com (CC BY 4.0)', href: 'https://open-meteo.com' },
   ],
-  origin: 'Nació en 1Hack (A Coruña, 14/11/2026) y sigue en desarrollo.',
+  origin: 'Hecho en un día por tres jóvenes de Vigo en 1Hack (A Coruña, 14/11/2026).',
   disclaimer:
     'Proyecto independiente: no es una web oficial del Concello de Vigo. Las fotos de los puntos son del Concello y los derechos son de sus autores. Los horarios son orientativos: confírmalos con la organización.',
 }

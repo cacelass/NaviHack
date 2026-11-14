@@ -67,22 +67,13 @@ export default function App() {
           <div className="wrap">
             <Reveal>
               <div className="origin-band">
-                <div className="origin-copy">
-                  <p className="eyebrow">{origin.eyebrow}</p>
-                  <h2 className="section-title">{origin.title}</h2>
-                  <p className="origin-text">{origin.text}</p>
-                  <ul className="origin-chips">
-                    {origin.chips.map((c) => (
-                      <li key={c.label}>
-                        <Icon name={c.icon} size={16} />
-                        {c.label}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <a className="btn btn-outline" href={site.repo} target="_blank" rel="noopener noreferrer">
+                <p className="origin-meta">{origin.facts.map((f) => f.value).join(' · ')}</p>
+                <h2 className="origin-title">{origin.title}</h2>
+                <p className="origin-text">{origin.text}</p>
+                <a className="origin-link" href={site.repo} target="_blank" rel="noopener noreferrer">
                   <Icon name="github" size={18} />
-                  Seguir el proyecto
+                  {site.repo.replace('https://github.com/', '')}
+                  <Icon name="arrow" size={16} />
                 </a>
               </div>
             </Reveal>
