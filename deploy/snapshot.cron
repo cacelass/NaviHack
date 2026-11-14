@@ -23,3 +23,6 @@ CRON_TZ=Europe/Madrid
 15 4 * * *   cd $HOME/NaviHack && python3 -m scripts.cameras >/dev/null
 # X-04: datos de bus/tren para la web, tras los GTFS
 45 14 * * *  cd $HOME/NaviHack && python3 -m scripts.build_transit_web >/dev/null
+# WEB-05: la web lee web/data/live/*.json; se refrescan con los snapshots (parkings cada 2 min)
+*/2 * * * *  sleep 45; cd $HOME/NaviHack && python3 -m scripts.build_web --live >/dev/null
+0 4 * * *    cd $HOME/NaviHack && python3 -m scripts.build_web >/dev/null

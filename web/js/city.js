@@ -1,7 +1,6 @@
 // TinyVigo «Vista ciudad»: todo Vigo en un mapa real (Leaflet + CARTO/OSM) con las fotos de cada
 // punto, los parkings en vivo y las rutas del tour o de casa al centro. El isométrico solo cubre el centro.
 (function () {
-  const PARKINGS = "https://datos.vigo.org/data/trafico/parkings-ocupacion.json";
   const COLORS = { light: "#f4cd80", attraction: "#e7836a", market: "#8fcf7a", santa_kings: "#d9534f", exhibit: "#9cc4ff", photo_gallery: "#9cc4ff", photocall: "#9cc4ff" };
 
   async function init() {
@@ -37,7 +36,7 @@
     const parkLayer = L.layerGroup().addTo(map);
     async function loadParkings() {
       try {
-        const rows = (await (await fetch(PARKINGS)).json()).filter((r) => r.lat);
+        const rows = (await tinyvigoData.parkings()).filter((r) => r.lat); // WEB-05
         parkLayer.clearLayers();
         for (const r of rows) {
           // D-18: fechahora es hora local de Madrid; >10 min sin publicar = «sin datos» (D-00).

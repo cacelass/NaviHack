@@ -6,7 +6,6 @@
 // - Lluvia en canvas a ~30 fps con ≤ 140 gotas, en pausa si la pestaña no se ve.
 // Hora y clima: automáticos o forzados desde Ajustes y el botón rápido.
 (function () {
-  const WX = "https://api.open-meteo.com/v1/forecast?latitude=42.2376&longitude=-8.7247&current=weather_code&daily=sunrise,sunset&forecast_days=2&timezone=Europe%2FMadrid";
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const state = { time: "auto", weather: "auto" };
   let live = null; // {kind, sunrise:[Date], sunset:[Date]}
@@ -14,7 +13,7 @@
 
   const kindOf = (c) => (c === 0 || c === 1 ? "clear" : c === 45 || c === 48 ? "fog" : c <= 3 ? "cloudy" : "rain");
   function fetchLive() {
-    fetch(WX).then((r) => r.json()).then((d) => {
+    tinyvigoData.weather().then((d) => { // WEB-05: fichero propio
       live = { kind: kindOf(d.current.weather_code), sunrise: d.daily.sunrise.map((s) => new Date(s)), sunset: d.daily.sunset.map((s) => new Date(s)) };
       apply();
     }).catch(() => {});

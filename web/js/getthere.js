@@ -5,7 +5,6 @@
 (function () {
   const FOOT = "https://routing.openstreetmap.de/routed-foot/route/v1/foot/";
   const CAR = "https://routing.openstreetmap.de/routed-car/route/v1/driving/";
-  const PARKINGS = "https://datos.vigo.org/data/trafico/parkings-ocupacion.json";
   const WALK_MS = 1.25, DETOUR = 1.3, CAR_KMH = 22; // ciudad, con semáforos
   const PARK_MIN = 5; // entrar, aparcar y salir a la calle
   const BOARD_M = 700, ALIGHT_M = 600, PARK_M = 2000, BUS_HORIZON = 120;
@@ -67,7 +66,7 @@
   }
   async function byCar(start, first, firstName, now) {
     let rows = null;
-    try { rows = (await (await fetch(PARKINGS)).json()).filter((r) => r.lat && r.lon); } catch (e) { rows = null; }
+    try { rows = (await tinyvigoData.parkings()).filter((r) => r.lat && r.lon); } catch (e) { rows = null; } // WEB-05
     const fresh = (rows || []).filter((r) => (Date.now() - new Date(r.fechahora.replace(" ", "T"))) / 60000 <= 15);
     const stale = !fresh.length;
     const pool = parkingPool(stale ? rows || [] : fresh, start, first);

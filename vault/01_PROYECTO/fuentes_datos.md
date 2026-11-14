@@ -162,3 +162,19 @@ Open-Meteo.com (CC BY 4.0)».
 
 Hasta nueva comprobación, los trenes del mapa (TRANSIT-02) van con horario programado
 y etiqueta «programado»; los retrasos se pueden mostrar como texto en el tablero.
+
+## Web: datos desde ficheros propios (WEB-05)
+
+La web no pide **datos** a APIs de terceros desde el navegador. Todo sale de `web/data/`:
+
+| Fichero | Lo genera | Refresco |
+|---|---|---|
+| `points.json`, `i18n/*.json`, `elevation.json` | `scripts/build_web_data.py` | al cambiar la capa o el programa |
+| `transit.json` | `scripts/build_transit_web.py` (GTFS Vitrasa + Renfe) | diario |
+| `live/parkings.json`, `live/agenda.json`, `live/weather.json`, `live/centros.json` | `scripts/build_web_live.py` desde los snapshots validados de D-01 | parkings cada 2 min, tiempo 30 min, agenda diaria |
+
+`python -m scripts.build_web` lo regenera todo (`--live` solo lo que cambia cada pocos minutos;
+cron en `deploy/snapshot.cron`). Cada fichero lleva `fetched_at`; si falta o viene vacío, la web
+muestra un aviso claro («No hay datos de … ahora mismo») y oculta el campo en vez de inventarlo.
+Quedan fuera, por ser **servicios** y no datos: el enrutado (OSRM, routing.openstreetmap.de) y las
+teselas de OpenStreetMap del mapa de calles.

@@ -81,6 +81,18 @@ def _valid_weather(payload: object) -> str | None:
     return None
 
 
+def _valid_centros(payload: object) -> str | None:
+    if not isinstance(payload, list) or not payload:
+        return "se esperaba una lista no vacía"
+    if any(not isinstance(r, dict) or "nombre" not in r for r in payload):
+        return "registro sin 'nombre'"
+    return None
+
+
+def _ts_none(payload: Any, last_modified: str | None) -> str | None:
+    return last_modified
+
+
 def _ts_parkings(payload: list[dict[str, object]], last_modified: str | None) -> str | None:
     # `fechahora` es hora local de Madrid sin zona (D-00): se guarda tal cual.
     return max(str(r["fechahora"]) for r in payload)
@@ -115,12 +127,20 @@ FEEDS = {
         _ts_header,
         stale_after_s=36 * 3600,
     ),
+    # Centros culturales del Concello: recintos de la agenda (D-04); cambian poco.
+    "centros": Feed(
+        "https://datos.vigo.org/data/cultura/centros.json",
+        _valid_centros,
+        _ts_none,
+        stale_after_s=7 * 24 * 3600,
+    ),
     # Open-Meteo (CC BY 4.0) actualiza cada 15 min; sondeamos cada 30 y damos 3 h.
     # 4 días horarios: tira de estado, planner y capa de tiempo del mapa (D-10 v4).
     "weather": Feed(
         "https://api.open-meteo.com/v1/forecast?latitude=42.2376&longitude=-8.7247"
         "&hourly=" + ",".join(WEATHER_HOURLY) + "&current=temperature_2m,weather_code,"
-        "precipitation,wind_speed_10m&timezone=Europe%2FMadrid&forecast_days=4",
+        "precipitation,wind_speed_10m,is_day&daily=sunrise,sunset"
+        "&timezone=Europe%2FMadrid&forecast_days=4",
         _valid_weather,
         _ts_weather,
         stale_after_s=3 * 3600,

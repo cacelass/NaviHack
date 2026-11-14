@@ -2,16 +2,14 @@
 // eventos del día primero y los permanentes agrupados. Se sitúan en el mapa por la instalación
 // (mapa aprendido de D-04: data/venues.json -> centros culturales) o por la dirección escrita.
 (function () {
-  const AGENDA = "https://datos.vigo.org/data/axenda/agenda-hoy.json";
-  const CENTROS = "https://datos.vigo.org/data/cultura/centros.json";
-  const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+      const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
   const lu = (name, size = 20) => { const s = document.createElement("span"); s.innerHTML = window.LU ? LU.svg(name, { size }) : ""; return s.firstChild || s; };
   const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null && k !== false)); return n; };
 
   async function load(points) {
     const [agenda, centros, ids] = await Promise.all([
-      fetch(AGENDA).then((r) => r.json()),
-      fetch(CENTROS).then((r) => r.json()).catch(() => []),
+      tinyvigoData.agenda(), // WEB-05: fichero propio (web/data/live), no la API del Concello
+      tinyvigoData.centros().catch(() => []),
       fetch("data/venues.json").then((r) => r.json()).catch(() => ({})),
     ]);
     const byId = new Map((Array.isArray(centros) ? centros : []).map((c) => ["cultura-" + c.id, c]));
@@ -117,8 +115,8 @@
     function loadWx() {
       if (wxLoading || (wx && Date.now() - wxAt < 600000)) return;
       wxLoading = true;
-      fetch("https://api.open-meteo.com/v1/forecast?latitude=42.2376&longitude=-8.7247&current=temperature_2m,weather_code,is_day&hourly=precipitation_probability,weather_code&forecast_hours=8&timezone=Europe%2FMadrid")
-        .then((r) => r.json()).then((d) => { wx = d; wxAt = Date.now(); }).catch(() => {}).finally(() => { wxLoading = false; render(); });
+      tinyvigoData.weather()
+        .then((d) => { wx = d; wxAt = Date.now(); }).catch(() => {}).finally(() => { wxLoading = false; render(); });
     }
     const wxKind = (c) => (c === 0 ? "clear" : c <= 3 ? "cloudy" : c <= 48 ? "fog" : c <= 67 || (c >= 80 && c <= 82) ? "rain" : c <= 77 || c <= 86 ? "snow" : "storm");
     const WX_ICON = { clear: "sun", cloudy: "cloud", fog: "cloud-fog", rain: "cloud-rain", snow: "cloud", storm: "cloud-rain" };

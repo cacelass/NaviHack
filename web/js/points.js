@@ -140,7 +140,7 @@
   let parkings = null, parkingsAt = 0;
   async function loadParkings() {
     if (parkings && Date.now() - parkingsAt < 120000) return parkings;
-    try { parkings = (await (await fetch("https://datos.vigo.org/data/trafico/parkings-ocupacion.json")).json()).filter((r) => r.lat); parkingsAt = Date.now(); } catch (e) { /* sin feed: no se enseña */ }
+    try { parkings = (await tinyvigoData.parkings()).filter((r) => r.lat); /* WEB-05 */ parkingsAt = Date.now(); } catch (e) { /* sin feed: no se enseña */ }
     return parkings;
   }
   const metres = (a, b) => Math.hypot((b.lat - a.lat) * 111320, (b.lon - a.lon) * 111320 * Math.cos(a.lat * Math.PI / 180));
