@@ -36,6 +36,21 @@ OUT = ROOT / "web" / "data"
 
 ORIGIN = (42.23807, -8.72581)  # Árbol de Porta do Sol = centro del lienzo (render-params de GEO-01)
 CANVAS = 3072
+
+
+def _drawn() -> tuple[float, float]:
+    """Tamaño del dibujo publicado (web/tiles/current.json): el bloque puede crecer hacia Vialia."""
+    try:
+        tiles = ROOT / "web" / "tiles"
+        version = json.loads((tiles / "current.json").read_text(encoding="utf-8"))["version"]
+        m = json.loads((tiles / version / "manifest.json").read_text(encoding="utf-8"))
+        ox, oy = (m.get("offset") or {}).get("x", 0), (m.get("offset") or {}).get("y", 0)
+        return ox + m["width"], oy + m["height"]
+    except (OSError, KeyError, ValueError):
+        return CANVAS, CANVAS
+
+
+DRAWN = _drawn()
 SCALE = 2.0  # px por metro
 TILT = math.radians(45)
 HEAD = math.radians(-15)
@@ -86,7 +101,7 @@ def web_points(
                 "lon": p["lon"],
                 "x": round(cx / CANVAS, 5),
                 "y": round(cy / CANVAS, 5),
-                "on_map": 0 <= cx <= CANVAS and 0 <= cy <= CANVAS,
+                "on_map": 0 <= cx <= DRAWN[0] and 0 <= cy <= DRAWN[1],
                 "programme": {**programme, "holidays": holidays} if programme else None,
                 "last_verified": p.get("last_verified"),
                 "status": p.get("status"),  # official | not_confirmed (D-18)
