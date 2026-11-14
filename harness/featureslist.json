@@ -167,12 +167,12 @@
         "hay tests de todo lo anterior",
         "make check pasa"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "BOOT-001"
       ],
       "ticket_id": "85c6d19e-257e-4f94-870f-f25decb7419e",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "85c6d19e-boot-002-installer-scaffold-crea",
       "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
@@ -296,12 +296,14 @@
         "Closed dates recorded",
         "last_verified updated"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "4b410240-8bd7-4afa-933b-ac4412825c88",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "4b410240-r-04-collect-official-2026-27-pr",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "R-05",
@@ -678,10 +680,12 @@
         "Cancelled Christmas stops cross-checked",
         "No dependency on unofficial real-time wrappers"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "f39a46e4-68c0-402a-9f5e-31acfe38c1b8",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "f39a46e4-x-01-vitrasa-gtfs-ingest",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "X-02",

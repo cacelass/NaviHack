@@ -1,24 +1,26 @@
 # Tarea actual
 
-**Feature:** D-11
+**Feature:** R-04
 **Estado:** in_progress
 **Iniciada:** 2026-11-14
 **Responsable:** implementer
 
 ## Objetivo
 
-CNIG MDT05 slope layer for 'Easy walk' route.
+Opening days, hours, show times, prices and closures for every point loaded into points.json.
 
 Criterios de aceptación:
-  1. Slope data loaded for Vigo centre
-  2. Consumed by planner's Easy walk option
-  3. Missing data handled gracefully
+  1. Programme fields populated for every point
+  2. Show times with clock times where available
+  3. Closed dates recorded
+  4. last_verified updated
 
 ## Criterios de aceptación
 
-- [ ] Slope data loaded for Vigo centre
-- [ ] Consumed by planner's Easy walk option
-- [ ] Missing data handled gracefully
+- [ ] Programme fields populated for every point
+- [ ] Show times with clock times where available
+- [ ] Closed dates recorded
+- [ ] last_verified updated
 
 ## Bitácora
 
