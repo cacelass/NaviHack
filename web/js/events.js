@@ -55,6 +55,7 @@
       const go = e.where ? el("button", "tv-btn tv-btn-quiet tv-ev-go", lu("map-pin", 16), t("events.on_map")) : null;
       if (go) go.onclick = () => show(e);
       return el("li", "tv-ev",
+        el("span", "tv-thumb", lu(/belen|bel[eé]n|nacimiento/i.test(e.titulo) ? "star" : /disney|desfile|parade|cabalgata/i.test(e.titulo) ? "ticket" : "calendar-days")),
         el("div", "tv-ev-main",
           el("p", "tv-ev-title", e.titulo),
           place ? el("p", "tv-ev-place", lu("map-pin", 14), place) : null,
@@ -123,7 +124,7 @@
       const x = christmasToday(events);
       box.append(x.timeline.length
         ? el("ol", "tv-timeline", ...x.timeline.map((it) => {
-            const b = el("button", it.past ? "is-past" : "", el("span", "tv-time", it.time), el("span", "tv-tl-main", el("span", "tv-ev-title", it.title), el("span", "tv-ev-place", it.sub)));
+            const b = el("button", it.past ? "is-past" : "", el("span", "tv-time", it.time), it.p && it.p.photo ? Object.assign(el("img", "tv-thumb tv-tl-img"), { src: it.p.photo, alt: "" }) : el("span", "tv-thumb", lu("calendar-days")), el("span", "tv-tl-main", el("span", "tv-ev-title", it.title), el("span", "tv-ev-place", it.sub)));
             b.onclick = () => pick(it.p);
             return el("li", null, b);
           }))

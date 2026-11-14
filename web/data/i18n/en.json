@@ -274,5 +274,8 @@
   "share.copied": "Link copied",
   "share.copy": "Copy the link",
   "detail.off_map": "See it in City view",
-  "detail.off_map_note": "It is outside the drawn map of the centre."
+  "detail.off_map_note": "It is outside the drawn map of the centre.",
+  "settings.view": "View",
+  "settings.dark": "Night",
+  "settings.light": "Day"
 }

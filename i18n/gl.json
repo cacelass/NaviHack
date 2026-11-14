@@ -274,5 +274,8 @@
   "share.copied": "Ligazón copiada",
   "share.copy": "Copia a ligazón",
   "detail.off_map": "Velo en Vista cidade",
-  "detail.off_map_note": "Queda fóra do mapa debuxado do centro."
+  "detail.off_map_note": "Queda fóra do mapa debuxado do centro.",
+  "settings.view": "Vista",
+  "settings.dark": "Noite",
+  "settings.light": "Día"
 }

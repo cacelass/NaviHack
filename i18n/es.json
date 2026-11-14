@@ -274,5 +274,8 @@
   "share.copied": "Enlace copiado",
   "share.copy": "Copia el enlace",
   "detail.off_map": "Verlo en Vista ciudad",
-  "detail.off_map_note": "Queda fuera del mapa dibujado del centro."
+  "detail.off_map_note": "Queda fuera del mapa dibujado del centro.",
+  "settings.view": "Vista",
+  "settings.dark": "Noche",
+  "settings.light": "Día"
 }

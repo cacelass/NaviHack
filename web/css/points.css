@@ -306,3 +306,30 @@ html[data-theme="dark"] .tv-mini-tiles { filter: brightness(.62) saturate(.7) co
 .tv-line { display: inline-grid; place-items: center; min-width: 32px; height: 22px; padding: 0 6px; border-radius: var(--r-sm); background: #3d6a96; color: #fff; font-size: var(--fs-meta); font-weight: var(--w-600); }
 .tv-dep-to { font-size: var(--fs-meta); color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tv-transit-note { font-size: var(--fs-meta); opacity: .8; }
+
+/* UI-06: un botón de Ajustes reúne idioma, vista, tema e información */
+body.tv-has-settings #about-open, body.tv-has-settings .tv-theme, body.tv-has-settings .tv-view, body.tv-has-settings .tv-panel .tv-langs { display: none !important; }
+.tv-settings-open { position: fixed; z-index: 8; top: 12px; right: 12px; width: var(--tap); height: var(--tap); display: grid; place-items: center; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--raised); color: var(--fg); cursor: pointer; }
+body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-settings-open { display: none; }
+.tv-settings { display: none; position: fixed; z-index: 11; top: 64px; right: 12px; width: 300px; padding: var(--sp-4); box-sizing: border-box; flex-direction: column; gap: var(--sp-2); background: var(--raised); border: 1px solid var(--line); border-radius: var(--r-panel); font: var(--fs-label)/1.4 var(--f-ui); color: var(--fg); }
+.tv-settings.is-open { display: flex; }
+.tv-settings h2 { margin: 0 0 var(--sp-2); font-size: var(--fs-title); font-weight: var(--w-600); }
+.tv-settings .tv-close { position: absolute; top: 10px; right: 10px; margin: 0; float: none; color: var(--fg); }
+.tv-settings button { font: inherit; color: inherit; }
+.tv-seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+.tv-seg button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: var(--fs-label); }
+.tv-settings .tv-btn { margin-top: var(--sp-2); }
+@media (max-width: 700px) { .tv-settings-open { top: 8px; right: 8px; } .tv-settings { top: 60px; left: 8px; right: 8px; width: auto; } }
+
+/* UI-06: marcadores del isométrico con forma de pin de mapa */
+.tv-marker { width: 24px; height: 30px; }
+.tv-marker::before { width: 24px; height: 24px; left: 0; top: 0; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #1b1f2c; box-shadow: inset 0 0 0 2px #f4cd80; }
+.tv-marker.is-open::before { box-shadow: inset 0 0 0 2px #97c46f; }
+.tv-marker::after { display: none; }
+.tv-marker svg { margin-top: 6px; }
+.tv-marker.is-group > svg { margin-top: 6px; }
+.tv-marker:hover::before, .tv-marker.is-selected::before { transform: rotate(-45deg) scale(1.15); background: #2c3244; }
+
+/* UI-06: «Hoy» con imagen o icono en cada fila */
+.tv-tl-img { width: 40px; height: 40px; }
+.tv-timeline .tv-thumb, .tv-ev > .tv-thumb { width: 40px; height: 40px; }
