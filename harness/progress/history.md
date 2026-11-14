@@ -705,3 +705,20 @@ commits 5a6ca17, fbaea3e, 17e8df5. pytest 89 passed; ruff/mypy/evals OK. test_we
 ```
 
 </details>
+
+## D-18 — Freshness UI
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 100 passed in 0.54s
+- **Ticket GEAS:** 15ffa301 · commit_after `7cbdf4c8`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 7cbdf4c. pytest tests 100 passed; evals PASS; node --check OK. 1) Cada capa muestra su última actualización: parkings con fechahora en el popup y 'Sin datos' gris si >10 min (D-00); 2) cada punto muestra last_verified y estado en la ficha ('Verificado el 2026-11-14 · Fuente: Concello' / 'Aún sin confirmar por el Concello'); 3) caducado (>7 días, R-05) o sin confirmar en color de peligro con ⚠; parking caducado en gris. Textos en gl/es/en (i18n/).
+```
+
+</details>
