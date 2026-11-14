@@ -1,204 +1,164 @@
-# MeshHarmes
+# TinyVigo
 
-![Python](https://img.shields.io/badge/Python-3.12+-blue?logo=python&logoColor=white)
-![Version](https://img.shields.io/badge/Version-0.1.10-green)
-![Author](https://img.shields.io/badge/Author-cacelass-blueviolet)
+![TinyVigo](docs/img/web-desktop-1400.png)
 
-> TinyVigo: un mapa isométrico pixel art de todo el centro de Vigo, con la Navidad encima (puntos con su horario real, eventos del día, rutas a pie, autobuses y trenes) y postales pixel art a partir de una foto propia.
+> Mapa isométrico pixel art del centro de Vigo, con la Navidad encima: puntos con
+> su horario real, eventos del día, rutas a pie, autobuses y trenes, y postales
+> pixel art a partir de una foto propia. Mobile-first, una sola ciudad, un solo
+> mapa dibujado una vez.
 
-Un repositorio para empezar proyectos donde el trabajo lo hace —en parte— un
-agente de IA, con las reglas del juego escritas **en código** y no en un
-prompt: una puerta de entrada que decide si se puede trabajar, un backlog con
-criterios de aceptación, memoria fuera de la ventana de contexto y una puerta
-de permisos para las acciones que no se deshacen.
+**Para quién:** personas que pasean por el centro de Vigo con el móvil, de día y
+sobre todo por la tarde-noche (vecinos y turistas), y quien planifica una visita
+corta y quiere saber qué le cabe en 1–3 horas. Uso con una mano, a la
+intemperie, de noche.
 
-No incluye nada de un dominio concreto. El paquete `app/` está vacío a
-propósito: ahí va tu código.
-
----
-
-## Tabla de contenidos
-
-- [Inicio rápido](#inicio-rápido)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [El arnés](#el-arnés)
-- [Sistema de agentes](#sistema-de-agentes)
-- [Vault de Obsidian](#vault-de-obsidian)
-- [Empezar un proyecto con esto](#empezar-un-proyecto-con-esto)
-
----
-
-## Inicio rápido
+## Arrancar en local
 
 ```bash
-make setup     # uv sync --extra dev + hooks de pre-commit
-make init      # la puerta: ¿el proyecto está sano?
-make run       # ejecuta el paquete de ejemplo
-make check     # lint + typecheck + test + arnés
+make setup      # uv sync --extra dev + hooks de pre-commit
+make website    # sirve web/ en http://127.0.0.1:8000 y abre el navegador
 ```
 
-Y para arrancar el ciclo de trabajo en tu asistente:
-
-> Lee `AGENTS.md` y sigue el protocolo: ejecuta `./init.sh`, lee
-> `harness/progress/` y elige la primera feature pendiente.
-
----
-
-## Estructura del proyecto
-
-```
-├── app/                    ← TU código (renómbralo, ver más abajo)
-├── tests/                  ← tus tests
-├── agents/                 ← el sistema de agentes (24 agentes Python)
-│   ├── agents/             cada agente, una responsabilidad
-│   ├── tools/              herramientas compartidas (stdlib pura)
-│   ├── prompts/            skills cargables por el asistente
-│   ├── evals/              evaluación de ruteo, contratos y RAG
-│   └── policy_guard.py     política para las herramientas del asistente (hook opcional)
-├── harness/
-│   ├── featureslist.json   backlog con criterios de aceptación
-│   ├── progress/           memoria del arnés: tarea actual + histórico
-│   └── memory.md           preferencias que persisten entre sesiones
-├── vault/                  conocimiento estable del proyecto (Obsidian)
-├── docs/                   Sphinx
-├── AGENTS.md               protocolo del arnés: lo primero que lee la IA
-├── CLAUDE.md               puntero a AGENTS.md para Claude Code
-├── init.sh                 la puerta: ¿se puede trabajar?
-├── project.yml             configuración que leen los agentes
-├── Makefile
-└── pyproject.toml
-```
-
----
-
-## El arnés
-
-Un entorno dentro del propio repositorio que gobierna cómo trabaja un agente
-de IA sobre él. No es un chatbot — es un ciclo con puerta de entrada, backlog
-y verificación.
-
-```
-./init.sh → harness/progress/ → harness/featureslist.json → implementar → revisar → done → commit_feature
-    │
-    └── si falla: el agente PARA. No se trabaja sobre un proyecto roto.
-```
-
-Funciona con **cualquier asistente**: `AGENTS.md` es la fuente única de reglas
-y `CLAUDE.md` solo apunta a él, sin duplicar nada. Los cuatro subagentes se
-escriben una vez en `.opencode/agents/` y `make assistants-sync` los espeja a
-`.claude/agents/` con el formato que espera Claude Code.
-
-| Pieza | Qué hace |
-|-------|----------|
-| `AGENTS.md` | Punto de entrada. Lo primero que lee cualquier agente |
-| `init.sh` | Verifica entorno, ficheros del arnés y que los tests pasan |
-| `harness/featureslist.json` | Qué hay que hacer, con criterios de aceptación explícitos |
-| `harness/progress/` | Memoria fuera de la ventana de contexto: tarea actual e histórico |
-| `.opencode/agents/` | `lider`, `explorer`, `implementer`, `reviewer` |
+Alternativa sin `make` (Windows o entorno sin make):
 
 ```bash
-make init            # ¿se puede trabajar?
-make harness-check   # solo estructura, sin tests
-make backlog         # estado de las features
+uv run python -m scripts.serve_web --port 8000
+# o, sin uv:
+python -m scripts.serve_web --port 8000 --no-open
 ```
 
-**La regla que no se salta:** ninguna feature se marca `done` sin que
-`./init.sh` pase en verde. No es una instrucción, es código: `harness finish`
-ejecuta la puerta y rechaza el cierre si está en rojo o si no le pasas la
-evidencia.
+La web es estática pero hace `fetch()` de los tiles, por eso hace falta un
+servidor: abrir `web/index.html` con doble clic (file://) no funciona.
 
-**Backlog compartido (GEAS):** con varias personas, los tickets viven en GEAS
-y `harness/featureslist.json` es un espejo de solo lectura. El setup ya está
-preparado: solo falta la IP/URL del servidor y el token.
+Comprobaciones de salud del proyecto:
 
 ```bash
-./scripts/geas_setup.sh 192.168.1.50   # configura, importa y regenera el espejo
-uv run python -m agents --json run harness status
+./init.sh            # puerta de entrada: ¿se puede trabajar?
+make test            # pytest (proyecto + agentes)
+make check           # lint + typecheck + test + arnés
 ```
 
-`harness start` hace commit WIP, `pull --rebase` y `push` antes de reclamar el
-ticket; si el servidor no responde, el arnés falla cerrado en vez de inventar
-trabajo local. Detalles en [`AGENTS.md`](AGENTS.md).
+## Arquitectura
 
-Para sumar a alguien (o a otro LLM) al backlog:
+```
+  fuentes de datos (Concello, IGN, OSM, GTFS, Open-Meteo, ...)
+            │
+            ▼
+  scripts/*  (snapshots versionados en data/raw/ + data/*.json)
+            │
+            ▼
+  pipeline de render (isométrico, offline, una sola vez)
+            │
+            ▼
+  web/tiles/*  +  web/js/*  (sitio estático)
+            │
+            ▼
+  scripts/serve_web.py  →  navegador (mobile-first)
+```
+
+Dos tuberías conviven:
+
+- **Datos → snapshots → web.** Cada fuente se descarga a `data/raw/` con su
+  `fetched_at` y se normaliza a JSON en `data/`. La web consume esos JSON;
+  nada se pide en vivo al usuario salvo el clima actual.
+- **Render → tiles.** El mapa base se dibuja una sola vez (modelo de imagen) y
+  se publica como pirámide de teselas en `web/tiles/`. Sol, sombras, noche y
+  clima se aplican por código sobre esas teselas, no se redibujan.
+
+Diagrama del pipeline de render (Mermaid):
+
+```mermaid
+flowchart LR
+  A[Ortofoto PNOA] --> B[Tiles base isométrico]
+  C[Edificios 3D Concello] --> B
+  B --> D[Pirámide de teselas web/tiles]
+  E[Capa navideña Concello] --> F[Activos separados]
+  G[GTFS Vitrasa/Renfe] --> F
+  H[Open-Meteo] --> I[Clima y hora]
+  F --> J[Web mobile-first]
+  I --> J
+  D --> J
+```
+
+## Fuentes de datos
+
+Tabla resumida; la auditoría completa (licencias, atribución y estado) está en
+[`vault/01_PROYECTO/licencias.md`](vault/01_PROYECTO/licencias.md).
+
+| Fuente | Licencia | Atribución |
+|---|---|---|
+| Concello — parkings, agenda, avisos, GTFS Vitrasa | ODC-BY 1.0 | Concello de Vigo — datos.vigo.org (ODC-BY) |
+| Concello — capa navideña (ArcGIS) | No declarada (público) | Concello de Vigo — Puntos de interés de Navidad 2026-27 |
+| Concello — Edificios 3D | No declarada | Concello de Vigo — Edificios 3D |
+| Renfe GTFS AV/LD/MD | CC BY 4.0 | Renfe Operadora (CC BY 4.0) |
+| Open-Meteo (forecast + marine) | CC BY 4.0 (API no comercial) | Weather data by Open-Meteo.com |
+| IGN — PNOA ortofoto y LiDAR | CC BY 4.0 | PNOA cedido por © Instituto Geográfico Nacional |
+| IGN/CNIG — MDT05 | CC BY 4.0 | MDT05 © Instituto Geográfico Nacional |
+| OpenStreetMap | ODbL 1.0 | © OpenStreetMap contributors |
+| Catastro (fallback de huellas) | Reutilización libre con atribución | Dirección General del Catastro |
+
+Reglas duras: todo vehículo en movimiento se etiqueta «según horario», nunca
+«en directo», mientras no haya un feed en vivo comprobado. Las fotos de la capa
+navideña se enlazan con crédito; las propias (R-03) tienen prioridad.
+
+## Cómo se trabaja aquí
+
+Este repositorio usa un **arnés de desarrollo** que rige cómo trabaja un agente
+de IA sobre él: puerta de entrada, backlog con criterios de aceptación, memoria
+fuera de la ventana de contexto y puerta de permisos para las acciones que no
+se deshacen. La fuente de verdad del backlog es **GEAS** (MongoDB); el fichero
+local `harness/featureslist.json` es un espejo de solo lectura.
+
+Reglas que se aplican a todo el mundo (humanos y agentes):
+
+1. **Un actor por dispositivo.** Cada persona/máquina tiene su propio actor en
+   GEAS (rol `agent`). No se comparte token entre cuentas.
+2. **Claim antes de tocar.** Antes de modificar código se reclama el ticket con
+   `harness start <ID>`: hace commit WIP, fetch, pull --rebase, push y
+   `start_ticket` de forma atómica. Sin remoto configurado no hay claim.
+3. **Una feature a la vez.** `harness next` dice qué toca; no se empieza otra
+   sin cerrar la anterior.
+4. **Evidencia, no afirmaciones.** Ninguna feature se marca `done` sin que
+   `./init.sh` pase en verde y con la salida real del comando que prueba cada
+   criterio.
+5. **No se commitean marcadores de conflicto** (`<<<<<<<` / `>>>>>>>`): un
+   `featureslist.json` con marcadores es JSON inválido y tumba la CI de todo el
+   equipo.
+
+Comandos habituales del arnés:
 
 ```bash
-./scripts/geas_add_actor.sh --name "Ana" --kind user --role manager
+./init.sh                              # puerta de entrada
+uv run python -m agents run harness next    # ¿qué toca?
+uv run python -m agents run harness start --id DOC-01
+uv run python -m agents run harness finish --id DOC-01 --evidence "..."
+uv run python -m agents run git commit_feature --id DOC-01 --title "..." --dry-run true
 ```
-
-El procedimiento completo está en [`harness/GEAS_ACTORES.md`](harness/GEAS_ACTORES.md).
-
-**Cierre de feature:** al terminar, `git commit_feature` sube el patch de la
-versión, actualiza el CHANGELOG y propone el commit (`--dry-run` primero, con
-confirmación tuya antes de ejecutarlo). El push siempre es decisión tuya.
 
 El protocolo completo está en [`AGENTS.md`](AGENTS.md).
 
----
+## Estado y roadmap
 
-## Sistema de agentes
+El estado vivo del trabajo está en [`harness/progress/current.md`](harness/progress/current.md)
+y el histórico en [`harness/progress/history.md`](harness/progress/history.md). El
+backlog con criterios de aceptación está en GEAS y se espeja en
+[`harness/featureslist.json`](harness/featureslist.json).
 
-24 agentes Python, cada uno con **una** responsabilidad y un contrato
-declarado en `agents/contracts.py` (qué puede, qué no, qué necesita y qué
-recursos posee en exclusiva). Son deterministas: no llaman a ningún LLM, se
-ejecutan por shell y funcionan con cualquier asistente.
+Criterio de «hecho» del v1 (resumen; texto completo en
+[`vault/01_PROYECTO/objetivo.md`](vault/01_PROYECTO/objetivo.md)):
 
-```bash
-uv run python -m agents list                      # todos los agentes
-uv run python -m agents describe git              # acciones y contrato de uno
-uv run python -m agents --json ask "<lo que sea>" # ruteo automático
-uv run python -m agents run dependency check_outdated
-```
+- Mapa de la zona (4x4 o 5x5 teselas) dibujado y aceptado, 0 pendientes.
+- 43 puntos de la capa navideña del Concello como activos separados con horario.
+- Primer vistazo reconocible en < 3 s en móvil gama media con 4G.
+- Planificador devuelve 3 opciones en < 2 s para hasta 12 paradas.
+- Autobuses (Vitrasa) y trenes (Renfe) visibles y etiquetados «según horario».
+- Clima de Open-Meteo y control de hora.
+- Postal pixel art a partir de una foto propia.
 
-Las acciones irreversibles (escribir en git, modificar código, instalar
-agentes de terceros) están declaradas `destructive` y `BaseAgent.run()` se
-niega a ejecutarlas sin autorización explícita — esa puerta está activa
-siempre.
+Fuera de alcance del v1: área metropolitana, GPS real de buses, afluencia,
+venta de entradas, cuentas, juegos, LoRA propia.
 
-La segunda frontera, `agents/policy_guard.py`, filtra las herramientas del
-propio asistente (Bash, Read, Write, Edit, MCP) y **viene desconectada**: no
-hay `.claude/settings.json` porque un hook `PreToolUse` que falle te deja sin
-herramientas hasta arreglarlo a mano. `AGENTS.md` trae el snippet para
-cablearla tú si la quieres. Ninguna de las dos es un sandbox; ambas están
-explicadas sin adornos ahí.
+## Licencia
 
----
-
-## Vault de Obsidian
-
-`vault/` es el conocimiento estable del proyecto — lo que sigue siendo cierto
-cuando la feature en curso ya se cerró. Solo lo escribe el agente
-`knowledge`; el resto lo lee.
-
-| Carpeta | Propósito |
-|---------|-----------|
-| `00_META/` | Índice general + plantillas para nuevas notas |
-| `01_PROYECTO/` | Visión, arquitectura, decisiones, roadmap |
-| `04_VISUALIZACIONES/` | Grafo de conocimiento (graphify) |
-| `05_AGENTES/` | Ficha de cada agente con su contrato expandido |
-| `06_OBSERVACIONES/` | Hallazgos y notas sueltas |
-
-Abre `vault/` como carpeta en Obsidian para navegarlo.
-
-Las fichas de `05_AGENTES/` se generan desde `agents/contracts.py`, así que un
-agente nuevo no se queda sin la suya. Simula por defecto; la prosa que escribas
-fuera del bloque autogenerado sobrevive y las fichas huérfanas se reportan, no
-se borran:
-
-```bash
-uv run python -m agents run knowledge sync_agent_cards                   # qué escribiría
-uv run python -m agents run knowledge sync_agent_cards --dry_run false --yes
-```
-
----
-
-## Empezar un proyecto con esto
-
-1. Clona o copia el repo y borra su historial git si quieres empezar limpio.
-2. **Renombra el paquete**: `git mv app <tu_paquete>` y actualiza
-   `project_slug` en `project.yml`, `packages` en `pyproject.toml`,
-   `[tool.coverage.run] source` y `MODULE` en el `Makefile`. `./init.sh` te
-   avisa si te dejas alguno.
-3. Vacía `harness/featureslist.json` y escribe tu propio backlog — o pídeselo
-   al agente: `uv run python -m agents run harness add --id X-001 --title "..." --criteria "a;b"`.
-4. `make setup && make init`.
+Código bajo la licencia del repositorio (ver [`LICENSE`](LICENSE)). Los datos
+tienen sus propias licencias (ver tabla de fuentes y `licencias.md`).

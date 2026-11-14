@@ -130,7 +130,7 @@ class ResearchAgent(BaseAgent):
         )
 
     def find_papers(self, *, backend: str = "openalex", max_results: int = 10,
-                    top_keywords: int = 8) -> AgentResult:
+                    top_keywords: int = 3) -> AgentResult:
         """
         Busca papers relacionados con el PROYECTO: deriva sus keywords y consulta
         el backend con ellas. Es la acción principal del agente.

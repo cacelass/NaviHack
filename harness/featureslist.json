@@ -23,6 +23,21 @@
       "raw_status": "FREE"
     },
     {
+      "id": "GEO-01",
+      "title": "Georreferencia del mapa isométrico: lat/lon a píxel del lienzo y vuelta",
+      "description": "El render se hizo con cámara ortográfica (inclinación 45°, rumbo -15°, 2 px/m, centro del lienzo = origen) pero el origen geográfico no está en el repo, así que la web no puede colocar puntos ni rutas sobre el mapa. Calibrar el origen contra datos independientes (máscara de mar del MDT05 de D-11 frente al agua del mapa dibujado) y publicar la transformación para Python y TypeScript, fuera de web/.\n\nCriterios de aceptación:\n  1. Origen (lat, lon) calibrado con método reproducible y error medido en metros/píxeles\n  2. Módulo Python y helper TS sin dependencias: (lat, lon, z) -> (x, y) del lienzo 3072 y coordenadas OSD del visor\n  3. Los 35 puntos de points.json proyectados y comprobados sobre el mapa con una captura\n  4. Tests de ida y vuelta y de un punto de control conocido",
+      "acceptance_criteria": [
+        "Origen (lat, lon) calibrado con método reproducible y error medido en metros/píxeles",
+        "Módulo Python y helper TS sin dependencias: (lat, lon, z) -> (x, y) del lienzo 3072 y coordenadas OSD del visor",
+        "Los 35 puntos de points.json proyectados y comprobados sobre el mapa con una captura",
+        "Tests de ida y vuelta y de un punto de control conocido"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "a418fcba-f908-45e7-9e73-ecc0f2e71b5c",
+      "raw_status": "FREE"
+    },
+    {
       "id": "GEAS-001",
       "title": "Arrancar GEAS de NavaHack (solo falta la IP/URL)",
       "description": "Dejar el arnés de NavaHack respaldado por GEAS con MongoDB. Ya está todo preparado: harness/geas.json, scripts/geas_setup.py, scripts/geas_setup.sh y el modo GEAS de agents/agents/harness_agent.py. Lo único que falta es sustituir <IP> por la IP/URL real del servidor, poner GEAS_TOKEN en .env y ejecutar el setup. A partir de ahí el backlog vive en tickets: nadie edita featureslist.json a mano y harness start hace commit WIP + pull --rebase + push antes de reclamar.\n\nCriterios de aceptación:\n  1. harness/geas.json tiene la IP/URL real (sin <IP>), org_id y repository_id de NavaHack\n  2. El token está en .env como GEAS_TOKEN y no aparece en harness/geas.json ni en git\n  3. ./scripts/geas_setup.sh <IP> importa el backlog a GEAS y escribe harness/geas_map.json\n  4. run harness status devuelve backend=geas y el conteo real de tickets\n  5. run harness next devuelve un ticket de GEAS, no del espejo local\n  6. run harness start <ID> hace commit WIP, pull --rebase y push antes de start_ticket\n  7. ./init.sh termina con ENTORNO LISTO\n\n[importada desde harness/featureslist.json: GEAS-001]",
@@ -208,12 +223,12 @@
         "uv run python -m agents.prompts_sync sale en verde (todo agente registrado tiene prompt y contrato)",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "ONBOARD-001"
       ],
       "ticket_id": "220b23f5-c265-4050-97b5-78da664d9c49",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "220b23f5-onboard-002-qu-se-sabe-ya-y-qu-a",
       "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
@@ -784,10 +799,10 @@
         "Offline file exported",
         "Fallback documented"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "715c81d2-ae46-4d72-88e9-c909511a3cc1",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "715c81d2-x-05-buildings-3d-footprint-heig",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },

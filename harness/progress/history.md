@@ -506,6 +506,11 @@ Estilo segun docs/ui-exploraciones (direccion D): sin box-shadow, sin mayusculas
 - **Cerrada:** 2026-11-14
 - **Verificación:** ./init.sh en verde · 86 passed in 0.51s
 - **Ticket GEAS:** 37eb79b5 · commit_after `00274a53`
+## DOC-01 — README completo y bonito: la idea, cómo funciona y cómo arrancarlo
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 86 passed in 0.14s
+- **Ticket GEAS:** 9ce3175f · commit_after `00274a53`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
 - **Pendiente:** _(nada)_
@@ -515,6 +520,7 @@ Estilo segun docs/ui-exploraciones (direccion D): sin box-shadow, sin mayusculas
 ```
 commit 9ecb24c. pytest tests 86 passed; ruff/mypy/evals OK. Cadencia documentada (lunes 06:00, cron en deploy/snapshot.cron) en vault/01_PROYECTO/investigacion_puntos.md; scripts/reverify.py: diff altas/bajas/nombre/tipo/horario/movido>15m, registro append-only data/raw/concello_navidad/changes.jsonl, reconstruye points.json (horario y last_verified al día), needs_review para programas estructurados, stale() a 7 días. Primera pasada 2026-11-14: 0 cambios. test_reverify 4 tests.
 commit 8e4d08f. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. test_parkings 5 tests: plazas+%, hora, congelado/caducado = sin datos, más cercano con datos. En vivo 12 parkings.
+init.sh: ENTORNO LISTO, pytest 86 passed in 0.62s; README.md rewritten, no MeshHarmes remnants (grep empty)
 ```
 
 </details>
@@ -526,6 +532,13 @@ commit 8e4d08f. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. test_parki
 - **Ticket GEAS:** f39a46e4 · commit_after `866582b8`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
+## ONBOARD-002 — Qué se sabe ya y qué agentes hacen falta
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 86 passed in 0.07s
+- **Ticket GEAS:** 220b23f5 · commit_after `00274a53`
+- **Cambios:** agents/agents/research_agent.py (top_keywords default 3); agents/agents/rag_agent.py (warnings None→[]); vault/01_PROYECTO/estado-del-arte.md (nuevo); pyproject.toml (description TinyVigo)
+- **Decisiones:** suggest_agents devolvio solo terminos de dominio (vigo, navidad, rutas...), sin huecos de capacidad: no se crearon agentes nuevos. RAG requiere chromadb (uv sync --extra rag). find_papers usaba 8 keywords unidos; reducido a 3 para que OpenAlex devuelva resultados. warnings=None en base_agent.run rompia el flujo; corregido a lista vacia.
 - **Pendiente:** _(nada)_
 
 <details><summary>Evidencia</summary>
@@ -603,6 +616,7 @@ commit 60b0978: vault/01_PROYECTO/licencias.md con tabla fuente/licencia/atribuc
 
 ```
 commit e3f2bb7. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Paginación <=2000, reproyección verificada (0,03 mm vs servidor), MultiPatch aplanado documentado, altura 98,4% ciudad / 99,6% núcleo, año por barrio, data/render/buildings.geojson (2975 edificios), fallback Catastro.
+$ uv run python -m agents --json run research find_papers → '10 paper(s) relacionados' (top_keywords=3) | $ uv run python -m agents --json run rag index_urls (via Python) → 'Indexadas 1 URL(s)' | $ uv run python -m agents --json run rag search → '4 resultado(s)' | vault/01_PROYECTO/estado-del-arte.md creado | $ uv run python -m agents --json run bootstrap suggest_agents → 69 terminos de dominio sin agente, sin huecos de capacidad reales | $ uv run python -m agents.prompts_sync → sincronizados | $ ./init.sh → ENTORNO LISTO
 ```
 
 </details>

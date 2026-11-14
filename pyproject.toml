@@ -1,7 +1,7 @@
 [project]
 name = "app"
-version = "0.1.10"
-description = "Arnés de agentes e infraestructura de proyecto para trabajo general en Python."
+version = "0.1.11"
+description = "TinyVigo: mapa web de Vigo en Navidad con puntos navidenos, escenas pixel-art, eventos del dia y rutas a pie."
 authors = [
   { name = "cacelass" }
 ]
