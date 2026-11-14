@@ -938,3 +938,20 @@ $ head -8 vault/01_PROYECTO/objetivo.md → 'Reescrito (SCOPE-002). Fuente de ve
 ```
 
 </details>
+
+## WEB-05 — Conectar los datos reales a la interfaz nueva (ficha, eventos, transporte, rutas)
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 155 passed in 3.06s
+- **Ticket GEAS:** 47691fa2 · commit_after `f16a60ff`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit 3f1f61a. Datos de la web desde ficheros propios (web/data/live) vía web/js/data.js; 0 peticiones a datos.vigo.org/open-meteo en navegador; scripts/build_web.py regenera todo web/data; aviso claro si falta un fichero; 155 tests.
+```
+
+</details>
