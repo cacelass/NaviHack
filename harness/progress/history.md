@@ -541,6 +541,11 @@ commit c945dca. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. GTFS ofici
 - **Cerrada:** 2026-11-14
 - **Verificación:** ./init.sh en verde · 86 passed in 0.53s
 - **Ticket GEAS:** 5d40e61c · commit_after `de03d5a6`
+## X-09 — Cameras via server or links only
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 89 passed in 0.81s
+- **Ticket GEAS:** caf1ab4c · commit_after `9c18ff87`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
 - **Pendiente:** _(nada)_
@@ -549,6 +554,7 @@ commit c945dca. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. GTFS ofici
 
 ```
 commit 5496341. CI verde; pytest tests 57 passed; ruff/mypy/evals OK. Renfe AV/LD/MD CC BY 4.0: Vigo Urzaiz 08223 y Vigo-Guixar 22308 presentes; 185 movimientos (84 salidas); test_gtfs_renfe 4 tests.
+commit 9c18ff8. pytest tests 89 passed; ruff/mypy/evals OK. Términos: dataset t-camaras ODC-BY cubre posiciones/URLs; imágenes de camaras.vigo.org sin licencia de redistribución -> enlaces + img en directo, sin proxy ni copias (vault/01_PROYECTO/licencias.md). Implementado scripts/cameras.py: http->https (contenido mixto), crédito, sondeo --probe 1 req/s. En vivo: 61 cámaras con posición, 61 con imagen. test_cameras 3 tests.
 ```
 
 </details>
