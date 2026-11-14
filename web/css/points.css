@@ -159,3 +159,15 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 .tv-route-hit { fill: transparent; stroke: none; }
 .tv-route-stop:hover circle:first-child { fill: #fff1c9; }
 .tv-stopnum { cursor: pointer; }
+
+/* Hoy en Vigo: dos botones abajo, Tour y Hoy */
+.tv-tour-open { transform: translateX(calc(-100% - 4px)); }
+.tv-today-open { position: fixed; z-index: 6; left: 50%; bottom: 14px; transform: translateX(4px); display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 52px; padding: 0 var(--sp-5); border: 1px solid var(--line); border-radius: var(--r-panel); background: var(--raised); color: var(--fg); font: var(--w-600) var(--fs-copy)/1 var(--f-ui); cursor: pointer; }
+.tv-evlist { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-2); }
+.tv-ev { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
+.tv-ev-main { flex: 1; min-width: 0; }
+.tv-ev-title { margin: 0 0 2px; font-size: var(--fs-label); font-weight: var(--w-500); }
+.tv-ev-place { margin: 0 0 2px; display: flex; align-items: center; gap: 4px; font-size: var(--fs-meta); color: var(--fg-2); }
+.tv-ev-go { flex: none; min-height: 40px; padding: 0 var(--sp-3); font-size: var(--fs-meta); }
+.tv-events .tv-note a { color: var(--fg); }
+@media (max-width: 700px) { .tv-tour-open, .tv-today-open { padding: 0 var(--sp-4); bottom: 10px; } }

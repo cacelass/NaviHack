@@ -110,6 +110,7 @@ def main() -> int:
         (OUT / "elevation.json").write_text(
             json.dumps(elevation_grid(grid), separators=(",", ":")), encoding="utf-8"
         )
+    shutil.copyfile(ROOT / "data" / "venues_ids.json", OUT / "venues.json")
     (OUT / "i18n").mkdir(exist_ok=True)
     for lang in ("gl", "es", "en"):
         shutil.copyfile(ROOT / "i18n" / f"{lang}.json", OUT / "i18n" / f"{lang}.json")

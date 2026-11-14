@@ -217,5 +217,7 @@
   "walk.end": "Fin do paseo. Bo Nadal!",
   "walk.story": "Vas ver",
   "tour.when": "Cando vas?",
-  "tour.now": "Agora"
+  "tour.now": "Agora",
+  "events.open": "Hoxe",
+  "events.on_map": "Ver no mapa"
 }

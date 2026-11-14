@@ -217,5 +217,7 @@
   "walk.end": "Fin del paseo. ¡Feliz Navidad!",
   "walk.story": "Vas a ver",
   "tour.when": "¿Cuándo vas?",
-  "tour.now": "Ahora"
+  "tour.now": "Ahora",
+  "events.open": "Hoy",
+  "events.on_map": "Ver en el mapa"
 }

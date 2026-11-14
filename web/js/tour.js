@@ -288,7 +288,7 @@
       render();
     }
 
-    btn.onclick = () => { box.classList.toggle("is-open"); render(); };
+    btn.onclick = () => { const open = !box.classList.contains("is-open"); document.querySelectorAll(".tv-tour.is-open").forEach((b) => b.classList.remove("is-open")); box.classList.toggle("is-open", open); render(); };
     document.addEventListener("tv:lang", render);
     render();
     window.tinyvigoTour = { plan, project, run, setWhen: (v) => { when = v; }, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; } };
