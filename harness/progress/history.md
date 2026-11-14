@@ -896,3 +896,20 @@ commit c212996. Batería de 12 transiciones en Edge headless a 360/390/430 px: s
 ```
 
 </details>
+
+## MOB-02 — Pulido de UX en móvil: encuadre inicial, vista ciudad, cómo llegar y detalles de interacción
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 152 passed in 1.37s
+- **Ticket GEAS:** 4754bf35 · commit_after `3971ba97`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commit cc52d2d (CI verde). Isométrico arranca en el núcleo navideño en móvil; vista ciudad con pines gota a zoom <16 y foto de cerca; rutas encuadradas por encima de la hoja (paddingBottomRight 62 % alto); 'Cambiar' separado de la ×; capturas 360 px; batería sin fallos.
+```
+
+</details>
