@@ -38,6 +38,32 @@ make test            # pytest (proyecto + agentes)
 make check           # lint + typecheck + test + arnés
 ```
 
+## Qué hace la web
+
+![Tour a pie con el paseo parada a parada](docs/img/web-tour-1400.jpg)
+
+- **Mapa dibujado del centro** (isométrico, OpenSeadragon) con los 35 puntos de Navidad del
+  Concello: pin con icono por tipo, verde si está abierto ahora, agrupados si se solapan.
+- **Ficha de cada punto:** foto entera (en grande al tocarla), «Abierto · Cierra 00:30» o
+  «Cerrado · Abre 18:00» calculado con el programa oficial 2026-27, horario, dirección con
+  mini-mapa, parking más cercano con plazas libres en vivo y próximos buses programados.
+- **Tour a pie:** «¿Cuánto tiempo tienes?» (30–120 min) y «¿Cuándo vas?» (ahora, 18:00, 20:00,
+  22:00); elige lo que cabe y está abierto, lo enruta por calles reales y lo dibuja sobre el
+  mapa; «Empezar el paseo» lo cuenta parada a parada. Lo lejano queda «para otro día».
+- **Navidad hoy:** línea de tiempo con horas reales (encendido de luces, pases del Árbol,
+  salidas), lo abierto ahora y lo navideño de la agenda del Concello, situado en el mapa.
+- **Vista ciudad:** todo Vigo en OpenStreetMap con la foto de cada punto, los 12 parkings en
+  vivo, estaciones y paradas (estas solo a nivel de calle) y la ruta desde casa.
+- **Búsqueda** de puntos, eventos, estaciones y 1921 calles, sin tildes y con erratas.
+- **Ajustes** en un solo botón: idioma (gl/es/en, por el navegador), vista, tema y créditos.
+- **Compartir:** el enlace guarda el punto (`#p=...`) o el tour (`#tour=60-20`).
+
+<p><img src="docs/img/web-ficha-movil-390.jpg" width="260" alt="Ficha en el móvil"> <img src="docs/img/web-hoy-1400.jpg" width="520" alt="Navidad hoy"></p>
+
+El servidor de `make website` es `scripts/serve_web.mjs` (Node, sin dependencias): el
+`http.server` de Python en Windows deja respuestas a medias con varias conexiones y la
+primera carga podía quedar en blanco. `scripts/serve_web.py` lo usa si hay Node.
+
 ## Arquitectura
 
 ```
