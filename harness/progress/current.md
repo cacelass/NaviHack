@@ -1,26 +1,35 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** DESIGN-001
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Escribir la arquitectura antes de implementarla: qué piezas hay, cómo se hablan, qué alternativas se consideraron y por qué se descartaron. No es un documento ceremonial — es lo que evita que cada feature reinvente una estructura distinta.
+
+Criterios de aceptación:
+  1. vault/01_PROYECTO/arquitectura.md describe las piezas del sistema y el flujo entre ellas
+  2. Hay al menos una alternativa considerada y descartada, con el motivo escrito
+  3. Están nombrados los riesgos conocidos y qué decisiones se dejan para más adelante
+  4. El paquete app/ está renombrado al nombre real del proyecto (project.yml, pyproject.toml, Makefile y coverage coherentes)
+  5. ./init.sh termina con ENTORNO LISTO
+
+[importada desde harness/featureslist.json: DESIGN-001]
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] vault/01_PROYECTO/arquitectura.md describe las piezas del sistema y el flujo entre ellas
+- [ ] Hay al menos una alternativa considerada y descartada, con el motivo escrito
+- [ ] Están nombrados los riesgos conocidos y qué decisiones se dejan para más adelante
+- [ ] El paquete app/ está renombrado al nombre real del proyecto (project.yml, pyproject.toml, Makefile y coverage coherentes)
+- [ ] ./init.sh termina con ENTORNO LISTO
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_

@@ -143,12 +143,14 @@
         "El paquete app/ está renombrado al nombre real del proyecto (project.yml, pyproject.toml, Makefile y coverage coherentes)",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "SCOPE-001"
       ],
       "ticket_id": "897cb941-fc2e-46c7-a1ff-c945c83057ce",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "897cb941-design-001-decidir-c-mo-se-va-a-",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "BOOT-002",
@@ -340,10 +342,10 @@
         "Terms/licence noted",
         "Intervals in A7 updated with measured values"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "9f20797f-3ced-4eeb-8580-557d57115a79",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "9f20797f-d-00-measure-real-refresh-rate-a",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -897,6 +899,541 @@
       "status": "pending",
       "depends_on": [],
       "ticket_id": "9a918c7c-7b1b-410b-9a58-3c11d622605d",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "SCOPE-002",
+      "title": "Rewrite objetivo.md for the isometric map (spec v4)",
+      "description": "SCOPE-001 is done against spec v3. Rewrite vault/01_PROYECTO/objetivo.md from the new spec, keeping its four sections. Done in the same change as this backlog.\n\nCriterios de aceptación:\n  1. objetivo.md has problem, user, done criterion and out of scope, matching docs/tinyvigo-spec.md\n  2. The done criterion is verifiable by a command or a concrete observation\n  3. Out of scope no longer excludes painting the city and no longer defers buses and trains\n  4. The README objective sentence agrees with it",
+      "acceptance_criteria": [
+        "objetivo.md has problem, user, done criterion and out of scope, matching docs/tinyvigo-spec.md",
+        "The done criterion is verifiable by a command or a concrete observation",
+        "Out of scope no longer excludes painting the city and no longer defers buses and trains",
+        "The README objective sentence agrees with it"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "SCOPE-001"
+      ],
+      "ticket_id": "6189b86a-73bb-47c7-b6c2-35fd19b0cd86",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "ZONE-01",
+      "title": "Choose the v1 zone: the Christmas core, 4x4 or 5x5 tiles",
+      "description": "Hackathon scope: the drawn map is the core of the Christmas (Porta do Sol, Alameda, Garcia Barbon), about 4x4 or 5x5 tiles, not the 50-65 tiles of the full centre. Routes, events, Christmas assets and the postcard have priority over map size. Define the zone polygon and the tile grid over it, say what happens to points that fall outside it, and the cost in drawings and API calls. The full centre stays as a later extension with the same pipeline.\n\nCriterios de aceptación:\n  1. Zone polygon recorded as a file and drawn over the PNOA orthophoto\n  2. Porta do Sol, Alameda and Garcia Barbon are inside the zone\n  3. Grid defined: tile size in pixels and metres per pixel (the 3x3 test used 1024 px at 2 px/m, the spec says about 0.3 m/px: decide and record), tile count of 16 to 25\n  4. Counts of tile and straight-seam drawings computed from the grid (2*N*(N-1) seams for an NxN grid)\n  5. Christmas points outside the zone are listed and the way they are shown (marker over the PNOA photo) is recorded\n  6. Cost estimate in API calls recorded, counting the 429 retries seen in the 3x3 test",
+      "acceptance_criteria": [
+        "Zone polygon recorded as a file and drawn over the PNOA orthophoto",
+        "Porta do Sol, Alameda and Garcia Barbon are inside the zone",
+        "Grid defined: tile size in pixels and metres per pixel (the 3x3 test used 1024 px at 2 px/m, the spec says about 0.3 m/px: decide and record), tile count of 16 to 25",
+        "Counts of tile and straight-seam drawings computed from the grid (2*N*(N-1) seams for an NxN grid)",
+        "Christmas points outside the zone are listed and the way they are shown (marker over the PNOA photo) is recorded",
+        "Cost estimate in API calls recorded, counting the 429 retries seen in the 3x3 test"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "R-06"
+      ],
+      "ticket_id": "4c74c76d-a233-441e-8a85-81dbdb51ebb3",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "STYLE-01",
+      "title": "Style: unlit high-bit look, reference prompt and style reference image",
+      "description": "Fix the look chosen by Jose: modern high-bit pixel art (Eastward, Octopath Traveler) drawn unlit, because sun, shadows and time of day are added in code. Start from the two tested prompts, vigo-estilos/p-7-neutra.txt (neutral flat light) and p-8-albedo.txt (albedo look), copied into the repo. The earlier 3x3 block used another style (SimCity, warm light, painted shadows) and is not a valid result. The spec says the prompt must say how to draw, not what is there; both tested prompts name contents (granite facades, miradores, terracotta roofs): test a version without them and keep the one that does not paint those things where they do not exist. The style reference is a small crop, not a whole tile (a whole tile made the model copy its contents into open sea).\n\nCriterios de aceptación:\n  1. p-7 and p-8 prompts copied into the repo and both run on the same 3 render tiles (city, sea edge, park)\n  2. One prompt chosen, with the reason; it forbids moving, adding or removing buildings, streets and trees\n  3. A content-free variant tested against the original; the choice is recorded with the images\n  4. Style reference committed as a small crop (about 512 px) and a rule for choosing it\n  5. The 3 test results pass a written checklist: no cast shadows, no warm tint, neutral colour, no thin outlines, roof/left wall/right wall distinct\n  6. The rejected look (SimCity with warm light) kept as reference of what to avoid\n  7. Calls used counted and recorded",
+      "acceptance_criteria": [
+        "p-7 and p-8 prompts copied into the repo and both run on the same 3 render tiles (city, sea edge, park)",
+        "One prompt chosen, with the reason; it forbids moving, adding or removing buildings, streets and trees",
+        "A content-free variant tested against the original; the choice is recorded with the images",
+        "Style reference committed as a small crop (about 512 px) and a rule for choosing it",
+        "The 3 test results pass a written checklist: no cast shadows, no warm tint, neutral colour, no thin outlines, roof/left wall/right wall distinct",
+        "The rejected look (SimCity with warm light) kept as reference of what to avoid",
+        "Calls used counted and recorded"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "248b5f40-c1b3-4efc-ae43-b15943098f41",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "IMGAPI-01",
+      "title": "Image model: Vertex access, quota and cost",
+      "description": "The image model is Gemini Flash image through Vertex with the user's gcloud session (no key in the repo). The test credit is the budget: count every call; Pro only when explicitly requested. The project quota is shared and the 3x3 test got 80 errors 429 in 136 calls, so calls go one at a time or with at most 2 in parallel, with a wait between retries, and no other image tests run at the same time. If the gcloud session expires the work stops and asks. The postcard later needs a server credential, a per-device daily limit and a monthly cap; that decision stays open.\n\nCriterios de aceptación:\n  1. Calls go through one helper that limits concurrency to 2, retries 429 with a wait and logs every attempt\n  2. Call counter with success, 429 and error counts, readable per run\n  3. Expired gcloud session stops the run with a clear message instead of retrying\n  4. Cost per drawing measured on 5 calls and recorded against the test credit\n  5. Provider terms for commercial use of outputs and for photos of people checked and recorded\n  6. No key or credential in any versioned file",
+      "acceptance_criteria": [
+        "Calls go through one helper that limits concurrency to 2, retries 429 with a wait and logs every attempt",
+        "Call counter with success, 429 and error counts, readable per run",
+        "Expired gcloud session stops the run with a clear message instead of retrying",
+        "Cost per drawing measured on 5 calls and recorded against the test credit",
+        "Provider terms for commercial use of outputs and for photos of people checked and recorded",
+        "No key or credential in any versioned file"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "91a980ab-0b09-459e-b3bb-d3c8fbd83316",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "LIC-01",
+      "title": "Licences and attributions audit",
+      "description": "Check and record the terms of each data source and tool: PNOA orthophoto and LiDAR (CC BY 4.0), OpenStreetMap (ODbL, including what applies to derived tiles), Concello 'Edificios 3D', Concello Christmas layer and agenda, Catastro, Vitrasa GTFS, Renfe GTFS (CC BY 4.0), Open-Meteo, MeteoGalicia (candidate), and the style-model licence if the plan B is ever used. Google Photorealistic 3D Tiles are not used.\n\nCriterios de aceptación:\n  1. One table: source, licence, attribution text, obligation for derived images, link\n  2. Each source marked allowed / allowed with attribution / blocked\n  3. Anything blocked has a named alternative\n  4. Attribution text ready for D-17",
+      "acceptance_criteria": [
+        "One table: source, licence, attribution text, obligation for derived images, link",
+        "Each source marked allowed / allowed with attribution / blocked",
+        "Anything blocked has a named alternative",
+        "Attribution text ready for D-17"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "b5bc2472-21e3-4c1e-bbb5-5b4209787b6f",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "RENDER-01",
+      "title": "Tile render: orthographic camera, height map and building-id map",
+      "description": "Orthographic camera at 45 degrees tilt and 15 degrees turn renders the zone into a grid of 1024 px tiles: ground from the PNOA orthophoto, geometry from the Concello 3D buildings (X-05), streets and shops from OpenStreetMap. For every tile it also writes a height map and a building-id map (used for shadows, occlusion and clicks). Scripts are re-runnable on any single tile.\n\nCriterios de aceptación:\n  1. Render script produces the tile grid of ZONE-01 from the offline files\n  2. Each tile has its render, height map and building-id map\n  3. Re-running one tile gives an identical output (deterministic)\n  4. Tile index file lists every tile with its coordinates\n  5. Pixel-to-ground conversion tested against 3 known points within an agreed error",
+      "acceptance_criteria": [
+        "Render script produces the tile grid of ZONE-01 from the offline files",
+        "Each tile has its render, height map and building-id map",
+        "Re-running one tile gives an identical output (deterministic)",
+        "Tile index file lists every tile with its coordinates",
+        "Pixel-to-ground conversion tested against 3 known points within an agreed error"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "ZONE-01",
+        "X-05"
+      ],
+      "ticket_id": "483877da-8eae-4a00-a1f5-f48f07d04946",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "RENDER-02",
+      "title": "Optional render enrichments, measured one at a time",
+      "description": "Candidate enrichments: PNOA LiDAR for tree and roof heights, Catastro building parts (floors per volume), and the Catastro facade photo read by a vision model as text attributes (colour, material, galleries, shops at ground level). Each is added only if it measurably reduces invented details on a test tile.\n\nCriterios de aceptación:\n  1. Each enrichment tried on the same test tiles, one at a time\n  2. For each, the count of invented details with and without it is recorded\n  3. Only enrichments that reduce invented details are kept in the pipeline\n  4. Catastro coverage for the zone documented",
+      "acceptance_criteria": [
+        "Each enrichment tried on the same test tiles, one at a time",
+        "For each, the count of invented details with and without it is recorded",
+        "Only enrichments that reduce invented details are kept in the pipeline",
+        "Catastro coverage for the zone documented"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "RENDER-01"
+      ],
+      "ticket_id": "9c845ab1-c017-46e6-99fb-285726ba23a5",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "DRAW-01",
+      "title": "Draw a tile with the image model",
+      "description": "Script that draws a tile from its render with the chosen prompt. It passes a small crop of the style reference (about 512 px) and a strip of the already drawn neighbour (about 256 px), never the whole reference tile or the whole neighbour: whole tiles made the model copy their contents (port and land invented over open sea) and drift to ochre. Reuse and port redraw.mjs and the prompt files of the 3x3 test. Resumable, one call at a time through the IMGAPI-01 helper.\n\nCriterios de aceptación:\n  1. One command draws a given tile from its render\n  2. Style reference crop and neighbour strip are passed, not whole tiles\n  3. Every tile keeps a record of inputs, prompt, model, parameters, output, cost and review status\n  4. Interrupted run resumes without redrawing finished tiles\n  5. Each drawing stored as a new immutable version, never overwritten\n  6. Open-sea tile drawn without inventing land, port or boats, checked by CHECK-01",
+      "acceptance_criteria": [
+        "One command draws a given tile from its render",
+        "Style reference crop and neighbour strip are passed, not whole tiles",
+        "Every tile keeps a record of inputs, prompt, model, parameters, output, cost and review status",
+        "Interrupted run resumes without redrawing finished tiles",
+        "Each drawing stored as a new immutable version, never overwritten",
+        "Open-sea tile drawn without inventing land, port or boats, checked by CHECK-01"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "STYLE-01",
+        "RENDER-01",
+        "IMGAPI-01"
+      ],
+      "ticket_id": "71bae10a-531b-45f2-a131-cbf100d681f5",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "SEAM-01",
+      "title": "Straight seams (no AI corners)",
+      "description": "For every straight seam, build a strip from the right half of one tile and the left half of the next, tint the outer parts transparent red and have the model redraw only the untinted middle; blend back with a soft fade. Corners by AI are not used: in the test they left a soft smudge. Seams improve land (mean jump 3.87 to 3.05) and almost nothing at sea, and the fix invented a cruise ship, a pier and a pure red roof, so every seam output is checked and reviewed by a person. Seams do not disappear: colour is also matched in code (FINISH-01). Reuse seams.py and metric-costuras.py.\n\nCriterios de aceptación:\n  1. Seam strip builder with the red-tint mask and a soft blend\n  2. Seam count for an NxN grid is 2*N*(N-1), verified for 3x3 (12) and for the ZONE-01 grid\n  3. Jump metric before and after recorded for every seam, land and sea separately\n  4. Invented elements in seam outputs (ships, piers, saturated roofs) flagged by CHECK-01 or review\n  5. Corner handling documented: no AI redraw, tile edges equalised in code\n  6. Every seam drawing logged and versioned",
+      "acceptance_criteria": [
+        "Seam strip builder with the red-tint mask and a soft blend",
+        "Seam count for an NxN grid is 2*N*(N-1), verified for 3x3 (12) and for the ZONE-01 grid",
+        "Jump metric before and after recorded for every seam, land and sea separately",
+        "Invented elements in seam outputs (ships, piers, saturated roofs) flagged by CHECK-01 or review",
+        "Corner handling documented: no AI redraw, tile edges equalised in code",
+        "Every seam drawing logged and versioned"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "DRAW-01"
+      ],
+      "ticket_id": "aa1bec5f-5807-46b6-8ced-36f829386fef",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "CHECK-01",
+      "title": "Automatic checks on drawings",
+      "description": "Compare each drawing with its render and with OpenStreetMap and reject: copies of the photo (share of flat-colour pixels compared with the render), buildings invented on open water, and silhouettes that moved. Also measure per-tile colour statistics (palette drift between tiles) and a jump metric on every seam. The checks do not try to judge seams: that stays with a person (REVIEW-01).\n\nCriterios de aceptación:\n  1. Copy-of-photo check with a documented threshold\n  2. Check for buildings on water using the OSM water polygons\n  3. Silhouette-moved check against the render\n  4. Per-tile colour statistics reported to catch palette drift between tiles\n  5. Jump metric computed on every seam and reported\n  6. Each check tested with one known good and one known bad tile\n  7. Report per tile lists which checks failed",
+      "acceptance_criteria": [
+        "Copy-of-photo check with a documented threshold",
+        "Check for buildings on water using the OSM water polygons",
+        "Silhouette-moved check against the render",
+        "Per-tile colour statistics reported to catch palette drift between tiles",
+        "Jump metric computed on every seam and reported",
+        "Each check tested with one known good and one known bad tile",
+        "Report per tile lists which checks failed"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "RENDER-01",
+        "DRAW-01"
+      ],
+      "ticket_id": "58fab62a-ecd4-479b-9cca-d7cd3bcf1475",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "REVIEW-01",
+      "title": "Contact sheets and human review",
+      "description": "Generate contact sheets (a crop of the drawing next to its render, plus seam crops) and a way to flag tiles to redo. The model cannot reliably judge its own seams and invented details, so this step stays manual.\n\nCriterios de aceptación:\n  1. Contact sheet generated for any set of tiles\n  2. Seam crops included in the sheet\n  3. A reviewer can mark a tile accepted or to-redo and the mark is stored\n  4. Flagged tiles are listed for DRAW-01 to redo",
+      "acceptance_criteria": [
+        "Contact sheet generated for any set of tiles",
+        "Seam crops included in the sheet",
+        "A reviewer can mark a tile accepted or to-redo and the mark is stored",
+        "Flagged tiles are listed for DRAW-01 to redo"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "DRAW-01"
+      ],
+      "ticket_id": "e54634a4-8b52-4778-af41-24810285d454",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "TILESTATUS-01",
+      "title": "Internal tool: tile status board",
+      "description": "Small internal tool that shows which tiles are rendered, drawn, checked, flagged for review or accepted, and lets us pick the next ones to draw.\n\nCriterios de aceptación:\n  1. Grid view of all tiles coloured by status\n  2. Statuses read from the pipeline files, not typed by hand\n  3. A tile can be queued to draw or redraw from the tool\n  4. Counts per status shown",
+      "acceptance_criteria": [
+        "Grid view of all tiles coloured by status",
+        "Statuses read from the pipeline files, not typed by hand",
+        "A tile can be queued to draw or redraw from the tool",
+        "Counts per status shown"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "RENDER-01"
+      ],
+      "ticket_id": "accbeabe-7f8d-424b-bb41-3c21ccba5dd9",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "NOTES-01",
+      "title": "Tile notes: reference photos and descriptions for monuments",
+      "description": "Optional inside the hackathon: only after routes, events, assets and the postcard. A tile can carry reference photos and a written description of a landmark (shape, which way it opens, roof). Every drawing of that tile receives them. For buildings such as the cathedral, the Sireno and the main squares.\n\nCriterios de aceptación:\n  1. Tile note format defined (photos plus text) and stored with the tile\n  2. DRAW-01 passes the notes of a tile on every drawing of it\n  3. Notes written for the monuments and main squares of the zone\n  4. At least 3 landmark tiles redrawn with notes and compared with the version without",
+      "acceptance_criteria": [
+        "Tile note format defined (photos plus text) and stored with the tile",
+        "DRAW-01 passes the notes of a tile on every drawing of it",
+        "Notes written for the monuments and main squares of the zone",
+        "At least 3 landmark tiles redrawn with notes and compared with the version without"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "DRAW-01",
+        "R-03"
+      ],
+      "ticket_id": "f063c619-59e3-44bb-b1cf-11e4b7f472c4",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "FINISH-01",
+      "title": "Finishing filters and colour matching in code",
+      "description": "A fixed stack of colour and contrast filters applied in code to every tile as soon as it is drawn and re-applied to the whole map when the stack changes. It includes colour matching between tiles (mean colour and saturation against a reference tile) because visible tile edges remain in the mosaic after seam redraws and colour drifts towards ochre.\n\nCriterios de aceptación:\n  1. Filter stack defined in one config file\n  2. Colour matching between neighbouring tiles measured before and after (mean colour, saturation)\n  3. Applied automatically to a tile when it is drawn\n  4. One command re-applies it to every tile\n  5. Before/after sample of the mosaic committed",
+      "acceptance_criteria": [
+        "Filter stack defined in one config file",
+        "Colour matching between neighbouring tiles measured before and after (mean colour, saturation)",
+        "Applied automatically to a tile when it is drawn",
+        "One command re-applies it to every tile",
+        "Before/after sample of the mosaic committed"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "DRAW-01"
+      ],
+      "ticket_id": "d1c4b5cf-bfcb-4af5-bb2a-ea94fd0bc363",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WATER-01",
+      "title": "Water in code",
+      "description": "The ria is not drawn by the model: it varies in tone between tiles and the model invents land, ports and ships over open sea. One sea texture is repeated across the map and coloured in code over a mask from OpenStreetMap coastlines. Boats and surf are kept from the drawing.\n\nCriterios de aceptación:\n  1. Water mask built from OSM coastlines\n  2. Sea texture repeated and coloured in code over the mask, same tone on every tile\n  3. Boats and surf kept from the drawing\n  4. No building, pier or ship from the model remains on open water in the zone",
+      "acceptance_criteria": [
+        "Water mask built from OSM coastlines",
+        "Sea texture repeated and coloured in code over the mask, same tone on every tile",
+        "Boats and surf kept from the drawing",
+        "No building, pier or ship from the model remains on open water in the zone"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "RENDER-01",
+        "DRAW-01"
+      ],
+      "ticket_id": "8505ec19-08b5-45dc-b77e-c8c56293278b",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEATHER-01",
+      "title": "Weather overlay: rain, snow, wet look, fog, lightning",
+      "description": "From Open-Meteo, code layers over the map: rain particles (density from drizzle to heavy, slant from the wind), wet look only on streets and squares using the ground mask from the height and building-id maps, snow, lightning for thunderstorm codes, and fog that thickens with distance and over the ria. Manual override to force rain, fog or any hour. Switches off on low-end devices and respects reduced motion. The forecast drives the hour control.\n\nCriterios de aceptación:\n  1. At load the weather layer matches Open-Meteo current conditions for Vigo\n  2. Rain, snow, lightning and fog effects work from the weather codes\n  3. Wet look applied to streets and squares only\n  4. Manual override can force rain, fog and any hour\n  5. With rain forced at 21:00 the map keeps a steady frame rate on a mid-range phone, measured\n  6. Effects off on low-end devices and with reduced motion",
+      "acceptance_criteria": [
+        "At load the weather layer matches Open-Meteo current conditions for Vigo",
+        "Rain, snow, lightning and fog effects work from the weather codes",
+        "Wet look applied to streets and squares only",
+        "Manual override can force rain, fog and any hour",
+        "With rain forced at 21:00 the map keeps a steady frame rate on a mid-range phone, measured",
+        "Effects off on low-end devices and with reduced motion"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "D-10",
+        "MAP-01"
+      ],
+      "ticket_id": "79a6ed58-06a3-4171-bb81-1871893bf9a6",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WEATHER-02",
+      "title": "Weather overlay: clouds, wind and sea",
+      "description": "Cloud shadows drifting at wind speed and direction with soft haze at high cover, swaying trees and flags, ripples in the sea texture, and wave amplitude from sea state if Open-Meteo Marine covers the ria. MeteoGalicia stays a candidate: its licence and API are checked before any use.\n\nCriterios de aceptación:\n  1. Cloud shadows move with the real wind speed and direction\n  2. Trees and flags sway and sea ripples change with the wind\n  3. Wave amplitude uses Marine data, or is documented as not covered\n  4. MeteoGalicia licence and API checked and the decision recorded\n  5. Frame rate on a mid-range phone recorded with all layers on",
+      "acceptance_criteria": [
+        "Cloud shadows move with the real wind speed and direction",
+        "Trees and flags sway and sea ripples change with the wind",
+        "Wave amplitude uses Marine data, or is documented as not covered",
+        "MeteoGalicia licence and API checked and the decision recorded",
+        "Frame rate on a mid-range phone recorded with all layers on"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "WEATHER-01"
+      ],
+      "ticket_id": "1f3acf32-acef-4f2a-8ffd-ab049403f79f",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "ASSETS-02",
+      "title": "Christmas assets for all points",
+      "description": "Pixel-art assets from the photos of the 43 points (and the 2026 additions), each with its own patch of ground, placed in code at the real position and a readable size. Installations are separate assets, never painted into the base tiles.\n\nCriterios de aceptación:\n  1. One asset per shown point, from its real photo, with a ground patch\n  2. Each reviewed against its photo\n  3. A point can be added or removed without redrawing any tile\n  4. Assets stored with prompt and source photo",
+      "acceptance_criteria": [
+        "One asset per shown point, from its real photo, with a ground patch",
+        "Each reviewed against its photo",
+        "A point can be added or removed without redrawing any tile",
+        "Assets stored with prompt and source photo"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "SCENES-01",
+        "R-03"
+      ],
+      "ticket_id": "4f7e1805-1a06-409a-bcf0-3835a337a598",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "ANIM-01",
+      "title": "Animated Christmas installations",
+      "description": "Animation in code: the ferris wheel is drawn as a structure plus a single cabin and the code places the cabins on an isometric ellipse and rotates them while the spokes blink; light installations blink or pulse; the tree runs its show at the scheduled hours. Assets are clickable.\n\nCriterios de aceptación:\n  1. Ferris wheel: one structure plus one cabin, cabins placed on an isometric ellipse and rotating\n  2. Light installations blink or pulse\n  3. The tree show runs at its scheduled hours\n  4. Clicking an asset opens its panel\n  5. Animation respects reduced motion and low-end devices",
+      "acceptance_criteria": [
+        "Ferris wheel: one structure plus one cabin, cabins placed on an isometric ellipse and rotating",
+        "Light installations blink or pulse",
+        "The tree show runs at its scheduled hours",
+        "Clicking an asset opens its panel",
+        "Animation respects reduced motion and low-end devices"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "SCENES-01",
+        "MAP-01"
+      ],
+      "ticket_id": "a6c5ad97-4582-46ed-b959-250e7d27afb7",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "SHARE-01",
+      "title": "Shareable URL state and share button",
+      "description": "Everything shareable lives in the URL hash: view, zoom, layers, selected point or event, route and chosen hour. A share button offers copy link and the phone's share sheet. Opening a link restores the same state.\n\nCriterios de aceptación:\n  1. View, zoom, layers, selected point or event, route and hour are written to the URL hash\n  2. Opening a link restores exactly that state, tested for each of the six fields\n  3. Share button with copy link and the Web Share sheet where available\n  4. Invalid or old hashes fall back to the default view without an error",
+      "acceptance_criteria": [
+        "View, zoom, layers, selected point or event, route and hour are written to the URL hash",
+        "Opening a link restores exactly that state, tested for each of the six fields",
+        "Share button with copy link and the Web Share sheet where available",
+        "Invalid or old hashes fall back to the default view without an error"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "MAP-01"
+      ],
+      "ticket_id": "2f4a72a7-4dca-4a55-b988-06c5c8ded7ad",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "PYR-01",
+      "title": "Tile pyramid and publishing",
+      "description": "Cut tiles into a 512 px WebP pyramid at several zoom levels, with the height and building-id maps, served from object storage behind a CDN with long cache. Each published version in its own folder; a published version is never overwritten. It must work with any folder of tiles, so the viewer is built early on the PNOA render tiles or the old 3x3 drawing as placeholder and does not wait for the drawn map.\n\nCriterios de aceptación:\n  1. Pyramid built from any folder of tiles, tested with placeholder tiles\n  2. WebP 512 px tiles at several zoom levels\n  3. Height and building-id maps published with the tiles\n  4. Each version in its own folder, never overwritten\n  5. Tiles served with long, immutable cache headers",
+      "acceptance_criteria": [
+        "Pyramid built from any folder of tiles, tested with placeholder tiles",
+        "WebP 512 px tiles at several zoom levels",
+        "Height and building-id maps published with the tiles",
+        "Each version in its own folder, never overwritten",
+        "Tiles served with long, immutable cache headers"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "48bee3f5-0c0b-4a17-a8dc-3ed53c531e76",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "MAP-02",
+      "title": "Map life: vehicles, boats and building highlight",
+      "description": "Cars moving by street, boats in the ria, markers, and clicking a building highlights it using the building-id map. At street zoom a focus effect can follow the pointer to help read the slopes.\n\nCriterios de aceptación:\n  1. Cars move along streets\n  2. Boats move in the ria\n  3. Clicking a building highlights it from the id map\n  4. Focus effect follows the pointer at street zoom\n  5. Frame rate on a mid-range phone recorded with the default layers on",
+      "acceptance_criteria": [
+        "Cars move along streets",
+        "Boats move in the ria",
+        "Clicking a building highlights it from the id map",
+        "Focus effect follows the pointer at street zoom",
+        "Frame rate on a mid-range phone recorded with the default layers on"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "MAP-01"
+      ],
+      "ticket_id": "cac2bb4b-97aa-45c7-a3a3-439de41c8716",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "TRANSIT-02",
+      "title": "Buses and trains on the map",
+      "description": "Bus lines in their colours, vehicles moving along them by timetable, stations and stops as icons with next departures, transit legs inside routes. The interface says 'scheduled', never 'live'.\n\nCriterios de aceptación:\n  1. Bus lines drawn in their colours\n  2. Vehicles move along the lines by the GTFS timetable\n  3. Stops and stations shown as icons with next departures\n  4. Every moving vehicle and the legend say 'scheduled' until X-03 approves live data\n  5. Train layer shows Vigo-Urzaiz and Vigo-Guixar",
+      "acceptance_criteria": [
+        "Bus lines drawn in their colours",
+        "Vehicles move along the lines by the GTFS timetable",
+        "Stops and stations shown as icons with next departures",
+        "Every moving vehicle and the legend say 'scheduled' until X-03 approves live data",
+        "Train layer shows Vigo-Urzaiz and Vigo-Guixar"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "MAP-01",
+        "X-01",
+        "X-02"
+      ],
+      "ticket_id": "fba21185-5d3a-42fb-b9e4-7b4ee9791f32",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "BLOCK-01",
+      "title": "3x3 block redone in the chosen style (method go/no-go)",
+      "description": "Redo the 3x3 test block with the unlit high-bit style, the small style crop and neighbour strip, straight seams and colour matching in code, with water by code. The earlier block (vigo-bloque-3x3) is only a source of render, height map and scripts. 5 of its 8 tiles failed at first. Measure the share of tiles that still fail after these improvements. The LoRA fall-back is not considered unless more than 30 percent of tiles still fail.\n\nCriterios de aceptación:\n  1. 3x3 block drawn in the style of STYLE-01 with straight seams and colour matching\n  2. Share of tiles that fail review recorded with contact sheets\n  3. Visible tile edges in the mosaic counted before and after colour matching\n  4. Invented details that survive the checks counted\n  5. Go/no-go written: LoRA plan B opened only if more than 30 percent of tiles still fail\n  6. Calls used counted against the budget of IMGAPI-01",
+      "acceptance_criteria": [
+        "3x3 block drawn in the style of STYLE-01 with straight seams and colour matching",
+        "Share of tiles that fail review recorded with contact sheets",
+        "Visible tile edges in the mosaic counted before and after colour matching",
+        "Invented details that survive the checks counted",
+        "Go/no-go written: LoRA plan B opened only if more than 30 percent of tiles still fail",
+        "Calls used counted against the budget of IMGAPI-01"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "SEAM-01",
+        "CHECK-01",
+        "REVIEW-01",
+        "FINISH-01",
+        "WATER-01",
+        "LIC-01"
+      ],
+      "ticket_id": "95f94db8-de01-4cf9-a4ab-291e22f7c76b",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "DAY-01",
+      "title": "Day map of the Christmas core, by batches",
+      "description": "Draw every tile of the ZONE-01 grid (16 to 25 tiles) with straight seams, in batches, resumable, one call at a time, with review and redo after each batch. Lower priority than routes, events, Christmas assets and the postcard when time runs short: a partly drawn zone still has a map because undrawn tiles fall back to the PNOA render.\n\nCriterios de aceptación:\n  1. Every tile of the ZONE-01 grid drawn with its straight seams\n  2. Each batch reviewed with contact sheets and its flagged tiles redone\n  3. TILESTATUS-01 reports 0 tiles drawn but not accepted\n  4. Tiles still undrawn show the PNOA render in the viewer, never a hole\n  5. Total calls and 429 retries recorded against the estimate of ZONE-01",
+      "acceptance_criteria": [
+        "Every tile of the ZONE-01 grid drawn with its straight seams",
+        "Each batch reviewed with contact sheets and its flagged tiles redone",
+        "TILESTATUS-01 reports 0 tiles drawn but not accepted",
+        "Tiles still undrawn show the PNOA render in the viewer, never a hole",
+        "Total calls and 429 retries recorded against the estimate of ZONE-01"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "BLOCK-01",
+        "TILESTATUS-01"
+      ],
+      "ticket_id": "2c8500cf-2dda-4956-b686-9e186d77d4a7",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "OUTDATED-01",
+      "title": "Outdated zones",
+      "description": "Optional inside the hackathon: only after routes, events, assets and the postcard. The base data is not all from the same year, so new buildings, works and demolished blocks do not match the city today. Outline the outdated area, redraw it from a more recent image of that spot and blend it with a soft edge.\n\nCriterios de aceptación:\n  1. Outdated areas outlined and listed, using the data year from X-05\n  2. Source of the more recent image for each area recorded with its licence\n  3. Area redrawn and blended with a soft edge\n  4. Before/after contact sheet for each area",
+      "acceptance_criteria": [
+        "Outdated areas outlined and listed, using the data year from X-05",
+        "Source of the more recent image for each area recorded with its licence",
+        "Area redrawn and blended with a soft edge",
+        "Before/after contact sheet for each area"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "BLOCK-01",
+        "X-05"
+      ],
+      "ticket_id": "4e337750-0868-4f40-a49f-070ba950c04a",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "COLORGUIDE-01",
+      "title": "Colour guides for uniform areas",
+      "description": "Optional inside the hackathon: only after routes, events, assets and the postcard. Parks, fields and wooded slopes drawn tile by tile can differ in tone. Draw the whole area once as a single picture, then redraw each tile using its piece as a colour guide.\n\nCriterios de aceptación:\n  1. Uniform areas listed\n  2. Each drawn once as a single picture\n  3. Each tile of the area redrawn with its piece as colour guide\n  4. Tone difference between neighbouring tiles measured before and after",
+      "acceptance_criteria": [
+        "Uniform areas listed",
+        "Each drawn once as a single picture",
+        "Each tile of the area redrawn with its piece as colour guide",
+        "Tone difference between neighbouring tiles measured before and after"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "BLOCK-01"
+      ],
+      "ticket_id": "18f9b4ce-5c2f-40b8-9898-63b414c3df12",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "LIGHT-01",
+      "title": "Time of day and sun shadows in code",
+      "description": "Sun position for Vigo computed from the clock with sunrise and sunset. Continuous grading through day, golden hour, dusk, night and dawn. Manual hour control. Shadows from every building and tree cast with the height map, also applied to moving sprites. Tuned on painted tiles.\n\nCriterios de aceptación:\n  1. Sun position matches a reference calculator for 3 dates and hours\n  2. Shadows follow the sun and are computed from the height map\n  3. Grading is continuous, not a switch between two images\n  4. Manual hour control works, and a clock control runs the hour at real time, x10 and x60\n  5. Shadows fade out as the sun sets\n  6. Frame rate on a mid-range phone recorded",
+      "acceptance_criteria": [
+        "Sun position matches a reference calculator for 3 dates and hours",
+        "Shadows follow the sun and are computed from the height map",
+        "Grading is continuous, not a switch between two images",
+        "Manual hour control works, and a clock control runs the hour at real time, x10 and x60",
+        "Shadows fade out as the sun sets",
+        "Frame rate on a mid-range phone recorded"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "MAP-01",
+        "BLOCK-01"
+      ],
+      "ticket_id": "56c0e355-6aac-461d-bf3f-15be5f958d7c",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "NIGHT-01",
+      "title": "Night in code",
+      "description": "Dark blue multiply tint, lit windows placed on building walls from footprints, heights and camera (count depends on the hour, fixed pattern per building, shops glow from their OSM position), halos on street lamps at fixed spacing, headlights, stars and moon phase. Christmas lights switch on at the Concello's real switch-on time.\n\nCriterios de aceptación:\n  1. Lit windows computed per wall, fixed pattern per building, no flicker\n  2. Number of lit windows changes with the hour (most in the evening, few after midnight)\n  3. Lamp halos along streets at a fixed spacing\n  4. Christmas lights switch on at the official switch-on time and follow each installation's schedule\n  5. Stars and moon phase shown at night\n  6. Lit windows tuned until misalignment with painted windows is not visible at map zoom",
+      "acceptance_criteria": [
+        "Lit windows computed per wall, fixed pattern per building, no flicker",
+        "Number of lit windows changes with the hour (most in the evening, few after midnight)",
+        "Lamp halos along streets at a fixed spacing",
+        "Christmas lights switch on at the official switch-on time and follow each installation's schedule",
+        "Stars and moon phase shown at night",
+        "Lit windows tuned until misalignment with painted windows is not visible at map zoom"
+      ],
+      "status": "pending",
+      "depends_on": [
+        "LIGHT-01",
+        "R-04"
+      ],
+      "ticket_id": "e652139e-1f34-4736-bded-fd148091b8f3",
       "raw_status": "FREE"
     }
   ]
