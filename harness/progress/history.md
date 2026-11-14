@@ -472,3 +472,26 @@ commit 12872c4. pytest tests 74 passed; ruff/mypy/evals OK. data/programme_2026.
 ```
 
 </details>
+
+## D-17 — About screen with attributions
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 82 passed in 1.33s
+- **Ticket GEAS:** d1049a58 · commit_after `43fdd681`
+- **Cambios:** web/js/about.js, web/css/about.css, web/index.html
+- **Decisiones:** Ficheros propios para no tocar app.js; fecha por capa queda para D-18
+- **Pendiente:** I18N-01 traducir; foto/ilustracion: anadir proveedor cuando IMGAPI-01 elija
+
+<details><summary>Evidencia</summary>
+
+```
+D-17 evidencia (captura headless Edge 390x844 de http://127.0.0.1/#about con scripts/shot.mjs):
+1. All data sources credited: 8 fuentes de vault/01_PROYECTO/licencias.md (Concello datos.vigo.org, capa Navidad 2026-27, Edificios 3D, Vitrasa GTFS, Renfe, Open-Meteo, IGN PNOA+MDT05, OSM) en web/js/about.js; window.tinyvigoAbout.sources.length = 8
+2. Licences shown: cada fila muestra licencia (ODC-BY 1.0, CC BY 4.0, ODbL 1.0, condiciones del portal) y enlace a la fuente
+3. Reachable from main UI: boton 'i' fijo abajo a la izquierda (44 px) abre un <dialog> modal; Esc / x / clic fuera cierran; deep link #about
+Estilo segun docs/ui-exploraciones (direccion D): sin box-shadow, sin mayusculas, tonos, radios 8/12, Inter.
+  [32m✔[0m pytest                 82 passed in 0.93s
+[1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+```
+
+</details>
