@@ -804,6 +804,13 @@ commit 15dc2b5. pytest 110 passed; evals PASS; node --check OK + smoke con datos
 - **Ticket GEAS:** db918085 · commit_after `5717dff6`
 - **Cambios:** _(no indicados)_
 - **Decisiones:** _(ninguna reseñable)_
+## CORE-001 — Primera pieza funcional de punta a punta
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 119 passed in 0.27s
+- **Ticket GEAS:** 9aacc009 · commit_after `04837532`
+- **Cambios:** app/points.py (nuevo: carga/summary/count_by_type); app/cli.py (añadido subcomando points); tests/test_points.py (nuevo: 9 tests); README.md (sección 'Línea de comandos'); pyproject.toml (add mypy, hypothesis dev deps)
+- **Decisiones:** CORE-001 es el primer vertical slice: app points carga data/points.json, filtra por tipo/idioma y muestra resumen. El proyecto ya tenia los datos y la web; este CLI es la primera entrada programatica real. Se instalaron mypy e hypothesis como deps de dev porque make check los necesita.
 - **Pendiente:** _(nada)_
 
 <details><summary>Evidencia</summary>
@@ -845,6 +852,7 @@ commit 5717dff. pytest 110 passed; evals PASS; prueba en Edge headless (scripts/
 
 ```
 UI-06 (c41c9e4): web/js/settings.js engranaje con idioma, vista 3D/ciudad, tema y creditos; ocultos #about-open, .tv-theme, .tv-view y GL/ES/EN del panel; pines en gota; Hoy con foto/icono por fila. Prueba en Edge: gl->Puntos de Nadal/Axustes, vista ciudad true, tema light.   [32m✔[0m pytest                 110 passed in 0.59s [1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+$ uv run python -m app points → 'Puntos navidenos de Vigo (35):' con lista de puntos | $ uv run python -m app points --by-type → conteo por tipo (light:16, attraction:8, exhibit:4, market:2, photo_gallery:2, photocall:1, santa_kings:2) | $ uv run python -m app points --format json → JSON válido | $ uv run pytest tests/test_points.py → 9 passed | $ make check → ENTORNO LISTO + 'check pasado: lint + typecheck + test + arnés OK' | README.md documenta el subcomando points con ejemplo de salida
 ```
 
 </details>

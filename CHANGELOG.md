@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Primer vertical slice: CLI points carga data/points.json (CORE-001)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Cerrar BOOT-003 (arranque en frio verificado) (BOOT-003)
 
 ## [Unreleased] — 2026-11-14

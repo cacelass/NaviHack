@@ -1,6 +1,6 @@
 [project]
 name = "app"
-version = "0.1.13"
+version = "0.1.14"
 description = "TinyVigo: mapa web de Vigo en Navidad con puntos navidenos, escenas pixel-art, eventos del dia y rutas a pie."
 authors = [
   { name = "cacelass" }
@@ -84,3 +84,9 @@ markers = [
 [tool.coverage.run]
 source = ["app"]
 omit = ["*/tests/*"]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.165.0",
+    "mypy>=2.3.0",
+]

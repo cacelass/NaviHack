@@ -38,6 +38,7 @@ make test            # pytest (proyecto + agentes)
 make check           # lint + typecheck + test + arnés
 ```
 
+<<<<<<< HEAD
 ## Qué hace la web
 
 ![Tour a pie con el paseo parada a parada](docs/img/web-tour-1400.jpg)
@@ -63,6 +64,29 @@ make check           # lint + typecheck + test + arnés
 El servidor de `make website` es `scripts/serve_web.mjs` (Node, sin dependencias): el
 `http.server` de Python en Windows deja respuestas a medias con varias conexiones y la
 primera carga podía quedar en blanco. `scripts/serve_web.py` lo usa si hay Node.
+=======
+## Línea de comandos
+
+El paquete `app` expone un CLI con `python -m app`. El subcomando principal es
+`points`, que lee los puntos navideños de ``data/points.json`` y muestra un
+resumen:
+
+```bash
+uv run python -m app points                          # texto en español
+uv run python -m app points --lang gl                # en galego
+uv run python -m app points --by-type                # conteo por tipo
+uv run python -m app points --format json            # salida JSON
+```
+
+Ejemplo de salida:
+
+```
+Puntos navidenos de Vigo (35):
+  concello-2552: Arbol gigante de Nadal (light)
+  concello-2553: Muneco de Nieve (light)
+  ...
+```
+>>>>>>> 0e3b18c (feat(CORE-001): Primer vertical slice: CLI points carga data/points.json)
 
 ## Arquitectura
 

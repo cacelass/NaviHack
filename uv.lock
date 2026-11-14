@@ -196,6 +196,12 @@ rag = [
     { name = "chromadb" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "hypothesis" },
+    { name = "mypy" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "bandit", marker = "extra == 'dev'" },
@@ -213,6 +219,12 @@ requires-dist = [
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'" },
 ]
 provides-extras = ["dev", "docs", "rag"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "hypothesis", specifier = ">=6.165.0" },
+    { name = "mypy", specifier = ">=2.3.0" },
+]
 
 [[package]]
 name = "ast-serialize"
