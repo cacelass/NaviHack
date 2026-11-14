@@ -1,0 +1,85 @@
+<!doctype html><meta charset="utf-8"><title>Vigo render · expansión</title>
+<style>body{margin:0;background:#222}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script src="params.js"></script>
+<script src="data.js"></script>
+<script>
+// Generalización del renderer del 3x3 (pipeline/render/original/render.html):
+// misma cámara y misma aritmética, pero el lienzo y las capas de ortofoto
+// vienen de params.js. La capa vieja se dibuja la última, así que donde ya
+// había ortofoto manda ella y la zona pintada sale idéntica píxel a píxel.
+const SC = SCENE.sc, TILT = SCENE.tiltDeg * Math.PI / 180, HEAD = SCENE.headDeg * Math.PI / 180;
+const K = Math.sin(TILT), KZ = Math.cos(TILT);
+const fx = Math.sin(HEAD), fy = Math.cos(HEAD);   // forward (into the view)
+const rx = Math.cos(HEAD), ry = -Math.sin(HEAD);  // screen right
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+cv.width = SCENE.width; cv.height = SCENE.height;
+const OX = SCENE.ox, OY = SCENE.oy;
+const proj = (x, y, z = 0) => [OX + SC * (rx * x + ry * y), OY + SC * (-K * (fx * x + fy * y) - KZ * z)];
+const orthoAt = (L, z) => {
+  const a = SC * rx * L.dx, b = -SC * K * fx * L.dx, c = -SC * ry * L.dy, d = SC * K * fy * L.dy;
+  const [e, f] = proj(L.x0, L.y0, z);
+  ctx.setTransform(a, b, c, d, e, f);
+};
+
+const layers = SCENE.layers.map(L => { const img = new Image(); img.src = L.src; return { ...L, img }; });
+let pending = layers.length;
+for (const L of layers) { L.img.onload = () => { if (--pending === 0) draw(); }; }
+
+// El tejado se texturiza con UNA capa: la última (la vieja) que toque la
+// huella. Así un edificio a caballo del borde de la ortofoto vieja se pinta
+// igual que en el render del 3x3, que solo tenía esa imagen: la parte que se
+// sale del recorte queda con el color de la pared, como entonces.
+const roofLayer = box => {
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const L = layers[i];
+    const west = L.x0, east = L.x0 + L.w * L.dx, north = L.y0, south = L.y0 - L.h * L.dy;
+    if (!(box[2] < west || box[0] > east || box[3] > north || box[1] < south)) return L;
+  }
+  return null;
+};
+const trace = (p, z) => {
+  ctx.beginPath();
+  p.forEach(([x, y], k) => { const [u, v] = proj(x, y, z); k ? ctx.lineTo(u, v) : ctx.moveTo(u, v); });
+  ctx.closePath();
+};
+
+function draw() {
+  ctx.fillStyle = '#3c4a52'; ctx.fillRect(0, 0, cv.width, cv.height);
+  for (const L of layers) { orthoAt(L, 0); ctx.drawImage(L.img, 0, 0); }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+  const depth = b => b.p.reduce((s, [x, y]) => s + fx * x + fy * y, 0) / b.p.length;
+  const bs = DATA.B.map(b => ({ ...b, d: depth(b) })).sort((a, b) => b.d - a.d);
+  for (const b of bs) {
+    const p = b.p; let A = 0;
+    for (let i = 0; i < p.length; i++) { const q = p[(i + 1) % p.length]; A += p[i][0] * q[1] - q[0] * p[i][1]; }
+    const sg = A > 0 ? 1 : -1;
+    for (let i = 0; i < p.length; i++) {
+      const a = p[i], c = p[(i + 1) % p.length], ex = c[0] - a[0], ey = c[1] - a[1], len = Math.hypot(ex, ey);
+      if (len < 0.3) continue;
+      const nx = sg * ey / len, ny = -sg * ex / len;
+      const facing = -(nx * fx + ny * fy);               // >0 when the wall faces the camera
+      if (facing <= 0) continue;
+      const side = nx * rx + ny * ry;                     // -1 left .. 1 right
+      const l = 0.62 + 0.25 * facing - 0.12 * side;       // soft afternoon light from the left
+      const col = `rgb(${[214, 204, 188].map(v => Math.min(255, v * l) | 0)})`;
+      const q = [proj(a[0], a[1], 0), proj(c[0], c[1], 0), proj(c[0], c[1], b.h), proj(a[0], a[1], b.h)];
+      ctx.beginPath(); q.forEach(([u, v], k) => k ? ctx.lineTo(u, v) : ctx.moveTo(u, v)); ctx.closePath();
+      ctx.fillStyle = col; ctx.fill();
+      ctx.strokeStyle = 'rgba(60,50,45,.25)'; ctx.lineWidth = 0.6;   // floor lines every 3 m as a scale hint
+      for (let z = 3; z < b.h - 0.5; z += 3) { const [u1, v1] = proj(a[0], a[1], z), [u2, v2] = proj(c[0], c[1], z); ctx.beginPath(); ctx.moveTo(u1, v1); ctx.lineTo(u2, v2); ctx.stroke(); }
+    }
+    const box = [Math.min(...p.map(q => q[0])), Math.min(...p.map(q => q[1])), Math.max(...p.map(q => q[0])), Math.max(...p.map(q => q[1]))];
+    const L = roofLayer(box);
+    if (L) {
+      ctx.save(); trace(p, b.h); ctx.clip();
+      orthoAt(L, b.h); ctx.drawImage(L.img, 0, 0);
+      ctx.restore();
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+  const SAVE = location.pathname.split('/').pop().replace(/\.html$/, '.png');
+cv.toBlob(b => fetch('/save?name=' + SAVE, { method: 'POST', body: b }).then(() => { document.title = 'READY'; }), 'image/png');
+}
+</script>
