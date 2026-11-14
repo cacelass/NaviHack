@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any
 
+import pytest
+
+from scripts import build_web_data
 from scripts.build_web_data import CANVAS, ORIGIN, project, web_points
 
 
@@ -30,3 +35,40 @@ def test_puntos_fuera_del_lienzo_y_sin_programa() -> None:
     assert [p["id"] for p in out] == ["a", "b"]
     assert out[0]["on_map"] and (out[0]["x"], out[0]["y"]) == (0.5, 0.5)
     assert not out[1]["on_map"] and out[1]["programme"] is None
+
+
+NORIA = {
+    "id": "n",
+    "type": "attraction",
+    "name": {"es": "Noria"},
+    "lat": 42.236839,
+    "lon": -8.708156,
+}
+
+
+def test_la_noria_entra_si_el_dibujo_publicado_es_mas_ancho(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """La noria cae en x≈1,39 del lienzo: fuera del 3x3 viejo y de v7 (4096), dentro de v8 (5120)."""
+    monkeypatch.setattr(build_web_data, "DRAWN", (float(CANVAS), float(CANVAS)))
+    viejo = web_points([NORIA], [], None)[0]
+    monkeypatch.setattr(build_web_data, "DRAWN", (5120.0, float(CANVAS)))
+    ancho = web_points([NORIA], [], None)[0]
+    assert 1.38 < ancho["x"] < 1.40 and ancho["x"] == viejo["x"]  # x sigue normalizada por 3072
+    assert not viejo["on_map"] and ancho["on_map"]
+
+
+def test_drawn_lee_el_manifest_publicado(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    tiles = tmp_path / "web" / "tiles"
+    (tiles / "v9").mkdir(parents=True)
+    (tiles / "current.json").write_text(json.dumps({"version": "v9"}))
+    (tiles / "v9" / "manifest.json").write_text(
+        json.dumps({"width": 5120, "height": 3072, "offset": {"x": 0, "y": 0}})
+    )
+    monkeypatch.setattr(build_web_data, "ROOT", tmp_path)
+    assert build_web_data._drawn() == (5120, 3072)
+
+
+def test_drawn_sin_manifest_es_el_lienzo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(build_web_data, "ROOT", tmp_path)
+    assert build_web_data._drawn() == (CANVAS, CANVAS)
