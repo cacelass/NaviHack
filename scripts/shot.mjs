@@ -52,5 +52,6 @@ try {
   ws.close();
 } finally {
   brave.kill();
-  fs.rmSync(profile, { recursive: true, force: true });
+  await sleep(300);
+  try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5 }); } catch {}
 }

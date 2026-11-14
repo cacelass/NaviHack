@@ -10,9 +10,9 @@
     showRotationControl: false,
     gestureSettingsMouse: { clickToZoom: false },
     animationTime: 0.6,
-    minZoomImageRatio: 0.9,
     maxZoomPixelRatio: 6,
-    visibilityRatio: 0.6,
+    homeFillsViewer: true,
+    visibilityRatio: 1,
     constrainDuringPan: true,
     immediateRender: true,
     imageSmoothingEnabled: false,
@@ -25,7 +25,18 @@
       getTileUrl: (level, x, y) => base + level + "/" + x + "_" + y + "." + m.format,
     },
   });
-  viewer.addHandler("open", () => viewer.viewport.goHome(true));
+  // The home view covers the whole screen; it is also the farthest you can zoom out.
+  const fit = (goHome) => {
+    const vp = viewer.viewport;
+    vp.minZoomLevel = vp.getHomeZoom();
+    if (goHome) vp.goHome(true);
+    vp.applyConstraints(true);
+  };
+  viewer.addHandler("open", () => fit(true));
+  viewer.addHandler("resize", () => fit(false));
   viewer.addHandler("tile-load-failed", (e) => console.warn("tile failed", e.tile && e.tile.url, e.message));
+  const zoomBy = (f) => { viewer.viewport.zoomBy(f); viewer.viewport.applyConstraints(); };
+  document.getElementById("zoom-in").onclick = () => zoomBy(1.6);
+  document.getElementById("zoom-out").onclick = () => zoomBy(1 / 1.6);
   window.tinyvigo = { viewer, manifest: m };
 })();
