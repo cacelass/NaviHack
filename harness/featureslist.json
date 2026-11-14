@@ -16,10 +16,12 @@
         "run harness start <ID> hace commit WIP, pull --rebase y push antes de start_ticket",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "d583a304-d44e-4168-8891-56ab030fee9c",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "d583a304-geas-001-arrancar-geas-de-navaha",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "SCOPE-001",
