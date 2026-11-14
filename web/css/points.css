@@ -223,3 +223,8 @@ html[data-theme="dark"] .tv-osm { filter: brightness(.62) saturate(.7) contrast(
 
 /* compartir (SHARE-01) */
 .tv-toast { position: fixed; z-index: 20; left: 50%; bottom: 84px; transform: translateX(-50%); padding: var(--sp-3) var(--sp-4); border-radius: var(--r-ctl); background: var(--fg); color: var(--raised); font: var(--w-500) var(--fs-label)/1 var(--f-ui); }
+
+/* parking más cercano en la ficha (PREVIEW-01) */
+.tv-parking:not(:empty) { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.tv-parking a { display: flex; align-items: center; gap: var(--sp-2); min-height: var(--tap); padding: 0 var(--sp-2); border-radius: var(--r-ctl); background: var(--surface); color: var(--fg); text-decoration: none; font-weight: var(--w-500); }
+.tv-parking a::before { content: "P"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 4px; background: #3d6a96; color: #fff; font-weight: var(--w-600); font-size: var(--fs-meta); }

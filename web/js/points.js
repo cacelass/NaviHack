@@ -135,6 +135,28 @@
     return el("p", "tv-fresh" + (stale ? " is-stale" : ""), note + " · " + when);
   }
 
+  // PREVIEW-01: parking más cercano a la ficha, con plazas en vivo (datos.vigo.org, cada 2 min)
+  let parkings = null, parkingsAt = 0;
+  async function loadParkings() {
+    if (parkings && Date.now() - parkingsAt < 120000) return parkings;
+    try { parkings = (await (await fetch("https://datos.vigo.org/data/trafico/parkings-ocupacion.json")).json()).filter((r) => r.lat); parkingsAt = Date.now(); } catch (e) { /* sin feed: no se enseña */ }
+    return parkings;
+  }
+  const metres = (a, b) => Math.hypot((b.lat - a.lat) * 111320, (b.lon - a.lon) * 111320 * Math.cos(a.lat * Math.PI / 180));
+  function parkingBlock(p) {
+    const box = el("div", "tv-parking");
+    loadParkings().then((rows) => {
+      if (!rows || !rows.length || selected !== p) return;
+      const near = rows.map((r) => ({ r, d: metres(p, r) })).sort((a, b) => a.d - b.d)[0];
+      if (near.d > 2500) return;
+      const free = Math.max(0, near.r.plazaslibres), walk = Math.max(1, Math.round((near.d * 1.3) / 75));
+      const go = el("a", null, el("span", "tv-name", near.r.nombre.replace(/^Parking /, "")), el("span", "tv-badge " + (free > 20 ? "is-open" : ""), free ? t("go.free_n", { n: free }) : t("go.full")));
+      go.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=" + near.r.lat + "," + near.r.lon; go.target = "_blank"; go.rel = "noopener";
+      box.append(el("p", "tv-kicker", t("detail.nearest_parking") + " · " + t("common.walk_min", { min: walk }) + " · " + t("common.updated", { when: near.r.fechahora.slice(11, 16) })), go);
+    });
+    return box;
+  }
+
   function renderSheet() {
     sheet.replaceChildren();
     sheet.classList.toggle("is-open", !!selected);
@@ -156,6 +178,7 @@
       p.short ? el("p", "tv-short", txt(p.short)) : null,
       sched ? el("details", "tv-sched", el("summary", null, t("detail.schedule")), el("p", null, sched)) : null,
       el("div", "tv-actions", dir, photo, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
+      parkingBlock(p),
       !p.on_map ? el("p", "tv-note", t("common.no_data") + " · " + t("app.map_label")) : null,
       freshness(p),
     ].filter(Boolean)
