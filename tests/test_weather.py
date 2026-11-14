@@ -18,7 +18,11 @@ PAYLOAD = {
         "temperature_2m": [10.0 + h / 2 for h in range(24)],
         "precipitation_probability": [h * 3 for h in range(24)],
         "weather_code": [3] * 24,
-        **{v: [0.0] * 24 for v in WEATHER_HOURLY[4:]},
+        **{
+            v: [0.0] * 24
+            for v in WEATHER_HOURLY
+            if v not in ("temperature_2m", "precipitation_probability", "weather_code")
+        },
     },
 }
 
