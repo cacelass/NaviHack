@@ -1878,10 +1878,12 @@
         "Bloque de bus rediseñado con icono, chips de línea y nota discreta de horario programado",
         "Menos texto y sin errores en consola"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "a8ed664d-02d5-4289-ad10-fa7f63682074",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "a8ed664d-ui-05-ficha-del-punto-redise-ada",
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
     {
       "id": "UI-06",
