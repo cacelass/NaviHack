@@ -1,0 +1,48 @@
+{
+  "$comment": "Generado por `python3 -m pipeline.render.params` desde pipeline/render/original/. No lo edites a mano.",
+  "camera": {
+    "sc": 2.0,
+    "tilt_deg": 45.0,
+    "head_deg": -15.0
+  },
+  "geo": {
+    "lat0": 42.23807,
+    "lon0": -8.72581,
+    "m_per_deg_lat": 111320.0,
+    "m_per_deg_lon": 82416.66482342356
+  },
+  "ortho": {
+    "half_m": [
+      1100.0,
+      1360.0
+    ],
+    "res_m": 0.4,
+    "bbox": [
+      42.22585296802012,
+      -8.73915681526311,
+      42.25028703197988,
+      -8.712463184736889
+    ]
+  },
+  "tile": 1024,
+  "canvases": {
+    "3x3": {
+      "width": 3072,
+      "height": 3072,
+      "origin_x": 1536.0,
+      "origin_y": 1536.0
+    },
+    "expansion": {
+      "width": 4096,
+      "height": 3072,
+      "origin_x": 1536.0,
+      "origin_y": 1536.0,
+      "tile_block": [
+        0,
+        0,
+        3,
+        2
+      ]
+    }
+  }
+}
