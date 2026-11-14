@@ -28,8 +28,27 @@ class Building:
     ring: list[tuple[float, float]]  # metros (x al este, y al norte)
 
 
+def merged_source(east: bool = True) -> list[dict]:
+    """Registros de edificios del Concello: los del 3x3 y, si ``east``, los de la franja este.
+
+    Los del 3x3 van primero y en su orden; los de la franja se suman sin repetir
+    referencia catastral. ``scene.py`` usa esta misma función, así que el render
+    y las comprobaciones ven exactamente los mismos edificios.
+    """
+    source = json.loads((ORIGINAL / "edificios_concello.json").read_text(encoding="utf-8"))
+    extra = ORIGINAL / "edificios_este.json"
+    if east and extra.exists():
+        seen = {b["r"] for b in source if b.get("r")}
+        source += [
+            b
+            for b in json.loads(extra.read_text(encoding="utf-8"))
+            if not b.get("r") or b["r"] not in seen
+        ]
+    return source
+
+
 def load_buildings(
-    params: RenderParams, source: Path = ORIGINAL / "edificios_concello.json"
+    params: RenderParams, source: list[dict] | None = None, east: bool = False
 ) -> list[Building]:
     """Los mismos edificios que vio el render, con los mismos redondeos.
 
@@ -42,7 +61,7 @@ def load_buildings(
     )["ortho"]["half_m"]
     half_x, half_y = float(half[0]), float(half[1])
     out: list[Building] = []
-    for raw in json.loads(source.read_text(encoding="utf-8")):
+    for raw in source if source is not None else merged_source(east):
         ring = [
             (
                 _js_round((lon - params.geo.lon0) * params.geo.m_per_deg_lon),
@@ -129,3 +148,23 @@ def _column_hits(ring: list[tuple[float, float]], x: float) -> list[float]:
         if (x0 > x) != (x1 > x):
             hits.append(y0 + (x - x0) * (y1 - y0) / (x1 - x0))
     return sorted(hits)
+
+
+def contains(buildings: list[Building], x: float, y: float) -> Building | None:
+    """Edificio cuya huella contiene el punto (metros desde el origen), o ``None``.
+
+    Es la comprobación que no se deja engañar por la oclusión: un punto del
+    suelo puede quedar tapado en pantalla por un edificio que tiene delante, pero
+    su huella en el plano no miente.
+    """
+    for b in buildings:
+        inside = False
+        j = len(b.ring) - 1
+        for i, (xi, yi) in enumerate(b.ring):
+            xj, yj = b.ring[j]
+            if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
+                inside = not inside
+            j = i
+        if inside:
+            return b
+    return None
