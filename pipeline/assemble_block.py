@@ -23,21 +23,63 @@ BAND = 96
 
 
 def water_mask(render_rgb: np.ndarray) -> np.ndarray:
-    """Agua por geometría, no por color: de la heurística de color nos quedamos solo
-    con las componentes conectadas que tocan el borde superior (la ría al norte).
-    Así las sombras de árboles y edificios, que son oscuras pero no tocan el mar,
-    no cuentan como agua. El mar real es la componente conectada que llega al norte."""
+    """Agua por geometría, no por un umbral de color aislado: de la heurística de color (oscuro y
+    azulado) nos quedamos con dos tipos de componente conectada:
+    1. La que toca el borde norte (la ría abierta), que es el filtro original.
+    2. Diques o dársenas cerradas que un barco o un muelle estrecho desconecta del mar abierto en el
+       umbral de color: se identifican porque, a diferencia de una sombra de árbol o de edificio
+       (textura moteada por el follaje, std de color 15-20), el agua es muy uniforme (std < 10) y
+       claramente azulada (canal B bastante por encima de R). Medido en el bloque 3x3: la ría son
+       std~6-7 y B-R~27-34; las sombras del Castro son std~13-20 y B-R~17-29 — el umbral de
+       uniformidad separa ambos grupos, el matiz solo no basta (ver harness/progress o el commit)."""
     lum = render_rgb.astype(np.float32) @ np.array([0.299, 0.587, 0.114], np.float32)
     r, b = render_rgb[..., 0].astype(np.int32), render_rgb[..., 2].astype(np.int32)
     m = ((lum < 80) & (b >= r)).astype(np.uint8)
     m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
     m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
-    n, labels = cv2.connectedComponents(m, connectivity=8)
+    n, labels, stats, _ = cv2.connectedComponentsWithStats(m, connectivity=8)
     keep = np.zeros(n, dtype=bool)
-    for lbl in np.unique(labels[0, :]):  # componentes que tocan el borde norte (mar abierto)
-        if lbl > 0:
-            keep[lbl] = True
+    keep[np.unique(labels[0, :])] = True  # toca el borde norte: mar abierto
+    for lbl in range(1, n):
+        if keep[lbl] or stats[lbl, cv2.CC_STAT_AREA] < 1000:
+            continue
+        px = render_rgb[labels == lbl].astype(np.int32)
+        if px.std(axis=0).mean() < 10 and (px[:, 2] - px[:, 0]).mean() > 15:
+            keep[lbl] = True  # dique/dársena cerrada, no sombra: uniforme y azulada
     return keep[labels].astype(bool)
+
+
+def devignette(tile_lab: np.ndarray) -> np.ndarray:
+    """Flatten a large, slow lightness gradient baked into a single drawn tile — found in draw_r1c1.png:
+    its top ~150 px are visibly paler/flatter than the rest, a vignette-like fade from the image model
+    itself, not a seam or a colour-matching artefact (it survives --no-blend and is already there in the
+    raw tile, see harness/progress or the commit for the before/after crop). A heavily blurred copy of L
+    (sigma 180, a sixth of the tile) tracks only that slow trend, not the real local shading of streets
+    and roofs; subtracting 80% of its deviation from the tile's own median flattens the fade and leaves
+    local contrast alone."""
+    L = tile_lab[..., 0]
+    trend = cv2.GaussianBlur(L, (0, 0), 180)
+    out = tile_lab.copy()
+    out[..., 0] = np.clip(L - (trend - np.median(L)) * 0.8, 0, 255)
+    return out
+
+
+def water_texture(shape: tuple[int, int], seed: int = 3) -> np.ndarray:
+    """Irregular sea surface, not the dead giveaway of a single sine ('rayas diagonales muy
+    regulares', se ve generado): several octaves of value noise (random low-res field, blurred and
+    upscaled, one call per octave) at falling amplitude and rising frequency, plus a sparse layer of
+    small bright glints. No two patches of sea repeat the same way, same as real chop."""
+    rng = np.random.default_rng(seed)
+    h, w = shape
+    wave = np.zeros((h, w), np.float32)
+    for octave, (cells, amp) in enumerate(((6, 3.2), (14, 2.0), (30, 1.1), (70, 0.5))):
+        small = rng.normal(0, 1, (cells, cells)).astype(np.float32)
+        big = cv2.resize(small, (w, h), interpolation=cv2.INTER_CUBIC)
+        big = cv2.GaussianBlur(big, (0, 0), max(w / cells / 6, 1.0))
+        wave += big * amp
+    glints = (rng.random((h, w)) > 0.9985).astype(np.float32)
+    glints = cv2.GaussianBlur(glints, (0, 0), 0.6) * 40
+    return wave + glints
 
 
 def to_lab(rgb: np.ndarray) -> np.ndarray:
@@ -77,6 +119,25 @@ def blend_seams(lab: np.ndarray, land: np.ndarray) -> np.ndarray:
         if axis == 0:
             lab = arr.transpose(1, 0, 2)
     return lab
+
+
+def blend_corners(lab: np.ndarray, land: np.ndarray, radius: int = BAND) -> np.ndarray:
+    """blend_seams runs the vertical and horizontal ramps separately, so right at a 4-tile crossing
+    both ramps are near their weakest point and a faint cross survives ('la cruz tenue' at the corner
+    where r1/r2 and c0/c1 meet — confirmed visible at zoom, not fixed by the two 1D passes). A local,
+    radially feathered blur of the land pixels around each of the 4 interior corners finishes the job:
+    strongest exactly at the crossing, fading to zero original edit at `radius` px out, so it only
+    touches the small patch the two ramps could not reach."""
+    out = lab.copy()
+    for cy, cx in ((T, T), (T, 2 * T), (2 * T, T), (2 * T, 2 * T)):
+        y0, y1, x0, x1 = cy - radius, cy + radius, cx - radius, cx + radius
+        patch, lnd = lab[y0:y1, x0:x1], land[y0:y1, x0:x1].astype(np.float32)
+        wb = np.maximum(cv2.GaussianBlur(lnd, (0, 0), 28), 1e-3)
+        smooth = np.stack([cv2.GaussianBlur(patch[..., ch] * lnd, (0, 0), 28) / wb for ch in range(3)], axis=-1)
+        yy, xx = np.mgrid[0:2 * radius, 0:2 * radius]
+        feather = (np.clip(1 - np.hypot(yy - radius, xx - radius) / radius, 0, 1) ** 1.5)[..., None] * lnd[..., None]
+        out[y0:y1, x0:x1] = patch * (1 - feather) + smooth * feather
+    return out
 
 
 def edge_map(rgb: np.ndarray) -> np.ndarray:
@@ -122,7 +183,7 @@ def main() -> None:
     canvas = np.zeros((3 * T, 3 * T, 3), np.float32)
     for r in range(3):
         for c in range(3):
-            canvas[r * T:(r + 1) * T, c * T:(c + 1) * T] = to_lab(np.asarray(Image.open(f"{a.tiles}/draw_r{r}c{c}.png").convert("RGB").resize((T, T), Image.LANCZOS)))
+            canvas[r * T:(r + 1) * T, c * T:(c + 1) * T] = devignette(to_lab(np.asarray(Image.open(f"{a.tiles}/draw_r{r}c{c}.png").convert("RGB").resize((T, T), Image.LANCZOS))))
     land = ~wm
     centre = (slice(T, 2 * T), slice(T, 2 * T))
     px = canvas[centre][land[centre]]
@@ -135,6 +196,7 @@ def main() -> None:
             canvas[s] = match_colour(canvas[s], land[s], ref_mean, ref_std)
     if not a.no_blend:
         canvas = blend_seams(canvas, land)
+        canvas = blend_corners(canvas, land)
     out = to_rgb(canvas)
     if a.flat_sea:
         # mar con gradiente (más claro junto a la costa, profundo al norte) y orilla de arena
@@ -144,8 +206,7 @@ def main() -> None:
         dmax = dist.max() + 1e-3
         t = np.clip(dist / (dmax * 0.5), 0, 1)[..., None]
         grad = sea_near[None, None, :] * (1 - t) + sea_deep[None, None, :] * t
-        yy, xx = np.mgrid[0:out.shape[0], 0:out.shape[1]]
-        wave = (np.sin((yy + xx) * 0.035) * 2.2 + np.sin(yy * 0.05 + xx * 0.02) * 1.6).astype(np.float32)[..., None]
+        wave = water_texture(out.shape[:2])[..., None]
         grad = np.clip(grad + wave, 0, 255)
         erode = cv2.erode(wm.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=1)
         shore = cv2.dilate((wm.astype(np.uint8) - erode), np.ones((3, 3), np.uint8), iterations=2).astype(bool)
