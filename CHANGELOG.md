@@ -12,6 +12,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ### Añadido
 
+- Arreglar import de app.__main__ (FIX-001)
+
+## [Unreleased] — 2026-11-14
+
+### Añadido
+
 - Sincronizar fichas de agentes en el vault (BOOT-004)
 
 ## [Unreleased] — 2026-11-14

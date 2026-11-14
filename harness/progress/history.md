@@ -320,3 +320,20 @@ $ uv run python -m agents --json run knowledge sync_agent_cards --dry_run false 
 ```
 
 </details>
+
+## FIX-001 — app.__main__ rompe los imports: falta la guarda __name__
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.14s
+- **Ticket GEAS:** 9919c3e2 · commit_after `d4b0b983`
+- **Cambios:** app/__main__.py (sin cambios: la guarda ya existia desde el commit inicial); tests/test_main_import.py
+- **Decisiones:** El codigo ya tenia la guarda if __name__ == '__main__'; el ticket se cierra con evidencia de que todos los criterios pasan
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ uv run python -c 'import app.__main__' → exit 0 (sin output) | $ uv run python -m app hello → 'Hola, mundo.' exit 0 | $ uv run pytest tests/test_main_import.py → 1 passed | $ make check → 'check pasado'
+```
+
+</details>
