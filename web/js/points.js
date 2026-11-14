@@ -256,6 +256,15 @@
     renderList();
   }
 
+  // Esc cierra lo último abierto: paseo, Tour/Hoy, ficha (accesible con teclado)
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || document.querySelector("dialog[open]")) return;
+    const step = document.querySelector(".tv-step.is-open .tv-close"), tour = document.querySelector(".tv-tour.is-open .tv-close");
+    if (step) step.click(); else if (tour) tour.click(); else if (selected) { selected = null; markers.forEach((m) => m.classList.remove("is-selected")); renderSheet(); }
+  });
+  // etiquetas de los botones de zoom en el idioma activo
+  const zoomLabels = () => { const a = document.getElementById("zoom-in"), b = document.getElementById("zoom-out"); if (a) a.setAttribute("aria-label", t("common.zoom_in")); if (b) b.setAttribute("aria-label", t("common.zoom_out")); };
+  document.addEventListener("tv:lang", zoomLabels); zoomLabels();
   document.documentElement.lang = lang;
   renderPanel();
   setInterval(() => { renderPanel(); renderSheet(); }, 60_000); // «abierto ahora» al minuto
