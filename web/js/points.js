@@ -22,8 +22,8 @@
     const q = new URLSearchParams(location.search).get("lang");
     if (LANGS.includes(q)) return q;
     try { const s = localStorage.getItem("tinyvigo.lang"); if (LANGS.includes(s)) return s; } catch (e) {}
-    for (const tag of navigator.languages || []) { const b = tag.toLowerCase().split("-")[0]; if (LANGS.includes(b)) return b; }
-    return "es";
+    for (const tag of navigator.languages || [navigator.language || ""]) { const b = tag.toLowerCase().split("-")[0]; if (LANGS.includes(b)) return b; }
+    return "en"; // WEB-04: si el navegador no está en gl/es/en, inglés
   };
   let lang = pickLang();
   const t = (key, vars = {}) => (CAT[lang][key] ?? CAT.es[key] ?? key).replace(/\{(\w+)\}/g, (h, n) => (n in vars ? vars[n] : h));

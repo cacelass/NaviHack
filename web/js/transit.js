@@ -83,12 +83,17 @@
   function addLayers() {
     const C = window.tinyvigoCity; if (!C || !window.L || !data) return;
     const layer = L.layerGroup().addTo(C.map);
+    // paradas de bus: discretas y solo a nivel de calle (zoom >= 17), no las ~1000 de Vigo a la vez
+    const stopLayer = L.layerGroup();
+    const STOP_ZOOM = 17;
+    const syncStops = () => (C.map.getZoom() >= STOP_ZOOM ? stopLayer.addTo(C.map) : stopLayer.remove());
+    C.map.on("zoomend", syncStops); syncStops();
     for (const [id, name, lat, lon, detour] of data.stops) {
-      L.circleMarker([lat, lon], { radius: 4, weight: 1, color: "#151b2a", fillColor: detour ? "#f4cd80" : "#4ea3ff", fillOpacity: 0.9 })
+      L.circleMarker([lat, lon], { radius: 3, weight: 1, color: "#3d6a96", fillColor: detour ? "#f4cd80" : "#ffffff", fillOpacity: 1, opacity: 0.9 })
         .on("click", function () {
           const deps = nextDepartures(id);
           this.bindPopup("<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
-        }).addTo(layer);
+        }).addTo(stopLayer);
     }
     for (const st of (data.trains && data.trains.stations) || []) {
       const pos = st.name === "Vigo Urzaiz" ? [42.234189, -8.713728] : [42.2392656, -8.7146089];

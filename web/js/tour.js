@@ -118,6 +118,7 @@
     const minY = Math.min(...xs.map((p) => p[1])), maxY = Math.max(...xs.map((p) => p[1]));
     const pad = matchMedia("(max-width: 700px)").matches ? 90 : 420; // en escritorio los paneles tapan los bordes
     viewer.viewport.fitBounds(new OpenSeadragon.Rect((minX - pad) / CANVAS, (minY - pad) / CANVAS, (maxX - minX + 2 * pad) / CANVAS, (maxY - minY + 2 * pad) / CANVAS));
+    viewer.viewport.applyConstraints(); // WEB-01: nunca deja ver fondo fuera del bloque
   }
   function clear(viewer) { if (layer) { viewer.removeOverlay(layer); layer = null; } }
 
