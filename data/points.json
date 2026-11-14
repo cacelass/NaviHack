@@ -28,9 +28,22 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/2552/arbol2_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
-   "agenda_ids": [],
-   "show_times": []
+   "agenda_ids": [
+    336
+   ],
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-2553",
@@ -58,9 +71,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/2553/Boneco2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-2566",
@@ -88,9 +112,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/2566/caja_regalo_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-2567",
@@ -118,9 +153,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/2567/Bola2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3494",
@@ -148,6 +194,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3494/Noria22_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -178,6 +233,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3496/CiesPortada2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -208,6 +272,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3499/Photocall2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -238,6 +311,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3502/cartero_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -268,6 +350,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3503/circo-de-nadal-en-vigo_es_lg.jpg",
    "web": "https://www.circodenadal.gal",
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -298,6 +389,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3508/_VRL6698_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -328,6 +428,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3512/hielo_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -358,6 +467,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3513/DSC09230_es_lg.JPG",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -388,9 +506,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3516/Palacio_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3527",
@@ -418,6 +547,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3527/belen_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -448,6 +586,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3534/nadalbus_es_lg.jpg",
    "web": "https://www.woutick.es/evento/100751/entradas-nadal-bus-vigo-20252026",
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -478,6 +625,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3535/DSC_8786_es_lg.jpg",
    "web": "https://www.mardeons.es/otros-cruceros-vigo/o-barco-do-nadal/",
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -508,6 +664,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3554/Jumping_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -538,6 +703,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3701/CPPN_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -568,6 +742,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3703/Bonecos_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -598,6 +781,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3709/Zorras_arbores14_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -628,6 +820,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3711/Violinista2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -658,6 +859,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3712/PPN_farola_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -688,9 +898,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3713/Bosque_1_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3714",
@@ -718,9 +939,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3714/Polar_Fugaz1_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3715",
@@ -748,9 +980,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3715/Estrela_portico3_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3720",
@@ -778,9 +1021,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3720/Carroza3_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3721",
@@ -808,9 +1062,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3721/Anxos2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-3729",
@@ -838,6 +1103,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3729/Inauguracion_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "approximate",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -868,6 +1142,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3730/Caballo_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "approximate",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -898,6 +1181,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/3731/TrenPC2_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -928,6 +1220,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/4872/arces_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -958,9 +1259,20 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/4873/arboles_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
-   "show_times": []
+   "show_times": [
+    "18:00"
+   ]
   },
   {
    "id": "concello-4876",
@@ -988,6 +1300,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/4876/lampara_es._lgjpeg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -1018,6 +1339,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/4940/PXL_20261113_091648169_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []
@@ -1048,6 +1378,15 @@
    "image_url": "https://api-rutasinteractivas.vigo.org/assets-server/file/poi/4941/PXL_20261113_091811366_es_lg.jpg",
    "web": null,
    "source": "concello_arcgis",
+   "sources": [
+    {
+     "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+     "url": "https://www.arcgis.com/home/item.html?id=41caae2067564a92a79d91f5a08c00f6",
+     "date": "2026-11-14"
+    }
+   ],
+   "last_verified": "2026-11-14",
+   "position": "address",
    "status": "official",
    "agenda_ids": [],
    "show_times": []

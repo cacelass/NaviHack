@@ -96,7 +96,22 @@ def text(value: Any) -> str | None:
     return "\n".join(line for line in lines if line) or None
 
 
-def to_point(feature: dict[str, Any]) -> dict[str, Any]:
+VAGUE_ADDRESS = ("por toda la ciudad", "diversas localizaciones", "varias ubicaciones")
+ITEM_URL = f"https://www.arcgis.com/home/item.html?id={ITEM_ID}"
+
+
+def switch_on_times(schedule: str | None) -> list[str]:
+    """Horas de «Encendido: … 18:00 h» del horario oficial → ["18:00"] (para la agenda y la noche)."""
+    if not schedule:
+        return []
+    times = []
+    for line in schedule.splitlines():
+        if re.match(r"\s*(encendido|acendido|aceso)\b", line, re.I):
+            times += [f"{int(h):02d}:{m}" for h, m in re.findall(r"(\d{1,2})[:.](\d{2})", line)]
+    return sorted(set(times))
+
+
+def to_point(feature: dict[str, Any], fetched_at: str = "") -> dict[str, Any]:
     a = feature["attributes"]
     g = feature.get("geometry") or {}
     lon = g.get("x", a.get("lon"))
@@ -104,6 +119,8 @@ def to_point(feature: dict[str, Any]) -> dict[str, Any]:
     address = a.get("dir_txt_alternativo") or " ".join(
         str(p) for p in (a.get("dir_nombre_via"), a.get("dir_numero")) if p
     )
+    schedule_es = text(a.get("horario_atencion"))
+    vague = any(v in (address or "").lower() for v in VAGUE_ADDRESS)
     return {
         "id": f"concello-{a['id']}",
         "concello_id": str(a["id"]),
@@ -115,7 +132,7 @@ def to_point(feature: dict[str, Any]) -> dict[str, Any]:
         },
         "long": {"es": text(a.get("descripcion_larga")), "gl": text(a.get("descripcion_larga_gl"))},
         "schedule_text": {
-            "es": text(a.get("horario_atencion")),
+            "es": schedule_es,
             "gl": text(a.get("horario_atencion_gl")),
         },
         "lat": round(float(lat), 6),
@@ -124,9 +141,19 @@ def to_point(feature: dict[str, Any]) -> dict[str, Any]:
         "image_url": a.get("image_url"),
         "web": a.get("web") or None,
         "source": "concello_arcgis",
+        "sources": [
+            {
+                "name": "Concello de Vigo — capa ArcGIS Navidad 2026-27",
+                "url": ITEM_URL,
+                "date": fetched_at[:10],
+            }
+        ],
+        "last_verified": fetched_at[:10] or None,
+        # «Por toda la ciudad»: el Concello pone un punto genérico; no es una ubicación real.
+        "position": "approximate" if vague else "address",
         "status": "official",
         "agenda_ids": [],
-        "show_times": [],
+        "show_times": switch_on_times(schedule_es),
     }
 
 
@@ -166,7 +193,7 @@ def latest_raw() -> dict[str, Any] | None:
 
 
 def build(raw: dict[str, Any], overrides: list[dict[str, Any]]) -> dict[str, Any]:
-    points = apply_overrides([to_point(f) for f in raw["features"]], overrides)
+    points = apply_overrides([to_point(f, raw["fetched_at"]) for f in raw["features"]], overrides)
     return {"fetched_at": raw["fetched_at"], "source_item": ITEM_ID, "points": points}
 
 

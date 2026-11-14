@@ -77,3 +77,24 @@ def test_build_guarda_fetched_at_de_la_copia() -> None:
 
 def test_text_vacio() -> None:
     assert text(None) is None and text("<p>&nbsp;</p>") is None
+
+
+def test_horas_de_encendido_del_horario_oficial() -> None:
+    from scripts.christmas_layer import switch_on_times
+
+    sched = (
+        "Encendido: Todos los días a las 18:00 h.\nApagado:\nDe domingo a miércoles: A las 01:00 h."
+    )
+    assert switch_on_times(sched) == ["18:00"]
+    assert switch_on_times("Aceso de domingo a mércores: 18:30 h. a 00:30 h.") == ["00:30", "18:30"]
+    assert switch_on_times(None) == []
+
+
+def test_cada_punto_lleva_fuente_fecha_y_precision() -> None:
+    p = to_point(_feature(1), "2026-11-14T12:00:00+00:00")
+    assert p["sources"][0]["date"] == "2026-11-14" and "arcgis.com" in p["sources"][0]["url"]
+    assert p["last_verified"] == "2026-11-14" and p["position"] == "address"
+    assert p["show_times"] == ["18:00"]
+    vague = _feature(2)
+    vague["attributes"]["dir_txt_alternativo"] = "Por toda la ciudad"
+    assert to_point(vague)["position"] == "approximate"
