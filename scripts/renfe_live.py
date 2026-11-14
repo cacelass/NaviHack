@@ -52,7 +52,9 @@ def main() -> int:
     static = json.loads(STATIC.read_text(encoding="utf-8"))
     ids = {m["trip_id"] for m in static["movements"]}
     res = delays(feed, ids, time.time())
-    print(f"feed {'al día' if res['fresh'] else 'VIEJO'} ({res['age_s']} s); {len(res['delays'])} trenes de Vigo con retraso:")
+    print(
+        f"feed {'al día' if res['fresh'] else 'VIEJO'} ({res['age_s']} s); {len(res['delays'])} trenes de Vigo con retraso:"
+    )
     for tid, mins in sorted(res["delays"].items()):
         print(f"  {tid}: +{mins} min")
     return 0
