@@ -697,10 +697,12 @@
         "Vigo-Urzáiz and Vigo-Guixar present",
         "Stops listed"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "5d40e61c-8ebc-4e87-803d-d0dd054b86f9",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "5d40e61c-x-02-renfe-static-gtfs-ingest",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "X-03",
