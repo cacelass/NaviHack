@@ -52,10 +52,12 @@
         "El workflow de CI ejecuta los mismos comandos que make check",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "b335baf8-76e8-4630-be81-61c111e253c9",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "b335baf8-qa-001-bater-a-de-calidad-en-ver",
+      "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
     {
       "id": "BOOT-001",

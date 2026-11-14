@@ -1,26 +1,35 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** QA-001
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Dejar make check (lint + typecheck + test + arnés) pasando de punta a punta, y el CI ejecutando lo mismo que se ejecuta en local. Es la condición que ./init.sh verifica antes de dejar trabajar a cualquier agente.
+
+Criterios de aceptación:
+  1. make lint pasa sin errores
+  2. make typecheck pasa sin errores
+  3. make test pasa y la salida real queda como evidencia
+  4. El workflow de CI ejecuta los mismos comandos que make check
+  5. ./init.sh termina con ENTORNO LISTO
+
+[importada desde harness/featureslist.json: QA-001]
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] make lint pasa sin errores
+- [ ] make typecheck pasa sin errores
+- [ ] make test pasa y la salida real queda como evidencia
+- [ ] El workflow de CI ejecuta los mismos comandos que make check
+- [ ] ./init.sh termina con ENTORNO LISTO
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_
