@@ -48,7 +48,7 @@
           const icon = L.divIcon({ className: "", html: '<div class="tv-park tv-park-' + cls + '"><b>P</b>' + label + "</div>", iconSize: [64, 26], iconAnchor: [32, 13] });
           const gm = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=" + r.lat + "," + r.lon;
           L.marker([r.lat, r.lon], { icon }).bindPopup(
-            "<strong>" + r.nombre + "</strong><br>" + (stale ? t("common.no_data") : free ? t("go.free_n", { n: free }) : t("go.full")) + " / " + r.totalplazas +
+            "<strong>" + r.nombre + "</strong><br>" + (stale ? t("common.no_data") : free ? t(free === 1 ? "go.free_1" : "go.free_n", { n: free }) : t("go.full")) + " / " + r.totalplazas +
             '<br><small>' + t("common.updated", { when: r.fechahora.slice(11, 16) }) + '</small><br><a target="_blank" rel="noopener" href="' + gm + '">' + t("go.route_to") + "</a>").addTo(parkLayer);
         }
       } catch (e) { /* sin feed: la capa queda vacía */ }

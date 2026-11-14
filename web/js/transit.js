@@ -68,7 +68,13 @@
       deps.length
         ? el("ul", "tv-deps", ...deps.map((x) => el("li", null, el("b", "tv-dep-time", x.time), el("span", "tv-line", x.line), el("span", "tv-dep-to", x.headsign), x.detour ? el("span", "tv-badge", "⚠") : null)))
         : el("p", "tv-note", t("transit.no_more_today")),
-      el("p", "tv-note tv-transit-note", t("transit.scheduled")));
+      el("div", "tv-transit-foot",
+        s ? Object.assign(el("a", "tv-leg-maps tv-stop-maps", t("transit.go_to_stop")), {
+          // sin origen: Google Maps usa la ubicación del móvil
+          href: "https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=" + s.lat.toFixed(6) + "," + s.lon.toFixed(6),
+          target: "_blank", rel: "noopener", title: t("transit.go_to_stop") + " · " + s.name,
+        }) : null,
+        el("p", "tv-note tv-transit-note", t("transit.scheduled"))));
     return box;
   }
 

@@ -150,7 +150,7 @@
       const near = rows.map((r) => ({ r, d: metres(p, r) })).sort((a, b) => a.d - b.d)[0];
       if (near.d > 2500) return;
       const free = Math.max(0, near.r.plazaslibres), walk = Math.max(1, Math.round((near.d * 1.3) / 75));
-      const go = el("a", null, el("span", "tv-name", near.r.nombre.replace(/^Parking /, "")), el("span", "tv-badge " + (free > 20 ? "is-open" : ""), free ? t("go.free_n", { n: free }) : t("go.full")));
+      const go = el("a", null, el("span", "tv-name", near.r.nombre.replace(/^Parking /, "")), el("span", "tv-badge " + (free > 20 ? "is-open" : ""), free ? t(free === 1 ? "go.free_1" : "go.free_n", { n: free }) : t("go.full")));
       go.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=" + near.r.lat + "," + near.r.lon; go.target = "_blank"; go.rel = "noopener";
       box.append(el("p", "tv-kicker", t("detail.nearest_parking") + " · " + t("common.walk_min", { min: walk }) + " · " + t("common.updated", { when: near.r.fechahora.slice(11, 16) })), go);
     });
@@ -203,13 +203,14 @@
     if (p.photo) {
       const img = Object.assign(el("img", "tv-photo"), { src: p.photo, alt: txt(p.name), onerror() { hero.classList.add("is-empty"); this.remove(); } });
       const zoom = el("button", "tv-hero-zoom", img); zoom.setAttribute("aria-label", t("detail.real_photo")); zoom.onclick = () => zoomPhoto(p);
-      hero = el("div", "tv-hero", zoom, close);
+      hero = el("div", "tv-hero", zoom);
     }
     const door = st ? el("div", "tv-door " + (st.open ? "is-open" : ""),
       el("span", "tv-door-state", window.PX ? Object.assign(el("span"), { innerHTML: PX.svg(st.open ? "open" : "closed", { size: 16, mono: true }) }) : null, st.open ? t("common.open_now") : t("common.closed")),
       el("span", "tv-door-time", st.label)) : null;
     sheet.append(...[
-      hero || close,
+      close, // MOB-01: primer hijo de la ficha y «sticky»: sigue a la vista al hacer scroll
+      hero,
       el("p", "tv-type", lu(ICON[p.type] || "map-pin", 16), t(TYPE_KEY[p.type] || "points.filter_all")),
       Object.assign(el("h2", null, txt(p.name)), { id: "tv-sheet-title", tabIndex: -1 }),
       door,

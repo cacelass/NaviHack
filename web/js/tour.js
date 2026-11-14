@@ -115,7 +115,9 @@
     const minX = Math.min(...xs.map((p) => p[0])), maxX = Math.max(...xs.map((p) => p[0]));
     const minY = Math.min(...xs.map((p) => p[1])), maxY = Math.max(...xs.map((p) => p[1]));
     const pad = matchMedia("(max-width: 700px)").matches ? 90 : 420; // en escritorio los paneles tapan los bordes
-    viewer.viewport.fitBounds(new OpenSeadragon.Rect((minX - pad) / CANVAS, (minY - pad) / CANVAS, (maxX - minX + 2 * pad) / CANVAS, (maxY - minY + 2 * pad) / CANVAS));
+    // MOB-01: en móvil la hoja tapa ~60 % de abajo; ampliamos el encuadre hacia abajo para que la ruta quede arriba, a la vista
+    const h = maxY - minY + 2 * pad, below = matchMedia("(max-width: 700px)").matches ? h * 1.5 : 0;
+    viewer.viewport.fitBounds(new OpenSeadragon.Rect((minX - pad) / CANVAS, (minY - pad) / CANVAS, (maxX - minX + 2 * pad) / CANVAS, (h + below) / CANVAS));
     viewer.viewport.applyConstraints(); // WEB-01: nunca deja ver fondo fuera del bloque
   }
   function clear(viewer) { if (layer) { viewer.removeOverlay(layer); layer = null; } }
@@ -131,7 +133,7 @@
     document.body.append(btn, box);
     let when = "now";
     const startTime = () => { if (when === "now") return new Date(); const d = new Date(); d.setHours(+when, 0, 0, 0); if (d < new Date()) d.setDate(d.getDate() + 1); return d; };
-    let budget = 60, fromHere = true, result = null, startPos = ORIGIN, busy = "", trip = null, offset = 0;
+    let budget = 60, fromHere = true, result = null, startPos = ORIGIN, busy = "", trip = null, offset = 0, editing = false;
 
     const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null && k !== false)); return n; };
     const hhmm = (min) => { const d = new Date(startTime().getTime() + (min + offset) * 60000); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
@@ -145,8 +147,20 @@
       const chips = el("div", "tv-chips", ...BUDGETS.map((b) => { const c = el("button", b === budget ? "is-on" : "", t("tour.minutes", { min: b })); c.onclick = () => { budget = b; render(); }; return c; }));
       const from = el("div", "tv-langs tv-from", ...[[true, "tour.from_here"], [false, "tour.from_centre"]].map(([v, k]) => { const c = el("button", v === fromHere ? "is-on" : "", t(k)); c.onclick = () => { fromHere = v; render(); }; return c; }));
       const whenChips = el("div", "tv-chips", ...[["now", t("tour.now")], ["18", "18:00"], ["20", "20:00"], ["22", "22:00"]].map(([v, label]) => { const c = el("button", v === when ? "is-on" : "", label); c.onclick = () => { when = v; render(); }; return c; }));
-      const go = el("button", "tv-btn tv-go", t("tour.go")); go.onclick = run;
-      box.append(close, el("h2", null, t("tour.title")), chips, el("p", "tv-note", t("tour.when")), whenChips, from, go);
+      const go = el("button", "tv-btn tv-go", t("tour.go")); go.onclick = () => { editing = false; run(); };
+      // MOB-01: con un tour o un «cómo llegar» ya calculado, el formulario se pliega en una línea
+      // de resumen para que la ruta se vea en el mapa; «Cambiar» lo vuelve a abrir.
+      const folded = (result || trip) && !editing && !busy;
+      box.classList.toggle("has-result", !!folded);
+      if (folded) {
+        const edit = el("button", "tv-btn tv-btn-quiet tv-edit", t("go.change"));
+        edit.onclick = () => { editing = true; render(); };
+        const whenLabel = when === "now" ? t("tour.now") : when + ":00";
+        box.append(close, el("div", "tv-tour-head",
+          el("p", "tv-kicker", t("tour.minutes", { min: budget }) + " · " + whenLabel + " · " + t(fromHere ? "tour.from_here" : "tour.from_centre")), edit));
+      } else {
+        box.append(close, el("h2", null, t("tour.title")), chips, el("p", "tv-note", t("tour.when")), whenChips, from, go);
+      }
       if (busy) box.append(el("p", "tv-note", busy));
       if (trip) box.append(renderGo());
       if (result) box.append(renderResult());
@@ -172,7 +186,8 @@
         const k = l.parking;
         detail = k ? t("go.park_detail", { free: k.free, total: k.total, time: k.updated }) + " · " + t("go.forecast_" + k.forecast) + " · " + t("go.park_time", { min: o.parkMin }) : t(o.warning || "go.no_parking_data");
       }
-      const maps = Object.assign(el("a", "tv-leg-maps", lu("arrow-up-right", 14), t("go.open_leg")), { href: l.gmaps, target: "_blank", rel: "noopener" });
+      const toStop = l.mode === "walk" && o.mode === "bus" && o.legs[0] === l;
+      const maps = Object.assign(el("a", "tv-leg-maps", lu("arrow-up-right", 14), t(toStop ? "go.open_to_stop" : "go.open_leg")), { href: l.gmaps, target: "_blank", rel: "noopener" });
       return el("li", "tv-leg tv-leg-" + l.mode,
         el("span", "tv-leg-icon", lu(MODE_ICON[l.mode], 18)),
         el("div", "tv-leg-body", el("strong", null, title), el("span", null, detail + (l.approx ? " · " + t("go.approx") : "")), maps),
@@ -232,7 +247,7 @@
         return el("li", null, b);
       }));
       const walk = el("button", "tv-btn tv-go", t("walk.start")); walk.onclick = () => startWalk(0);
-      const gm = el("a", "tv-btn", t("tour.open_gmaps"));
+      const gm = el("a", "tv-btn tv-btn-quiet", t("tour.open_gmaps"));
       const dest = stops[stops.length - 1].p;
       gm.href = gmaps("walking", [dest.lat, dest.lon], stops.slice(0, -1).map((s) => [s.p.lat, s.p.lon]).slice(0, 9));
       gm.target = "_blank"; gm.rel = "noopener";

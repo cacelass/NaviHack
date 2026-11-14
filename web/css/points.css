@@ -356,3 +356,74 @@ body:has(.tv-sheet.is-open) .tv-settings-open, body:has(.tv-tour.is-open) .tv-se
 .tv-wx-hours { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
 .tv-wx-hours li { display: grid; justify-items: center; gap: 2px; font-size: var(--fs-meta); color: var(--fg-2); font-variant-numeric: tabular-nums; }
 .tv-wx-hours .is-rain { color: var(--warning); font-weight: var(--w-600); }
+
+/* ── MOB-01 (Miguel): móvil — hojas inferiores, áreas seguras, una sola hoja a la vez (js/sheets.js) ── */
+@media (max-width: 700px) {
+  /* todas las hojas iguales: ancladas abajo, a todo lo ancho, con asa y scroll propio */
+  .tv-sheet, .tv-tour, .tv-step, .tv-settings {
+    left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important;
+    width: auto !important; max-width: none !important;
+    max-height: calc(100dvh - 72px - env(safe-area-inset-top)) !important;
+    border-radius: 20px 20px 0 0 !important; border-bottom: 0 !important;
+    padding-bottom: calc(var(--sp-4) + env(safe-area-inset-bottom)) !important;
+    overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, .4);
+  }
+  .tv-tour, .tv-settings { padding-top: 22px !important; }
+  .tv-tour::before, .tv-settings::before, .tv-step::before {
+    content: ""; position: absolute; top: 8px; left: 50%; width: 40px; height: 4px; margin-left: -20px;
+    border-radius: 2px; background: var(--line); pointer-events: none;
+  }
+  .tv-step { transform: translateY(calc(100% + 24px)) !important; }
+  .tv-step.is-open { transform: none !important; }
+  .tv-sheet { transform: translateY(calc(100% + 24px)); }
+  .tv-sheet.is-open { transform: none; }
+
+  /* con una hoja abierta, la barra inferior (Tour, Hoy, vista, zoom) se aparta: nada solapado */
+  .tv-tour-open, .tv-today-open, .tv-view, #zoom, #about-open { transition: opacity .2s, transform .25s; }
+  .tv-tour-open, .tv-today-open { bottom: calc(10px + env(safe-area-inset-bottom)); }
+  body.tv-has-sheet .tv-tour-open, body.tv-has-sheet .tv-today-open,
+  body.tv-has-sheet .tv-view, body.tv-has-sheet #zoom, body.tv-has-sheet #about-open { opacity: 0; pointer-events: none; }
+  body.tv-has-sheet .tv-tour-open { transform: translate(calc(-100% - 4px), 24px); }
+  body.tv-has-sheet .tv-today-open { transform: translate(4px, 24px); }
+
+  /* la lista desplegada no tapa la barra ni el engranaje */
+  .tv-panel { max-height: calc(100dvh - 150px - env(safe-area-inset-bottom)); overflow: hidden; }
+
+  /* objetivos táctiles y textos legibles */
+  .tv-close { min-width: var(--tap); min-height: var(--tap); }
+  .tv-chips button, .tv-langs button, .tv-goopt, .tv-res, .tv-btn { min-height: var(--tap); }
+  .tv-note, .tv-kicker, .tv-leg-body span, .tv-goopt-body span { font-size: 13px; }
+  .tv-chips { flex-wrap: wrap; }
+  .tv-legs .tv-leg-maps { min-height: 32px; }
+  .leaflet-popup-content { font-size: 14px; }
+}
+@media (max-width: 380px) {
+  .tv-tour-open, .tv-today-open { padding: 0 var(--sp-3); font-size: var(--fs-label); }
+  .tv-goopt { grid-template-columns: 36px 1fr auto; gap: var(--sp-2); padding: var(--sp-2); }
+}
+
+/* MOB-01: cabecera plegada del tour cuando ya hay ruta */
+.tv-tour-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); padding-right: calc(var(--tap) + var(--sp-2)); }
+.tv-tour-head .tv-kicker { margin: 0; font-size: var(--fs-label); color: var(--fg-2); }
+.tv-tour-head .tv-edit { min-height: 36px; padding: 0 var(--sp-3); flex: none; }
+@media (max-width: 700px) {
+  .tv-tour.has-result { max-height: 62dvh !important; }
+}
+
+/* «Ir a la parada» en la ficha */
+.tv-transit-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.tv-stop-maps { min-height: var(--tap); display: inline-flex; align-items: center; font-weight: var(--w-500); }
+
+/* MOB-01: la × de cada hoja se queda arriba a la derecha al hacer scroll (sticky, sin ocupar sitio) */
+.tv-sheet > .tv-close, .tv-tour > .tv-close, .tv-settings > .tv-close {
+  position: sticky !important; top: 8px; float: none !important; z-index: 6;
+  display: grid; margin: 0 0 calc(-1 * var(--tap)) auto !important;
+  background: rgba(16, 18, 26, .72); color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.tv-sheet > .tv-close + .tv-hero { margin-top: 0; }
+.tv-tour > h2, .tv-settings > h2, .tv-events > h2 { padding-right: calc(var(--tap) + var(--sp-2)); }
+@media (max-width: 700px) {
+  .tv-sheet > .tv-close, .tv-tour > .tv-close, .tv-settings > .tv-close { top: 10px; }
+}
