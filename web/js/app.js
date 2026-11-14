@@ -16,14 +16,19 @@
     constrainDuringPan: true,
     immediateRender: true,
     imageSmoothingEnabled: false,
-    tileSources: {
-      width: m.width,
-      height: m.height,
-      tileSize: m.tile_size,
-      minLevel: m.min_level,
-      maxLevel: m.max_level,
-      getTileUrl: (level, x, y) => base + level + "/" + x + "_" + y + "." + m.format,
-    },
+    tileSources: (() => {
+      const source = {
+        width: m.width,
+        height: m.height,
+        tileSize: m.tile_size,
+        minLevel: m.min_level,
+        maxLevel: m.max_level,
+        getTileUrl: (level, x, y) => base + level + "/" + x + "_" + y + "." + m.format,
+      };
+      // An image that covers only part of the georeferenced canvas is placed at its real position.
+      if (!m.canvas) return source;
+      return { tileSource: source, x: m.offset.x / m.canvas.width, y: m.offset.y / m.canvas.width, width: m.width / m.canvas.width };
+    })(),
   });
   // The home view covers the whole screen; it is also the farthest you can zoom out.
   const fit = (goHome) => {

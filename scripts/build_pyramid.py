@@ -22,7 +22,8 @@ TILE = 512
 Image.MAX_IMAGE_PIXELS = None
 
 
-def build(image: Path, out_root: Path, version: str, quality: int = 85, set_current: bool = False) -> Path:
+def build(image: Path, out_root: Path, version: str, quality: int = 85, set_current: bool = False,
+          canvas: tuple[int, int] | None = None, offset: tuple[int, int] = (0, 0)) -> Path:
     dest = out_root / version
     if dest.exists():
         raise SystemExit(f"version '{version}' already exists at {dest}; never overwritten, pick a new version")
@@ -56,6 +57,9 @@ def build(image: Path, out_root: Path, version: str, quality: int = 85, set_curr
         "max_level": max_level,
         "levels": levels,
     }
+    if canvas:  # the image covers only part of the georeferenced canvas (e.g. one tile of the 3x3 block)
+        manifest["canvas"] = {"width": canvas[0], "height": canvas[1]}
+        manifest["offset"] = {"x": offset[0], "y": offset[1]}
     (dest / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     if set_current:
         (out_root / "current.json").write_text(json.dumps({"version": version}) + "\n", encoding="utf-8")
@@ -68,9 +72,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--version", required=True)
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parents[1] / "web" / "tiles")
     ap.add_argument("--quality", type=int, default=85)
+    ap.add_argument("--canvas", type=int, nargs=2, metavar=("W", "H"), help="size of the georeferenced canvas the image sits in")
+    ap.add_argument("--offset", type=int, nargs=2, metavar=("X", "Y"), default=(0, 0), help="top-left of the image in that canvas")
     ap.add_argument("--set-current", action="store_true", help="point web/tiles/current.json at this version")
     args = ap.parse_args(argv)
-    dest = build(args.image, args.out, args.version, args.quality, args.set_current)
+    dest = build(args.image, args.out, args.version, args.quality, args.set_current,
+                 tuple(args.canvas) if args.canvas else None, tuple(args.offset))
     n = sum(1 for _ in dest.rglob("*.webp"))
     print(f"built {dest} ({n} tiles)")
     return 0
