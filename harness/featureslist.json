@@ -71,10 +71,12 @@
         "hay tests de contratos inline (inline_contracts, all_contracts, contract_for, validate_contracts) y de las cuatro acciones de bootstrap",
         "make check pasa"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [],
       "ticket_id": "ba181545-7e31-4565-ab2b-61cc8b8645e3",
-      "raw_status": "FREE",
+      "raw_status": "IN_PROGRESS",
+      "branch": "ba181545-boot-001-arranque-en-frio-operat",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167",
       "started": "2026-08-04",
       "closed": "2026-08-04",
       "review_rounds": 0

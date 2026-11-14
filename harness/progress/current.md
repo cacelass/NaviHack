@@ -1,26 +1,37 @@
 # Tarea actual
 
-> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
-> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
-> está el trabajo sin releer el proyecto entero.
-
-**Feature:** _(ninguna)_
-**Estado:** idle
-**Iniciada:** —
-**Responsable:** —
+**Feature:** BOOT-001
+**Estado:** in_progress
+**Iniciada:** 2026-11-14
+**Responsable:** implementer
 
 ## Objetivo
 
-_(sin trabajo en curso)_
+Completar el codigo ya escrito y nunca ejecutado: el soporte de contratos inline en agents/contracts.py y el agente bootstrap. Incluye arreglar la colision de nombre entre la accion 'describe' del agente y BaseAgent.describe(), que hoy rompe 'python -m agents list'.
+
+Criterios de aceptación:
+  1. python -m agents list lista los 24 agentes sin excepcion, bootstrap incluido
+  2. python -m agents describe bootstrap devuelve el contrato inline
+  3. existe agents/prompts/bootstrap_agent.md con prosa a mano y bloque AUTOGEN
+  4. uv run python -m agents.prompts_sync sale en verde
+  5. hay tests de contratos inline (inline_contracts, all_contracts, contract_for, validate_contracts) y de las cuatro acciones de bootstrap
+  6. make check pasa
+
+[importada desde harness/featureslist.json: BOOT-001]
 
 ## Criterios de aceptación
 
-_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
+- [ ] python -m agents list lista los 24 agentes sin excepcion, bootstrap incluido
+- [ ] python -m agents describe bootstrap devuelve el contrato inline
+- [ ] existe agents/prompts/bootstrap_agent.md con prosa a mano y bloque AUTOGEN
+- [ ] uv run python -m agents.prompts_sync sale en verde
+- [ ] hay tests de contratos inline (inline_contracts, all_contracts, contract_for, validate_contracts) y de las cuatro acciones de bootstrap
+- [ ] make check pasa
 
 ## Bitácora
 
-_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
+_(pendiente)_
 
 ## Bloqueos
 
-_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
+_(ninguno)_
