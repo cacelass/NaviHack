@@ -22,3 +22,5 @@
 {"t":"2026-11-14T14:21:31.223Z","model":"gemini-3.1-flash-image","label":"arbol-sprite-v2","size":"default","status":"OK"}
 {"t":"2026-11-14T14:39:54.321Z","model":"gemini-3.1-flash-image","label":"arbol-add-v1","size":"default","status":"OK"}
 {"t":"2026-11-14T14:53:26.767Z","model":"gemini-3.1-flash-image","label":"arbol-porta-sol-v2","size":"default","status":"OK"}
+{"t":"2026-11-14T15:13:46.619Z","model":"gemini-3.1-flash-image","label":"arbol-porta-sol-real-v1","size":"default","status":"OK"}
+{"t":"2026-11-14T15:14:39.865Z","model":"gemini-3.1-flash-image","label":"arbol-porta-sol-real-v2","size":"default","status":"OK"}

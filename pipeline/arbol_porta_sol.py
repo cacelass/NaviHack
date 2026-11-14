@@ -29,7 +29,8 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 CANVAS = Path.home() / "proyectos/NaviHack/work/tiles-p3/ensamblado-v6.png"  # best current style (v6)
 OUT_DIR = ROOT / "work/assets"
-PROMPT = ROOT / "pipeline/prompts/arbol-add-full.txt"
+PROMPT = ROOT / "pipeline/prompts/arbol-add-real.txt"
+PHOTO_REF = ROOT / "web/ui/assets/foto-arbol.jpg"  # real Porta do Sol tree, content reference only
 # centre of the plaza, found by eye around the geo-referenced canvas centre (1536,1536) = Porta do Sol
 CX, CY, HALF = 1608, 1518, 175  # box: (1433,1343)-(1783,1693), 350x350
 
@@ -65,6 +66,9 @@ def main() -> None:
     ap.add_argument("--call", action="store_true", help="spend one image call")
     ap.add_argument("--from-file", dest="from_file", type=Path, default=None, help="reuse an existing model answer")
     ap.add_argument("--label", default="arbol-porta-sol-v2")
+    ap.add_argument("--with-photo", action="store_true", default=True)
+    ap.add_argument("--no-photo", dest="with_photo", action="store_false")
+    ap.add_argument("--prompt", type=Path, default=None)
     a = ap.parse_args()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -80,7 +84,9 @@ def main() -> None:
     if a.from_file:
         out1024 = a.from_file
     elif a.call:
-        cmd = ["node", str(ROOT / "pipeline/imggen.mjs"), str(out1024), str(PROMPT), str(in1024)]
+        prompt = a.prompt or PROMPT
+        imgs = [str(in1024)] + ([str(PHOTO_REF)] if a.with_photo else [])
+        cmd = ["node", str(ROOT / "pipeline/imggen.mjs"), str(out1024), str(prompt), *imgs]
         env = {**os.environ, "MODEL": "gemini-3.1-flash-image", "AR": "1:1", "LABEL": a.label}
         r = subprocess.run(cmd, env=env)
         if r.returncode != 0:
