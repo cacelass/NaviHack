@@ -26,7 +26,7 @@ import sys
 from pathlib import Path
 
 from pipeline import georef
-from pipeline.render import fetch_ortho
+from pipeline.render import fetch_ortho, silhouette
 
 HERE = Path(__file__).resolve().parent
 TEMPLATES = HERE / "templates"
@@ -36,16 +36,7 @@ MARGIN_M = 30.0
 def buildings(params: georef.RenderParams, bounds: tuple[float, float, float, float]) -> list[dict]:
     """Los edificios que tocan el lienzo, en metros y con los redondeos del 3x3."""
     x_min, y_min, x_max, y_max = bounds
-    source = json.loads((HERE / "original" / "edificios_concello.json").read_text(encoding="utf-8"))
-    east = HERE / "original" / "edificios_este.json"
-    if east.exists():
-        # Los del 3x3 van primero y en su orden: así la zona ya pintada sale igual.
-        seen = {b["r"] for b in source if b.get("r")}
-        source += [
-            b
-            for b in json.loads(east.read_text(encoding="utf-8"))
-            if not b.get("r") or b["r"] not in seen
-        ]
+    source = silhouette.merged_source()
     out: list[dict] = []
     for raw in source:
         ring = [
@@ -153,8 +144,6 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _old_buildings_count(params: georef.RenderParams) -> int:
-    from pipeline.render import silhouette
-
     return len(silhouette.load_buildings(params))
 
 
