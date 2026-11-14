@@ -688,3 +688,20 @@ $ data/points.json contiene 35 puntos con status 'official', incluidos los 6 lan
 ```
 
 </details>
+
+## D-10 — Weather feed (Open-Meteo): current, hourly forecast and sea state
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 100 passed in 0.67s
+- **Ticket GEAS:** 66ad58ab · commit_after `c7d219f2`
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+commits 5a6ca17, fbaea3e, 17e8df5. pytest 89 passed; ruff/mypy/evals OK. test_weather: tira ahora+6 h, 4 días horarios con 11 variables, rain_probability en ventana, último bueno con edad. Marine en fuentes_datos.md.
+```
+
+</details>

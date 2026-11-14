@@ -1,33 +1,26 @@
 # Tarea actual
 
-**Feature:** D-04
-**Estado:** in_progress
-**Iniciada:** 2026-11-14
-**Responsable:** implementer
+> Estado vivo de la ejecución en curso. Es la memoria **fuera** de la ventana de
+> contexto: cualquier agente que arranque de cero lee este fichero y sabe dónde
+> está el trabajo sin releer el proyecto entero.
+
+**Feature:** _(ninguna)_
+**Estado:** idle
+**Iniciada:** —
+**Responsable:** —
 
 ## Objetivo
 
-Join instalacion to CKAN venue datasets, with name and address fallbacks; unmatched-event report.
-
-Criterios de aceptación:
-  1. Join by instalacion id implemented
-  2. Fallback by venue name
-  3. Fallback by direccion text
-  4. Unmatched events logged
-  5. Events without location shown in list only
+_(sin trabajo en curso)_
 
 ## Criterios de aceptación
 
-- [ ] Join by instalacion id implemented
-- [ ] Fallback by venue name
-- [ ] Fallback by direccion text
-- [ ] Unmatched events logged
-- [ ] Events without location shown in list only
+_(copiar aquí los `acceptance_criteria` de la feature al empezar)_
 
 ## Bitácora
 
-_(pendiente)_
+_(una línea por paso: qué se hizo, qué fichero se tocó, qué verificó)_
 
 ## Bloqueos
 
-_(ninguno)_
+_(qué impide avanzar y qué se necesita para desbloquearlo — vacío si nada)_
