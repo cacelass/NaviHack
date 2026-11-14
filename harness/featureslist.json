@@ -143,12 +143,12 @@
         "El paquete app/ está renombrado al nombre real del proyecto (project.yml, pyproject.toml, Makefile y coverage coherentes)",
         "./init.sh termina con ENTORNO LISTO"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "SCOPE-001"
       ],
       "ticket_id": "897cb941-fc2e-46c7-a1ff-c945c83057ce",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "897cb941-design-001-decidir-c-mo-se-va-a-",
       "assigned_actor_id": "c58cace2-4954-4590-9ed7-ad02415a8c99"
     },
@@ -326,10 +326,10 @@
         "If not found: documented as not blocking v1",
         "No dependency created on this layer"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "822d9147-9765-4b80-9441-4e9f3d21f4f1",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "822d9147-r-06-locate-concello-christmas-l",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
@@ -362,12 +362,14 @@
         "History file appended",
         "App shows age and 'no data' after threshold"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-00"
       ],
       "ticket_id": "37c8b711-4172-4bf5-9b0a-c059419fe1d6",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "37c8b711-d-01-snapshot-publisher",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-03",

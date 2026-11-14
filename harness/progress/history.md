@@ -371,3 +371,26 @@ commit 51b838a. $ pytest tests -> 16 passed (test_snapshot: payload bueno escrib
 ```
 
 </details>
+
+## R-06 — Locate Concello Christmas layer (optional baseline)
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 41 passed in 0.46s
+- **Ticket GEAS:** 822d9147 · commit_after `860c7e70`
+- **Cambios:** vault/01_PROYECTO/capa_navidad_concello.md: capa oficial de Navidad 2026-27 en ArcGIS del Concello (35 puntos, ES/GL, horarios)
+- **Decisiones:** No se commitean datos en bruto (licencia no declarada); sin dependencia de la capa
+- **Pendiente:** R-01 usarla como semilla; LIC-01 aclarar licencia
+
+<details><summary>Evidencia</summary>
+
+```
+R-06 evidencia (2026-11-14):
+1. Search attempted+documented: CKAN datos-ckan.vigo.org package_search nadal/luces/luzes/navidad/iluminacion/atracciones/photocall/eventos -> count 0; mercado -> 2 (abastos). ArcGIS search orgid:ss3qikvq575kYKRJ nadal -> total 21, navidad -> total 26. Registro en vault/01_PROYECTO/capa_navidad_concello.md
+2. Found: FeatureServer Puntos_interés_Navidad_2023_2024/0 (titulo 'Puntos interés Navidad 2026 2027', modified 2026-11-13) -> n 35 puntos; URL registrada; points.json aun no existe (R-01), criterio de comparacion documentado (nombre + <50 m)
+3. N/A (encontrada)
+4. Sin dependencia: la app lee points.json; ningun codigo referencia el FeatureServer: 1 ficheros de codigo
+  [32m✔[0m pytest                 41 passed in 0.76s
+[1;32m━━ ENTORNO LISTO ━━[0m  2 aviso(s)
+```
+
+</details>
