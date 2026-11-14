@@ -450,12 +450,14 @@
         "Unmatched events logged",
         "Events without location shown in list only"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-03"
       ],
       "ticket_id": "0753e662-0daf-4237-a7ff-bc6c45f079c1",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "0753e662-d-04-venue-join-for-agenda-event",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-05",
@@ -487,12 +489,14 @@
         "Last-good fallback with age; strip hides itself if the feed fails",
         "Open-Meteo Marine coverage of the ria checked and documented"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "D-01"
       ],
       "ticket_id": "66ad58ab-90c3-4724-b997-14de71842058",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "66ad58ab-d-10-weather-feed-open-meteo-cur",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "D-11",
@@ -1646,10 +1650,12 @@
         "Tres aplicaciones: cabecera, matasellos, certificado",
         "Revisado con modelo con visión"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "65017256-fbe1-4637-a4d1-94bdcf1c8ea2",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "65017256-brand-01-marca-y-logotipo-de-tin",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
     {
       "id": "POSTCARD-02",
@@ -1661,10 +1667,12 @@
         "Imagen dentro en el estilo del mapa",
         "Revisado con modelo con visión"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "855092f2-f8b1-44e1-90b8-2cbd4bba6db4",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "855092f2-postcard-02-postal-con-dise-o-de",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
     {
       "id": "UI-02",
