@@ -37,6 +37,15 @@ def buildings(params: georef.RenderParams, bounds: tuple[float, float, float, fl
     """Los edificios que tocan el lienzo, en metros y con los redondeos del 3x3."""
     x_min, y_min, x_max, y_max = bounds
     source = json.loads((HERE / "original" / "edificios_concello.json").read_text(encoding="utf-8"))
+    east = HERE / "original" / "edificios_este.json"
+    if east.exists():
+        # Los del 3x3 van primero y en su orden: así la zona ya pintada sale igual.
+        seen = {b["r"] for b in source if b.get("r")}
+        source += [
+            b
+            for b in json.loads(east.read_text(encoding="utf-8"))
+            if not b.get("r") or b["r"] not in seen
+        ]
     out: list[dict] = []
     for raw in source:
         ring = [
@@ -105,7 +114,9 @@ def main(argv: list[str] | None = None) -> int:
     gx0, gy0, gx1, gy1 = fetch_ortho.canvas_ground(params)
     # La caja del 3x3 se mantiene entera: si se recortara a lo que se ve, un
     # edificio alto de fuera del borde podría dejar de tapar lo que tapaba.
-    old_half = json.loads((HERE / "render-params.json").read_text(encoding="utf-8"))["ortho"]["half_m"]
+    old_half = json.loads((HERE / "render-params.json").read_text(encoding="utf-8"))["ortho"][
+        "half_m"
+    ]
     bounds = (
         min(-float(old_half[0]), gx0 - MARGIN_M),
         min(-float(old_half[1]), gy0 - MARGIN_M),
