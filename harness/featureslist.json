@@ -17,10 +17,12 @@
         "Avisar al equipo al pushear: a partir de aquí toda feature de web va en React + TS",
         "Todos los textos de la interfaz salen de i18n/ (t() de i18n/i18n.ts, catálogos gl/es/en de I18N-01) y hay selector de idioma en Ajustes"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "47a7d6c0-99cd-4a60-b5bd-4d8cf0dc2c37",
-      "raw_status": "FREE"
+      "raw_status": "DONE",
+      "branch": "47a7d6c0-stack-01-urgente-jose-migrar-web",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
     },
     {
       "id": "GEO-01",
@@ -299,12 +301,14 @@
         "Schedule confirmed from the official 2026-27 programme",
         "List of the 6 landmarks recorded as input for SCENES-01 and NOTES-01"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R-01"
       ],
       "ticket_id": "42cdd200-3293-4acc-9194-b2af84fa2337",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "42cdd200-r-02-landmarks-first-verify-6-la",
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
     },
     {
       "id": "R-03",
@@ -1575,9 +1579,106 @@
         "Ningun texto usa fuente de pixel: solo Inter (el pixel queda en mapa, iconos y matasellos)",
         "A Navidena es jugable: 43 sellos, certificado numerado, estado en URL y localStorage"
       ],
-      "status": "pending",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "209c25e4-27af-4c5e-8f6c-b95ee16e43a0",
+      "raw_status": "BLOCKED",
+      "branch": "209c25e4-ui-01-interfaz-d-v2-12-pantallas",
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
+    },
+    {
+      "id": "ASSETS-03",
+      "title": "Árbol y noria como imagen pintada en el bloque",
+      "description": "El árbol (Porta do Sol) y la noria (Vialia) se pintan dentro del recorte del bloque con el modelo, mismo estilo p-3 y luz, y se componen con máscara suave. Sin croma ni transparencias. Parpadeo y halo por código; cabinas de la noria girando.\n\nCriterios de aceptación:\n  1. Árbol pintado dentro del recorte y compuesto con máscara suave\n  2. Noria pintada dentro del recorte de Vialia (requiere bloque ampliado)\n  3. Sin croma ni PNG superpuesto; sombra pintada\n  4. Parpadeo y halo por código; cabinas girando sobre elipse\n  5. Máximo 4 llamadas Flash; contadas en pipeline/ledger\n  6. Revisado por un modelo con visión",
+      "acceptance_criteria": [
+        "Árbol pintado dentro del recorte y compuesto con máscara suave",
+        "Noria pintada dentro del recorte de Vialia (requiere bloque ampliado)",
+        "Sin croma ni PNG superpuesto; sombra pintada",
+        "Parpadeo y halo por código; cabinas girando sobre elipse",
+        "Máximo 4 llamadas Flash; contadas en pipeline/ledger",
+        "Revisado por un modelo con visión"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "b8821781-3351-4481-8dbb-d3ed7c11df71",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "MAP-03",
+      "title": "Pulido visual del bloque (agente mapa)",
+      "description": "Pulir el bloque isométrico: costuras no adyacentes, guía de color del parque, filtros finales y agua con textura. Lo lleva el agente mapa.\n\nCriterios de aceptación:\n  1. Costuras no adyacentes reducidas con guía de color y filtros\n  2. Parque del Castro con verde uniforme\n  3. Agua con textura y profundidad\n  4. Mapa de alturas usado para sombras y foco\n  5. Revisado con modelo con visión",
+      "acceptance_criteria": [
+        "Costuras no adyacentes reducidas con guía de color y filtros",
+        "Parque del Castro con verde uniforme",
+        "Agua con textura y profundidad",
+        "Mapa de alturas usado para sombras y foco",
+        "Revisado con modelo con visión"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "e099b222-8936-484d-bfcf-708f5811e3a9",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "ZONE-02",
+      "title": "Ampliación del bloque hacia Vialia",
+      "description": "El 3x3 no incluye Vialia (noria y Cíes Market), a ~1 km este. Calcular y ampliar el bloque para Porta do Sol, Alameda, García Barbón y Vialia (4x3 o 4x4), con mar por código y coste en llamadas.\n\nCriterios de aceptación:\n  1. Zona ampliada sobre la ortofoto\n  2. Porta do Sol, Alameda, García Barbón y Vialia dentro\n  3. Teselas de mar separadas; van por código\n  4. Coste en llamadas calculado antes de lanzar\n  5. Bloque ampliado publicado como versión nueva",
+      "acceptance_criteria": [
+        "Zona ampliada sobre la ortofoto",
+        "Porta do Sol, Alameda, García Barbón y Vialia dentro",
+        "Teselas de mar separadas; van por código",
+        "Coste en llamadas calculado antes de lanzar",
+        "Bloque ampliado publicado como versión nueva"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "6219ff16-9a6d-4aa3-a6f0-d02748f1fc6c",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "BRAND-01",
+      "title": "Marca y logotipo de TinyVigo",
+      "description": "Logotipo SVG isométrico (sin fuente de píxel en el wordmark), versión principal y reducida, paleta en tokens y tres aplicaciones: cabecera, matasellos, certificado. La lleva el agente marca.\n\nCriterios de aceptación:\n  1. Logotipo SVG sin fuente de píxel en el texto\n  2. Versión principal y reducida\n  3. Paleta en tokens y tipografía\n  4. Tres aplicaciones: cabecera, matasellos, certificado\n  5. Revisado con modelo con visión",
+      "acceptance_criteria": [
+        "Logotipo SVG sin fuente de píxel en el texto",
+        "Versión principal y reducida",
+        "Paleta en tokens y tipografía",
+        "Tres aplicaciones: cabecera, matasellos, certificado",
+        "Revisado con modelo con visión"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "65017256-fbe1-4637-a4d1-94bdcf1c8ea2",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "POSTCARD-02",
+      "title": "Postal con diseño de postal real",
+      "description": "Postal como una postal de verdad: marco, sello, matasellos, línea de dirección y texto en Inter, con la imagen pixel dentro.\n\nCriterios de aceptación:\n  1. Marco con sello y matasellos dibujados\n  2. Línea de dirección y texto en Inter\n  3. Imagen dentro en el estilo del mapa\n  4. Revisado con modelo con visión",
+      "acceptance_criteria": [
+        "Marco con sello y matasellos dibujados",
+        "Línea de dirección y texto en Inter",
+        "Imagen dentro en el estilo del mapa",
+        "Revisado con modelo con visión"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "855092f2-f8b1-44e1-90b8-2cbd4bba6db4",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "UI-02",
+      "title": "Página de direcciones de UI",
+      "description": "Página índice de las cuatro direcciones (A/B/C/D) con qué se aprendió de cada una y por qué se eligió D, enlazada desde la app.\n\nCriterios de aceptación:\n  1. Cuatro direcciones con una imagen de cada una\n  2. Una línea por dirección: qué se aprendió y por qué\n  3. Enlazada desde la app\n  4. Sin fuentes de píxel en el texto",
+      "acceptance_criteria": [
+        "Cuatro direcciones con una imagen de cada una",
+        "Una línea por dirección: qué se aprendió y por qué",
+        "Enlazada desde la app",
+        "Sin fuentes de píxel en el texto"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "cf75eff9-41da-4949-a4a8-0efa7ac0fd48",
       "raw_status": "FREE"
     }
   ]
