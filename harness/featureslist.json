@@ -527,7 +527,7 @@
         "Planner can favour covered or indoor stops when rain is expected",
         "Missing signals reported, not fatal"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "R-04",
         "D-05",
@@ -535,7 +535,7 @@
         "D-11"
       ],
       "ticket_id": "88638b5e-d722-4dd6-ae97-c7f8ea9c2d81",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "88638b5e-d-12-planner-signals-and-weights",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
@@ -792,13 +792,15 @@
         "Next departures shown in the point panel",
         "Bus stop and train station layers on the map"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "X-01",
         "X-02"
       ],
       "ticket_id": "b7daf91d-54e3-4784-b958-c9d141e79e49",
-      "raw_status": "FREE"
+      "raw_status": "IN_PROGRESS",
+      "branch": "b7daf91d-x-04-transit-legs-in-planner-nex",
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "X-05",
@@ -1721,10 +1723,10 @@
         "Sin fuente de píxel en texto; iconos Lucide en la interfaz",
         "Auditoría en docs/investigacion/auditoria-ui.md con las desviaciones y su estado"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "773b34d3-a45a-4137-a32d-5fa093082c22",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "773b34d3-ui-04-aplicar-la-gu-a-a-la-web-r",
       "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
     },
