@@ -1,449 +1,226 @@
 <!doctype html>
 <html lang="es" data-theme="light">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TinyVigo · La marca</title>
-<style>
-  /* Autocontenido: la tipografía y los tokens viven aquí, no dependen de css/. */
-  @font-face { font-family: "Inter"; src: url(assets/fonts/Inter.ttf); font-weight: 100 900; font-display: swap; }
-  :root {
-    --f-ui: "Inter", system-ui, sans-serif;
-    --bg: #f8f7f4; --surface: #efeee9; --sunk: #e6e4dd; --raised: #ffffff;
-    --line: rgba(29,29,29,.12);
-    --fg: #1d1d1d; --fg-2: #51554c; --fg-3: #686d62;
-    --danger: #c4452f; --warning: #b7791f; --ok: #3f8a4f;
-    --accent-1: #fdf6e3; --accent-2: #f7e7b8; --accent-3: #eecb7a; --accent-4: #d9a441;
-    --accent-5: #a9760f; --accent-6: #7a4a00; --accent-7: #4a2d00;
-    --r-sm: 6px; --r-ctl: 8px; --r-panel: 12px;
-    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
-    --dark-bg: #10121a; --dark-surface: #171a24; --dark-line: rgba(255,255,255,.12);
-    --dark-fg: #f4ecd9; --dark-fg-2: #bcb6a6;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; }
-  body { background: var(--bg); color: var(--fg); font: 400 16px/1.55 var(--f-ui); letter-spacing: -.006em; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 1000px; margin: 0 auto; padding: 48px 24px 96px; display: flex; flex-direction: column; gap: 64px; }
-
-  /* ——— estructura de la página ——— */
-  .doc-head { display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 32px; }
-  .doc-head h1 { margin: 0; font: 600 28px/1.15 var(--f-ui); letter-spacing: -.025em; }
-  .doc-head p { margin: 0; max-width: 62ch; color: var(--fg-2); }
-  .sec { display: flex; flex-direction: column; gap: 20px; }
-  .sec > h2 { margin: 0; display: flex; align-items: baseline; gap: 12px; font: 600 20px/1.2 var(--f-ui); letter-spacing: -.015em; }
-  .sec > h2 span { font: 500 12px/1 var(--f-ui); color: var(--fg-3); letter-spacing: .08em; text-transform: uppercase; }
-  .sec > p { margin: 0; max-width: 68ch; color: var(--fg-2); font-size: 14px; }
-  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-  .stack { display: flex; flex-direction: column; gap: 16px; }
-  .card { background: var(--raised); border-radius: var(--r-panel); box-shadow: inset 0 0 0 1px var(--line); padding: 24px; }
-  .card--sunk { background: var(--surface); }
-  .card--dark { background: var(--dark-bg); color: var(--dark-fg); box-shadow: inset 0 0 0 1px var(--dark-line); }
-  .cap { font: 500 12px/1.4 var(--f-ui); color: var(--fg-3); }
-  .card--dark .cap { color: var(--dark-fg-2); }
-  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } .wrap { padding: 32px 16px 64px; gap: 48px; } }
-
-  /* ——— el símbolo y el logotipo ——— */
-  .sym { display: block; flex: none; }
-  .logo { display: inline-flex; align-items: center; gap: 10px; }
-  .logo__wm { font: 600 22px/1 var(--f-ui); letter-spacing: -.025em; }
-  .logo--lg .logo__wm { font-size: 28px; }
-  .logo--lg { gap: 12px; }
-  .logo--sm .logo__wm { font-size: 16px; letter-spacing: -.02em; }
-  .logo-stack { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
-  code { font: 500 13px/1 var(--f-ui); color: var(--fg-2); background: var(--sunk); padding: 2px 5px; border-radius: 4px; }
-  .on-dark { color: var(--dark-fg); }
-  .spec { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
-  .spec > div { display: flex; flex-direction: column; gap: 8px; }
-  .rules { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 24px; font-size: 14px; color: var(--fg-2); }
-  .rules li { display: flex; gap: 8px; }
-  .rules li::before { content: "—"; color: var(--fg-3); }
-  @media (max-width: 720px) { .rules { grid-template-columns: 1fr; } }
-
-  /* ——— paleta ——— */
-  .pal { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 12px; }
-  .sw { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-ctl); box-shadow: inset 0 0 0 1px var(--line); background: var(--raised); }
-  .sw__c { height: 64px; }
-  .sw__t { padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; }
-  .sw__n { font: 600 12px/1.2 var(--f-ui); }
-  .sw__h { font: 400 12px/1.2 var(--f-ui); color: var(--fg-3); font-variant-numeric: tabular-nums; }
-  .pal-group { display: flex; flex-direction: column; gap: 8px; }
-  .pal-group h3 { margin: 0; font: 600 14px/1.4 var(--f-ui); }
-  .pal-group .note { margin: 0; font-size: 13px; color: var(--fg-2); }
-
-  /* ——— tipografía ——— */
-  .type { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
-  .type__row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .type__meta { font: 500 12px/1.5 var(--f-ui); color: var(--fg-3); }
-  .type__meta b { display: block; color: var(--fg-2); font-weight: 600; }
-  .t28 { font: 600 28px/1.2 var(--f-ui); letter-spacing: -.02em; }
-  .t20 { font: 600 20px/1.3 var(--f-ui); letter-spacing: -.014em; }
-  .t16 { font: 400 16px/1.55 var(--f-ui); }
-  .t14 { font: 400 14px/1.5 var(--f-ui); color: var(--fg-2); }
-  .t12 { font: 400 12px/1.45 var(--f-ui); color: var(--fg-3); }
-  .weights { display: flex; gap: 32px; flex-wrap: wrap; }
-  .weights > div { display: flex; flex-direction: column; gap: 4px; }
-
-  /* ——— aplicaciones ——— */
-  .app { display: flex; flex-direction: column; gap: 12px; }
-  .app__frame { border-radius: var(--r-panel); overflow: hidden; box-shadow: inset 0 0 0 1px var(--line); background: var(--surface); }
-  /* cabecera del mapa */
-  .hud { position: relative; height: 260px; background: url(assets/mapa-escritorio.jpg) center/cover; padding: 12px; display: flex; align-items: flex-start; gap: 8px; }
-  .hud__brand { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: var(--r-ctl); background: rgba(255,255,255,.8); color: var(--fg); }
-  .hud__search { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: var(--r-ctl); background: rgba(255,255,255,.8); color: var(--fg-2); }
-  .hud__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 8px; max-width: 460px; }
-  .chipdemo { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: var(--r-ctl); font: 500 14px/1 var(--f-ui); background: rgba(255,255,255,.8); color: var(--fg); }
-  .chipdemo--off { background: rgba(255,255,255,.55); color: var(--fg-2); }
-  .dot { width: 6px; height: 6px; border-radius: 2px; background: var(--accent-5); }
-  /* matasellos */
-  .stamp-demo { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
-  .stamp { width: 132px; height: 132px; color: var(--accent-6); flex: none; }
-  .stamp .ring { fill: none; stroke: currentColor; }
-  .stamp text { font-family: var(--f-ui); font-weight: 500; font-size: 8.5px; fill: currentColor; letter-spacing: .8px; }
-  .stamp .inner { fill: none; stroke: currentColor; opacity: .55; }
-  /* certificado */
-  .cert-demo { display: flex; justify-content: center; }
-  .cert { width: min(340px, 100%); background: var(--bg); border: 1px solid var(--line); outline: 3px solid var(--accent-4); outline-offset: 4px; border-radius: var(--r-panel); padding: 28px 22px; text-align: center; display: flex; flex-direction: column; gap: 10px; }
-  .cert h3 { margin: 4px 0 0; font: 600 28px/1.15 var(--f-ui); letter-spacing: -.02em; }
-  .cert p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--fg-2); }
-  .cert p b { color: var(--fg); font-weight: 600; }
-  .cert__meta { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font-size: 12px; color: var(--fg-2); font-variant-numeric: tabular-nums; }
-  .cert__foot { margin: 8px 0 0; font-size: 12px; color: var(--fg-3); }
-
-  footer { border-top: 1px solid var(--line); padding-top: 24px; color: var(--fg-3); font-size: 13px; }
-</style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TinyVigo · Marca</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/marca.css">
 </head>
 <body>
-<div class="wrap">
+<main class="mk">
 
-  <header class="doc-head">
-    <div class="row">
-      <svg class="sym" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
-        <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-        <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-        <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-        <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-      </svg>
-      <span class="cap">TinyVigo · identidad</span>
+  <header class="mk__cab">
+    <div>
+      <span data-tv="logo" data-tv-size="40"></span>
+      <h1 style="margin-top:20px">La V encendida</h1>
+      <p class="mk__lead">Una V y un punto de luz. La V que se hace con las manos delante del árbol y el punto
+        de luz de Porta do Sol: el gesto de la ciudad y lo que lo enciende, en una sola forma.</p>
     </div>
-    <h1>La marca</h1>
-    <p>Un bloque de ciudad en isométrico con un punto de luz encima: eso es Vigo en Navidad y eso es lo que va a todos lados. El nombre se escribe en Inter, nunca en píxel. Aquí están las piezas, los colores y las tres aplicaciones que existen hoy.</p>
+    <button class="btn sec ic" data-theme-toggle aria-label="Tema"><i class="lu"></i></button>
   </header>
 
-  <!-- 01 · LOGOTIPO -->
-  <section class="sec">
-    <h2><span>01</span>Logotipo</h2>
-    <p>El símbolo aguanta solo; el logotipo lo acompaña. Tres caras planas, sin degradado ni sombra: el volumen lo da el tono.</p>
+  <!-- 01 · CONCEPTO -->
+  <section>
+    <h2><span class="mk__num">01</span>El concepto</h2>
+    <p>La V es el gesto que todo el mundo repite en Porta do Sol: dos brazos abiertos, punta abajo. El punto es
+      la luz de la plaza. Juntos dan lo que la estrella no daba: se reconoce a 16 px, aguanta una sola tinta y
+      dice algo de Vigo sin explicarlo.</p>
+    <div class="mk__nota">La marca no dibuja el árbol ni la ría: los insinúa. El árbol es un punto encendido; la V,
+      la boca de la ría que entra en la ciudad. El trazo se afina hacia la punta, como la luz que cae del árbol.</div>
+  </section>
 
-    <div class="grid2">
-      <div class="card">
-        <div class="cap">Principal · sobre claro</div>
-        <div class="logo-stack" style="margin-top:16px">
-          <div class="logo logo--lg">
-            <svg class="sym" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="logo__wm">TinyVigo</span>
-          </div>
-          <div class="logo">
-            <svg class="sym" viewBox="0 0 40 40" width="24" height="24" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="logo__wm" style="font-size:20px">TinyVigo</span>
-          </div>
-          <div class="logo logo--sm">
-            <svg class="sym" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="logo__wm">TinyVigo</span>
-          </div>
-        </div>
+  <!-- 02 · VARIANTES -->
+  <section>
+    <h2><span class="mk__num">02</span>Variantes</h2>
+    <p>Tres versiones, tres usos. No se inventa una cuarta.</p>
+    <div class="mk__fila">
+      <figure class="mk__caja base">
+        <span data-tv="simbolo" data-tv-size="96"></span>
+        <figcaption>Principal · vector<br>32 px en adelante</figcaption>
+      </figure>
+      <figure class="mk__caja base">
+        <span data-tv="simbolo" data-tv-size="32"></span>
+        <figcaption>Reducida · rejilla 16<br>16 a 32 px</figcaption>
+      </figure>
+      <figure class="mk__caja tinta">
+        <span data-tv="simbolo" data-tv-size="96" data-tv-variante="tinta"></span>
+        <figcaption>Una tinta<br>papel, fax, troquel, sello</figcaption>
+      </figure>
+    </div>
+    <div class="mk__nota" style="margin-top:16px">A 32 px cambia el dibujo, no la forma: por debajo se usa la
+      rejilla de 16 (píxeles enteros, sin desenfoque) y por encima el trazado vectorial. Las dos versiones son el
+      mismo símbolo a distinta resolución.</div>
+  </section>
+
+  <!-- 03 · TAMAÑOS -->
+  <section>
+    <h2><span class="mk__num">03</span>Tamaños</h2>
+    <p>Mínimo 16 px para el símbolo suelto y 24 px para el logotipo completo.</p>
+    <div class="mk__caja base">
+      <div class="mk__escala">
+        <figure><span data-tv="simbolo" data-tv-size="16"></span><figcaption>16</figcaption></figure>
+        <figure><span data-tv="simbolo" data-tv-size="20"></span><figcaption>20</figcaption></figure>
+        <figure><span data-tv="simbolo" data-tv-size="24"></span><figcaption>24</figcaption></figure>
+        <figure><span data-tv="simbolo" data-tv-size="32"></span><figcaption>32</figcaption></figure>
+        <figure><span data-tv="simbolo" data-tv-size="48"></span><figcaption>48</figcaption></figure>
+        <figure><span data-tv="simbolo" data-tv-size="96"></span><figcaption>96</figcaption></figure>
       </div>
+    </div>
+  </section>
 
-      <div class="card card--dark">
-        <div class="cap">Principal · sobre oscuro</div>
-        <div class="logo logo--lg on-dark" style="margin-top:16px">
-          <svg class="sym" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
-            <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-            <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-            <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-            <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-          </svg>
-          <span class="logo__wm">TinyVigo</span>
-        </div>
-        <div class="spec on-dark" style="margin-top:28px">
-          <div>
-            <svg class="sym" viewBox="0 0 40 40" width="44" height="44" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="cap">44 px</span>
-          </div>
-          <div>
-            <svg class="sym" viewBox="0 0 40 40" width="28" height="28" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="cap">28 px</span>
-          </div>
-          <div>
-            <svg class="sym" viewBox="0 0 40 40" width="20" height="20" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="cap">20 px · mínimo</span>
-          </div>
-        </div>
+  <!-- 04 · CONSTRUCCIÓN -->
+  <section>
+    <h2><span class="mk__num">04</span>Construcción</h2>
+    <p>Rejilla de 16. Brazos de 3 celdas que se cierran en una punta de 2, y el punto de luz a 6,7 % del símbolo,
+      separado de la punta por medio punto. El aire mínimo alrededor de la marca es ese mismo medio punto.</p>
+    <div class="mk__fila">
+      <figure class="mk__caja base">
+        <span data-tv="simbolo" data-tv-size="128"></span>
+        <figcaption>Rejilla 16 · la punta se enciende</figcaption>
+      </figure>
+      <figure class="mk__caja noche">
+        <span data-tv="simbolo" data-tv-size="96"></span>
+        <figcaption>Sobre la noche, la luz sube de tono</figcaption>
+      </figure>
+      <figure class="mk__caja claro">
+        <span data-tv="simbolo" data-tv-size="96"></span>
+        <figcaption>Sobre papel, el punto va en oro oscuro</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 05 · LOGOTIPO -->
+  <section>
+    <h2><span class="mk__num">05</span>Logotipo</h2>
+    <p>Símbolo y nombre. El nombre va en Inter 600, interletraje −2 %, y <b>nunca</b> en fuente de píxel: el píxel
+      es la imagen, no el texto. La separación entre símbolo y nombre es un tercio del símbolo.</p>
+    <div class="mk__fila">
+      <figure class="mk__caja base"><span data-tv="logo" data-tv-size="36"></span><figcaption>Principal</figcaption></figure>
+      <figure class="mk__caja base"><span data-tv="logo" data-tv-size="24"></span><figcaption>Mínimo · 24 px</figcaption></figure>
+      <figure class="mk__caja noche"><span data-tv="logo" data-tv-size="32"></span><figcaption>Sobre noche</figcaption></figure>
+    </div>
+    <div class="mk__nota" style="margin-top:16px">Corrección pendiente en el resto de la UI: <code>.wm</code>
+      (<code>css/base.css</code>) pone el nombre en Pixelify Sans y la cabecera de <code>mapa.html</code> todavía
+      la usa. La marca de aquí es Inter; quien lleve el mapa cambia esa línea por la de esta página.</div>
+  </section>
+
+  <!-- 06 · PALETA -->
+  <section>
+    <h2><span class="mk__num">06</span>Paleta</h2>
+    <p>Siete valores. La marca usa tres: tinta, luz y papel. Los demás son soporte.</p>
+    <table>
+      <thead><tr><th>Muestra</th><th>Nombre</th><th>Hex</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td><span class="mk__chip" style="background:#1d1d1d"></span></td><td>tinta</td><td><code>#1D1D1D</code></td><td>El trazo sobre fondo claro</td></tr>
+        <tr><td><span class="mk__chip" style="background:#10121a"></span></td><td>noche</td><td><code>#10121A</code></td><td>Fondo de la vista nocturna</td></tr>
+        <tr><td><span class="mk__chip" style="background:#d9a441"></span></td><td>luz</td><td><code>#D9A441</code></td><td>El punto, sobre papel y fondos claros</td></tr>
+        <tr><td><span class="mk__chip" style="background:#f4cd80"></span></td><td>luz alta</td><td><code>#F4CD80</code></td><td>El punto, sobre noche</td></tr>
+        <tr><td><span class="mk__chip" style="background:#fbfaf7"></span></td><td>papel</td><td><code>#FBFAF7</code></td><td>Marco de la postal y símbolo invertido</td></tr>
+        <tr><td><span class="mk__chip" style="background:#3d6a96"></span></td><td>ría</td><td><code>#3D6A96</code></td><td>Solo en la ilustración, nunca en el símbolo</td></tr>
+        <tr><td><span class="mk__chip" style="background:#b4472b"></span></td><td>sello</td><td><code>#B4472B</code></td><td>Sello de correos y matasellos</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 07 · TIPOGRAFÍA -->
+  <section>
+    <h2><span class="mk__num">07</span>Tipografía</h2>
+    <p>Una familia para el texto de la marca: Inter. Tres pesos, tres usos.</p>
+    <table>
+      <thead><tr><th>Uso</th><th>Cuerpo</th><th>Inter</th><th>Interletraje</th></tr></thead>
+      <tbody>
+        <tr><td>Nombre de la marca</td><td>0,86 × símbolo</td><td>600</td><td>−2 %</td></tr>
+        <tr><td>Complemento y pies</td><td>12 a 14 px</td><td>500</td><td>−0,6 %</td></tr>
+        <tr><td>Matasellos y sellos</td><td>9,4 / 7,4 (rejilla 100)</td><td>600 / 500</td><td>versalitas espaciadas</td></tr>
+        <tr><td>Manuscrito de la postal</td><td>19 a 22 px</td><td>Caveat 500</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="mk__nota" style="margin-top:12px">Caveat (OFL) se añade solo para lo que de verdad va escrito a
+      mano: el mensaje y la dirección del reverso de la postal. Ni un título ni un botón.</div>
+  </section>
+
+  <!-- 08 · APLICACIONES -->
+  <section>
+    <h2><span class="mk__num">08</span>Aplicaciones</h2>
+    <p>Las tres formas en que la marca aparece en el producto, con el marcado real.</p>
+
+    <h3>1 · Cabecera del mapa</h3>
+    <div class="mk__mapa">
+      <div class="hud">
+        <div class="hud__brand tv-hud"><span data-tv="logo" data-tv-size="20"></span></div>
+      </div>
+    </div>
+    <div class="mk__nota" style="margin-top:8px">Símbolo a 20 px (dibujo de rejilla) y nombre a 16 px. El vidrio
+      oscurece con el tema y la luz pasa a <code>#F4CD80</code>. Mismo marcado que <code>.hud__brand</code>:
+      <code>&lt;div class="hud__brand tv-hud"&gt;</code>.</div>
+
+    <h3 style="margin-top:24px">2 · Matasellos de A Navideña</h3>
+    <div class="mk__fila">
+      <div class="tv-sello-nav">
+        <span data-tv="matasellos" data-tv-size="148" data-tv-fecha="14 · 12 · 2026"></span>
+        <p>VIGO · A NAVIDEÑA · 43 puntos</p>
+      </div>
+      <div style="max-width:280px">
+        <p style="margin:0;font-size:var(--fs-label);line-height:1.55;color:var(--fg-2)">Cierra la colección. El aro
+          dentado es la perforación del sello y la fecha, la de la visita. Se estampa al conseguir el sello 43.</p>
       </div>
     </div>
 
-    <div class="card card--sunk">
-      <div class="cap">Versión reducida · la del mapa</div>
-      <div class="row" style="margin-top:16px;gap:32px">
-        <div class="stack" style="align-items:center;gap:6px">
-          <svg class="sym" viewBox="0 0 40 40" width="44" height="44" aria-hidden="true">
-            <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-            <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-            <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-            <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-          </svg>
-          <span class="cap">sobre claro</span>
-        </div>
-        <div class="stack" style="align-items:center;gap:6px;background:#10121a;padding:12px;border-radius:8px">
-          <svg class="sym on-dark" viewBox="0 0 40 40" width="44" height="44" aria-hidden="true">
-            <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-            <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-            <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-            <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-          </svg>
-          <span class="cap">sobre oscuro</span>
-        </div>
-        <div class="stack" style="align-items:center;gap:6px">
-          <svg class="sym" viewBox="0 0 40 40" width="22" height="22" aria-hidden="true">
-            <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-            <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-            <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-            <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-          </svg>
-          <span class="cap">22 px · cabecera</span>
-        </div>
-      </div>
+    <h3 style="margin-top:24px">3 · Certificado</h3>
+    <div class="tv-cert">
+      <div class="tv-cert__filete"></div>
+      <span class="tv-cert__marca tv-tinta" data-tv="simbolo" data-tv-size="56" data-tv-variante="tinta"></span>
+      <p class="tv-cert__nombre-doc">A Navideña</p>
+      <p class="tv-cert__texto">Certifica que <b>Marta Costas</b> visitó las 43 instalaciones de la Navidad de Vigo
+        entre el 14 de noviembre y el 6 de enero.</p>
+      <div class="tv-cert__pie"><span>N.º 00184/2026</span><span>14 · 12 · 2026</span></div>
     </div>
+    <div class="mk__nota" style="margin-top:8px">Una tinta: el símbolo toma el color del texto y el punto se funde
+      con el trazo. Es la versión que sobrevive a una impresora de una tinta y a un troquel.</div>
+  </section>
 
-    <div class="spec">
-      <div class="stack" style="gap:8px">
-        <span class="cap">Construcción: tres caras, una retícula isométrica</span>
-        <svg width="220" height="150" viewBox="0 0 220 150" aria-hidden="true" style="display:block">
-          <g stroke="rgba(29,29,29,.14)" stroke-width="1">
-            <path d="M110 34 154 59 110 84 66 59Z" fill="none"/>
-            <path d="M110 34V132M66 59H154M66 59v46M154 59v46M110 84v48"/>
-            <path d="M110 46.5 132 59 110 71.5 88 59Z" fill="none"/>
-          </g>
-          <g>
-            <path d="M110 46.5 132 59 110 71.5 88 59Z" fill="#eecb7a"/>
-            <path d="M88 59 110 71.5V119L88 105.5Z" fill="#d9a441"/>
-            <path d="M132 59 110 71.5V119l22-13.5Z" fill="#a9760f"/>
-          </g>
-        </svg>
+  <!-- 09 · REGLAS -->
+  <section>
+    <h2><span class="mk__num">09</span>Reglas</h2>
+    <div class="mk__si-no">
+      <div class="mk__si">
+        <h3><i class="lu" data-lu="circle-check" data-size="16"></i>Sí</h3>
+        <ul>
+          <li>Una tinta cuando el soporte solo tiene una</li>
+          <li>Aire de medio punto alrededor</li>
+          <li>Símbolo suelto cuando el nombre ya está cerca</li>
+          <li>Invertir sobre noche: trazo papel, luz alta</li>
+        </ul>
       </div>
-      <div class="stack" style="gap:8px;max-width:44ch">
-        <span class="cap">Reglas</span>
-        <ul class="rules">
-          <li>El nombre va en Inter 600, nunca en píxel.</li>
-          <li>Sin sombra: el volumen es el tono.</li>
-          <li>Sin degradados ni brillos.</li>
-          <li>No rotar ni inclinar el símbolo.</li>
-          <li>Aire mínimo alrededor: media altura del símbolo.</li>
-          <li>Por debajo de 20 px, solo el símbolo.</li>
+      <div class="mk__no">
+        <h3><i class="lu" data-lu="x" data-size="16"></i>No</h3>
+        <ul>
+          <li>Estrellas, copos o árboles dibujados: la marca es una V</li>
+          <li>El nombre en Pixelify o en cualquier fuente de píxel</li>
+          <li>Sombras, degradados, biseles o contornos</li>
+          <li>Rotar, estirar o mover el punto a otro sitio</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- 02 · PALETA -->
-  <section class="sec">
-    <h2><span>02</span>Paleta</h2>
-    <p>Neutros cálidos y un acento que es la luz de la Navidad. El color solo dice estado o magnitud: nunca decora. Los nombres son los tokens de <code>css/tokens.css</code>.</p>
-
-    <div class="pal-group">
-      <h3>Superficies</h3>
-      <div class="pal">
-        <div class="sw"><div class="sw__c" style="background:#f8f7f4"></div><div class="sw__t"><span class="sw__n">--bg</span><span class="sw__h">#f8f7f4</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#efeee9"></div><div class="sw__t"><span class="sw__n">--surface</span><span class="sw__h">#efeee9</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#e6e4dd"></div><div class="sw__t"><span class="sw__n">--sunk</span><span class="sw__h">#e6e4dd</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#ffffff"></div><div class="sw__t"><span class="sw__n">--raised</span><span class="sw__h">#ffffff</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:rgba(29,29,29,.12)"></div><div class="sw__t"><span class="sw__n">--line</span><span class="sw__h">rgba(29,29,29,.12)</span></div></div>
-      </div>
-    </div>
-
-    <div class="pal-group">
-      <h3>Texto</h3>
-      <div class="pal">
-        <div class="sw"><div class="sw__c" style="background:#1d1d1d"></div><div class="sw__t"><span class="sw__n">--fg</span><span class="sw__h">#1d1d1d</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#51554c"></div><div class="sw__t"><span class="sw__n">--fg-2</span><span class="sw__h">#51554c</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#686d62"></div><div class="sw__t"><span class="sw__n">--fg-3</span><span class="sw__h">#686d62</span></div></div>
-      </div>
-    </div>
-
-    <div class="pal-group">
-      <h3>Acento · luz de Navidad</h3>
-      <p class="note">Siete pasos: de casi blanco a marrón profundo. El acento de la Navidad es la pareja <b>#f4cd80</b> (luz, paso 5 en oscuro) y <b>#7a4a00</b> (paso 6 en claro).</p>
-      <div class="pal">
-        <div class="sw"><div class="sw__c" style="background:#fdf6e3"></div><div class="sw__t"><span class="sw__n">--accent-1</span><span class="sw__h">#fdf6e3</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#f7e7b8"></div><div class="sw__t"><span class="sw__n">--accent-2</span><span class="sw__h">#f7e7b8</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#eecb7a"></div><div class="sw__t"><span class="sw__n">--accent-3</span><span class="sw__h">#eecb7a</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#d9a441"></div><div class="sw__t"><span class="sw__n">--accent-4</span><span class="sw__h">#d9a441</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#a9760f"></div><div class="sw__t"><span class="sw__n">--accent-5</span><span class="sw__h">#a9760f</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#7a4a00"></div><div class="sw__t"><span class="sw__n">--accent-6 · #7a4a00</span><span class="sw__h">#7a4a00</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#4a2d00"></div><div class="sw__t"><span class="sw__n">--accent-7</span><span class="sw__h">#4a2d00</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#f4cd80"></div><div class="sw__t"><span class="sw__n">--i-a · #f4cd80</span><span class="sw__h">#f4cd80</span></div></div>
-      </div>
-    </div>
-
-    <div class="pal-group">
-      <h3>Estados</h3>
-      <div class="pal">
-        <div class="sw"><div class="sw__c" style="background:#3f8a4f"></div><div class="sw__t"><span class="sw__n">--ok</span><span class="sw__h">#3f8a4f</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#b7791f"></div><div class="sw__t"><span class="sw__n">--warning</span><span class="sw__h">#b7791f</span></div></div>
-        <div class="sw"><div class="sw__c" style="background:#c4452f"></div><div class="sw__t"><span class="sw__n">--danger</span><span class="sw__h">#c4452f</span></div></div>
-      </div>
-      <p class="note">En oscuro los estados suben de luminosidad (<code>#97c46f</code>, <code>#e0b06a</code>, <code>#f09078</code>) y el acento invierte la rampa: <code>#f4cd80</code> es el paso 5.</p>
-    </div>
+  <section>
+    <h2><span class="mk__num">10</span>Archivos</h2>
+    <table>
+      <tbody>
+        <tr><td><code>assets/marca.js</code></td><td>Dibuja símbolo, logotipo y matasellos: <code>MARCA.simbolo()</code>, <code>MARCA.logotipo()</code>, <code>MARCA.matasellos()</code></td></tr>
+        <tr><td><code>css/marca.css</code></td><td>Tokens de marca, logotipo y las tres aplicaciones</td></tr>
+        <tr><td><code>marca-exploracion.html</code></td><td>Los tres conceptos que se probaron antes de elegir este</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px"><a class="btn sec mk__explorar" href="marca-exploracion.html"><i class="lu" data-lu="palette" data-size="16"></i>Ver la exploración (3 conceptos)</a></p>
   </section>
 
-  <!-- 03 · TIPOGRAFÍA -->
-  <section class="sec">
-    <h2><span>03</span>Tipografía</h2>
-    <p>Una sola familia, Inter, con cinco tamaños y tres pesos. Nada intermedio: si un texto no encaja en la lista, está mal jerarquizado. Las cifras van con <code>tabular-nums</code>.</p>
-
-    <div class="type">
-      <div class="type__row">
-        <div class="type__meta"><b>28 / 600</b>display · titular de pantalla</div>
-        <div class="t28">Vigo en Navidad, a pie</div>
-      </div>
-      <div class="type__row">
-        <div class="type__meta"><b>20 / 600</b>título · cabecera de panel</div>
-        <div class="t20">Noria gigante</div>
-      </div>
-      <div class="type__row">
-        <div class="type__meta"><b>16 / 400</b>copia · párrafo y relato</div>
-        <div class="t16">La noria cambia de sitio en 2026 y pasa a Vialia. La información viene de la prensa local y el Concello aún no la ha confirmado.</div>
-      </div>
-      <div class="type__row">
-        <div class="type__meta"><b>14 / 400 · 500</b>etiqueta · datos y controles</div>
-        <div class="t14">Laborables de 17:00 a 22:30 · 11 min andando · 3,4 km</div>
-      </div>
-      <div class="type__row">
-        <div class="type__meta"><b>12 / 400</b>meta · fuente, hora, número</div>
-        <div class="t12">Concello de Vigo · actualizado el 14.11.2026 · N.º 04217/2026</div>
-      </div>
-    </div>
-
-    <div class="weights">
-      <div><span class="t28" style="font-weight:400">Regular 400</span><span class="cap">cuerpo, relato, horas</span></div>
-      <div><span class="t28" style="font-weight:500">Medium 500</span><span class="cap">controles, etiquetas, botones</span></div>
-      <div><span class="t28" style="font-weight:600">Semibold 600</span><span class="cap">títulos, cifras, marca</span></div>
-    </div>
-  </section>
-
-  <!-- 04 · APLICACIONES -->
-  <section class="sec">
-    <h2><span>04</span>Aplicaciones</h2>
-    <p>Las tres piezas donde la marca aparece de verdad. Ninguna introduce un color ni una tipografía que no esté arriba.</p>
-
-    <div class="app">
-      <div class="cap">A · Cabecera del mapa</div>
-      <div class="app__frame">
-        <div class="hud">
-          <span class="hud__brand">
-            <svg class="sym" viewBox="0 0 40 40" width="22" height="22" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <span class="logo__wm" style="font-size:22px">TinyVigo</span>
-          </span>
-          <span class="hud__search" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          </span>
-          <div class="hud__chips">
-            <span class="chipdemo">Luz <i class="dot"></i></span>
-            <span class="chipdemo">Eventos <i class="dot"></i></span>
-            <span class="chipdemo chipdemo--off">Rutas</span>
-          </div>
-        </div>
-      </div>
-      <p class="cap" style="margin:0">Símbolo a 22 px sobre vidrio. El nombre, en Inter 600; los iconos de interfaz van en línea fina (Lucide), no en píxel.</p>
-    </div>
-
-    <div class="grid2">
-      <div class="app">
-        <div class="cap">B · Matasellos de A Navideña</div>
-        <div class="card stamp-demo">
-          <svg class="stamp" viewBox="0 0 120 120" role="img" aria-label="Matasellos de A Navideña">
-            <defs><path id="ring" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs>
-            <circle class="ring" cx="60" cy="60" r="56" stroke-width="2.6"/>
-            <circle class="inner" cx="60" cy="60" r="51" stroke-width=".9"/>
-            <text letter-spacing="1"><textPath href="#ring" startOffset="0">A NAVIDEÑA · VIGO · 14 NOV 2026 · </textPath></text>
-            <g transform="translate(44,42)">
-              <rect x="0" y="0" width="4" height="4" fill="#a9760f"/><rect x="8" y="0" width="4" height="4" fill="#a9760f"/><rect x="16" y="0" width="4" height="4" fill="#a9760f"/>
-              <rect x="4" y="4" width="4" height="4" fill="#eecb7a"/><rect x="12" y="4" width="4" height="4" fill="#eecb7a"/>
-              <rect x="4" y="8" width="16" height="4" fill="#d9a441"/>
-              <rect x="8" y="12" width="8" height="4" fill="#a9760f"/>
-              <rect x="4" y="16" width="16" height="4" fill="#7a4a00"/>
-              <rect x="0" y="20" width="24" height="4" fill="#7a4a00"/>
-            </g>
-            <text x="60" y="80" text-anchor="middle" style="font-size:6.5px;letter-spacing:1.2px">PORTA DO SOL</text>
-          </svg>
-          <div class="stack" style="gap:6px">
-            <span class="t16" style="font-weight:600">Sello conseguido</span>
-            <span class="t14" style="max-width:30ch">Doble anillo, texto curvado en Inter y el punto dentro. Es un sello de verdad: se gana al pasar por el sitio, no se compra.</span>
-            <span class="t12">Tamaño mínimo de uso: 44 px.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="app">
-        <div class="cap">C · Certificado</div>
-        <div class="card cert-demo">
-          <div class="cert">
-            <svg class="sym" viewBox="0 0 40 40" width="44" height="44" style="margin:0 auto" aria-hidden="true">
-              <path d="M20 11 33 18.5 20 26 7 18.5Z" fill="#eecb7a"/>
-              <path d="M7 18.5 20 26v10L7 28.5Z" fill="#d9a441"/>
-              <path d="M33 18.5 20 26v10l13-7.5Z" fill="#a9760f"/>
-              <path d="M20 2.6l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1Z" fill="currentColor"/>
-            </svg>
-            <h3>A Navideña</h3>
-            <p>Certifica que <b>Marta Fernández</b> visitó las 43 instalaciones de la Navidad de Vigo.</p>
-            <div class="cert__meta"><span>N.º 04217/2026</span><span>14 de noviembre de 2026</span></div>
-            <p class="cert__foot">TinyVigo · mapa de la Navidad de Vigo</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    TinyVigo · documentos de identidad. El símbolo está dibujado en SVG (assets/marca.js), la tipografía es Inter
-    (SIL OFL 1.1) y los iconos de interfaz son Lucide (ISC). Sin fuentes de píxel en texto, sin sombras,
-    sin degradados.
-  </footer>
-
-</div>
+</main>
+<script src="assets/lucide.js"></script>
+<script src="assets/marca.js"></script>
+<script src="assets/theme.js"></script>
 </body>
 </html>
