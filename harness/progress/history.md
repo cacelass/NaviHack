@@ -269,3 +269,20 @@ $ uv run python -m agents list → 24 agentes, bootstrap incluido. $ uv run pyth
 ```
 
 </details>
+
+## ONBOARD-001 — Entender el proyecto
+
+- **Cerrada:** 2026-11-14
+- **Verificación:** ./init.sh en verde · 7 passed in 0.33s
+- **Ticket GEAS:** b0fa3e7b · commit_after `44fe6492`
+- **Cambios:** project.yml; vault/01_PROYECTO/objetivo.md (ya existia de SCOPE-001)
+- **Decisiones:** bootstrap describe responde las 4 preguntas del onboarding con el spec TinyVigo v3
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+$ uv run python -m agents --json run bootstrap describe --yes --description '...' → success=true, 'Descripción escrita en project.yml.' | project.yml project_description actualizado con TinyVigo | vault/01_PROYECTO/objetivo.md con 4 apartados | README frase propia | ./init.sh → ENTORNO LISTO, pytest 7 passed
+```
+
+</details>

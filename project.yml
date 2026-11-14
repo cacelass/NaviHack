@@ -9,7 +9,7 @@
 project_name: MeshHarmes
 project_slug: app
 project_author_name: cacelass
-project_description: Arnés de agentes e infraestructura de proyecto para trabajo general en Python.
+project_description: TinyVigo: mapa web de Vigo en Navidad para quien pasea por el centro con el movil. Muestra los puntos navidenos investigados (ubicacion verificada, horario, estado 'abierto ahora'), eventos del dia, rutas a pie que se adaptan al tiempo disponible (3 opciones) y postales pixel-art a partir de una foto propia. Criterio de hecho: init.sh en verde + demo end-to-end en dispositivo real + capturas de los 6 hitos de la seccion A10 del spec. Fuera de alcance: autobuses y trenes, huella de edificios, estimacion de afluencia, venta de entradas, cuentas de usuario, zona fuera de Vigo/temporada, pintar toda la ciudad. Sistemas externos: feeds del Concello (CKAN/ArcGIS: aparcamientos, agenda, trafico, camaras), Open-Meteo (tiempo), OpenStreetMap (calles, bancos, cafes), CNIG MDT05 (elevacion), ortofoto PNOA (IGN), modelos de imagen (vision+generacion) para postales.
 project_version: 0.1.0
 # La versión del .venv. uv la resuelve desde requires-python en pyproject.toml.
 python_version: 3.12

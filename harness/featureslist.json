@@ -1,7 +1,7 @@
 {
-  "$comment": "Backlog del arnés. Fuente de verdad de QUÉ hay que hacer. El orden no es decorativo: las dos primeras features fijan el rumbo (qué se quiere resolver → cómo se va a resolver) antes de que nadie escriba código. Los agentes leen la primera feature pendiente, la marcan in_progress y no la marcan done hasta que ./init.sh pasa en verde. Tras cerrar (harness finish), el líder propone el commit del cierre con git commit_feature --dry-run y espera confirmación del usuario. Estados válidos: pending | in_progress | done | blocked. Este backlog es el de arranque de un proyecto nuevo: sustitúyelo por el tuyo con 'harness add'.",
+  "$comment": "ESPEJO de solo lectura de GEAS. La fuente de verdad es el ticket; no edites este fichero a mano: cámbialo con `harness add`.",
   "version": 1,
-  "project": "MeshHarmes",
+  "project": "NavaHack",
   "features": [
     {
       "id": "GEAS-001",
@@ -71,15 +71,12 @@
         "hay tests de contratos inline (inline_contracts, all_contracts, contract_for, validate_contracts) y de las cuatro acciones de bootstrap",
         "make check pasa"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "ba181545-7e31-4565-ab2b-61cc8b8645e3",
-      "raw_status": "IN_PROGRESS",
+      "raw_status": "DONE",
       "branch": "ba181545-boot-001-arranque-en-frio-operat",
-      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167",
-      "started": "2026-08-04",
-      "closed": "2026-08-04",
-      "review_rounds": 0
+      "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
     },
     {
       "id": "ONBOARD-001",
@@ -112,10 +109,7 @@
       "status": "pending",
       "depends_on": [],
       "ticket_id": "a659501f-3282-4210-b43c-828b3b0fa415",
-      "raw_status": "FREE",
-      "started": "2026-08-04",
-      "closed": "2026-08-04",
-      "review_rounds": 0
+      "raw_status": "FREE"
     },
     {
       "id": "FIX-001",
@@ -130,10 +124,7 @@
       "status": "pending",
       "depends_on": [],
       "ticket_id": "9919c3e2-516f-48ee-929c-58f4a1294830",
-      "raw_status": "FREE",
-      "started": "2026-08-04",
-      "closed": "2026-08-04",
-      "review_rounds": 0
+      "raw_status": "FREE"
     },
     {
       "id": "DESIGN-001",
@@ -173,10 +164,7 @@
         "BOOT-001"
       ],
       "ticket_id": "85c6d19e-257e-4f94-870f-f25decb7419e",
-      "raw_status": "FREE",
-      "started": "2026-08-04",
-      "closed": "2026-08-04",
-      "review_rounds": 0
+      "raw_status": "FREE"
     },
     {
       "id": "ONBOARD-002",
@@ -234,10 +222,7 @@
         "BOOT-002"
       ],
       "ticket_id": "6e86eb88-006b-4dd2-9060-0005a7c85c13",
-      "raw_status": "FREE",
-      "started": "2026-08-04",
-      "closed": "2026-08-04",
-      "review_rounds": 0
+      "raw_status": "FREE"
     },
     {
       "id": "R-01",
@@ -887,6 +872,23 @@
         "D-01"
       ],
       "ticket_id": "9825ff2b-c143-42cb-8031-ffa6203ee030",
+      "raw_status": "FREE"
+    },
+    {
+      "id": "WIN-001",
+      "title": "Compatibilidad Windows: entorno y suite de agents/",
+      "description": "Encontrado al montar el entorno en Windows 11 (Git Bash + Python 3.14). 1) uv no viene instalado y la red del evento intercepta TLS: uv sync falla con 'invalid peer certificate: UnknownIssuer' salvo con --system-certs (o UV_SYSTEM_CERTS=1). 2) Sin PYTHONUTF8=1 la CLI rompe con UnicodeEncodeError cp1252 al imprimir ✘/✔ (agents/cli.py:156, agents.prompts_sync). 3) uv run reescribe uv.lock cuando pyproject sube de versión y no se regenera el lock en commit_feature. 4) No hay make en Windows. 5) 8 tests de agents/tests fallan solo en Windows: test_geas_add_actor::test_append_token_crea_fichero_0600 (chmod 0600 no aplica), test_installer_agent::test_install_* x6 (shutil.rmtree sobre .git de solo lectura -> WinError 5 en installer_agent.py:115), test_refactor_scope::test_no_entra_en_venv_aunque_se_le_pida_la_raiz (separador '\\' vs '/'). 6) init.sh usa el python de WindowsApps (sin pytest) si no hay .venv: debería ir por uv run.\n\nCriterios de aceptación:\n  1. uv run pytest pasa en Windows (o los tests POSIX-only se marcan skipif con motivo)\n  2. installer_agent borra clones con onexc que quita el read-only\n  3. rutas comparadas con as_posix()\n  4. la CLI no rompe con stdout cp1252 (reconfigure utf-8)\n  5. commit_feature regenera uv.lock al subir versión\n  6. README documenta el setup en Windows (uv, --system-certs, sin make)",
+      "acceptance_criteria": [
+        "uv run pytest pasa en Windows (o los tests POSIX-only se marcan skipif con motivo)",
+        "installer_agent borra clones con onexc que quita el read-only",
+        "rutas comparadas con as_posix()",
+        "la CLI no rompe con stdout cp1252 (reconfigure utf-8)",
+        "commit_feature regenera uv.lock al subir versión",
+        "README documenta el setup en Windows (uv, --system-certs, sin make)"
+      ],
+      "status": "pending",
+      "depends_on": [],
+      "ticket_id": "9a918c7c-7b1b-410b-9a58-3c11d622605d",
       "raw_status": "FREE"
     }
   ]
