@@ -479,3 +479,12 @@ body.is-city .tv-time-quick, body:has(.tv-sheet.is-open) .tv-time-quick, body:ha
 .tv-track button { font: inherit; }
 @media (max-width: 700px) { .tv-track { top: auto; bottom: 70px; width: calc(100vw - 16px); } .tv-track-go { bottom: 70px; } }
 @media (prefers-reduced-motion: reduce) { .tv-me-pulse { animation: none; } }
+
+/* MOB-02: vista ciudad con zoom lejano — pin tipo gota (Google Maps) en vez de la foto */
+.tv-z-far .tv-pin { width: 24px; height: 24px; margin: 39px 0 0 30px; padding: 0; border-width: 3px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--acc); box-shadow: 0 1px 4px rgba(0, 0, 0, .45); }
+.tv-z-far .tv-pin.is-open { background: var(--ok); }
+.tv-z-far .tv-pin::after { display: none; }
+.tv-z-far .tv-pin img { display: none !important; }
+.tv-z-far .tv-pin::before { content: ""; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #151b2a; }
+/* el resumen plegado del tour no se pega a la × */
+.tv-tour-head { padding-right: calc(var(--tap) + var(--sp-3)); }

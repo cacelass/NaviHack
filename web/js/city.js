@@ -56,6 +56,17 @@
     loadParkings();
     setInterval(loadParkings, 120000); // el Concello publica cada 2 min (D-00)
 
+    // MOB-02: en móvil la hoja tapa ~60 % de abajo; la ruta se encuadra en la parte visible
+    const fitRoute = (b) => {
+      if (!b) return;
+      const m = matchMedia("(max-width: 700px)").matches;
+      map.fitBounds(b, m ? { paddingTopLeft: [24, 90], paddingBottomRight: [24, Math.round(innerHeight * 0.62)] } : { padding: [40, 40] });
+    };
+    // con zoom lejano las fotos se amontonan: pines tipo gota; de cerca, la foto entera
+    const zoomClass = () => map.getContainer().classList.toggle("tv-z-far", map.getZoom() < 16);
+    map.on("zoomend", zoomClass);
+    zoomClass();
+
     // rutas que calcula el tour
     const routeLayer = L.layerGroup().addTo(map);
     document.addEventListener("tv:route", (e) => {
@@ -87,7 +98,7 @@
         .on("click", () => (window.tinyvigoTour ? tinyvigoTour.startWalk(i) : P.select(s.p, false))).addTo(routeLayer));
       lastBounds = L.latLngBounds(all).pad(0.15);
       if (e.detail.showCity) setCity(true);
-      else if (document.body.classList.contains("is-city")) map.fitBounds(lastBounds);
+      else if (document.body.classList.contains("is-city")) fitRoute(lastBounds);
     });
     document.addEventListener("tv:clear-route", () => { routeLayer.clearLayers(); lastBounds = null; });
 
@@ -97,7 +108,7 @@
     function setCity(on) {
       document.body.classList.toggle("is-city", on);
       btn.innerHTML = (window.LU ? LU.svg(on ? "layers" : "map-pin", { size: 20 }) : "") + "<span>" + (on ? "Vigo 3D" : t("app.city_view")) + "</span>";
-      if (on) setTimeout(() => { map.invalidateSize(); if (lastBounds) map.fitBounds(lastBounds); }, 50);
+      if (on) setTimeout(() => { map.invalidateSize(); if (lastBounds) fitRoute(lastBounds); }, 50);
     }
     btn.onclick = () => setCity(!document.body.classList.contains("is-city"));
     document.addEventListener("tv:lang", () => setCity(document.body.classList.contains("is-city")));
