@@ -80,7 +80,8 @@
 
   // marcadores
   const markers = new Map();
-  for (const p of points.filter((p) => p.on_map)) {
+  const PAINTED = new Set(["concello-2552", "concello-3494"]); // árbol y noria ya están pintados en el bloque (ASSETS-03)
+  for (const p of points.filter((p) => p.on_map && !PAINTED.has(p.id))) {
     const m = el("button", "tv-marker" + (status(p) && status(p).open ? " is-open" : ""));
     m.setAttribute("aria-label", txt(p.name));
     m.onclick = (ev) => { ev.stopPropagation(); select(p, false); };
