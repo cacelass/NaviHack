@@ -1,0 +1,6 @@
+Redraw this 3D aerial render of central Vigo, Galicia, Spain as an isometric pixel-art map tile. Keep the exact layout: every building footprint, height, street, square and tree stays where it is; do not add, remove or move buildings. Granite facades, white glass galleries (miradores), terracotta and dark grey slate roofs. No text, no labels, no thin anti-aliased outlines.
+Style: modern high-bit pixel art like Eastward or Octopath Traveler. Rich lighting and many tones, soft ambient occlusion in the streets, warm sunlight with cool shadows, subtle glow, fine detail on roofs, windows and balconies, still clearly pixel art with hard pixel edges.
+
+The picture shows exactly one fixed area. Keep the same area at exactly the same scale: do not zoom in, do not crop, do not enlarge or merge buildings, do not add any building, pier, boat or object that is not in the image, and do not remove any. Every quay, pier, marina finger, tower and street stays exactly where it is and exactly as big as it is. Open water stays plain, smooth and empty. Fill the whole square edge to edge.
+
+There is NO sea, river, harbour, canal or any water anywhere in this picture. Do not draw any water, quay, pier or jetty. The whole picture is dense city blocks, streets, a station and a large shopping centre: draw only those.
