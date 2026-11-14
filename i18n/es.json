@@ -289,5 +289,8 @@
   "wx.storm": "Tormenta",
   "wx.rain_at": "Lluvia probable hacia las {time} ({pct} %). Lleva paraguas.",
   "wx.dry": "Sin lluvia en las próximas horas.",
-  "wx.source": "Tiempo: Open-Meteo, centro de Vigo"
+  "wx.source": "Tiempo: Open-Meteo, centro de Vigo",
+  "common.lit_now": "Encendido ya",
+  "common.lights_on_at": "Se enciende a las {time}",
+  "common.lights_off_at": "Se apaga a las {time}"
 }

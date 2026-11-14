@@ -61,9 +61,10 @@
     const today = new Date(now); today.setHours(0, 0, 0, 0);
     const spans = slots(e, addDays(today, -1)).concat(slots(e, today));
     const open = spans.find(([a, b]) => a <= now && now < b);
-    if (open) return { open: true, label: t("common.closes_at", { time: hm(open[1]) }) };
+    const lit = p.type === "light"; // las luces «se encienden», no «abren» (voz de calle, DESIGN.md)
+    if (open) return { open: true, word: lit ? t("common.lit_now") : t("common.open_now"), label: t(lit ? "common.lights_off_at" : "common.closes_at", { time: hm(open[1]) }) };
     const next = spans.concat(slots(e, addDays(today, 1))).map(([a]) => a).filter((a) => a > now).sort((a, b) => a - b)[0];
-    return { open: false, label: next ? t("common.opens_at", { time: hm(next) }) : t("common.closed") };
+    return { open: false, word: lit ? t("common.lights_off") : t("common.closed"), label: next ? t(lit ? "common.lights_on_at" : "common.opens_at", { time: hm(next) }) : t("common.closed") };
   }
   const hm = (d) => String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
 
@@ -206,7 +207,7 @@
       hero = el("div", "tv-hero", zoom);
     }
     const door = st ? el("div", "tv-door " + (st.open ? "is-open" : ""),
-      el("span", "tv-door-state", window.PX ? Object.assign(el("span"), { innerHTML: PX.svg(st.open ? "open" : "closed", { size: 16, mono: true }) }) : null, st.open ? t("common.open_now") : t("common.closed")),
+      el("span", "tv-door-state", window.PX ? Object.assign(el("span"), { innerHTML: PX.svg(st.open ? "open" : "closed", { size: 16, mono: true }) }) : null, st.word),
       el("span", "tv-door-time", st.label)) : null;
     sheet.append(...[
       close, // MOB-01: primer hijo de la ficha y «sticky»: sigue a la vista al hacer scroll
@@ -256,7 +257,7 @@
         const li = el("li", null, el("button", null,
           p.photo ? Object.assign(el("img", "tv-thumb"), { src: p.photo, alt: "", loading: "lazy" }) : el("span", "tv-thumb", lu(ICON[p.type] || "map-pin")),
           el("span", "tv-name", txt(p.name)),
-          st ? el("span", "tv-badge " + (st.open ? "is-open" : ""), st.open ? t("common.open_now") : st.label) : null));
+          st ? el("span", "tv-badge " + (st.open ? "is-open" : ""), st.open ? st.word : st.label) : null));
         li.firstChild.onclick = () => select(p);
         return li;
       }));

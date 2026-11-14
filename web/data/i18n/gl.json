@@ -289,5 +289,8 @@
   "wx.storm": "Treboada",
   "wx.rain_at": "Choiva probable cara ás {time} ({pct} %). Leva paraugas.",
   "wx.dry": "Sen choiva nas próximas horas.",
-  "wx.source": "Tempo: Open-Meteo, centro de Vigo"
+  "wx.source": "Tempo: Open-Meteo, centro de Vigo",
+  "common.lit_now": "Aceso xa",
+  "common.lights_on_at": "Acéndese ás {time}",
+  "common.lights_off_at": "Apágase ás {time}"
 }

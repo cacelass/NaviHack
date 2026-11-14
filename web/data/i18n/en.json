@@ -289,5 +289,8 @@
   "wx.storm": "Storm",
   "wx.rain_at": "Rain likely around {time} ({pct} %). Take an umbrella.",
   "wx.dry": "No rain in the next hours.",
-  "wx.source": "Weather: Open-Meteo, Vigo centre"
+  "wx.source": "Weather: Open-Meteo, Vigo centre",
+  "common.lit_now": "Lit now",
+  "common.lights_on_at": "Lights up at {time}",
+  "common.lights_off_at": "Goes dark at {time}"
 }
