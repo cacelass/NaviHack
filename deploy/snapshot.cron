@@ -16,3 +16,4 @@ CRON_TZ=Europe/Madrid
 30 14 * * *  cd $HOME/NaviHack && python3 -m scripts.gtfs_vitrasa >/dev/null
 # Renfe GTFS AV/LD/MD: se republica ~00:08 UTC
 0 3 * * *    cd $HOME/NaviHack && python3 -m scripts.gtfs_renfe >/dev/null
+40 7 * * *   cd $HOME/NaviHack && python3 -m scripts.venues >/dev/null
