@@ -1,0 +1,50 @@
+{
+  "version": "v17-sombras",
+  "source": "s15.png",
+  "width": 5120,
+  "height": 3072,
+  "tile_size": 512,
+  "format": "webp",
+  "min_level": 9,
+  "max_level": 13,
+  "levels": {
+    "9": {
+      "width": 320,
+      "height": 192,
+      "cols": 1,
+      "rows": 1
+    },
+    "10": {
+      "width": 640,
+      "height": 384,
+      "cols": 2,
+      "rows": 1
+    },
+    "11": {
+      "width": 1280,
+      "height": 768,
+      "cols": 3,
+      "rows": 2
+    },
+    "12": {
+      "width": 2560,
+      "height": 1536,
+      "cols": 5,
+      "rows": 3
+    },
+    "13": {
+      "width": 5120,
+      "height": 3072,
+      "cols": 10,
+      "rows": 6
+    }
+  },
+  "canvas": {
+    "width": 3072,
+    "height": 3072
+  },
+  "offset": {
+    "x": 0,
+    "y": 0
+  }
+}
