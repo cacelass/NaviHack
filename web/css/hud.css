@@ -439,3 +439,10 @@ body.is-walking .tv-track-go, body.is-walking .tv-track.is-following { display: 
 .tv-offline .tv-btn { margin-left: auto; }
 .tv-offline-bar { flex: 1 1 100%; height: 4px; border-radius: 2px; background: var(--sunk); overflow: hidden; }
 .tv-offline-bar span { display: block; height: 100%; background: var(--acc-line); transition: width .3s linear; }
+
+/* the gold action stays gold on hover (the generic .tv-plan-start hover turned it dark under dark text) */
+.tv-sticky-foot .tv-go:hover:not(:disabled) { background: color-mix(in srgb, var(--acc) 82%, #fff); }
+
+/* A11Y-01: «Saltar a la búsqueda», visible solo con el foco */
+.tv-skip { position: fixed; z-index: 100; left: 12px; top: 12px; min-height: var(--tap); display: inline-flex; align-items: center; padding: 0 var(--sp-4); border-radius: var(--r-ctl); background: var(--acc); color: var(--on-acc); font: var(--w-600) var(--fs-label)/1 var(--f-ui); text-decoration: none; transform: translateY(-200%); }
+.tv-skip:focus { transform: none; outline: 2px solid var(--fg); outline-offset: 2px; }

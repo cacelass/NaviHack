@@ -26,11 +26,19 @@
   corner.className = "tv-corner";
   document.body.append(bar, corner);
 
+  // A11Y-01: the map and its ~30 markers come first in the DOM; the first Tab offers a jump to search
+  const skip = document.createElement("a");
+  skip.className = "tv-skip";
+  skip.href = "#";
+  skip.onclick = (e) => { e.preventDefault(); input.focus(); };
+  document.body.prepend(skip);
+
   function labels() {
     const P = window.tinyvigoPoints;
     if (!P) return;
     input.placeholder = P.t("points.search");
     input.setAttribute("aria-label", P.t("points.search"));
+    skip.textContent = P.t("a11y.skip");
   }
 
   // Adopt the controls as their modules create them (some arrive after tv:ready).

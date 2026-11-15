@@ -97,9 +97,13 @@
   let filter = "all", query = "", selected = null;
   // ancho del panel: se arrastra el borde derecho (o flechas con el foco) y se recuerda
   const MINW = 300, maxW = () => Math.min(720, innerWidth - 120);
-  const setW = (w) => { w = Math.max(MINW, Math.min(maxW(), Math.round(w))); panel.style.setProperty("--panel-w", w + "px"); return w; };
+  const setW = (w) => { w = Math.max(MINW, Math.min(maxW(), Math.round(w))); panel.style.setProperty("--panel-w", w + "px"); if (window.tvGripValue) window.tvGripValue(w); return w; };
   try { const w = +localStorage.getItem("tinyvigo.panelw"); if (w) setW(w); } catch (e) {}
   const grip = el("div", "tv-grip"); grip.setAttribute("role", "separator"); grip.setAttribute("aria-orientation", "vertical"); grip.tabIndex = 0;
+  // a focusable separator is a window splitter: it says its size in px and its range (WAI-ARIA)
+  grip.setAttribute("aria-label", t("panel.resize")); grip.setAttribute("aria-valuemin", String(MINW));
+  window.tvGripValue = (w) => { grip.setAttribute("aria-valuenow", String(Math.round(w))); grip.setAttribute("aria-valuemax", String(Math.round(maxW()))); };
+  window.tvGripValue(panel.offsetWidth || MINW);
   grip.onpointerdown = (e) => {
     e.preventDefault(); grip.setPointerCapture(e.pointerId); panel.classList.add("is-resizing");
     const move = (m) => setW(m.clientX - panel.getBoundingClientRect().left);

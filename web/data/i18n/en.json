@@ -365,5 +365,7 @@
   "offline.saved": "Saved: the map works without signal.",
   "offline.now": "You're offline. What you've already seen is still here.",
   "offline.now_saved": "You're offline. The saved map still works.",
-  "offline.back": "Back online."
+  "offline.back": "Back online.",
+  "panel.resize": "Resize the panel",
+  "a11y.skip": "Skip to search"
 }

@@ -365,5 +365,7 @@
   "offline.saved": "Guardado: el mapa funciona sin cobertura.",
   "offline.now": "Sin conexión. Lo que ya has visto sigue disponible.",
   "offline.now_saved": "Sin conexión. El mapa guardado sigue funcionando.",
-  "offline.back": "Conexión recuperada."
+  "offline.back": "Conexión recuperada.",
+  "panel.resize": "Cambiar el ancho del panel",
+  "a11y.skip": "Saltar a la búsqueda"
 }

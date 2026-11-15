@@ -219,6 +219,9 @@
     }
 
     function render() {
+      // re-rendering replaces the nodes: keep the keyboard focus where it was (by id, else the title)
+      const focused = box.contains(document.activeElement) ? document.activeElement.id || "tv-events-title" : null;
+      if (focused) queueMicrotask(() => { const n = document.getElementById(focused) || document.getElementById("tv-events-title"); if (n && !box.contains(document.activeElement)) n.focus({ preventScroll: true }); });
       const open = box.classList.contains("is-open");
       btn.replaceChildren(lu("calendar-days"), t("events.open"));
       btn.setAttribute("aria-expanded", String(open));
