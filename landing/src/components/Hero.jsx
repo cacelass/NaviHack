@@ -1,8 +1,10 @@
 import heroBg from '../assets/hero-vigo.webp'
-import shotFicha from '../assets/web-ficha-390.webp'
+import shotMovil from '../assets/app-movil-390.webp'
 import Icon from './Icon.jsx'
-import { site } from '../data.js'
+import { hero, site } from '../data.js'
 
+// The illustrated map fills the hero; copy on the left, the real app on a phone on the right.
+// On load the title rises line by line, then the text, the buttons and the phone (CSS only).
 export default function Hero() {
   return (
     <section className="hero" id="top">
@@ -11,42 +13,33 @@ export default function Hero() {
 
       <div className="wrap hero-grid">
         <div className="hero-copy">
-
-          <h1 className="hero-title">Conoce la Navidad de Vigo</h1>
-
-          <p className="hero-tagline">
-            Las luces, los sitios y los planes de esta Navidad, sobre un mapa ilustrado del centro. <strong>Pasea</strong>,
-            descubre los puntos del Concello y mira <strong>qué está abierto ahora</strong>.
-          </p>
-
-          <div className="hero-actions">
+          <p className="hero-kicker load" style={{ '--load': 0 }}>{hero.kicker}</p>
+          <h1 className="hero-title">
+            {hero.title.map((line, i) => (
+              <span className="line" key={line}>
+                <span className="line-in" style={{ '--load': i + 1 }}>{line}</span>
+              </span>
+            ))}
+          </h1>
+          <p className="hero-text load" style={{ '--load': 3 }}>{hero.text}</p>
+          <div className="hero-actions load" style={{ '--load': 4 }}>
             <a className="btn btn-gold btn-lg" href={site.demo}>
-              Probar demo
+              Abrir el mapa
               <Icon name="arrow" size={18} />
             </a>
-            <a className="btn btn-outline btn-lg" href={site.repo} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-quiet btn-lg" href={site.repo} target="_blank" rel="noopener noreferrer">
               <Icon name="github" size={18} />
-              Ver código
+              Código en GitHub
             </a>
           </div>
-
-          <ul className="hero-points" aria-label="Lo esencial">
-            <li>Gratis</li>
-            <li>En el navegador</li>
-            <li>Datos abiertos</li>
-          </ul>
         </div>
 
-        <div className="hero-phone" aria-hidden="true">
+        <div className="hero-phone load" style={{ '--load': 5 }} aria-hidden="true">
           <div className="phone">
-            <img src={shotFicha} alt="" width="780" height="1130" decoding="async" />
+            <img src={shotMovil} alt="" width="780" height="1688" decoding="async" />
           </div>
         </div>
       </div>
-
-      <a className="hero-scroll" href="#about" aria-label="Bajar a la siguiente sección">
-        <span />
-      </a>
     </section>
   )
 }

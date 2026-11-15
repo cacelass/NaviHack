@@ -146,7 +146,7 @@ export default function Header() {
         </nav>
 
         <a className="btn btn-gold btn-sm header-cta" href={site.demo}>
-          Probar demo
+          Abrir el mapa
         </a>
 
         <ThemeToggle />
@@ -183,7 +183,7 @@ export default function Header() {
             </a>
           ))}
           <a className="btn btn-gold mobile-cta" href={site.demo} style={{ '--i': nav.length }} tabIndex={open ? 0 : -1}>
-            Probar demo
+            Abrir el mapa
           </a>
         </nav>
       </div>

@@ -27,6 +27,10 @@
 - **Tres pesos:** 400 para leer, 500 para actuar, 600 para anunciar.
 - **Títulos en minúscula normal** (sentence case). Nada de mayúsculas decorativas.
 - Cifras tabulares (`tabular-nums`) en horas, cuentas y columnas.
+- **Excepción, solo la landing (`landing/`):** el titular del hero y los de sección usan un tamaño
+  de portada (hasta ~76 px, peso 600, interletra negativa). Es una página para leer de arriba
+  abajo, no interfaz; todo lo demás de la landing sigue esta guía (Inter, tokens de la app, dorado
+  solo como acento, sin sombras ni degradados decorativos, iconos Lucide, 44 px).
 
 ## Iconos y assets
 

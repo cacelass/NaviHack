@@ -1,11 +1,10 @@
-// NaviVigo landing content. Images are imported so Vite fingerprints and bundles
-// them (works at a domain root or a subpath).
+// NaviVigo landing content. Images are imported so Vite fingerprints and bundles them.
+// Every figure here comes from the app's data (web/data/points.json, stories.json, live/parkings.json).
 
-import shotCentro from './assets/web-centro-1400.webp'
-import shotFicha from './assets/web-ficha-390.webp'
-import shotMovil from './assets/web-movil-390.webp'
-import shotHoy from './assets/web-hoy-1400.webp'
-import shotTour from './assets/web-tour-1400.webp'
+import shotMapa from './assets/app-mapa-1440.webp'
+import shotNoche from './assets/app-noche-1600.webp'
+import shotHoy from './assets/app-hoy-1440.webp'
+import shotFicha from './assets/app-ficha-390.webp'
 
 export const site = {
   name: 'NaviVigo',
@@ -16,108 +15,89 @@ export const site = {
 }
 
 export const nav = [
-  { href: '#about', id: 'about', label: 'La Navidad' },
-  { href: '#features', id: 'features', label: 'Qué ver' },
-  { href: '#origin', id: 'origin', label: 'Origen' },
-  { href: '#team', id: 'team', label: 'Equipo' },
+  { href: '#mapa', id: 'mapa', label: 'El mapa' },
+  { href: '#pasear', id: 'pasear', label: 'Pasear' },
+  { href: '#equipo', id: 'equipo', label: 'Quiénes' },
 ]
+
+export const hero = {
+  kicker: 'Navidad 2026–27 en Vigo',
+  title: ['La Navidad de Vigo,', 'en un mapa'],
+  text: 'Las luces del Concello, los mercados y la noria, sobre un dibujo del centro. Mira qué está encendido ahora y sal a dar un paseo que cabe en el tiempo que tienes.',
+}
 
 export const stats = [
-  { value: '35', label: 'puntos de Navidad con su horario' },
-  { value: '3', label: 'paseos a pie por cada plan' },
-  { value: '12', label: 'parkings con plazas en vivo' },
-  { value: '3', label: 'idiomas: gallego, castellano e inglés' },
+  { value: '35', label: 'puntos de Navidad del Concello' },
+  { value: '16', label: 'luces de Navidad en el mapa' },
+  { value: '12', label: 'parkings con plazas libres al minuto' },
+  { value: '3', label: 'idiomas: galego, castellano e inglés' },
 ]
 
-export const about = {
-  id: 'about',
-  title: 'La Navidad de Vigo',
-  intro: 'Un solo mapa para saber qué hay, qué está abierto y cómo llegar, sin abrir cinco webs.',
+export const map = {
+  id: 'mapa',
+  title: 'Todo lo de la Navidad, en su sitio',
+  intro: 'Un mapa del centro de Vigo para saber qué hay, si está abierto y cómo llegar, sin saltar de web en web.',
   items: [
     {
-      icon: 'map',
-      title: 'Un mapa ilustrado del centro',
-      desc: 'Vigo y Vialia en isométrico, con la Navidad encima: las luces del Concello, los mercados, la Noria y los 35 puntos que no te puedes perder.',
+      key: 'mapa',
+      title: 'El centro, dibujado',
+      text: 'Vigo y Vialia en isométrico, calle a calle, a partir de la ortofoto del IGN. Cada punto de Navidad está donde está de verdad.',
+      img: shotMapa,
+      w: 1440, h: 900,
+      alt: 'El mapa ilustrado del centro de Vigo con los puntos de Navidad marcados',
     },
     {
-      icon: 'bulb',
-      title: 'Luces que están encendidas',
-      desc: 'Cada punto con su horario oficial y los eventos del día, para saber qué está abierto ahora y adónde acercarte cuando cae la tarde.',
-    },
-    {
-      icon: 'phone',
-      title: 'Para pasear de noche',
-      desc: 'En el móvil, con una mano, mientras paseas: se entiende de un vistazo, aunque haga frío y vayas con prisa.',
-    },
-    {
-      icon: 'database',
-      title: 'Hecho con datos abiertos',
-      desc: 'El Concello, el IGN, OpenStreetMap, Renfe y Open-Meteo ponen los datos. Nosotros los juntamos en un único mapa.',
-    },
-  ],
-}
-
-export const features = {
-  id: 'features',
-  title: 'Luces, sitios y planes',
-  items: [
-    {
-      title: 'El centro, en pixel art',
-      tag: 'isométrico',
-      img: shotCentro,
-      wide: true,
-      alt: 'El mapa isométrico del centro de Vigo, con el árbol de la Puerta del Sol',
-      desc: 'Un mapa del centro y de Vialia ilustrado a partir de la ortofoto del IGN. La luz cambia con la hora: de día, o de noche con las luces encendidas.',
-    },
-    {
+      key: 'ficha',
       title: 'Cada sitio, con su ficha',
-      tag: '35 puntos',
+      text: 'Foto, horario oficial y si está encendido ahora mismo.',
       img: shotFicha,
+      w: 780, h: 1688,
       phone: true,
-      tall: true,
-      alt: 'La ficha del Árbol gigante de Nadal en el móvil, con su foto y su estado',
-      desc: 'El Árbol, la Noria, los mercados, el Palacio Navideño… con su foto, su horario oficial y un «Abierto · Cierra 00:30» calculado al momento.',
+      alt: 'Ficha del Árbol de Porta do Sol en el móvil: «Encendido ya, se apaga a las 03:00»',
     },
     {
-      title: 'Tu paseo a pie',
-      tag: '3 rutas',
-      img: shotTour,
-      alt: 'El planificador de paseos con una ruta de 60 minutos sobre el mapa',
-      desc: 'Dices cuánto tiempo tienes y cuándo vas, y te propone 3 paseos por lo que está abierto, trazados por calles reales.',
+      key: 'noche',
+      title: 'De noche, con sus luces',
+      text: 'Al ponerse el sol se encienden las farolas y cada luz de Navidad a su hora. El Árbol de Porta do Sol brilla más en sus pases de música.',
+      img: shotNoche,
+      w: 1600, h: 900,
+      alt: 'El mapa de noche: farolas encendidas y el Árbol de Porta do Sol iluminado',
     },
     {
-      title: 'Navidad hoy',
-      tag: 'Open-Meteo',
+      key: 'hoy',
+      title: 'Lo que pasa hoy',
+      text: 'El encendido, los pases del Árbol, las salidas del Nadal Bus y el tiempo de Vigo hora a hora, para saber si hace falta paraguas.',
       img: shotHoy,
-      alt: 'La vista «Navidad hoy», con el tiempo de Vigo y la agenda del día',
-      desc: 'Encendido de luces, pases del Árbol, lo abierto ahora y el tiempo de Vigo, para saber si te hace falta el paraguas.',
-    },
-    {
-      title: 'Pensado para el móvil',
-      tag: 'gl · es · en',
-      img: shotMovil,
-      phone: true,
-      alt: 'El mapa de noche en el móvil, con los puntos de Navidad',
-      desc: 'Mapa a pantalla completa, controles grandes y el idioma de tu navegador. Se abre sin instalar nada.',
+      w: 1440, h: 900,
+      alt: 'La agenda del día con el tiempo de Vigo y los horarios del Árbol y del Nadal Bus',
     },
   ],
 }
 
-export const origin = {
-  id: 'origin',
-  title: 'Nació en 1Hack',
-  text: 'Hecho por tres jóvenes de Vigo en un solo día, en 1Hack, en A Coruña, el 14 de noviembre de 2026: un mapa para enseñar la Navidad de su ciudad.',
-  facts: [
-    { value: '14 de noviembre de 2026' },
-    { value: 'A Coruña' },
-    { value: '1Hack' },
+export const walk = {
+  id: 'pasear',
+  title: 'Pasea por la Navidad',
+  intro: 'Dices cuánto tiempo tienes y desde dónde sales. El mapa elige lo que está abierto a esa hora y te lleva parada a parada por calles reales.',
+  steps: [
+    { title: 'Elige el tiempo', text: '30, 60, 90 o 120 minutos. Ahora, o a las 18:00, 20:00 o 22:00.' },
+    { title: 'Sigue las paradas', text: 'Cada una con su foto y lo que vas a ver. Con «Seguirme» sabes a cuántos metros estás, y la tarjeta pasa sola a la siguiente.' },
+    { title: 'Llévatelo', text: 'Comparte el paseo con un enlace o ábrelo en Google Maps.' },
   ],
+  tipsTitle: 'Antes de salir',
+  tips: [
+    { icon: 'clock', title: 'Las luces, a las 18:00', text: 'Se apagan a la 01:00, o a las 03:00 de jueves a sábado, en festivos y en sus vísperas.' },
+    { icon: 'music', title: 'El Árbol suena cinco veces', text: '10 minutos de música a las 18:00, 19:00, 20:00, 21:00 y 21:50.' },
+    { icon: 'moon', title: 'Ocho noches sin apagar', text: 'El 23, 24, 25, 30 y 31 de diciembre y el 1, 5 y 6 de enero el Árbol sigue encendido hasta el amanecer.' },
+    { icon: 'parking', title: 'Sabe dónde aparcar', text: 'Las plazas libres de los 12 parkings públicos del centro, cada dos minutos.' },
+  ],
+  cta: 'Planear un paseo',
 }
 
 export const team = {
-  id: 'team',
+  id: 'equipo',
   title: 'Hecho por',
-  intro: 'Tres personas y un solo proyecto. Todo vive en un único sitio, navivigo.vercel.app: una web, un mapa y una demo.',
+  text: 'Tres jóvenes de Vigo, en un solo día, en 1Hack, en A Coruña, el 14 de noviembre de 2026: un mapa para enseñar la Navidad de su ciudad.',
+  more: 'Lo seguimos mejorando. El código está abierto.',
   items: [
     {
       name: 'Alejandro Cancelas',
@@ -143,16 +123,10 @@ export const team = {
   ],
 }
 
-export const cta = {
-  id: 'cta',
-  title: 'Pasea por la Navidad de Vigo',
-  intro: 'Abre el mapa y recorre el centro: las luces, los sitios y los planes de esta Navidad. En el navegador, sin instalar nada.',
-}
-
 export const footer = {
-  blurb: 'El mapa de la Navidad de Vigo: sitios, horarios y paseos a pie.',
+  blurb: 'El mapa de la Navidad de Vigo: dónde están las luces, a qué hora se encienden y un paseo a pie a tu medida.',
   links: [
-    { label: 'Probar demo', href: site.demo },
+    { label: 'Abrir el mapa', href: site.demo },
     { label: 'Código en GitHub', href: site.repo, external: true },
     { label: 'README', href: site.readme, external: true },
   ],
@@ -160,11 +134,11 @@ export const footer = {
   data: [
     { label: 'Concello de Vigo', note: 'datos.vigo.org (ODC-BY) y capa «Puntos de interés de Navidad 2026-27»', href: 'https://datos.vigo.org' },
     { label: 'IGN', note: 'PNOA y MDT05 © Instituto Geográfico Nacional (CC BY 4.0)', href: 'https://www.ign.es' },
-    { label: 'OpenStreetMap', note: '© colaboradores de OpenStreetMap (ODbL)', href: 'https://www.openstreetmap.org/copyright' },
+    { label: 'OpenStreetMap', note: 'Calles y farolas: © colaboradores de OpenStreetMap (ODbL)', href: 'https://www.openstreetmap.org/copyright' },
     { label: 'Renfe', note: 'GTFS de Renfe Operadora (CC BY 4.0)', href: 'https://data.renfe.com' },
     { label: 'Open-Meteo', note: 'Weather data by Open-Meteo.com (CC BY 4.0)', href: 'https://open-meteo.com' },
   ],
-  origin: 'Hecho en un día por tres jóvenes de Vigo en 1Hack (A Coruña, 14/11/2026).',
+  origin: 'Hecho en un día en 1Hack (A Coruña, 14 de noviembre de 2026).',
   disclaimer:
     'Proyecto independiente: no es una web oficial del Concello de Vigo. Las fotos de los puntos son del Concello y los derechos son de sus autores. Los horarios son orientativos: confírmalos con la organización.',
 }

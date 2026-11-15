@@ -15,13 +15,15 @@ export default function TeamCard({ member, delay = 0 }) {
         className="team-avatar"
         src={`https://github.com/${member.github}.png`}
         alt={`Foto de perfil de ${member.name}`}
-        width="52"
-        height="52"
+        width="48"
+        height="48"
         loading="lazy"
       />
       <div className="team-info">
-        <h3>{member.name}</h3>
-        <p className="team-handle">{member.handle}</p>
+        <div>
+          <h3>{member.name}</h3>
+          <p className="team-handle">{member.handle}</p>
+        </div>
         <div className="team-links">
           {links.map((l) => (
             <a

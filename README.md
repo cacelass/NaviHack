@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/img/banner.jpg" alt="TinyVigo: la Navidad de Vigo en un mapa dibujado a mano" width="100%">
+  <img src="docs/img/banner.jpg" alt="NaviVigo: la Navidad de Vigo, en un mapa" width="100%">
 </p>
 
 <p align="center"><b>Web en vivo: <a href="https://navivigo.vercel.app">navivigo.vercel.app</a></b> · <a href="https://navivigo.vercel.app/demo/">probar la demo</a></p>
@@ -19,10 +19,11 @@
   <img alt="Datos" src="https://img.shields.io/badge/datos-Concello%20de%20Vigo%20·%20IGN%20·%20OSM-3d6a96">
 </p>
 
-**TinyVigo** es la Navidad del centro de Vigo en un mapa isométrico pintado: los 35 puntos
-del programa oficial con su horario real («Encendido ya», «Se apaga a las 03:00»), un paseo a
-pie a la medida de tu tiempo que te cuenta parada a parada lo que vas a ver, y la ciudad en
-vivo alrededor: parkings libres, buses, trenes y el tiempo. Hecho en un día para NaviHack 2026.
+**NaviVigo** es la Navidad del centro de Vigo en un mapa isométrico dibujado. Están los 35
+puntos del programa del Concello con su horario («Encendido ya · Se apaga a las 03:00»), un
+paseo a pie que cabe en el tiempo que tienes y te lleva parada a parada, y la ciudad alrededor:
+parkings libres, buses, trenes y el tiempo. Lo hicieron tres jóvenes de Vigo en un día, en
+1Hack (A Coruña, 14 de noviembre de 2026), y lo siguen mejorando.
 
 La landing está en [`landing/`](landing/); se publica con `landing/deploy.sh`, que copia `web/` como `demo/`.
 
@@ -70,13 +71,16 @@ make check           # lint + typecheck + test + arnés
 ## Qué hace la web
 
 - **Mapa dibujado del centro y Vialia** (isométrico, OpenSeadragon) con los 35 puntos de Navidad
-  del Concello: pin con icono por tipo, agrupados si se solapan.
+  del Concello: pin con icono por tipo, agrupados si se solapan. El minimapa enseña Vigo entero
+  y lleva la vista adonde lo tocas.
 - **Ficha de cada punto:** foto entera (en grande al tocarla), «Abierto · Cierra 00:30» o
   «Cerrado · Abre 18:00» calculado con el programa oficial 2026-27, horario, dirección con
   mini-mapa, parking más cercano con plazas libres en vivo y próximos buses programados.
 - **Tour a pie:** «¿Cuánto tiempo tienes?» (30–120 min) y «¿Cuándo vas?» (ahora, 18:00, 20:00,
   22:00); elige lo que cabe y está abierto, lo enruta por calles reales y lo dibuja sobre el
-  mapa; «Empezar el paseo» lo cuenta parada a parada. Lo lejano queda «para otro día».
+  mapa con pines numerados (la parada a la que vas, en oscuro; las vistas, en gris).
+  «Empezar el paseo» lo cuenta parada a parada y «Terminar paseo» lo borra todo del mapa.
+  Lo lejano queda «para otro día».
 - **Navidad hoy:** línea de tiempo con horas reales (encendido de luces, pases del Árbol,
   salidas), lo abierto ahora y lo navideño de la agenda del Concello, situado en el mapa.
 - **Vista ciudad:** todo Vigo en OpenStreetMap con la foto de cada punto, los 12 parkings en
@@ -84,15 +88,22 @@ make check           # lint + typecheck + test + arnés
 - **Búsqueda** de puntos, eventos, estaciones y 1921 calles, sin tildes y con erratas.
 - **Ajustes** en un solo botón: idioma (gl/es/en, por el navegador), vista, tema y créditos.
 - **Compartir:** el enlace guarda el punto (`#p=...`) o el tour (`#tour=60-20`).
-- **Seguimiento en ruta:** «Seguirme» sigue tu posición por el tour, pinta lo ya andado y dice
-  «Te quedan 39 min · Próxima: …»; sin GPS, «Simular paseo».
-- **Día, noche y clima:** la noche entra con la puesta de sol real y enciende las luces; lluvia,
-  nubes y niebla según Open-Meteo, o a mano con el botón de hora y en Ajustes.
+- **Seguimiento en ruta:** «Seguirme», dentro de la tarjeta del paseo, sigue tu posición, pinta
+  lo ya andado, dice «A 140 m · 2 min» y pasa sola a la siguiente parada; sin GPS, «Simular paseo».
+- **Día, noche y clima:** la noche entra con la puesta de sol real. El mapa se tiñe con el azul
+  medido del par día/noche, las farolas se encienden por las calles de OpenStreetMap y cada luz de
+  Navidad a su hora oficial; el Árbol de Porta do Sol y la Noria de Vialia llevan su propia luz
+  (`web/js/lights.js`). Lluvia, nubes, nieve y tormenta según Open-Meteo, o a mano con el botón
+  de hora y en Ajustes.
 - **Historia** de cada punto con el texto del Concello, y la ficha con la foto en grande.
 
-<p align="center"><img src="docs/img/web-ficha-movil-390.jpg" width="250" alt="Ficha en el móvil"> <img src="docs/img/web-hoy-1400.jpg" width="560" alt="Navidad hoy"></p>
+<p align="center"><img src="docs/img/web-desktop-1400.jpg" width="100%" alt="El mapa en el escritorio, de día, con los puntos de Navidad"></p>
 
-<p align="center"><img src="docs/img/web-noche-1600.jpg" width="100%" alt="El mapa de noche con las luces de Navidad"></p>
+<p align="center"><img src="docs/img/web-ficha-movil-390.jpg" width="250" alt="Ficha del Árbol en el móvil: encendido ya, se apaga a las 03:00"> <img src="docs/img/web-paseo-movil-390.jpg" width="250" alt="El paseo en el móvil, parada 2 de 9"> <img src="docs/img/web-movil-390.jpg" width="250" alt="El mapa de noche en el móvil"></p>
+
+<p align="center"><img src="docs/img/web-hoy-1400.jpg" width="100%" alt="La agenda del día con el tiempo de Vigo"></p>
+
+<p align="center"><img src="docs/img/web-noche-1600.jpg" width="100%" alt="El mapa de noche: farolas encendidas y el Árbol de Porta do Sol iluminado"></p>
 
 El servidor de `make website` es `scripts/serve_web.mjs` (Node, sin dependencias): el
 `http.server` de Python en Windows deja respuestas a medias con varias conexiones y la
@@ -256,14 +267,14 @@ El protocolo completo está en [`AGENTS.md`](AGENTS.md).
 
 El estado vivo del trabajo está en [`harness/progress/current.md`](harness/progress/current.md)
 y el histórico en [`harness/progress/history.md`](harness/progress/history.md). El
-backlog con criterios de aceptación está en GEAS y se espeja en
-[`harness/featureslist.json`](harness/featureslist.json).
+backlog con criterios de aceptación está en
+[`harness/featureslist.json`](harness/featureslist.json) (GEAS se retiró el 15 de noviembre).
 
 Criterio de «hecho» del v1 (resumen; texto completo en
 [`vault/01_PROYECTO/objetivo.md`](vault/01_PROYECTO/objetivo.md)):
 
 - Mapa de la zona (4x4 o 5x5 teselas) dibujado y aceptado, 0 pendientes.
-- 43 puntos de la capa navideña del Concello como activos separados con horario.
+- Los puntos de la capa navideña del Concello como activos separados con horario (la capa trae 35).
 - Primer vistazo reconocible en < 3 s en móvil gama media con 4G.
 - Planificador devuelve 3 opciones en < 2 s para hasta 12 paradas.
 - Autobuses (Vitrasa) y trenes (Renfe) visibles y etiquetados «según horario».
@@ -292,4 +303,4 @@ tienen sus propias licencias (ver tabla de fuentes y `licencias.md`).
 
 ---
 
-<p align="center">Hecho en Vigo por Miguel Fernández de la Cigoña París, Jose Estévez Saborido y Alejandro Cancelas Chapela · NaviHack 2026</p>
+<p align="center">Hecho en Vigo por Miguel Fernández de la Cigoña París, Jose Estévez Saborido y Alejandro Cancelas Chapela · 1Hack 2026</p>
