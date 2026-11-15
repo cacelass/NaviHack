@@ -1,0 +1,39 @@
+# BUS-03: rehace cada día los horarios de bus (GTFS de Vitrasa) y tren de la demo, SIN commits:
+# el fichero se sube a la release fija `datos-transporte` (se sobrescribe) y la demo de Vercel lo lee
+# de ahí (deploy/vercel/api/live.mjs). Si esto falla, la demo sirve la copia del deploy.
+
+name: Horarios de transporte
+
+on:
+  schedule:
+    - cron: "15 4 * * *"   # 05:15 en Vigo en invierno
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: transit
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rehacer web/data/transit.json
+        run: python -m scripts.build_transit_web
+
+      - name: Subir a la release datos-transporte
+        run: |
+          gh release view datos-transporte >/dev/null 2>&1 || gh release create datos-transporte \
+            --title "Datos de transporte (automático)" --prerelease \
+            --notes "Horarios programados de Vitrasa y Renfe para la demo. Lo rehace .github/workflows/transit.yml cada día; no es una versión de la app."
+          gh release upload datos-transporte web/data/transit.json --clobber

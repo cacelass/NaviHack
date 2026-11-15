@@ -132,6 +132,7 @@
         "<br><small>" + t("common.updated", { when: r.fechahora.slice(11, 16) }) + '</small><br><a target="_blank" rel="noopener" href="' + gm + '">' + t("go.route_to") + "</a>";
       markers.park.push(marker('<div class="tv-park tv-park-' + cls + '"><b>P</b>' + label + "</div>", [r.lon, r.lat], { title: r.nombre, onClick: () => popup(r.lat, r.lon, html) }));
     }
+    syncLayers();
   }
 
   function fit() {
@@ -163,7 +164,7 @@
     map.getSource("route").setData({ type: "FeatureCollection", features });
     if (!all.length) { lastBounds = null; return; }
     if (d.start) markers.route.push(marker('<div class="tv-route-me"></div>', [d.start[1], d.start[0]]));
-    (d.stops || []).forEach((s, i) => markers.route.push(marker('<div class="tv-stopnum">' + (i + 1) + "</div>", [s.p.lon, s.p.lat],
+    (d.stops || []).forEach((s, i) => markers.route.push(marker('<div class="tv-stopnum" data-i="' + i + '">' + (i + 1) + "</div>", [s.p.lon, s.p.lat],
       { anchor: "bottom", title: (i + 1) + ". " + txt(s.p.name), onClick: () => (window.tinyvigoTour ? tinyvigoTour.startWalk(i) : P.select(s.p, false)) })));
     const b = new maplibregl.LngLatBounds();
     all.forEach((c) => b.extend(c));
@@ -180,6 +181,7 @@
 
   function setCity(on) {
     document.body.classList.toggle("is-city", on);
+    document.dispatchEvent(new CustomEvent("tv:sat", { detail: { on } })); // the switch in the layers panel follows
     btn.innerHTML = (window.LU ? LU.svg(on ? "layers" : "map-pin", { size: 20 }) : "") + "<span>" + (on ? "Vigo 3D" : t("app.city_view")) + "</span>";
     if (on) load().then(() => { map.resize(); if (lastBounds) fit(); });
   }
@@ -205,6 +207,28 @@
     if (walkedMe) { walkedMe.remove(); walkedMe = null; }
   }
 
+  // LAYERS-02: markers handed over by layers.js (events, cameras), and the layer switches
+  function addMarker(node, lat, lon) {
+    if (!map) { queue.push(() => addMarker(node, lat, lon)); return; }
+    new maplibregl.Marker({ element: node, anchor: "center" }).setLngLat([lon, lat]).addTo(map);
+  }
+  const layerOn = (id) => !window.tinyvigoLayers || window.tinyvigoLayers.isOn(id);
+  function syncLayers() {
+    if (!map) return;
+    if (map.getLayer("bus-stops")) map.setLayoutProperty("bus-stops", "visibility", layerOn("buses") ? "visible" : "none");
+    markers.stations.forEach((m) => { m.getElement().style.display = layerOn("trenes") ? "" : "none"; });
+    markers.park.forEach((m) => { m.getElement().style.display = layerOn("parking") ? "" : "none"; });
+  }
+  // the satellite view where the drawn map was: [[lat, lon], …] corners
+  function show(corners) {
+    setCity(true);
+    if (!corners) return;
+    load().then(() => {
+      const lats = corners.map((p) => p[0]), lons = corners.map((p) => p[1]);
+      map.fitBounds([[Math.min(...lons), Math.min(...lats)], [Math.max(...lons), Math.max(...lats)]], { duration: 0, maxZoom: 18 });
+    });
+  }
+
   function setTraffic(geojson) {
     pendingTraffic = geojson;
     if (map && map.getSource("traffic")) map.getSource("traffic").setData(geojson || { type: "FeatureCollection", features: [] });
@@ -224,6 +248,7 @@
     }
     markers.stations.forEach((m) => m.remove());
     markers.stations = stations.map((st) => marker('<div class="tv-train">' + (window.LU ? LU.svg("train-front", { size: 16 }) : "T") + "</div>", [st.lon, st.lat], { title: st.name, onClick: () => popup(st.lat, st.lon, stationHtml(st.name)) }));
+    syncLayers();
   }
 
   function init() {
@@ -233,9 +258,15 @@
     document.addEventListener("tv:lang", () => setCity(document.body.classList.contains("is-city")));
     document.addEventListener("tv:route", (e) => drawRoute(e.detail));
     document.addEventListener("tv:clear-route", clearRoute);
+    document.addEventListener("tv:layer", syncLayers);
+    // TOUR-05: visited, current and still to come, like the pins on the drawn map
+    document.addEventListener("tv:walk-at", (e) => document.querySelectorAll(".tv-stopnum[data-i]").forEach((n) => {
+      const i = +n.dataset.i, at = e.detail;
+      n.classList.toggle("is-current", i === at); n.classList.toggle("is-done", at >= 0 && i < at);
+    }));
     document.addEventListener("tv:select", (e) => { if (map && document.body.classList.contains("is-city")) map.flyTo({ center: [e.detail.lon, e.detail.lat], zoom: Math.max(map.getZoom(), 16.5), duration: 1000 }); });
     setCity(false);
-    window.tinyvigoCity = { get map() { return map; }, setCity, focus, popup, setWalked, clearWalked, addTransit, setTraffic, load, kind: "3d" };
+    window.tinyvigoCity = { get map() { return map; }, setCity, show, focus, popup, setWalked, clearWalked, addTransit, addMarker, setTraffic, load, kind: "3d" };
   }
   if (window.tinyvigoPoints) init();
   else document.addEventListener("tv:ready", init, { once: true });

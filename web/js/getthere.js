@@ -11,7 +11,6 @@
   const R = 6371000, rad = (x) => (x * Math.PI) / 180;
   const dist = (a, b) => { const p = rad(b[0] - a[0]), q = rad(b[1] - a[1]); const h = Math.sin(p / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(q / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
   const hm = (min) => String(Math.floor(min / 60) % 24).padStart(2, "0") + ":" + String(Math.round(min) % 60).padStart(2, "0");
-  const ymd = (d) => d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0");
   const ll = (p) => p[0].toFixed(6) + "," + p[1].toFixed(6);
   const gm = (mode, a, b) => "https://www.google.com/maps/dir/?api=1&travelmode=" + mode + "&origin=" + ll(a) + "&destination=" + ll(b);
 
@@ -87,7 +86,7 @@
     const T = window.tinyvigoTransit;
     const data = T && (await T.load());
     if (!data || !data.trips) return { mode: "bus", unavailable: "go.no_transit_data" };
-    const key = ymd(now), svc = new Set(data.services.map((d, i) => (d.includes(key) ? i : -1)).filter((i) => i >= 0));
+    const svc = T.active(now); // BUS-02: same weekday of the published week when today is outside it
     const S = data.all_stops, nowMin = now.getHours() * 60 + now.getMinutes();
     const board = new Map(), alight = new Map();
     S.forEach(([, , lat, lon], i) => {

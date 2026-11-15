@@ -53,6 +53,13 @@
   }
 
   function set(v) {
+    // LAYERS-02: with the satellite city view (city3d.js) the «real photo» is that view, at the same
+    // place and with every layer on it; this bare orthophoto stays only as its fallback
+    const C = window.tinyvigoCity;
+    if (C && C.show) {
+      if (v) C.show(bounds()); else C.setCity(false);
+      return;
+    }
     on = !!v;
     document.body.classList.toggle("is-sat", on);
     if (on) {
@@ -64,5 +71,5 @@
   }
 
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && on) set(false); });
-  window.tinyvigoSat = { set, isOn: () => on };
+  window.tinyvigoSat = { set, isOn: () => (window.tinyvigoCity && window.tinyvigoCity.show ? document.body.classList.contains("is-city") : on) };
 })();

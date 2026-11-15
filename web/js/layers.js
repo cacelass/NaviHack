@@ -28,6 +28,13 @@
   // ── marcadores sobre el isométrico ───────────────────────────────────────
   const groups = {}; // id -> [elementos]
   function add(id, node) { (groups[id] ||= []).push(node); }
+  // LAYERS-02: the same marker on the satellite view (city3d.js), shown and hidden with its layer.
+  // Off-drawing places (out of the pixel map) only exist there.
+  function twin(id, b, lat, lon) {
+    const C = window.tinyvigoCity; if (!C || !C.addMarker) return;
+    const n = b.cloneNode(true); n.onclick = b.onclick; n.classList.add("is-on-city");
+    C.addMarker(n, lat, lon); add(id, n);
+  }
   function visible(id) { return state[id]; }
   function apply(id) {
     for (const n of groups[id] || []) n.style.display = state[id] ? "" : "none";
@@ -90,6 +97,7 @@
         const xy = project(at.lat, at.lon); if (!xy) continue;
         const b = dot("is-event", "calendar-days", e.titulo || "Evento");
         b.onclick = () => toast((e.titulo || "Evento") + (e.horario ? " · " + e.horario : "") + (e.direccion ? "\n" + e.direccion : ""));
+        twin("eventos", b, at.lat, at.lon);
         if (overlay(b, xy[0], xy[1])) { add("eventos", b); placed++; }
       }
       if (placed === 0) console.info("TinyVigo capas: agenda sin direcciones casadas con el mapa");
@@ -108,6 +116,7 @@
         const inside = within(xy);
         if (!inside) continue;
         const b = dot("is-bus", "bus", name);
+        b.onclick = () => departuresToast(name, (T) => T.nextDepartures(id).map((x) => x.time + " " + x.line + " → " + x.headsign), (T) => T.emptyText(id)); // BUS-02
         if (overlay(b, xy[0], xy[1])) add("buses", b);
       }
       // las estaciones de Renfe no traen lat/lon en transit.json: coordenadas conocidas (WEB-03)
@@ -116,6 +125,7 @@
         const pos = ST[s.name]; if (!pos) continue;
         const xy = project(pos[0], pos[1]); if (!xy) continue;
         const b = dot("is-train", "train-front", s.name);
+        b.onclick = () => departuresToast(s.name, (T) => T.trains().filter((x) => x.station === s.name).map((x) => x.time + " " + x.train + " → " + x.to));
         if (overlay(b, xy[0], xy[1])) add("trenes", b);
       }
     } catch (err) { /* sin dato: capa vacía */ }
@@ -150,12 +160,11 @@
       for (const f of rows) {
         const c = f.geometry ? f.geometry.coordinates : [f.lon, f.lat];
         if (!c || c[1] == null) continue;
-        const xy = project(c[1], c[0]); if (!xy) continue;
-        const inside = within(xy);
-        if (!inside) continue;
         const props = f.properties || f;
         const b = dot("is-cam", "camera", props.name || props.nombre || "Cámara");
         if (props.image_url) b.onclick = () => showCam(props); // CAM-01: la imagen en directo, dentro de la app
+        twin("camaras", b, c[1], c[0]);
+        const xy = project(c[1], c[0]); if (!xy || !within(xy)) continue;
         if (overlay(b, xy[0], xy[1])) add("camaras", b);
       }
     } catch (err) { /* sin capa: vacía */ }
@@ -235,11 +244,18 @@
 
   // aviso breve para los clics de capa
   let toastTimer = null;
-  function toast(text) {
+  function toast(text, ms = 2600) {
     let n = document.querySelector(".tv-ltoast");
     if (!n) { n = el("div", "tv-ltoast"); document.body.append(n); }
     n.textContent = text; n.classList.add("is-on");
-    clearTimeout(toastTimer); toastTimer = setTimeout(() => n.classList.remove("is-on"), 2600);
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => n.classList.remove("is-on"), ms);
+  }
+  // BUS-02: a stop or station on the drawn map says its next scheduled departures
+  async function departuresToast(name, rows, empty) {
+    const T = window.tinyvigoTransit; if (!T) return toast(name);
+    await T.load();
+    const r = rows(T), t = (k) => (window.tinyvigoPoints ? window.tinyvigoPoints.t(k) : k);
+    toast([name, ...(r.length ? r : [empty ? empty(T) : t("transit.no_more_today")]), t("transit.scheduled")].join("\n"), 7000);
   }
 
   function set(id, on, opts = {}) {
@@ -337,6 +353,12 @@
     });
 
     for (const l of LAYERS) apply(l.id);
+    // LAYERS-02: what is on shows from the start, not only after opening the panel (the loaders
+    // wait for the projection, which tour.js sets up right after tv:ready)
+    (function loadOn(n = 0) {
+      if (!(window.tinyvigoTour && window.tinyvigoTour.project)) { if (n < 100) setTimeout(() => loadOn(n + 1), 200); return; }
+      Object.keys(lazies).forEach((id) => { if (state[id]) lazies[id](); });
+    })();
     // los marcadores de puntos se crean después de tv:ready
     document.addEventListener("tv:ready", () => { apply("navidad"); apply("rutas"); }, { once: true });
     // una ruta nueva debe verse aunque la capa estuviera apagada: se enciende al planificar

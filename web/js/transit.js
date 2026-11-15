@@ -11,18 +11,47 @@
   const P = () => window.tinyvigoPoints;
   const t = (k, v) => (P() ? P().t(k, v) : k);
 
+  // BUS-02: the GTFS Vitrasa publishes covers about a week. Outside it, the same weekday of the
+  // published week stands in (the timetable repeats weekly) instead of «no buses» for everyone.
   function active(day) {
-    const key = ymd(day);
-    return new Set(data.services.map((dates, i) => (dates.includes(key) ? i : -1)).filter((i) => i >= 0));
+    const on = (key) => new Set(data.services.map((dates, i) => (dates.includes(key) ? i : -1)).filter((i) => i >= 0));
+    const svc = on(ymd(day));
+    if (svc.size) return svc;
+    const known = [...new Set(data.services.flat())].sort();
+    const same = known.filter((k) => new Date(+k.slice(0, 4), +k.slice(4, 6) - 1, +k.slice(6, 8)).getDay() === day.getDay());
+    if (!same.length) return svc;
+    // before the published week: its first such day; after it: its last one
+    return on(ymd(day) < known[0] ? same[0] : same[same.length - 1]);
+  }
+  // BUS-02: departures of ANY stop, from the trips (data.departures only has the stops next to a point)
+  function departuresOf(stopId) {
+    if (data.departures[stopId]) return data.departures[stopId];
+    if (!data._deps) {
+      const idx = new Map(), detour = new Map(data.stops.map(([id, , , , d]) => [id, d]));
+      data.trips.forEach(([line, headsign, s, stops, mins]) => stops.forEach((st, i) => {
+        if (i === stops.length - 1) return; // the last stop: nobody boards there
+        (idx.get(st) || idx.set(st, []).get(st)).push([mins[i], line, headsign, s]);
+      }));
+      for (const v of idx.values()) v.sort((a, b) => a[0] - b[0]);
+      data._deps = { idx, detour, at: new Map(data.all_stops.map(([id], i) => [id, i])) };
+    }
+    const D = data._deps, d = D.detour.get(stopId) ? 1 : 0;
+    return (D.idx.get(D.at.get(stopId)) || []).map(([m, l, h, s]) => [m, l, h, s, d]);
   }
   const stopById = () => (data._stops ||= Object.fromEntries(data.stops.map(([id, name, lat, lon, detour]) => [id, { id, name, lat, lon, detour }])));
 
   // próximas salidas programadas de una parada: [{time, line, headsign, detour}]
   function nextDepartures(stopId, when = new Date(), n = 3) {
-    if (!data || !data.departures[stopId]) return [];
+    if (!data) return [];
     const svc = active(when), m = nowMin(when);
-    return data.departures[stopId].filter(([min, , , s]) => svc.has(s) && min >= m).slice(0, n)
+    return departuresOf(stopId).filter(([min, , , s]) => svc.has(s) && min >= m).slice(0, n)
       .map(([min, line, headsign, , detour]) => ({ time: hm(min), line, headsign, detour: !!detour }));
+  }
+
+  // BUS-02: «no quedan hoy» only when some bus did stop here today; otherwise say none runs today
+  function emptyText(stopId, when = new Date()) {
+    const day = new Date(when); day.setHours(0, 0, 0, 0);
+    return t(nextDepartures(stopId, day, 1).length ? "transit.no_more_today" : "transit.none_today");
   }
 
   // bus directo al centro desde las paradas a ≤ 600 m de (lat, lon): el que antes te deja allí
@@ -67,7 +96,7 @@
       el("div", "tv-transit-head", ic, el("div", "tv-transit-stop", el("strong", null, s ? s.name : near.stop_id), el("span", null, near.distance_m + " m · " + t("common.walk_min", { min: walk })))),
       deps.length
         ? el("ul", "tv-deps", ...deps.map((x) => el("li", null, el("b", "tv-dep-time", x.time), el("span", "tv-line", x.line), el("span", "tv-dep-to", x.headsign), x.detour ? el("span", "tv-badge", "⚠") : null)))
-        : el("p", "tv-note", t("transit.no_more_today")),
+        : el("p", "tv-note", emptyText(near.stop_id)),
       el("div", "tv-transit-foot",
         s ? Object.assign(el("a", "tv-leg-maps tv-stop-maps", t("transit.go_to_stop")), {
           // sin origen: Google Maps usa la ubicación del móvil
@@ -91,7 +120,7 @@
   // capa de paradas y estaciones en la vista ciudad
   function addLayers() {
     const C = window.tinyvigoCity; if (!C || !data) return;
-    const stopHtml = (id, name) => { const deps = nextDepartures(id); return "<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>"; };
+    const stopHtml = (id, name) => { const deps = nextDepartures(id); return "<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : emptyText(id)) + "<br><small>" + t("transit.scheduled") + "</small>"; };
     const stationHtml = (name) => { const rows = trains().filter((x) => x.station === name); return "<strong>" + name + "</strong><br>" + (rows.length ? rows.map((x) => x.time + " · " + x.train + " → " + x.to).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>"; };
     if (C.kind === "3d") { // MAP3D-01
       const POS = { "Vigo Urzaiz": [42.234189, -8.713728], "Vigo-Guixar": [42.2392656, -8.7146089] };
@@ -109,7 +138,7 @@
       L.circleMarker([lat, lon], { radius: 3, weight: 1, color: "#3d6a96", fillColor: detour ? "#f4cd80" : "#ffffff", fillOpacity: 1, opacity: 0.9 })
         .on("click", function () {
           const deps = nextDepartures(id);
-          this.bindPopup("<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
+          this.bindPopup("<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : emptyText(id)) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
         }).addTo(stopLayer);
     }
     for (const st of (data.trains && data.trains.stations) || []) {
@@ -130,5 +159,5 @@
     return el("p", "tv-note tv-transit-leg", t("transit.direct_bus", r) + " · " + t("transit.scheduled"));
   }
 
-  window.tinyvigoTransit = { load, nextDepartures, toCentre, trains, renderToCentre };
+  window.tinyvigoTransit = { load, nextDepartures, toCentre, trains, renderToCentre, emptyText, active: (when) => (data ? active(when) : new Set()) };
 })();

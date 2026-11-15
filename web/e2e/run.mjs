@@ -87,6 +87,8 @@ const TESTS = [
     await page.waitForFunction(() => tinyvigoTour.result() && tinyvigoTour.result().line, null, { timeout: 45_000 });
     ok(await page.locator(".tv-stop-pin").count() > 2, "sin pines de parada");
     const n = await page.evaluate(() => tinyvigoTour.result().stops.length);
+    await page.evaluate(() => tinyvigoTour.startWalk(1)); await wait(600);
+    ok(await page.locator(".tv-stop-pin.is-done").count() >= 1 && await page.locator(".tv-stop-pin.is-current").count() === 1, "las paradas no cambian de color según vas");
     await page.evaluate((n) => tinyvigoTour.startWalk(n - 1), n); await wait(600);
     ok(/Terminar/.test(await page.locator(".tv-step-next").innerText()), "la última parada no ofrece terminar");
     await page.click(".tv-step-next"); await wait(800);
@@ -110,6 +112,23 @@ const TESTS = [
     ok(labels.includes("Parking Vialia Interior"), "falta el parking de Vialia (al este del lienzo viejo)");
     ok(await page.locator(".tv-lmark.is-cam").count() > 20, "menos de 21 cámaras");
     ok(await page.locator(".tv-traffic polyline").count() > 0, "sin tramos de tráfico");
+  }],
+  ["buses: casi todas las paradas tienen salidas, también fuera de la semana publicada", async (page) => {
+    await open(page);
+    const r = await page.evaluate(async () => {
+      const T = tinyvigoTransit, d = await T.load();
+      const dates = [...new Set(d.services.flat())].sort(), day = (s, h) => new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8), h);
+      const tue = dates.find((s) => day(s, 12).getDay() === 2);
+      const empty = d.stops.filter(([id]) => !T.nextDepartures(id, day(tue, 12), 1).length).length;
+      const later = new Date(day(dates[dates.length - 1], 12).getTime() + 30 * 864e5); // a month after the GTFS ends
+      return { stops: d.stops.length, empty, later: T.nextDepartures(d.stops[0][0], later, 1).length + d.stops.filter(([id]) => T.nextDepartures(id, later, 1).length).length };
+    });
+    ok(r.empty < r.stops * 0.05, `${r.empty} de ${r.stops} paradas sin buses un martes a mediodía`);
+    ok(r.later > r.stops * 0.5, "un mes después del GTFS no sale ningún bus");
+    await page.click(".tv-layers-btn"); await page.click('[data-layer="buses"]'); await wait(1500);
+    await page.keyboard.press("Escape");
+    await page.evaluate(() => document.querySelector(".tv-lmark.is-bus").onclick()); await wait(800);
+    ok(/programad|scheduled|previst/i.test(await page.locator(".tv-ltoast.is-on").textContent()), "tocar una parada no enseña sus salidas");
   }],
   ["una cámara enseña su imagen dentro de la app, sin abrir pestañas", async (page, ctx) => {
     await open(page);

@@ -46,6 +46,7 @@
   "transit.scheduled": "horário previsto, não em tempo real",
   "transit.nearest_stop": "Autocarro · {stop} ({m} m)",
   "transit.no_more_today": "Já não há partidas previstas hoje",
+  "transit.none_today": "Hoje não passa nenhum autocarro previsto nesta paragem",
   "transit.direct_bus": "Autocarro {line} às {time} desde {stop} ({walk} min a pé) · chegas ao centro às {arrive}",
   "planner.rain_warning": "Pode chover durante o percurso ({probability} %)",
   "planner.missing_signals": "Sem dados de: {signals}",

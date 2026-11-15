@@ -173,6 +173,7 @@
       b.classList.toggle("is-current", group.includes(at));
       b.classList.toggle("is-done", at >= 0 && group.every((k) => k < at));
     });
+    document.dispatchEvent(new CustomEvent("tv:walk-at", { detail: at })); // TOUR-05: the satellite view colours its stops too
   }
   function clear(viewer) {
     if (layer) { viewer.removeOverlay(layer); layer = null; }
@@ -739,11 +740,11 @@
       const planned = plan(P.points, startPos, budget, P.status, startTime());
       if (!planned.stops.length) { result = { ...planned, line: [], km: "0" }; busy = ""; render(); return; }
       busy = t("tour.routing"); render();
-      await finish(startPos, planned, startTime(), []);
+      await finish(startPos, planned, startTime());
     }
 
     // PLANNER-01: optimiza el orden con 3 criterios (js/planner.js) y dibuja la opción elegida
-    async function finish(from, planned, at, extraLegs) {
+    async function finish(from, planned, at) {
       let options = null, source = null;
       if (window.tinyvigoPlanner && planned.stops.length > 1) {
         const lights = P.points.filter((p) => p.type === "light" && (P.status(p, at) || {}).open).map((p) => [p.lat, p.lon]);
@@ -756,7 +757,7 @@
         options = res.options.filter((o) => o.ok); source = res.source;
       }
       const preferred = options && (options.find((o) => o.mode === preferredMode) || options[0]);
-      result = { ...planned, options, source, from, extraLegs, mode: preferred ? preferred.mode : null };
+      result = { ...planned, options, source, from, mode: preferred ? preferred.mode : null };
       await applyMode(result.mode);
     }
     async function applyMode(mode) {
@@ -778,10 +779,12 @@
       result.km = (meters / 1000).toFixed(1).replace(".", P.lang() === "en" ? "." : ",");
       busy = "";
       if (stops.length) draw(viewer, line, from, stops, { name: (p) => txt(p.name), pick: (i) => startWalk(i) });
-      const legs = result.extraLegs || [];
-      // the walk stays on the drawn map: switching to the city view is the user's call (Ajustes)
-      if (legs.length) emit("tv:route", { legs: legs.concat(line.length ? [{ line, mode: "tour" }] : []), start: startPos, stops, showCity: false });
-      else emit("tv:route", { line, start: from, stops, mode: "walking", showCity: false });
+      // TOUR-05: only the Christmas walk is drawn (the way here is gone once you are here), framed on
+      // its own. It is walked on the drawn map; the satellite only when a stop falls outside the drawing
+      // (Samil, the circus).
+      const m = window.tinyvigo.manifest, off = stops.some((s) => { const [x, y] = project(s.p.lat, s.p.lon); return !(x > 0 && y > 0 && x < m.width && y < m.height); });
+      emit("tv:route", { line, start: from, stops, mode: "walking", showCity: off });
+      if (!off && document.body.classList.contains("is-city") && window.tinyvigoCity) tinyvigoCity.setCity(false);
       render();
     }
     async function loadStreets() {
@@ -795,9 +798,8 @@
       offset = o.total;
       const arrive = new Date(startTime().getTime() + offset * 60000);
       const planned = plan(P.points, from, budget, P.status, arrive);
-      const legs = routeLegs(o);
       trip = null; busy = t("tour.routing"); render();
-      await finish(from, planned, arrive, legs);
+      await finish(from, planned, arrive);
     }
 
     btn.onclick = () => { if (box.classList.contains("is-open")) closeBox(); else openBox(); };

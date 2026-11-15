@@ -66,9 +66,28 @@ function json(body, ttl) {
   });
 }
 
+// BUS-03: the bus and train timetable (web/data/transit.json). GitHub Actions rebuilds it every day from
+// Vitrasa's GTFS into the `datos-transporte` release (.github/workflows/transit.yml, no commits), so the demo reads that
+// instead of the copy frozen at deploy time. Served as is: transit.js reads the file, not a feed envelope.
+const TRANSIT_URL = "https://github.com/cacelass/NaviHack/releases/download/datos-transporte/transit.json";
+async function transit(url) {
+  try {
+    const r = await fetch(TRANSIT_URL, { headers: { "user-agent": UA }, signal: AbortSignal.timeout(8000) });
+    if (!r.ok) throw new Error("http " + r.status);
+    const text = await r.text(), d = JSON.parse(text);
+    if (d.kind !== "scheduled" || !Array.isArray(d.trips) || !d.trips.length) throw new Error("no valida");
+    return json(text, 6 * 3600);
+  } catch (err) {
+    const snap = await fetch(new URL("/demo/data/live-snapshot/transit.json", url.origin));
+    if (!snap.ok) return new Response("sin datos", { status: 502 });
+    return json(await snap.text(), 300);
+  }
+}
+
 export async function GET(request) {
   const url = new URL(request.url);
   const name = url.searchParams.get("feed");
+  if (name === "transit") return transit(url);
   const feed = FEEDS[name];
   if (!feed) return new Response("feed desconocido", { status: 404 });
   try {

@@ -420,8 +420,8 @@ body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: inline-flex !i
 .tv-stop-pin.is-current { transform: scale(1.22); z-index: 3; }
 .tv-stop-pin.is-current .tv-pin-shape { fill: #1b1f2c; }
 .tv-stop-pin.is-current .tv-stop-num { color: #f4cd80; }
-.tv-stop-pin.is-done .tv-pin-shape { fill: #d9d6cf; }
-.tv-stop-pin.is-done .tv-stop-num { color: #3a3d45; }
+.tv-stop-pin.is-done .tv-pin-shape { fill: #3f7a4c; } /* TOUR-05: visited, in the state green */
+.tv-stop-pin.is-done .tv-stop-num { color: #fff; }
 .tv-stop-pin:focus-visible { outline: 2px solid var(--acc-line); outline-offset: 2px; border-radius: 6px; }
 
 /* ROUTE-03: while the walk card is open, «Seguirme» lives inside it */

@@ -16,6 +16,8 @@ rm -rf "$DIST/demo/e2e"
 # Datos en vivo: los sirve deploy/vercel/api/live.mjs; los ficheros del repo quedan de respaldo.
 # Se renombran porque en Vercel un fichero estático gana a la reescritura de vercel.json.
 mv "$DIST/demo/data/live" "$DIST/demo/data/live-snapshot"
+# Los horarios de bus y tren también: la función lee los que GitHub rehace cada día (release datos-transporte).
+mv "$DIST/demo/data/transit.json" "$DIST/demo/data/live-snapshot/transit.json"
 cp -r "$ROOT/deploy/vercel/." "$DIST/"
 
 cd "$DIST"
