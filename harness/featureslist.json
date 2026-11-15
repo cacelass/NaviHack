@@ -1980,6 +1980,23 @@
       "raw_status": "DONE",
       "branch": "4754bf35-mob-02-pulido-de-ux-en-m-vil-enc",
       "assigned_actor_id": "56a8a107-41cd-49d3-9131-f2eba37f3167"
+    },
+    {
+      "id": "LANDING-02",
+      "title": "Landing con mimo: scroll progresivo, tarjetas a medida, copy humano y SEO, capturas del HUD nuevo",
+      "description": "Landing con mimo: scroll progresivo, tarjetas a medida, copy humano y SEO, capturas del HUD nuevo",
+      "acceptance_criteria": [
+        "Sin ratón de scroll, sin chips Gratis/En el navegador/Datos abiertos y sin la frase redundante de Hecho por",
+        "Título y metas sin doble guion (—)",
+        "Aparición al hacer scroll escalonada por elemento, sin desplazamientos laterales, con expo-out y respetando prefers-reduced-motion",
+        "Sección Pasea por la Navidad rehecha con tarjetas y consejos a medida",
+        "Capturas nuevas sacadas del HUD actual (escritorio, móvil, ficha, paseo, agenda)",
+        "Copy revisado con los patrones de Humanizer y pensado para SEO local (Vigo, Navidad, luces)",
+        "Cumple web/ui/DESIGN.md: Inter, sin sombras ni degradados, iconos Lucide, dorado solo como acento, 44 px",
+        "npm run build sin errores, sin scroll horizontal a 390 y 1440 px, sin errores de consola"
+      ],
+      "status": "pending",
+      "depends_on": []
     }
   ]
 }
