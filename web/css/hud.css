@@ -541,3 +541,16 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 @media (max-width: 520px) {
   .tv-dock { left: calc(60px + env(safe-area-inset-left)); transform: none; }
 }
+
+/* CAM-01: a traffic camera's live picture, in a card (bottom sheet on a phone) */
+.tv-cam { display: none; position: fixed; z-index: 12; right: calc(12px + env(safe-area-inset-right)); bottom: calc(12px + env(safe-area-inset-bottom)); width: min(460px, calc(100vw - 24px)); box-sizing: border-box; padding: var(--sp-4); border: 1px solid var(--line); border-radius: var(--r-panel); background: var(--raised); color: var(--fg); font: var(--fs-label)/1.4 var(--f-ui); }
+.tv-cam.is-open { display: grid; gap: var(--sp-2); }
+.tv-cam > h2 { margin: 0; padding-right: var(--tap); font-size: var(--fs-title); font-weight: var(--w-600); }
+.tv-cam > .tv-close { position: absolute; top: 8px; right: 8px; width: var(--tap); height: var(--tap); display: grid; place-items: center; border: 0; border-radius: var(--r-ctl); background: none; color: var(--fg-2); cursor: pointer; }
+.tv-cam > .tv-close:hover { background: var(--surface); color: var(--fg); }
+.tv-cam-frame { aspect-ratio: 16 / 9; border-radius: var(--r-ctl); overflow: hidden; background: var(--sunk); }
+.tv-cam-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.tv-cam.is-broken .tv-cam-img { visibility: hidden; }
+.tv-cam-state { margin: 0; color: var(--fg-2); }
+.tv-cam-credit { margin: 0; font-size: var(--fs-meta); color: var(--fg-3); }
+@media (max-width: 700px) { .tv-cam { left: 8px; right: 8px; width: auto; bottom: calc(8px + env(safe-area-inset-bottom)); } }

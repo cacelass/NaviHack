@@ -372,5 +372,7 @@
   "search.more_filters": "More filters",
   "search.g_addresses": "Addresses",
   "search.addr_error": "Couldn't look up the address. Check your connection.",
-  "search.looking": "Looking for “{q}”…"
+  "search.looking": "Looking for “{q}”…",
+  "camera.live": "Live · refreshes every 20 s",
+  "camera.no_image": "This camera has no picture right now."
 }

@@ -372,5 +372,7 @@
   "search.more_filters": "Más filtros",
   "search.g_addresses": "Direcciones",
   "search.addr_error": "No se pudo buscar la dirección. Revisa la conexión.",
-  "search.looking": "Buscando «{q}»…"
+  "search.looking": "Buscando «{q}»…",
+  "camera.live": "En directo · se actualiza cada 20 s",
+  "camera.no_image": "Esta cámara no da imagen ahora mismo."
 }

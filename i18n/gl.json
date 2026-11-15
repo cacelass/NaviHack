@@ -372,5 +372,7 @@
   "search.more_filters": "Máis filtros",
   "search.g_addresses": "Enderezos",
   "search.addr_error": "Non se puido buscar o enderezo. Revisa a conexión.",
-  "search.looking": "Buscando «{q}»…"
+  "search.looking": "Buscando «{q}»…",
+  "camera.live": "En directo · actualízase cada 20 s",
+  "camera.no_image": "Esta cámara non dá imaxe agora mesmo."
 }

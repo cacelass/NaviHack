@@ -154,11 +154,45 @@
         if (!inside) continue;
         const props = f.properties || f;
         const b = dot("is-cam", "camera", props.name || props.nombre || "Cámara");
-        if (props.link) b.onclick = () => window.open(props.link, "_blank", "noopener"); // imagen en directo del Concello (X-09)
+        if (props.image_url) b.onclick = () => showCam(props); // CAM-01: la imagen en directo, dentro de la app
         if (overlay(b, xy[0], xy[1])) add("camaras", b);
       }
     } catch (err) { /* sin capa: vacía */ }
     apply("camaras");
+  }
+
+  // CAM-01: the live picture from the Concello in a card (the camera URL has no content type, so
+  // opening it downloaded a «.php» file; in an <img> it shows fine). Refreshed every 20 s.
+  let camCard = null, camTimer = 0, camOpener = null;
+  function showCam(props) {
+    const P = window.tinyvigoPoints, tt = (k) => (P ? P.t(k) : k);
+    if (!camCard) {
+      camCard = el("section", "tv-cam");
+      camCard.setAttribute("role", "dialog"); camCard.setAttribute("aria-modal", "false");
+      document.body.append(camCard);
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && camCard.classList.contains("is-open")) closeCam(); });
+    }
+    camOpener = document.activeElement;
+    const src = () => props.image_url + (props.image_url.includes("?") ? "&" : "?") + "t=" + Date.now();
+    const img = Object.assign(el("img", "tv-cam-img"), { alt: props.name || tt("layer.camaras"), width: 640, height: 360, decoding: "async" });
+    const state = el("p", "tv-cam-state", tt("state.loading") + "…");
+    state.setAttribute("role", "status");
+    img.onload = () => { state.textContent = tt("camera.live"); camCard.classList.remove("is-broken"); };
+    img.onerror = () => { state.textContent = tt("camera.no_image"); camCard.classList.add("is-broken"); };
+    img.src = src();
+    const close = el("button", "tv-close", lu("x", 20)); close.type = "button"; close.setAttribute("aria-label", tt("common.close")); close.onclick = closeCam;
+    const title = el("h2", null, props.name || tt("layer.camaras")); title.id = "tv-cam-title";
+    camCard.setAttribute("aria-labelledby", "tv-cam-title");
+    camCard.replaceChildren(close, title, el("div", "tv-cam-frame", img), state, el("p", "tv-cam-credit", props.credit || "Imagen: Concello de Vigo"));
+    camCard.classList.add("is-open");
+    clearInterval(camTimer);
+    camTimer = setInterval(() => { if (!document.hidden) img.src = src(); }, 20000);
+    setTimeout(() => close.focus(), 30);
+  }
+  function closeCam() {
+    clearInterval(camTimer);
+    camCard.classList.remove("is-open");
+    if (camOpener && document.body.contains(camOpener)) camOpener.focus();
   }
 
   const lazies = { eventos: loadEventos, buses: loadTransit, trenes: loadTransit, parking: loadParking, camaras: loadCamaras };
