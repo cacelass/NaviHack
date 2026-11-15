@@ -278,6 +278,9 @@ El protocolo completo está en [`AGENTS.md`](AGENTS.md).
 
 ## Estado y roadmap
 
+Resumen para presentar (qué hace, cómo se mantiene sola, arreglos y seguridad):
+[`docs/entrega-concello.md`](docs/entrega-concello.md).
+
 El estado vivo del trabajo está en [`harness/progress/current.md`](harness/progress/current.md)
 y el histórico en [`harness/progress/history.md`](harness/progress/history.md). El
 backlog con criterios de aceptación está en
