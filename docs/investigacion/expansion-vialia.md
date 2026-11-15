@@ -370,10 +370,12 @@ Costura `H y=2048`, columna 0: salto de color 1,99× lo normal. Tres intentos:
 | Referencia del método | `docs/video-marcelo.md`, `docs/investigacion/tinygyn-video-trucos.md` (§11: lo que no se trasladó) |
 | Auditoría anterior del 3×3 | `docs/investigacion/auditoria-bloque.md` |
 
-## Ronda 2 (v11-costuras)
+## Ronda 2 (v11 a v16-costa)
 
-- Seis costuras peores del 3×3 (ratio de salto, `seam_metric.py`): V x=1024 f2 1,60→0,87; V x=2048 f1 1,58→1,10; H y=2048 c2 1,37→1,14; V x=2048 f2 1,36→1,10; V x=1024 f1 1,34→1,04; H y=2048 c1 1,30→1,01. Media 1,26→1,03.
-- Método: una ventana de 1024 px pintada desde el render, centrada en la costura (o en el cruce de dos), mezclada con máscara suave (`pipeline/render/seam_window_blend.py`: núcleo 48 px, fundido a 200 px, color ajustado a media y desviación del mapa). Fuera de la máscara no cambia ni un píxel.
-- Gasto: 6 llamadas de imagen, ninguna repetida. Una corrección solo de color (rampa suave) bajó la media a 1,17 pero no pasó de 1,46 en la peor: el salto que queda es de contenido, no de tono.
-- Lo aprendido: dos ventanas distintas solapadas en un fundido dejan un fantasma; se evita recortando cada ventana a su tramo (`--clip`). Una ventana con mar encima se recorta fuera del agua.
-- Pendiente: H y=1024 col0 (1,22, sin tocar), un círculo naranja suelto en el parque de x≈2100, y=2480, y la fidelidad al render de las ventanas nuevas sin medir.
+- Costuras del 3×3 (`seam_metric.py`): las seis peores pasaron de 1,30-1,60× a 0,87-1,14×; con v16 las diez quedan ≤ 1,14× (media 1,00×).
+- Costuras: una ventana de 1024 px pintada desde el render y mezclada con máscara suave (`seam_window_blend.py`: núcleo 48 px, fundido a 200 px, color ajustado a media y desviación). Una corrección solo de color bajó la media a 1,17 pero no la peor (1,46): el salto era de contenido. Dos ventanas solapadas en un fundido dejan un fantasma; se evita con `--clip`.
+- Costa (v14-v16): el mar por código se comía grúas y muelles (la máscara de agua toma sombras como agua). Lo que arregla es redibujar un recorte de 350-512 px con el modelo, con el render como referencia, y pegar solo lo que cambia con máscara suave y color ajustado a la zona sin cambios (`zona/coast_r3/`). Añade lo que el render tiene y el mapa no (espigón, barcos atracados).
+- Probado y descartado: SAM 2 (CPU) sobre la costa deja halos de arena; ensanchar la banda del mar deja dos tonos de agua. El modelo inventa barcos y plataformas en recortes con mucho mar abierto: 7 de 16 recortes de costa se pegaron y 9 se descartaron tras mirarlos.
+- Una franja clara en la unión de dos recortes (x=3584) obligó a quitar dos recortes; los bordes de cada recorte se funden a 16 px pero no basta si el modelo pinta un degradado en el borde.
+- La fidelidad por bordes (mediana 0,39) engaña en el centro urbano: las celdas «peores» se ven fieles porque el render lleva fachadas lisas.
+- Gasto: 24 llamadas de imagen de 40. Pendiente: 9 recortes de costa en mar abierto (muelle este, x 4096-4608), con recortes más pequeños y prompt más estricto.
