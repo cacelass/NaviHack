@@ -14,7 +14,7 @@ const CORE = [
   "ui/css/tokens.css", "vendor/leaflet/leaflet.css", "css/app.css", "css/about.css", "css/points.css", "css/hud.css",
   "ui/assets/theme.js", "ui/assets/lucide.js", "vendor/openseadragon.min.js", "vendor/leaflet/leaflet.js",
   "tiles/current.json", "data/points.json", "data/stories.json", "data/elevation.json",
-  "data/i18n/gl.json", "data/i18n/es.json", "data/i18n/en.json",
+  "data/i18n/gl.json", "data/i18n/es.json", "data/i18n/en.json", "data/i18n/pt.json",
 ];
 
 self.addEventListener("install", (e) => {

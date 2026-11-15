@@ -27,7 +27,7 @@
       return g;
     };
     const isCity = () => document.body.classList.contains("is-city");
-    const LANG_OPTIONS = [["gl", "Galego"], ["es", "Español"], ["en", "English"]];
+    const LANG_OPTIONS = [["gl", "Galego"], ["es", "Español"], ["en", "English"], ["pt", "Português"]];
     const theme = () => document.documentElement.getAttribute("data-theme") || "dark";
     // UI-08: one group per setting: its title (icon + name) and the control under it, full width.
     // The old icon | label | control row broke on a phone (the control fell over the next row).

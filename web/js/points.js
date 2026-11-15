@@ -1,7 +1,7 @@
 // TinyVigo: puntos de Navidad sobre el mapa, lista con filtros, ficha y estado «abierto ahora».
 // Datos de data/points.json (scripts/build_web_data.py) y textos de data/i18n/ (I18N-01).
 (async function () {
-  const LANGS = ["gl", "es", "en"];
+  const LANGS = ["gl", "es", "en", "pt"];
   const TYPE_KEY = {
     light: "points.filter_lights", market: "points.filter_markets", attraction: "points.filter_attractions",
     santa_kings: "points.filter_santa", exhibit: "points.filter_exhibits", photo_gallery: "points.filter_exhibits",
@@ -25,11 +25,11 @@
     if (LANGS.includes(q)) return q;
     try { const s = localStorage.getItem("tinyvigo.lang"); if (LANGS.includes(s)) return s; } catch (e) {}
     for (const tag of navigator.languages || [navigator.language || ""]) { const b = tag.toLowerCase().split("-")[0]; if (LANGS.includes(b)) return b; }
-    return "en"; // WEB-04: si el navegador no está en gl/es/en, inglés
+    return "en"; // WEB-04: si el navegador no está en gl/es/en/pt, inglés
   };
   let lang = pickLang();
   const t = (key, vars = {}) => (CAT[lang][key] ?? CAT.es[key] ?? key).replace(/\{(\w+)\}/g, (h, n) => (n in vars ? vars[n] : h));
-  const txt = (obj) => (obj ? obj[lang] || obj.es || obj.gl || "" : "");
+  const txt = (obj) => (obj ? obj[lang] || (lang === "pt" ? obj.gl : null) || obj.es || obj.gl || "" : "");
 
   // ── contenido editorial por punto (STORY-01, web/data/stories.json) ───────
   // «story» (cuerpo), «fact» (¿Sabías que…?) y «facts» (filas con icono) sustituyen

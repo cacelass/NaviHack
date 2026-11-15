@@ -10,13 +10,14 @@
 import es from "./es.json";
 import gl from "./gl.json";
 import en from "./en.json";
+import pt from "./pt.json";
 
-export const LANGS = ["gl", "es", "en"] as const;
+export const LANGS = ["gl", "es", "en", "pt"] as const;
 export type Lang = (typeof LANGS)[number];
 export type Key = keyof typeof es;
-export const LANG_NAMES: Record<Lang, string> = { gl: "Galego", es: "Español", en: "English" };
+export const LANG_NAMES: Record<Lang, string> = { gl: "Galego", es: "Español", en: "English", pt: "Português" };
 
-const CATALOGS: Record<Lang, Record<Key, string>> = { es, gl, en };
+const CATALOGS: Record<Lang, Record<Key, string>> = { es, gl, en, pt };
 const STORAGE_KEY = "tinyvigo.lang";
 const FALLBACK: Lang = "es";
 const listeners = new Set<(lang: Lang) => void>();

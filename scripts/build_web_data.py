@@ -142,7 +142,7 @@ def main() -> int:
         )
     shutil.copyfile(ROOT / "data" / "venues_ids.json", OUT / "venues.json")
     (OUT / "i18n").mkdir(exist_ok=True)
-    for lang in ("gl", "es", "en"):
+    for lang in ("gl", "es", "en", "pt"):
         shutil.copyfile(ROOT / "i18n" / f"{lang}.json", OUT / "i18n" / f"{lang}.json")
     shown = sum(p["on_map"] for p in result)
     print(f"{len(result)} puntos, {shown} dentro del mapa -> web/data/points.json")

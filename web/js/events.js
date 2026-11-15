@@ -88,7 +88,7 @@
     const iso = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
     const hm = (d) => String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
     const timeIn = (label) => ((label || "").match(/(\d{1,2}:\d{2})/) || [])[1];
-    const locale = () => P.lang() === "en" ? "en-GB" : P.lang() === "gl" ? "gl-ES" : "es-ES";
+    const locale = () => ({ en: "en-GB", gl: "gl-ES", pt: "pt-PT" })[P.lang()] || "es-ES";
     const selectedDate = () => { const d = new Date(); if (dayOffset) d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + dayOffset); return d; };
 
     function renderChip() {

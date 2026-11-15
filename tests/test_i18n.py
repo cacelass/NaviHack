@@ -1,4 +1,4 @@
-"""Textos de la interfaz (I18N-01): mismos textos y mismos huecos en gl/es/en."""
+"""Textos de la interfaz (I18N-01): mismos textos y mismos huecos en gl/es/en/pt."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 I18N = Path(__file__).resolve().parent.parent / "i18n"
-LANGS = ("gl", "es", "en")
+LANGS = ("gl", "es", "en", "pt")
 HOLE = re.compile(r"\{(\w+)\}")
 
 
@@ -20,12 +20,12 @@ def catalog(lang: str) -> dict[str, str]:
 
 def test_los_tres_idiomas_tienen_las_mismas_claves() -> None:
     es = set(catalog("es"))
-    for lang in ("gl", "en"):
+    for lang in ("gl", "en", "pt"):
         keys = set(catalog(lang))
         assert keys == es, f"{lang}: faltan {sorted(es - keys)} · sobran {sorted(keys - es)}"
 
 
-@pytest.mark.parametrize("lang", ["gl", "en"])
+@pytest.mark.parametrize("lang", ["gl", "en", "pt"])
 def test_mismos_huecos_que_en_espanol(lang: str) -> None:
     es, other = catalog("es"), catalog(lang)
     for key, text in es.items():
@@ -51,3 +51,9 @@ def test_el_helper_lee_los_tres_catalogos() -> None:
     src = (I18N / "i18n.ts").read_text(encoding="utf-8")
     for lang in LANGS:
         assert f'from "./{lang}.json"' in src
+
+
+def test_el_portugues_no_es_una_copia_del_espanol() -> None:
+    es, pt = catalog("es"), catalog("pt")
+    same = [k for k in es if es[k] == pt[k]]
+    assert len(same) / len(es) < 0.3, f"demasiados textos iguales al español: {same}"
