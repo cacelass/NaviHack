@@ -25,7 +25,7 @@
      "data/live/parkings.json", "data/live/weather.json", "data/live/agenda.json", "data/live/centros.json"].forEach((u) => urls.add(u));
     // only the app's own files (under its folder): not Vercel's analytics or anything else on the host
     const root = new URL(".", location.href).pathname;
-    const local = (u) => { try { const a = new URL(u, location.href); return a.origin === location.origin && a.pathname.startsWith(root) ? a.pathname.slice(root.length) : null; } catch (e) { return null; } };
+    const local = (u) => { try { const a = new URL(u, location.href); const rel = a.origin === location.origin && a.pathname.startsWith(root) ? a.pathname.slice(root.length) : null; return rel && !rel.startsWith("_vercel/") ? rel : null; } catch (e) { return null; } };
     document.querySelectorAll("script[src], link[rel=stylesheet]").forEach((n) => { const u = local(n.src || n.href); if (u) urls.add(u); });
     return { urls: [...urls], version: m.version };
   }
