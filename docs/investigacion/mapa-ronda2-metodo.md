@@ -15,8 +15,9 @@ Guía para repetirlo. Las reglas cortas están en `vault/01_PROYECTO/mapa_render
 | `v16-costa` | Costa de 7 tramos redibujada (espigón, barcos, bordes nítidos) | 16 |
 | `v17-sombras` | Tres sombras que la máscara de agua tomaba por agua | 3 |
 | `v18-cuenca` | Cuenca de agua inventada y texto falso en un tejado | 1 |
+| `v19-eliptica` | Cúpula de cristal esférica inventada sobre la Plaza Elíptica (es una plaza plana con un tragaluz oval) | 1 |
 
-Gasto total de la ronda: 28 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
+Gasto total de la ronda: 29 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
 `work/mapa-sonnet/` (`s4` a `s16`) y no se versionan.
 
 ## Principio: componer, no rehacer
@@ -84,6 +85,8 @@ Criterios para aceptar o rechazar una respuesta (se rechazaron 9 de 16 recortes 
 - Los recortes con mucho mar abierto son los que más inventan: mejor recortes pequeños centrados en el borde.
 
 ## 4. Auditoría y comprobaciones
+
+- **Identificar lo que el mapa dibuja antes de darlo por bueno**: coordenadas con `pipeline.georef.to_latlon(px, py)` y búsqueda web del lugar. La «cúpula» de v10 a v18 era la Plaza Elíptica (42,2318 N, −8,7207 E): el modelo convirtió el tragaluz oval en una esfera con nervios. Que coincida con el render no basta: el render también puede llevar un tragaluz que el modelo exagera.
 
 - Hojas de 24 pares mapa | render a 600 px **no ven** defectos finos (los dos fantasmas, las grúas, las charcas); las capturas
   de Jose con zoom sí. Ante una captura: localizarla con `cv2.matchTemplate` multiescala sobre el mapa (la escala sale sola),
