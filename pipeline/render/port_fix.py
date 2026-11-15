@@ -1,6 +1,6 @@
 """Pone una ventana pintada del puerto en el mapa final, sin tocar el resto.
 
-El puerto de v6 está roto (ver harness/progress/zona-vialia-hallazgo-puerto.md): la tesela r0c1 casi
+El puerto de v6 está roto (ver docs/investigacion/expansion-vialia.md §4.3): la tesela r0c1 casi
 no tiene tierra, así que pintada sola el modelo hace zoom e inventa. Se pinta en cambio una ventana
 de 1024 px a caballo entre las filas 0 y 1 (muelle y dársena arriba, ciudad abajo) y esto la integra:
 
