@@ -1,7 +1,7 @@
 {
-  "$comment": "Fuente de verdad del backlog: GEAS. Solo falta sustituir <IP> por la IP/URL del servidor (o poner GEAS_URL en .env) y tener GEAS_TOKEN en .env. No escribas el token aquí. `./scripts/geas_setup.sh <IP>` rellena esto y siembra los tickets.",
+  "$comment": "GEAS retirado el 2026-11-15 (decisión de Jose): el backlog vive en el repo, en harness/featureslist.json, y lo gestiona el agente harness en modo local (una sola feature en curso a la vez). Para volver a GEAS: enabled a true y GEAS_TOKEN en .env. No escribas el token aquí.",
   "backend": "geas",
-  "enabled": true,
+  "enabled": false,
   "url": "http://10.20.26.2:9000",
   "org_id": "7649c0dd-c222-4c20-92db-b096c349ff60",
   "repository": "NavaHack",
