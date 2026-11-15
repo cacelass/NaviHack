@@ -54,8 +54,7 @@
           document.documentElement.setAttribute("data-theme", v);
           try { localStorage.setItem("tinyvigo-theme", v); } catch (e) {}
         }, t("settings.theme")),
-        info,
-        Object.assign(el("a", "tv-btn tv-btn-quiet", lu("layers", 16), t("settings.design")), { href: "https://github.com/cacelass/NaviHack/tree/main/docs/ui-exploraciones", target: "_blank", rel: "noopener" }));
+        info);
     }
     btn.onclick = () => {
       pop.classList.toggle("is-open"); render();
