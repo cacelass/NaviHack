@@ -334,10 +334,10 @@ Costura `H y=2048`, columna 0: salto de color 1,99× lo normal. Tres intentos:
 - **`build_web_data` reescribe más de lo suyo** (`web/data/i18n/*`, el bloque de `web/index.html`). Si no son tuyos,
   `git checkout --` antes de commitear.
 - **GEAS retirado** (decisión de Jose, 15-nov): `harness/geas.json` pasa a `enabled: false` y el arnés trabaja en
-  modo local sobre `harness/featureslist.json`. GEO-01 y ZONE-02 se cierran en el repo con `harness finish` (su
-  evidencia está en `harness/progress/history.md`). El modo local solo admite **una** feature en curso y hay seis
-  abiertas, así que `harness start` falla hasta que se cierren o bloqueen. La sección «Backlog en GEAS» de
-  `AGENTS.md` ha quedado obsoleta.
+  modo local sobre `harness/featureslist.json`. GEO-01 y ZONE-02 se cerraron en el repo con `harness finish`; la
+  evidencia está en `harness/progress/history.md`. El modo local solo admite **una** feature en curso y quedan
+  cinco abiertas (WIN-001, CHECK-01, LIGHT-02, ASSETS-03, UI-05), así que `harness start` falla hasta que se cierren
+  o bloqueen. `AGENTS.md` lleva un aviso de que su sección «Backlog en GEAS» está retirada.
 - **Subagentes pequeños (Haiku)** para lo mecánico y de solo lectura: tabular una métrica sobre varias versiones,
   averiguar la procedencia de un fichero, analizar qué había que cambiar para `on_map`, escribir `noria.py` con
   datos sintéticos. Útiles y baratos, pero **hay que revisar su salida**: el `noria.py` usaba el umbral del árbol y
