@@ -18,8 +18,9 @@ Guía para repetirlo. Las reglas cortas están en `vault/01_PROYECTO/mapa_render
 | `v19-eliptica` | Error mío: quité la cúpula de la Plaza Elíptica y la dejé plana. Sustituida por v20 | 1 |
 | `v20-eliptica2` | Plaza Elíptica con la cúpula baja y ovalada que tiene de verdad, base de piedra, monumento de tubos de acero, pérgola (con fotos reales de referencia) | 1 |
 | `v21-capturas` | Costura H y=2048 que cortaba un bosquecillo (el render es una explanada de grava) y mancha clara con borde junto a la estación (ya estaba en el mapa original) | 2 |
+| `v22-plaza-estacion` | La plaza de la estación era asfalto oscuro y el aparcamiento salía vacío; en el render es hormigón claro y aparcamiento lleno de coches | 1 |
 
-Gasto total de la ronda: 34 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
+Gasto total de la ronda: 35 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
 `work/mapa-sonnet/` (`s4` a `s16`) y no se versionan.
 
 ## Principio: componer, no rehacer
@@ -87,6 +88,8 @@ Criterios para aceptar o rechazar una respuesta (se rechazaron 9 de 16 recortes 
 - Los recortes con mucho mar abierto son los que más inventan: mejor recortes pequeños centrados en el borde.
 
 ## 4. Auditoría y comprobaciones
+
+- **Un arreglo no acaba al quitar el defecto**: hay que volver a comparar con el render lo que queda. En v21 quité una mancha y dejé la plaza oscura cuando es hormigón claro.
 
 - **Localizar una captura de Jose**: están en `~/Pictures/Screenshots/` (la más reciente por fecha). `cv2.matchTemplate` sobre el mapa en gris reducido a la mitad, escalas 0,3-1,6 en pasos de 0,05, recortando de la captura la interfaz (barra, botones). Con captura de noche el tinte baja la correlación (0,47 y aun así acertó); cuando sale < 0,35 se amplía el rango de escalas, no se rinde. La escala del navegador puede ser mayor que 1.
 
