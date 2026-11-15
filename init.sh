@@ -61,7 +61,7 @@ section "Entorno"
 DECLARED_PY="$(sed -n 's/^python_version:[[:space:]]*//p' project.yml 2>/dev/null | head -1 | cut -d'#' -f1 | tr -d '"'"'"' \r' | tr -d ' ')"
 
 PY=""
-for candidate in "./.venv/bin/python" "python${DECLARED_PY}" python3 python; do
+for candidate in "./.venv/bin/python" "./.venv/Scripts/python.exe" "python${DECLARED_PY}" python3 python; do
   if [ -x "$candidate" ] || command -v "$candidate" >/dev/null 2>&1; then PY="$candidate"; break; fi
 done
 
