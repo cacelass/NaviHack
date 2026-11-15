@@ -2124,6 +2124,27 @@
       "started": "2026-11-15",
       "review_rounds": 0,
       "closed": "2026-11-15"
+    },
+    {
+      "id": "POLISH-03",
+      "title": "Ronda para presentar al Concello: satélite, tráfico, cámaras, buses al día, pt, búsqueda de direcciones, tour y seguridad",
+      "description": "Ronda para presentar al Concello: satélite, tráfico, cámaras, buses al día, pt, búsqueda de direcciones, tour y seguridad",
+      "acceptance_criteria": [
+        "Vista satélite plana con las capas del dibujo",
+        "Tráfico en vivo pegado a la calzada",
+        "Cámaras con imagen dentro de la app",
+        "Salidas en todas las paradas y horarios al día sin redesplegar",
+        "Portugués y búsqueda de cualquier dirección",
+        "Tour con ruedas, sin ruta de casa al empezar y paradas por colores",
+        "Capas visibles desde el inicio",
+        "CSP y cabeceras de seguridad en Vercel, texto de feeds escapado",
+        "Pruebas e2e en la CI"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
     }
   ]
 }

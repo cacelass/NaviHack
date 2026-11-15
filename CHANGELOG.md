@@ -8,6 +8,12 @@ añade aquí una entrada por cada feature cerrada del arnés.
 
 ---
 
+## [Unreleased] — 2026-11-15
+
+### Añadido
+
+- Ronda para presentar al Concello: satélite, tráfico, cámaras, buses al día, pt, direcciones, tour y seguridad (POLISH-03)
+
 ## [Unreleased] — 2026-11-14
 
 ### Añadido

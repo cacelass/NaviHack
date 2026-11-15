@@ -1198,3 +1198,19 @@ Sin ratón, chips ni frase redundante; título sin —; reveals verticales expo-
 ```
 
 </details>
+
+## POLISH-03 — Ronda para presentar al Concello: satélite, tráfico, cámaras, buses al día, pt, búsqueda de direcciones, tour y seguridad
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 163 passed, 1 skipped in 1.74s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Commits aa68e81, 330830a, 0926e97, 9ed21e6. e2e (web/e2e, Edge, escritorio+móvil): 25 bien · 0 mal · 1 no aplican — buses (<5% paradas sin salidas un martes; salidas un mes después del GTFS), paseo con paradas por colores, capas, cámara en la app, axe 0. CI e2e verde. CSP de vercel.json inyectada en el navegador: 0 avisos. Tráfico: 263/270 tramos encajados. init.sh: 163 passed, 1 skipped, ENTORNO LISTO
+```
+
+</details>
