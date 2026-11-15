@@ -7,6 +7,7 @@
   const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null && k !== false)); return n; };
 
   let route = null; // {pts:[[lat,lon]], cum:[m], total, stops:[{p, at:m, stay}]}
+  let offered = false; // no GPS fix on the route: the walk card offers the simulation instead
   let pos = null, along = 0, watch = null, sim = null, svg = null, walkedLine = null, meDot = null, cityWalked = null, cityMe = null;
   const bar = el("div", "tv-track"); bar.setAttribute("role", "status"); bar.setAttribute("aria-live", "polite");
   const go = el("button", "tv-track-go");
@@ -75,11 +76,18 @@
   }
 
   // ── barra: tiempo restante y próxima parada ─────────────────────────────────────────
+  // ROUTE-03: the walk card (tour.js) follows along: where you are and where each stop falls on the line
+  function tell() {
+    const following = !!(route && (watch || sim));
+    document.dispatchEvent(new CustomEvent("tv:track", { detail: { following, offer: offered && !following, sim: !!sim, along, total: route ? route.total : 0, stops: route ? route.stops.map((s) => s.at) : [] } }));
+  }
   function paint() {
+    tell();
     go.style.display = route && !watch && !sim ? "" : "none";
     go.replaceChildren(lu("crosshair"), t("track.follow"));
     bar.replaceChildren();
     bar.classList.toggle("is-on", !!(watch || sim));
+    bar.classList.toggle("is-following", !!(watch || sim));
     if (!route || !(watch || sim)) return;
     const ahead = route.stops.filter((s) => s.at > along + 15);
     const left = Math.max(0, route.total - along) / WALK / 60 + ahead.reduce((a, s) => a + s.stay, 0);
@@ -101,12 +109,13 @@
     drawWalked(); paint();
   }
   function startSim() {
-    stopWatch(); along = 0; const t0 = performance.now(), speed = 25; // 25 m/s: ruta entera en segundos, para enseñar
+    stopWatch(); offered = false; along = 0; const t0 = performance.now(), speed = 25; // 25 m/s: ruta entera en segundos, para enseñar
     sim = setInterval(() => { along = Math.min(route.total, ((performance.now() - t0) / 1000) * speed); drawWalked(); paint(); if (along >= route.total) { clearInterval(sim); sim = "done"; } }, 120);
     paint();
   }
   function start() {
     if (!route) return;
+    offered = false;
     if (!navigator.geolocation) { startSim(); return; }
     let first = true;
     watch = navigator.geolocation.watchPosition((p) => {
@@ -118,18 +127,22 @@
   }
   function offerSim() {
     stopWatch();
+    bar.classList.remove("is-following");
+    offered = true;
+    if (document.body.classList.contains("is-walking")) { bar.classList.remove("is-on"); tell(); return; } // said in the card
     bar.classList.add("is-on");
     const simBtn = el("button", "tv-btn", lu("route", 16), t("track.simulate")); simBtn.onclick = startSim;
     const no = el("button", "tv-btn tv-btn-quiet", t("common.close")); no.onclick = () => { bar.classList.remove("is-on"); paint(); };
     bar.replaceChildren(el("div", "tv-track-main", el("strong", null, t("track.far")), el("span", null, t("track.far_body"))), el("div", "tv-track-actions", simBtn, no));
   }
   function stopWatch() { if (watch !== null && watch !== undefined && navigator.geolocation) navigator.geolocation.clearWatch(watch); watch = null; }
-  function stop() { stopWatch(); if (sim && sim !== "done") clearInterval(sim); sim = null; pos = null; along = 0; clearDrawn(); }
+  function stop() { offered = false; stopWatch(); if (sim && sim !== "done") clearInterval(sim); sim = null; pos = null; along = 0; clearDrawn(); }
 
   go.onclick = start;
   document.addEventListener("tv:route", (e) => setRoute(e.detail));
   document.addEventListener("tv:clear-route", () => { stop(); route = null; paint(); });
   document.addEventListener("tv:lang", paint);
   paint();
-  window.tinyvigoTrack = { start, startSim, stop, update, state: () => ({ along, total: route && route.total }) };
+  // halt/following: the walk card's «Seguirme» toggle (ROUTE-03)
+  window.tinyvigoTrack = { start, startSim, stop, update, state: () => ({ along, total: route && route.total }), halt: () => { stop(); paint(); }, following: () => !!(route && (watch || sim)) };
 })();

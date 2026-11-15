@@ -352,5 +352,9 @@
   "tour.duration": "Canto tempo tes?",
   "tour.kind": "Tipo de paseo",
   "walk.full_route": "Ver ruta completa · {n} paradas",
-  "walk.next_stop": "Seguinte parada: {name}"
+  "walk.next_stop": "Seguinte parada: {name}",
+  "walk.finish": "Rematar o paseo",
+  "walk.here": "Xa chegaches",
+  "walk.live": "A {m} m · {min} min",
+  "walk.ended": "Paseo rematado. Bo Nadal!"
 }

@@ -5,8 +5,8 @@
     const viewer = window.tinyvigo && window.tinyvigo.viewer;
     const m = window.tinyvigo && window.tinyvigo.manifest;
     if (!viewer || !m) return;
-    const canvas = m.canvas || { width: m.width, height: m.height };
-    const off = m.offset || { x: 0, y: 0 };
+    // el mini-mapa es la imagen entera (nivel mínimo, una tesela): se mide contra ella y no contra
+    // `canvas`, que se quedó en 3072² cuando el mapa creció al este (v8) y descuadraba el recuadro
     const base = "tiles/" + m.version + "/";
 
     const box = document.createElement("div");
@@ -19,10 +19,11 @@
     img.draggable = false;
     const frame = document.createElement("span");
     frame.className = "tv-minimap-view";
+    box.style.aspectRatio = m.width + " / " + m.height; // sin recortar: Vigo entero
     box.append(img, frame);
     document.body.append(box);
 
-    const frac = (ix, iy) => [((off.x + ix) / canvas.width), ((off.y + iy) / canvas.height)];
+    const frac = (ix, iy) => [ix / m.width, iy / m.height];
     const place = () => {
       const r = viewer.viewport.viewportToImageRectangle(viewer.viewport.getBounds());
       const [x0, y0] = frac(r.x, r.y);
@@ -45,9 +46,9 @@
       const r = box.getBoundingClientRect();
       const px = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width));
       const py = Math.max(0, Math.min(1, (ev.clientY - r.top) / r.height));
-      const ix = (px * canvas.width - off.x) / m.width;
-      const iy = (py * canvas.height - off.y) / m.height;
-      viewer.viewport.panTo(new OpenSeadragon.Point(ix, iy));
+      // la imagen ocupa en el visor los límites de su TiledImage (no 0..1: ver tileSources en app.js)
+      const hb = viewer.world.getItemAt(0).getBounds();
+      viewer.viewport.panTo(new OpenSeadragon.Point(hb.x + px * hb.width, hb.y + py * hb.height));
       viewer.viewport.applyConstraints();
     };
     box.addEventListener("pointerdown", (ev) => { dragging = true; box.setPointerCapture(ev.pointerId); go(ev); });

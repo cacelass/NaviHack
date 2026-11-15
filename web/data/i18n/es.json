@@ -352,5 +352,9 @@
   "tour.duration": "¿Cuánto tiempo tienes?",
   "tour.kind": "Tipo de paseo",
   "walk.full_route": "Ver ruta completa · {n} paradas",
-  "walk.next_stop": "Siguiente parada: {name}"
+  "walk.next_stop": "Siguiente parada: {name}",
+  "walk.finish": "Terminar paseo",
+  "walk.here": "Has llegado",
+  "walk.live": "A {m} m · {min} min",
+  "walk.ended": "Paseo terminado. ¡Feliz Navidad!"
 }

@@ -103,7 +103,9 @@
 
   // ── dibujo sobre el mapa ─────────────────────────────────────────────────
   const SVG = "http://www.w3.org/2000/svg";
-  let layer = null;
+  // ROUTE-02: same drop as the place markers (points.js), with the stop number where the type icon goes
+  const PIN = '<svg class="tv-pin-shape" viewBox="3.8 1.8 16.4 20.4" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/></svg>';
+  let layer = null, pins = [];
   function draw(viewer, line, start, stops, onPick) {
     clear(viewer);
     layer = document.createElementNS(SVG, "svg");
@@ -119,21 +121,23 @@
     const me = document.createElementNS(SVG, "circle");
     me.setAttribute("cx", s[0]); me.setAttribute("cy", s[1]); me.setAttribute("r", 14); me.setAttribute("class", "tv-route-start");
     layer.append(me);
-    stops.forEach((st, i) => {
-      const [x, y] = project(st.p.lat, st.p.lon);
-      const g = document.createElementNS(SVG, "g");
-      g.setAttribute("class", "tv-route-stop");
-      const c = document.createElementNS(SVG, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", y - 40); c.setAttribute("r", 20);
-      const tx = document.createElementNS(SVG, "text"); tx.setAttribute("x", x); tx.setAttribute("y", y - 33); tx.textContent = i + 1;
-      const hit = document.createElementNS(SVG, "circle"); hit.setAttribute("cx", x); hit.setAttribute("cy", y - 40); hit.setAttribute("r", 34); hit.setAttribute("class", "tv-route-hit");
-      const title = document.createElementNS(SVG, "title"); title.textContent = (i + 1) + ". " + (onPick ? onPick.name(st.p) : "");
-      g.append(c, tx, hit, title); layer.append(g);
-      if (onPick) {
-        g.addEventListener("pointerdown", (e) => e.stopPropagation());
-        new OpenSeadragon.MouseTracker({ element: g, clickHandler: (e) => { e.preventDefaultAction = true; onPick.pick(i); } });
-      }
-    });
     viewer.addOverlay({ element: layer, location: new OpenSeadragon.Rect(0, 0, 1, 1) });
+    // the stops are HTML pins anchored at the place itself (not floating above it), so they keep their
+    // size at any zoom like the other markers; the place marker underneath is hidden by points.js
+    pins = stops.map((st, i) => {
+      const [x, y] = project(st.p.lat, st.p.lon);
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "tv-stop-pin";
+      b.innerHTML = PIN + '<span class="tv-stop-num">' + (i + 1) + "</span>";
+      b.setAttribute("aria-label", (i + 1) + ". " + (onPick ? onPick.name(st.p) : ""));
+      b.title = b.getAttribute("aria-label");
+      viewer.addOverlay({ element: b, location: new OpenSeadragon.Point(x / CANVAS, y / CANVAS), placement: OpenSeadragon.Placement.BOTTOM });
+      if (onPick) {
+        b.addEventListener("pointerdown", (e) => e.stopPropagation());
+        new OpenSeadragon.MouseTracker({ element: b, clickHandler: (e) => { e.preventDefaultAction = true; onPick.pick(i); } });
+      }
+      return b;
+    });
     // encuadra la ruta
     const xs = line.map(([lo, la]) => project(la, lo));
     const minX = Math.min(...xs.map((p) => p[0])), maxX = Math.max(...xs.map((p) => p[0]));
@@ -143,8 +147,38 @@
     const h = maxY - minY + 2 * pad, below = matchMedia("(max-width: 700px)").matches ? h * 1.5 : 0;
     viewer.viewport.fitBounds(new OpenSeadragon.Rect((minX - pad) / CANVAS, (minY - pad) / CANVAS, (maxX - minX + 2 * pad) / CANVAS, (h + below) / CANVAS));
     viewer.viewport.applyConstraints(); // WEB-01: nunca deja ver fondo fuera del bloque
+    setTimeout(declutter, 700);
   }
-  function clear(viewer) { if (layer) { viewer.removeOverlay(layer); layer = null; } }
+  // two stops a few pixels apart (same square, same street) share one pin: «3·4»
+  function declutter() {
+    const viewer = window.tinyvigo && window.tinyvigo.viewer;
+    if (!viewer || !pins.length) return;
+    const pos = pins.map((b) => { const r = b.getBoundingClientRect(); return [r.left + r.width / 2, r.bottom]; });
+    const lead = pins.map((_, i) => i);
+    for (let i = 0; i < pins.length; i++) {
+      if (lead[i] !== i) continue;
+      for (let j = i + 1; j < pins.length; j++) if (lead[j] === j && Math.hypot(pos[i][0] - pos[j][0], pos[i][1] - pos[j][1]) < 26) lead[j] = i;
+    }
+    pins.forEach((b, i) => {
+      const group = lead.map((l, k) => (l === i ? k + 1 : 0)).filter(Boolean);
+      b.style.visibility = lead[i] !== i ? "hidden" : ""; // OpenSeadragon sets display inline on overlays
+      b.querySelector(".tv-stop-num").textContent = group.length ? group.join("·") : String(i + 1);
+      b.classList.toggle("is-multi", group.length > 1);
+      b.dataset.group = group.join(",");
+    });
+  }
+  // the stop you are heading to stands out; the ones already seen step back
+  function markPins(at) {
+    pins.forEach((b, i) => {
+      const group = (b.dataset.group || String(i + 1)).split(",").map((n) => +n - 1);
+      b.classList.toggle("is-current", group.includes(at));
+      b.classList.toggle("is-done", at >= 0 && group.every((k) => k < at));
+    });
+  }
+  function clear(viewer) {
+    if (layer) { viewer.removeOverlay(layer); layer = null; }
+    pins.forEach((b) => viewer.removeOverlay(b)); pins = [];
+  }
 
   // ── interfaz ─────────────────────────────────────────────────────────────
   function init() {
@@ -358,7 +392,7 @@
       gm.href = gmaps("walking", [dest.lat, dest.lon], stops.slice(0, -1).map((s) => [s.p.lat, s.p.lon]).slice(0, 9));
       gm.target = "_blank"; gm.rel = "noopener";
       const clr = el("button", "tv-icon-btn", lu("x")); clr.setAttribute("aria-label", t("tour.clear")); clr.title = t("tour.clear");
-      clr.onclick = () => { result = null; clear(viewer); emit("tv:clear-route"); render(); };
+      clr.onclick = () => endRoute(false);
       const share = window.tinyvigoShare ? window.tinyvigoShare.button(t("tour.summary", { min: budget, n: stops.length, km })) : null;
       if (share) share.classList.add("tv-icon-btn");
       const opts = result.options || [];
@@ -380,7 +414,52 @@
     const step = document.createElement("section");
     step.className = "tv-step";
     document.body.append(step);
-    let at = -1;
+    let at = -1, live = null, offer = false, legEl = null, followBtn = null;
+    viewer.addHandler("animation-finish", declutter);
+    // ROUTE-02: finishing (or clearing) a walk removes everything it drew: line, numbered pins,
+    // the walked trace and «Seguirme», and the place markers come back
+    function endRoute(done) {
+      at = -1; result = null; trip = null; offset = 0; live = null; offer = false;
+      clear(viewer);
+      emit("tv:clear-route");
+      document.querySelectorAll(".tv-marker.is-selected").forEach((m) => m.classList.remove("is-selected"));
+      showStep(); render();
+      if (done) toast(t("walk.ended"));
+    }
+    function toast(text) {
+      let n = document.querySelector(".tv-ltoast");
+      if (!n) { n = el("div", "tv-ltoast"); n.setAttribute("role", "status"); document.body.append(n); }
+      n.textContent = text; n.classList.add("is-on");
+      clearTimeout(toast.timer); toast.timer = setTimeout(() => n.classList.remove("is-on"), 2600);
+    }
+    // ROUTE-03: «Seguirme» (track.js) drives the card: the distance to the stop updates live and the
+    // card moves on by itself once you have walked past a stop
+    function paintLive() {
+      if (!legEl || !followBtn || at < 0 || !result) return;
+      const st = result.stops, from = at === 0 ? t("walk.you") : txt(st[at - 1].p.name);
+      const togo = live ? Math.max(0, live.stops[at] - live.along) : null;
+      legEl.lastChild.textContent = !live ? t("walk.leg", { min: legMin(at), from })
+        : togo <= 20 ? t("walk.here")
+        : t("walk.live", { m: Math.round(togo / 10) * 10, min: Math.max(1, Math.round(togo / WALK_MS / 60)) });
+      legEl.classList.toggle("is-live", !!live);
+      // no fix on the route: say so here and offer the simulation (track.js keeps its own bar off)
+      const far = step.querySelector(".tv-step-far");
+      if (offer && !far) followBtn.before(el("p", "tv-note tv-step-far", t("track.far_body")));
+      if (!offer && far) far.remove();
+      followBtn.replaceChildren(lu(live ? "x" : offer ? "route" : "crosshair", 18), el("span", null, live ? t("track.stop") : offer ? t("track.simulate") : t("track.follow")));
+      followBtn.setAttribute("aria-pressed", String(!!live));
+    }
+    document.addEventListener("tv:track", (e) => {
+      live = e.detail && e.detail.following && e.detail.stops.length ? e.detail : null;
+      offer = !!(e.detail && e.detail.offer);
+      if (at < 0 || !result) return;
+      if (live) {
+        const i = live.stops.findIndex((a) => live.along < a + 40);
+        const want = i < 0 ? live.stops.length - 1 : i;
+        if (want > at) { at = want; showStep(); return; }
+      }
+      paintLive();
+    });
     function legMin(i) {
       const st = result.stops;
       return Math.max(1, Math.round(i === 0 ? st[0].arrive : st[i].arrive - st[i - 1].arrive - st[i - 1].stay));
@@ -404,6 +483,9 @@
     function showStep() {
       step.replaceChildren();
       step.classList.toggle("is-open", at >= 0 && !!result);
+      document.body.classList.toggle("is-walking", at >= 0 && !!result);
+      markPins(result ? at : -1);
+      legEl = followBtn = null;
       if (at < 0 || !result) return;
       const st = result.stops, s = st[at], p = s.p, last = at === st.length - 1;
       const from = at === 0 ? t("walk.you") : txt(st[at - 1].p.name);
@@ -411,9 +493,12 @@
       const prev = el("button", "tv-step-nav tv-step-prev", lu("chevron-left"), el("span", null, t("walk.prev")));
       prev.setAttribute("aria-label", t("walk.prev"));
       prev.disabled = at === 0; prev.onclick = () => { at--; showStep(); };
-      const next = el("button", "tv-step-nav tv-step-next" + (last ? " is-end" : ""), el("span", null, last ? t("common.close") : t("walk.next")), last ? lu("x") : lu("chevron-right"));
-      next.setAttribute("aria-label", last ? t("common.close") : t("walk.next"));
-      next.onclick = () => { if (last) at = -1; else at++; showStep(); };
+      const next = el("button", "tv-step-nav tv-step-next" + (last ? " is-end" : ""), el("span", null, last ? t("walk.finish") : t("walk.next")), last ? lu("check") : lu("chevron-right"));
+      next.setAttribute("aria-label", last ? t("walk.finish") : t("walk.next"));
+      next.onclick = () => { if (last) endRoute(true); else { at++; showStep(); } };
+      followBtn = el("button", "tv-step-follow");
+      followBtn.type = "button";
+      followBtn.onclick = () => { const T = window.tinyvigoTrack; if (!T) return; if (live) T.halt(); else if (offer) T.startSim(); else T.start(); };
       const nextStop = last ? null : el("p", "tv-step-next-stop", t("walk.next_stop", { name: txt(st[at + 1].p.name) }));
       const progress = el("div", "tv-step-dots", ...st.map((_, i) => el("span", i === at ? "is-on" : i < at ? "is-done" : "")));
       const route = el("details", "tv-step-route", el("summary", null, lu("list", 16), t("walk.full_route", { n: st.length })),
@@ -427,13 +512,14 @@
         el("p", "tv-kicker", t("walk.step", { n: at + 1, total: st.length }) + " · " + hhmm(s.arrive)),
         progress,
         Object.assign(el("h2", null, txt(p.name)), { id: "tv-step-title", tabIndex: -1 }),
-        el("p", "tv-step-leg", lu("footprints", 16), t("walk.leg", { min: legMin(at), from })),
+        legEl = el("p", "tv-step-leg", lu("footprints", 16), el("span", null, t("walk.leg", { min: legMin(at), from }))),
         p.photo ? Object.assign(el("img", "tv-step-photo"), { src: p.photo, alt: txt(p.name), loading: "lazy", decoding: "async" }) : null,
         ...stepStoryParts(p),
         last ? el("p", "tv-note", t("walk.end")) : null,
         route,
-        el("div", "tv-sticky-foot tv-step-foot", nextStop, el("div", "tv-step-nav-row", prev, next)),
+        el("div", "tv-sticky-foot tv-step-foot", nextStop, window.tinyvigoTrack ? followBtn : null, el("div", "tv-step-nav-row", prev, next)),
       ].filter(Boolean));
+      paintLive();
       step.scrollTop = 0;
       // the map follows on the drawn map only; it never switches style on its own
       if (p.on_map && !document.body.classList.contains("is-city")) {

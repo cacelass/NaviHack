@@ -19,7 +19,7 @@ html, body { margin: 0; height: 100%; background: var(--stage, #f1efe9); overflo
   background: var(--raised); overflow: hidden; cursor: crosshair;
   touch-action: none; transition: opacity .2s var(--ease);
 }
-.tv-minimap img { width: 100%; height: 100%; display: block; object-fit: cover; image-rendering: pixelated; pointer-events: none; }
+.tv-minimap img { width: 100%; height: 100%; display: block; object-fit: fill; image-rendering: pixelated; pointer-events: none; }
 .tv-minimap-view {
   position: absolute; box-sizing: border-box; border: 2px solid var(--acc-line, #d8a13a);
   background: color-mix(in srgb, var(--acc-line, #d8a13a) 18%, transparent);

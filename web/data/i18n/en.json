@@ -352,5 +352,9 @@
   "tour.duration": "How much time do you have?",
   "tour.kind": "Kind of walk",
   "walk.full_route": "See the whole route · {n} stops",
-  "walk.next_stop": "Next stop: {name}"
+  "walk.next_stop": "Next stop: {name}",
+  "walk.finish": "Finish walk",
+  "walk.here": "You're here",
+  "walk.live": "{m} m away · {min} min",
+  "walk.ended": "Walk finished. Merry Christmas!"
 }

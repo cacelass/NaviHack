@@ -75,7 +75,7 @@ body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: inline-flex !i
 .tv-corner { width: 148px; }
 .tv-corner > #zoom { display: flex; gap: 6px; width: 100%; }
 .tv-corner > #zoom button { flex: 1; width: auto; }
-.tv-corner .tv-minimap { width: 100%; height: 148px; }
+.tv-corner .tv-minimap { width: 100%; height: auto; } /* alto por aspect-ratio (minimap.js) */
 .tv-dock, .tv-event-chip { bottom: calc(10px + env(safe-area-inset-bottom)); }
 
 /* covered by an open surface (js/sheets.js measures it) */
@@ -154,8 +154,8 @@ body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: inline-flex !i
   .tv-topbar-actions .tv-time-quick span, .tv-topbar-actions .tv-view span { display: none; }
   .tv-topbar-actions .tv-time-quick, .tv-topbar-actions .tv-view { width: var(--tap); padding: 0; justify-content: center; }
   .tv-corner { right: calc(8px + env(safe-area-inset-right)); }
-  .tv-corner { width: 108px; }
-  .tv-corner .tv-minimap { height: 108px; }
+  .tv-corner { width: 128px; }
+  .tv-corner .tv-minimap { height: auto; }
   .tv-panel { top: auto !important; left: 8px !important; right: 8px !important; bottom: 8px !important; width: auto !important; max-height: 70vh; }
   .tv-panel:not(.is-collapsed) { animation-name: tv-in-up; }
 }
@@ -409,3 +409,26 @@ body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: inline-flex !i
 
 /* the card scrolls: its blocks keep their size instead of shrinking (the photo collapsed to 0 px) */
 .tv-step > * { flex-shrink: 0; }
+
+/* ── ROUTE-02: route stops, numbered drops anchored at the place ─────────────────────────────
+   Same drop as .tv-marker, a size up so the number reads. Heading to: ink drop with a gold number.
+   Already seen: stepped-back grey. Never colour alone: the current one is also bigger. */
+.tv-stop-pin { width: 30px; height: 37px; padding: 0; border: 0; background: none; cursor: pointer; position: relative; display: block; transform-origin: 50% 100%; transition: transform .25s var(--ease); }
+.tv-stop-pin .tv-pin-shape { position: absolute; inset: 0; width: 30px; height: 37px; fill: var(--pin-fill); }
+.tv-stop-num { position: absolute; left: 0; right: 0; top: 7px; text-align: center; font: 600 13px/15px var(--f-ui); font-variant-numeric: tabular-nums; color: var(--pin-ink); letter-spacing: -.02em; }
+.tv-stop-pin.is-multi .tv-stop-num { font-size: 11px; letter-spacing: -.04em; }
+.tv-stop-pin:hover { transform: scale(1.12); }
+.tv-stop-pin.is-current { transform: scale(1.22); z-index: 3; }
+.tv-stop-pin.is-current .tv-pin-shape { fill: #1b1f2c; }
+.tv-stop-pin.is-current .tv-stop-num { color: #f4cd80; }
+.tv-stop-pin.is-done .tv-pin-shape { fill: #d9d6cf; }
+.tv-stop-pin.is-done .tv-stop-num { color: #3a3d45; }
+.tv-stop-pin:focus-visible { outline: 2px solid var(--acc-line); outline-offset: 2px; border-radius: 6px; }
+
+/* ROUTE-03: while the walk card is open, «Seguirme» lives inside it */
+body.is-walking .tv-track-go, body.is-walking .tv-track.is-following { display: none !important; }
+.tv-step-follow { display: flex; align-items: center; justify-content: center; gap: var(--sp-2); width: 100%; min-height: var(--tap); margin-bottom: var(--sp-2); border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--surface); color: var(--fg); font: var(--w-500) var(--fs-label)/1 var(--f-ui); cursor: pointer; }
+.tv-step-follow .lu, .tv-step-follow svg { color: var(--acc-line); }
+.tv-step-follow[aria-pressed="true"] { background: none; color: var(--fg-2); }
+.tv-step-follow[aria-pressed="true"] .lu, .tv-step-follow[aria-pressed="true"] svg { color: var(--fg-2); }
+.tv-step .tv-step-leg.is-live { color: var(--fg); font-weight: var(--w-600); font-variant-numeric: tabular-nums; }
