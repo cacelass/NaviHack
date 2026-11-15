@@ -4,7 +4,6 @@
 import shotMapa from './assets/app-mapa-1440.webp'
 import shotNoche from './assets/app-noche-1600.webp'
 import shotHoy from './assets/app-hoy-1440.webp'
-import shotFicha from './assets/app-ficha-390.webp'
 
 export const site = {
   name: 'NaviVigo',
@@ -26,13 +25,6 @@ export const hero = {
   text: 'Las luces del Concello, los mercados y la noria, sobre un dibujo del centro. Mira qué está encendido ahora y sal a dar un paseo que cabe en el tiempo que tienes.',
 }
 
-export const stats = [
-  { value: '35', label: 'puntos de Navidad del Concello' },
-  { value: '16', label: 'luces de Navidad en el mapa' },
-  { value: '12', label: 'parkings con plazas libres al minuto' },
-  { value: '4', label: 'idiomas: galego, castellano, inglés y portugués' },
-]
-
 export const map = {
   id: 'mapa',
   title: 'Todo lo de la Navidad, en su sitio',
@@ -50,10 +42,7 @@ export const map = {
       key: 'ficha',
       title: 'Cada sitio, con su ficha',
       text: 'Foto, horario oficial y si está encendido ahora mismo.',
-      img: shotFicha,
-      w: 780, h: 1688,
       phone: true,
-      alt: 'Ficha del Árbol de Porta do Sol en el móvil: «Encendido ya, se apaga a las 03:00»',
     },
     {
       key: 'noche',

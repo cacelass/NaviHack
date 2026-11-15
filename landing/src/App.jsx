@@ -8,7 +8,7 @@ import TeamCard from './components/TeamCard.jsx'
 import LightsNow from './components/LightsNow.jsx'
 import Footer from './components/Footer.jsx'
 import Icon from './components/Icon.jsx'
-import { map, team, stats, site } from './data.js'
+import { map, team, site } from './data.js'
 
 export default function App() {
   return (
@@ -17,19 +17,6 @@ export default function App() {
 
       <main>
         <Hero />
-
-        <section className="stats" aria-label="NaviVigo en cifras">
-          <div className="wrap">
-            <ul className="stats-grid">
-              {stats.map((s, i) => (
-                <Reveal as="li" className="stat" delay={70 * i} key={s.label}>
-                  <span className="stat-value">{s.value}</span>
-                  <span className="stat-label">{s.label}</span>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </section>
 
         <section className="section" id={map.id}>
           <div className="wrap">
