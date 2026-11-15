@@ -376,5 +376,10 @@
   "search.addr_error": "No se pudo buscar la dirección. Revisa la conexión.",
   "search.looking": "Buscando «{q}»…",
   "camera.live": "En directo · se actualiza cada 20 s",
-  "camera.no_image": "Esta cámara no da imagen ahora mismo."
+  "camera.no_image": "Esta cámara no da imagen ahora mismo.",
+  "go.traffic_now": "Tráfico ahora ({time}):",
+  "go.traffic_fluid": "fluido en el centro.",
+  "go.traffic_slow": "lento o con retenciones en {streets}.",
+  "go.traffic_route": "Tu ruta en coche pasa por tramos lentos: {streets}.",
+  "go.traffic_note": "El tiempo en coche no cuenta el tráfico; Google Maps sí."
 }

@@ -337,7 +337,37 @@
         el("div", "tv-leg-body", el("strong", null, title), el("span", null, detail + (l.approx ? " · " + t("go.approx") : "")), maps),
         el("span", "tv-leg-time", minTxt(l.min)));
     }
+    // TRAFFIC-01: the Concello's live traffic (data/live/trafico.json) next to the options, and the
+    // slow sections a car route goes through. OSRM's car time knows nothing about traffic: it says so.
+    let traffic = null, trafficAsked = false;
+    const SLOW = (estado) => !["Muy fluido", "Fluido", "Normal"].includes(estado);
+    function askTraffic() {
+      if (trafficAsked || !window.tinyvigoData || !tinyvigoData.trafico) return;
+      trafficAsked = true;
+      tinyvigoData.trafico().then((d) => { traffic = d; render(); }).catch(() => {});
+      setTimeout(() => { trafficAsked = false; }, 60000); // a minute later it may be asked again
+    }
+    const streetsOf = (fs) => [...new Set(fs.map((f) => f.properties.nombre_tramo.split(/ desde | entre /i)[0].trim()))].slice(0, 3).join(", ");
+    function trafficNow() {
+      if (!traffic) return null;
+      const bad = traffic.data.features.filter((f) => SLOW(f.properties.estado));
+      const when = String(traffic.source_timestamp || "").slice(11, 16);
+      const text = bad.length ? t("go.traffic_slow", { streets: streetsOf(bad) }) : t("go.traffic_fluid");
+      return el("p", "tv-note tv-traffic-now" + (bad.length ? " is-slow" : ""), lu(bad.length ? "triangle-alert" : "circle-check", 16), el("span", null, t("go.traffic_now", { time: when }) + " " + text));
+    }
+    function trafficOnRoute(o) {
+      if (!traffic || o.mode !== "car") return null;
+      const line = o.legs.filter((l) => l.mode === "car").flatMap((l) => l.line || []);
+      if (!line.length) return null;
+      const near = (c) => line.some(([lo, la], i) => i % 3 === 0 && distM([la, lo], [c[1], c[0]]) < 30);
+      const hit = traffic.data.features.filter((f) => SLOW(f.properties.estado) && f.geometry.coordinates.some(near));
+      return el("div", "tv-traffic-route",
+        hit.length ? el("p", "tv-note is-slow", lu("triangle-alert", 16), el("span", null, t("go.traffic_route", { streets: streetsOf(hit) }))) : null,
+        el("p", "tv-note", t("go.traffic_note")));
+    }
+
     function renderGo() {
+      askTraffic();
       const name = txt(trip.first.name);
       const head = [el("h3", null, t("go.how_title", { name })), el("p", "tv-note", t("go.how_body", { min: trip.away }))];
       if (trip.loading) return el("div", "tv-go", ...head, el("p", "tv-note tv-loading", t("go.calculating")));
@@ -352,7 +382,7 @@
           b.onclick = () => choose(o);
           return b;
         });
-        return el("div", "tv-go", ...head, el("div", "tv-goopts", ...opts));
+        return el("div", "tv-go", ...head, el("div", "tv-goopts", ...opts), trafficNow());
       }
       const o = trip.chosen;
       let alt = null;
@@ -370,6 +400,7 @@
         el("p", "tv-summary", t("go.total", { min: o.total, time: clock(o.arrive) })),
         el("ol", "tv-legs", ...o.legs.map((l) => legRow(l, o))),
         o.mode === "bus" ? el("p", "tv-note", t("transit.scheduled")) : null,
+        trafficOnRoute(o),
         alt, start, el("div", "tv-actions", all, back));
     }
     function choose(o) {

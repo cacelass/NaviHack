@@ -376,5 +376,10 @@
   "search.addr_error": "Couldn't look up the address. Check your connection.",
   "search.looking": "Looking for “{q}”…",
   "camera.live": "Live · refreshes every 20 s",
-  "camera.no_image": "This camera has no picture right now."
+  "camera.no_image": "This camera has no picture right now.",
+  "go.traffic_now": "Traffic now ({time}):",
+  "go.traffic_fluid": "flowing in the centre.",
+  "go.traffic_slow": "slow or jammed on {streets}.",
+  "go.traffic_route": "Your car route goes through slow sections: {streets}.",
+  "go.traffic_note": "The car time doesn't include traffic; Google Maps does."
 }

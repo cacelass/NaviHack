@@ -562,3 +562,9 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-traffic .is-normal { stroke: #c9b03a; }
 .tv-traffic .is-slow { stroke: #e08a2c; }
 .tv-traffic .is-jam { stroke: #d4402b; stroke-width: 12; }
+
+/* TRAFFIC-01: live traffic in «cómo llegar» */
+.tv-traffic-now, .tv-traffic-route .tv-note { display: flex; align-items: flex-start; gap: 6px; margin: var(--sp-2) 0 0; }
+.tv-traffic-now .lu, .tv-traffic-now svg, .tv-traffic-route .lu, .tv-traffic-route svg { flex: none; margin-top: 1px; color: var(--ok); }
+.tv-traffic-now.is-slow .lu, .tv-traffic-now.is-slow svg, .tv-traffic-route .is-slow .lu, .tv-traffic-route .is-slow svg { color: var(--warning); }
+.tv-city3d.is-far .tv-park { display: none; }

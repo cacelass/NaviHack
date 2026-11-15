@@ -101,6 +101,9 @@
       map.addSource("walked", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
       map.addLayer({ id: "walked", type: "line", source: "walked", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": "#8a8f9c", "line-width": 6, "line-opacity": 0.95 } });
       addPoints(); loadParkings(); setInterval(loadParkings, 120000);
+      // far out the car park labels pile up over the town: they show from street level
+      const parkZoom = () => wrap.classList.toggle("is-far", map.getZoom() < 13);
+      map.on("zoomend", parkZoom); parkZoom();
       if (transitArgs) addTransit(transitArgs);
       queue.splice(0).forEach((f) => f());
       return map;
@@ -139,7 +142,12 @@
 
   // rutas del paseo o de casa al centro (tv:route), con sus tramos coche / bus / a pie
   function drawRoute(d) {
-    if (!map) { queue.push(() => drawRoute(d)); return; }
+    if (!map) {
+      // not loaded yet: keep the route for later, and if it asks for the city view, open it (that loads the map)
+      queue.push(() => drawRoute({ ...d, showCity: false }));
+      if (d.showCity) setCity(true);
+      return;
+    }
     markers.route.forEach((m) => m.remove()); markers.route = [];
     const legs = d.legs || (d.line ? [{ line: d.line, mode: d.mode === "driving" ? "car" : "tour" }] : []);
     const features = [], all = [];

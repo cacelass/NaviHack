@@ -376,5 +376,10 @@
   "search.addr_error": "Não foi possível procurar a morada. Verifica a ligação.",
   "search.looking": "A procurar «{q}»…",
   "camera.live": "Em direto · atualiza a cada 20 s",
-  "camera.no_image": "Esta câmara não tem imagem neste momento."
+  "camera.no_image": "Esta câmara não tem imagem neste momento.",
+  "go.traffic_now": "Trânsito agora ({time}):",
+  "go.traffic_fluid": "fluido no centro.",
+  "go.traffic_slow": "lento ou com filas em {streets}.",
+  "go.traffic_route": "O teu percurso de carro passa por troços lentos: {streets}.",
+  "go.traffic_note": "O tempo de carro não conta com o trânsito; o Google Maps conta."
 }
