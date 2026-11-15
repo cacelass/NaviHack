@@ -48,7 +48,7 @@
 
   // ── fila para Ajustes (settings.js la pide si existe) ──
   function control(lu, el) {
-    const row = el("div", "tv-set-row tv-offline");
+    const row = el("div", "tv-offline");
     const paint = () => {
       const pct = saving ? Math.round((100 * saving.done) / Math.max(1, saving.total)) : 0;
       const state = saving ? t("offline.saving", { pct }) : isSaved() ? t("offline.saved") : t("offline.hint");
@@ -56,9 +56,9 @@
       btn.disabled = !!saving || !navigator.onLine;
       btn.onclick = save;
       const bar = saving ? el("span", "tv-offline-bar", Object.assign(el("span"), { style: "width:" + pct + "%" })) : null;
-      const note = el("span", "tv-set-label tv-offline-state", state);
+      const note = el("p", "tv-offline-state", state);
       note.setAttribute("role", "status");
-      row.replaceChildren(...[el("span", "tv-set-ico", lu("wifi-off")), note, bar, btn].filter(Boolean));
+      row.replaceChildren(...[note, bar, btn].filter(Boolean));
     };
     listeners.add(() => { if (row.isConnected) paint(); });
     paint();

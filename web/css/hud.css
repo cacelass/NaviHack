@@ -22,7 +22,6 @@
 }
 .tv-topsearch .tv-search::placeholder { color: var(--fg-3); }
 .tv-topsearch:focus-within { border-color: var(--acc-line); }
-body .tv-topbar-actions > .tv-theme { display: grid !important; place-items: center; padding: 0; }
 /* the open-sheet rules in points.css hid these everywhere; now only what a sheet covers hides */
 body .tv-topbar-actions > .tv-settings-open { display: grid !important; }
 body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: inline-flex !important; }
@@ -494,3 +493,23 @@ body.is-walking .tv-track-go, body.is-walking .tv-track.is-following { display: 
 .tv-street-opt span { display: grid; min-width: 0; }
 .tv-street-opt strong { font-weight: var(--w-500); overflow-wrap: anywhere; }
 .tv-street-opt small { font-size: var(--fs-meta); color: var(--fg-3); }
+
+/* ── UI-08: Ajustes — one group per setting (title, then the control at full width) ───── */
+body .tv-theme { display: none !important; } /* the theme is a setting, not a quick action */
+.tv-settings { width: 360px; max-height: calc(100dvh - 80px); overflow-y: auto; gap: 0 !important; }
+.tv-set-group { display: grid; gap: var(--sp-2); padding: var(--sp-3) 0; border-top: 1px solid var(--line); }
+.tv-settings > h2 + .tv-set-group { border-top: 0; padding-top: 0; }
+.tv-settings .tv-set-title { display: flex; align-items: center; gap: 8px; margin: 0; font-size: var(--fs-label); font-weight: var(--w-600); color: var(--fg); }
+.tv-settings .tv-set-title .lu, .tv-settings .tv-set-title svg { color: var(--acc-line); flex: none; }
+.tv-settings .tv-seg { display: grid; grid-auto-flow: row; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 2px; width: 100%; max-width: none; box-sizing: border-box; justify-content: stretch; }
+.tv-settings .tv-seg button { min-height: var(--tap); padding: 0 10px; white-space: nowrap; }
+.tv-settings > .tv-btn { width: 100%; justify-content: center; margin-top: var(--sp-3); min-height: var(--tap); }
+.tv-offline { display: grid; gap: var(--sp-2); }
+.tv-offline .tv-offline-state { margin: 0; font-size: var(--fs-label); color: var(--fg-2); }
+.tv-offline .tv-btn { justify-self: start; margin: 0; min-height: var(--tap); }
+@media (max-width: 700px) {
+  .tv-settings { width: auto; max-height: calc(100dvh - 72px - env(safe-area-inset-top)) !important; }
+  .tv-settings .tv-seg { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); }
+  .tv-offline .tv-btn { justify-self: stretch; justify-content: center; }
+}
+.tv-settings .tv-seg.tv-seg-4 { grid-template-columns: 1fr 1fr; }

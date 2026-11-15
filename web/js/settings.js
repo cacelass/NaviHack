@@ -27,10 +27,16 @@
       return g;
     };
     const isCity = () => document.body.classList.contains("is-city");
+    const LANG_OPTIONS = [["gl", "Galego"], ["es", "Español"], ["en", "English"]];
     const theme = () => document.documentElement.getAttribute("data-theme") || "dark";
-    const section = (label) => el("h3", "tv-set-title", label);
-    const settingRow = (icon, label, control) => el("div", "tv-set-row",
-      el("span", "tv-set-ico", lu(icon)), el("span", "tv-set-label", label), control);
+    // UI-08: one group per setting: its title (icon + name) and the control under it, full width.
+    // The old icon | label | control row broke on a phone (the control fell over the next row).
+    const group = (icon, label, control) => {
+      const id = "tv-set-" + label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const g = el("section", "tv-set-group", el("h3", "tv-set-title", lu(icon, 16), Object.assign(el("span"), { id, textContent: label })), control);
+      if (control && control.setAttribute && !control.getAttribute("aria-label")) control.setAttribute("aria-labelledby", id);
+      return g;
+    };
 
     function closePop(restoreFocus = true) {
       pop.classList.remove("is-open");
@@ -50,22 +56,18 @@
       const info = el("button", "tv-btn tv-btn-quiet", lu("info", 16), t("nav.about"));
       info.onclick = () => { closePop(false); const d = document.getElementById("about"); if (d) d.showModal(); };
       pop.append(close, Object.assign(el("h2", null, t("settings.title")), { id: "tv-settings-title" }),
-        section(t("settings.language")),
-        settingRow("type", t("settings.language"), seg([["gl", "Galego"], ["es", "Español"], ["en", "English"]], P.lang(), (l) => {
-          const b = document.querySelectorAll(".tv-panel .tv-langs button")[["gl", "es", "en"].indexOf(l)];
+        group("languages", t("settings.language"), seg(LANG_OPTIONS, P.lang(), (l) => {
+          const b = document.querySelectorAll(".tv-panel .tv-langs button")[LANG_OPTIONS.map((x) => x[0]).indexOf(l)];
           if (b) b.click();
         }, t("settings.language"))),
-        section(t("settings.view")),
-        settingRow("layers", t("settings.view"), seg([["iso", "Vigo 3D", "layers"], ["city", t("app.city_view"), "map-pin"]], isCity() ? "city" : "iso", (v) => window.tinyvigoCity && window.tinyvigoCity.setCity(v === "city"), t("settings.view"))),
-        settingRow("clock", t("settings.time"), seg([["auto", t("tour.now"), "clock"], ["day", t("settings.light"), "sun"], ["night", t("settings.dark"), "moon"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().time : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ time: v }), t("settings.time"))),
-        settingRow("cloud", t("settings.weather"), seg([["auto", t("settings.weather_real"), "layers"], ["clear", t("settings.weather_clear"), "sun"], ["cloudy", t("wx.cloudy"), "cloud"], ["rain", t("settings.weather_rain"), "cloud-rain"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().weather : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ weather: v }), t("settings.weather"))),
-        section(t("settings.theme")),
-        settingRow("palette", t("settings.theme"), seg([["dark", t("settings.dark"), "moon"], ["light", t("settings.light"), "sun"]], theme(), (v) => {
+        group("layers", t("settings.view"), seg([["iso", "Vigo 3D", "layers"], ["city", t("app.city_view"), "map-pin"]], isCity() ? "city" : "iso", (v) => window.tinyvigoCity && window.tinyvigoCity.setCity(v === "city"), t("settings.view"))),
+        group("clock", t("settings.time"), seg([["auto", t("tour.now"), "clock"], ["day", t("settings.light"), "sun"], ["night", t("settings.dark"), "moon"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().time : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ time: v }), t("settings.time"))),
+        group("cloud", t("settings.weather"), seg([["auto", t("settings.weather_real"), "layers"], ["clear", t("settings.weather_clear"), "sun"], ["cloudy", t("wx.cloudy"), "cloud"], ["rain", t("settings.weather_rain"), "cloud-rain"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().weather : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ weather: v }), t("settings.weather"))),
+        group("palette", t("settings.theme"), seg([["dark", t("settings.dark"), "moon"], ["light", t("settings.light"), "sun"]], theme(), (v) => {
           document.documentElement.setAttribute("data-theme", v);
           try { localStorage.setItem("tinyvigo-theme", v); } catch (e) {}
         }, t("settings.theme"))),
-        window.tinyvigoOffline ? section(t("offline.title")) : null,
-        window.tinyvigoOffline ? window.tinyvigoOffline.control(lu, el) : null,
+        window.tinyvigoOffline ? group("wifi-off", t("offline.title"), window.tinyvigoOffline.control(lu, el)) : null,
         info);
     }
     btn.onclick = () => {

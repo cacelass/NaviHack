@@ -32,7 +32,8 @@
     return wrap;
   };
   // right-hand actions, in this order: time, view, layers, theme, settings
-  const ACTIONS = [".tv-time-quick", ".tv-view", ".tv-layers-btn", ".tv-theme", ".tv-settings-open"];
+  // UI-08: the theme lives in Ajustes only (a second sun/moon next to «Ahora» confused people)
+  const ACTIONS = [".tv-time-quick", ".tv-view", ".tv-layers-btn", ".tv-settings-open"];
 
   const bar = document.createElement("div");
   bar.className = "tv-topbar";
