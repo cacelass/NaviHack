@@ -41,7 +41,7 @@ export const map = {
     {
       key: 'ficha',
       title: 'Cada sitio, con su ficha',
-      text: 'Horario oficial, si está encendido ahora, la historia del sitio y los minutos andando hasta él.',
+      text: 'Su foto, el horario oficial, si está encendido ahora y los minutos andando hasta él.',
       phone: true,
     },
     {

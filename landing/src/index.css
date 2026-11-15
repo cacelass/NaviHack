@@ -171,7 +171,9 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .phone img { flex: 1; min-height: 0; width: 100%; object-fit: cover; object-position: top; display: block; }
 
 /* ── Ficha mock: the app's place screen as real markup, no screenshot ── */
-.ficha-mock { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0; padding: 5.5cqi 6cqi 6cqi; background: var(--raised); overflow: hidden; text-align: left; }
+.ficha-mock { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0; padding: 0 6cqi 6cqi; background: var(--raised); overflow: hidden; text-align: left; }
+.fm-photo { margin: 0 -6cqi 3.5cqi; }
+.fm-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .fm-top { display: flex; align-items: flex-start; gap: 0.5em; }
 .fm-top > div { flex: 1; min-width: 0; }
 .fm-type { margin: 0; font-size: 3.4cqi; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: var(--gold-ink); }
@@ -190,12 +192,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .fm-story { margin-top: 1.2em; padding-top: 1em; border-top: 1px solid var(--line); }
 .fm-h { margin: 0; font-size: 3.4cqi; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--fg-3); }
 .fm-p { margin: 0.55em 0 0; font-size: 3.6cqi; line-height: 1.45; color: var(--fg-2); }
-.fm-src { margin: 0.6em 0 0; font-size: 3.2cqi; font-weight: 600; color: var(--gold-ink); text-decoration: underline; text-underline-offset: 0.2em; }
-.fm-near { margin-top: 1.1em; padding-top: 1em; border-top: 1px solid var(--line); display: grid; gap: 0.7em; }
-.fm-ev { display: grid; grid-template-columns: 7cqi 1fr; gap: 0.6em; align-items: baseline; }
-.fm-ev-time { font-size: 3.4cqi; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--gold-ink); }
-.fm-ev-title { margin: 0; font-size: 3.7cqi; font-weight: 600; line-height: 1.3; }
-.fm-ev-meta { margin: 0.2em 0 0; font-size: 3.2cqi; color: var(--fg-3); }
+
 
 /* ── Hero: the illustrated map behind a night scrim, copy left, the app right ── */
 .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; min-height: min(100svh, 56rem); padding-block: calc(var(--header-h) + 3rem) 4rem; background: var(--night); color: var(--night-fg); }

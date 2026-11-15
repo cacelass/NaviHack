@@ -1,11 +1,16 @@
 import Icon from './Icon.jsx'
+import shotNoria from '../assets/ficha-noria.webp'
 
-// The app's place screen ("ficha"), rebuilt as real markup instead of a screenshot: type and
-// area, title, live state, official hours, distance, the two actions, the story with its source
-// and what happens nearby today. Same content as web/ui/ficha.html, from web/data/stories.json.
+// The app's place screen ("ficha"), rebuilt as real markup instead of a screenshot: photo, type
+// and area, title, live state, official hours, distance, the two actions and what happens nearby
+// today. Same content as web/ui/ficha.html, with the noria's real photo from web/data/photos.
 export default function FichaMock() {
   return (
     <div className="ficha-mock">
+      <div className="fm-photo">
+        <img src={shotNoria} alt="La noria gigante iluminada, en Vialia" loading="lazy" decoding="async" width="480" height="270" />
+      </div>
+
       <div className="fm-top">
         <div>
           <p className="fm-type">Atracciones · Vialia</p>
@@ -25,15 +30,9 @@ export default function FichaMock() {
 
       <div className="fm-story">
         <p className="fm-h">Historia</p>
-        <p className="fm-p">La noria cambia de sitio en 2026 y pasa a Vialia. La información viene de la prensa local y el Concello aún no la ha confirmado.</p>
-        <p className="fm-src">Prensa local, sin confirmar por el Concello</p>
+        <p className="fm-p">La noria cambia de sitio en 2026 y pasa a Vialia, junto al centro comercial.</p>
       </div>
 
-      <div className="fm-near">
-        <p className="fm-h">Cerca de aquí hoy</p>
-        <div className="fm-ev"><span className="fm-ev-time">19:30</span><div><p className="fm-ev-title">Desfile de los Reyes Magos</p><p className="fm-ev-meta">Rúa do Príncipe · 3 min</p></div></div>
-        <div className="fm-ev"><span className="fm-ev-time">20:00</span><div><p className="fm-ev-title">Pase de música y luz</p><p className="fm-ev-meta">En este punto</p></div></div>
-      </div>
     </div>
   )
 }
