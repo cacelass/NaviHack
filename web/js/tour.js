@@ -227,19 +227,20 @@
       const ITEM = 40;
       let idx = Math.max(0, values.findIndex(([v]) => String(v) === String(current)));
       const box = el("div", "tv-picker");
-      box.tabIndex = 0;
-      box.setAttribute("role", "spinbutton");
-      box.setAttribute("aria-label", label);
-      box.setAttribute("aria-valuemin", "0"); box.setAttribute("aria-valuemax", String(values.length - 1));
+      // the scrolling list itself takes the focus and the keys (axe: a scrollable region must be focusable)
       const list = el("div", "tv-picker-list", ...values.map(([, text], i) => {
         const o = el("div", "tv-picker-item", text);
         o.onclick = () => go(i, true);
         return o;
       }));
+      list.tabIndex = 0;
+      list.setAttribute("role", "spinbutton");
+      list.setAttribute("aria-label", label);
+      list.setAttribute("aria-valuemin", "0"); list.setAttribute("aria-valuemax", String(values.length - 1));
       box.append(list);
       const mark = () => {
         [...list.children].forEach((c, i) => c.classList.toggle("is-on", i === idx));
-        box.setAttribute("aria-valuenow", String(idx)); box.setAttribute("aria-valuetext", values[idx][1]);
+        list.setAttribute("aria-valuenow", String(idx)); list.setAttribute("aria-valuetext", values[idx][1]);
       };
       const go = (i, smooth) => {
         idx = Math.max(0, Math.min(values.length - 1, i));
@@ -251,7 +252,7 @@
         clearTimeout(settle);
         settle = setTimeout(() => { const i = Math.round(list.scrollTop / ITEM); if (i !== idx) { idx = Math.max(0, Math.min(values.length - 1, i)); mark(); onPick(values[idx][0]); } }, 90);
       }, { passive: true });
-      box.onkeydown = (e) => {
+      list.onkeydown = (e) => {
         const k = { ArrowDown: 1, ArrowUp: -1, PageDown: 4, PageUp: -4 }[e.key];
         if (k) { e.preventDefault(); go(idx + k, true); }
         else if (e.key === "Home") { e.preventDefault(); go(0, true); }
