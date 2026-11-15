@@ -999,12 +999,13 @@
         "commit_feature regenera uv.lock al subir versión",
         "README documenta el setup en Windows (uv, --system-certs, sin make)"
       ],
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "9a918c7c-7b1b-410b-9a58-3c11d622605d",
       "raw_status": "IN_PROGRESS",
       "branch": "9a918c7c-win-001-compatibilidad-windows-e",
-      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b",
+      "blocked_reason": "Pausado para que la CI pase (una sola feature en curso): el trabajo sigue en su rama sin fusionar. Retomar con harness start al fusionar."
     },
     {
       "id": "SCOPE-002",
@@ -1197,7 +1198,7 @@
         "Each check tested with one known good and one known bad tile",
         "Report per tile lists which checks failed"
       ],
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "RENDER-01",
         "DRAW-01"
@@ -1205,7 +1206,8 @@
       "ticket_id": "58fab62a-ecd4-479b-9cca-d7cd3bcf1475",
       "raw_status": "IN_PROGRESS",
       "branch": "58fab62a-check-01-automatic-checks-on-dra",
-      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b",
+      "blocked_reason": "Pausado para que la CI pase (una sola feature en curso): el trabajo sigue en su rama sin fusionar. Retomar con harness start al fusionar."
     },
     {
       "id": "REVIEW-01",
@@ -1592,12 +1594,13 @@
         "A written verdict: how close it gets, what is missing, and the decision on using unlit tiles plus code light",
         "No image-model call is needed for the experiment"
       ],
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "ef8724e0-be3f-4d28-a9fe-adf5c37564ed",
       "raw_status": "IN_PROGRESS",
       "branch": "ef8724e0-light-02-research-can-lighting-b",
-      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b"
+      "assigned_actor_id": "c5326d66-0c99-4d61-a283-8d3995880f4b",
+      "blocked_reason": "Pausado para que la CI pase (una sola feature en curso): el trabajo sigue en su rama sin fusionar. Retomar con harness start al fusionar."
     },
     {
       "id": "DOC-01",
@@ -1649,12 +1652,13 @@
         "Máximo 4 llamadas Flash; contadas en pipeline/ledger",
         "Revisado por un modelo con visión"
       ],
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "b8821781-3351-4481-8dbb-d3ed7c11df71",
       "raw_status": "IN_PROGRESS",
       "branch": "b8821781-assets-03-rbol-y-noria-como-imag",
-      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d",
+      "blocked_reason": "Pausado para que la CI pase (una sola feature en curso): el trabajo sigue en su rama sin fusionar. Retomar con harness start al fusionar."
     },
     {
       "id": "MAP-03",
@@ -1920,12 +1924,13 @@
         "Bloque de bus rediseñado con icono, chips de línea y nota discreta de horario programado",
         "Menos texto y sin errores en consola"
       ],
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [],
       "ticket_id": "a8ed664d-02d5-4289-ad10-fa7f63682074",
       "raw_status": "IN_PROGRESS",
       "branch": "a8ed664d-ui-05-ficha-del-punto-redise-ada",
-      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22"
+      "assigned_actor_id": "3131e21f-7aac-4de7-9370-8622da140c22",
+      "blocked_reason": "Pausado para que la CI pase (una sola feature en curso): el trabajo sigue en su rama sin fusionar. Retomar con harness start al fusionar."
     },
     {
       "id": "UI-06",
