@@ -1,5 +1,5 @@
 {
-  "app.name": "TinyVigo",
+  "app.name": "NaviVigo",
   "app.tagline": "Vigo en Nadal, nun mapa isométrico que percorres a pé.",
   "app.subtitle": "As luces, os mercados e as atraccións, co seu horario real, nun mapa debuxado unha soa vez.",
   "app.map_label": "Mapa isométrico de Vigo",
@@ -178,7 +178,7 @@
   "state.error_title": "Algo saíu mal",
   "state.error_points_body": "Non se puideron cargar os puntos de Nadal. Téntao de novo ou usa o mapa sen esa capa.",
   "state.loading": "Cargando",
-  "about.title": "TinyVigo",
+  "about.title": "NaviVigo",
   "about.intro": "Mapa ilustrado do Nadal no centro de Vigo. Que hai, se está aberto agora e como chegar a pé.",
   "about.sources": "Datos e licenzas",
   "about.note": "Cada capa da cidade amosa a súa data de actualización. Autobuses e trens: horario programado.",

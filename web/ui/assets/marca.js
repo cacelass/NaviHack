@@ -33,7 +33,7 @@
     var s = opts.size || 28;
     return '<span class="tv-lockup" style="--tv-s:' + s + 'px">' +
       simbolo({ size: s, variante: opts.variante }) +
-      '<span class="tv-nombre">TinyVigo</span></span>';
+      '<span class="tv-nombre">NaviVigo</span></span>';
   }
 
   var idn = 0;

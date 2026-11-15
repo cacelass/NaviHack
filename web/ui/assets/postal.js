@@ -198,7 +198,7 @@
             if (!blob) { ok(null); return; }
             var a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'tinyvigo-postal-' + lugar.value + '.png';
+            a.download = 'navivigo-postal-' + lugar.value + '.png';
             document.body.appendChild(a); a.click(); a.remove();
             setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
             ok(blob);

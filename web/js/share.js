@@ -20,7 +20,7 @@
 
   async function share(title) {
     const url = location.href, t = window.tinyvigoPoints.t;
-    if (navigator.share) { try { await navigator.share({ title: "TinyVigo · " + title, url }); return; } catch (e) { /* cancelado: se copia */ } }
+    if (navigator.share) { try { await navigator.share({ title: "NaviVigo · " + title, url }); return; } catch (e) { /* cancelado: se copia */ } }
     try { await navigator.clipboard.writeText(url); toast(t("share.copied")); } catch (e) { prompt(t("share.copy"), url); }
   }
   function button(title) {

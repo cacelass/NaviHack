@@ -1,5 +1,5 @@
 {
-  "app.name": "TinyVigo",
+  "app.name": "NaviVigo",
   "app.tagline": "Christmas in Vigo, on an isometric map you explore on foot.",
   "app.subtitle": "The lights, the markets and the rides, with their real opening hours, on a map drawn once.",
   "app.map_label": "Isometric map of Vigo",
@@ -178,7 +178,7 @@
   "state.error_title": "Something went wrong",
   "state.error_points_body": "The Christmas spots could not be loaded. Try again or use the map without that layer.",
   "state.loading": "Loading",
-  "about.title": "TinyVigo",
+  "about.title": "NaviVigo",
   "about.intro": "An illustrated map of Christmas in Vigo city centre. What's on, whether it's open now and how to walk there.",
   "about.sources": "Data and licences",
   "about.note": "Each city layer shows when it was last updated. Buses and trains: timetable, not live.",

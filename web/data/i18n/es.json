@@ -1,5 +1,5 @@
 {
-  "app.name": "TinyVigo",
+  "app.name": "NaviVigo",
   "app.tagline": "Vigo en Navidad, en un mapa isométrico que recorres a pie.",
   "app.subtitle": "Las luces, los mercados y las atracciones, con su horario real, en un mapa dibujado una sola vez.",
   "app.map_label": "Mapa isométrico de Vigo",
@@ -178,7 +178,7 @@
   "state.error_title": "Algo salió mal",
   "state.error_points_body": "No se pudieron cargar los puntos de Navidad. Vuelve a intentarlo o usa el mapa sin esa capa.",
   "state.loading": "Cargando",
-  "about.title": "TinyVigo",
+  "about.title": "NaviVigo",
   "about.intro": "Mapa ilustrado de la Navidad en el centro de Vigo. Qué hay, si está abierto ahora y cómo llegar andando.",
   "about.sources": "Datos y licencias",
   "about.note": "Cada capa de la ciudad muestra su fecha de actualización. Autobuses y trenes: horario programado.",

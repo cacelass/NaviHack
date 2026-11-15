@@ -18,7 +18,7 @@
     return n;
   };
   // hasta que lleguen los textos, castellano
-  const FALLBACK = { "about.title": "TinyVigo", "about.intro": "", "about.sources": "Datos y licencias", "about.note": "", "common.close": "Cerrar", "nav.about": "Créditos y licencias", "about.portal_terms": "Condiciones del portal de datos abiertos" };
+  const FALLBACK = { "about.title": "NaviVigo", "about.intro": "", "about.sources": "Datos y licencias", "about.note": "", "common.close": "Cerrar", "nav.about": "Créditos y licencias", "about.portal_terms": "Condiciones del portal de datos abiertos" };
   const t = (k) => (window.tinyvigoPoints ? window.tinyvigoPoints.t(k) : FALLBACK[k] || k);
 
   const dialog = el("dialog", { id: "about", "aria-labelledby": "about-title" });

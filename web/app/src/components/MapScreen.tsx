@@ -31,7 +31,7 @@ export default function MapScreen() {
       </div>
 
       <div className="hud">
-        <div className="hud__brand"><Px name="star" size={20} /><span className="wm">TinyVigo</span></div>
+        <div className="hud__brand"><Px name="star" size={20} /><span className="wm">NaviVigo</span></div>
         <div className="hud__center">
           <div className={'search' + (searchOpen ? ' is-open' : ' is-collapsed')}>
             <button className="search__btn btn ic" aria-label="Buscar" onClick={() => setSearchOpen(true)}><Px name="search" size={20} /></button>

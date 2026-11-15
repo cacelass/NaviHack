@@ -12,7 +12,7 @@ export default function FichaScreen() {
       </div>
 
       <div className="hud">
-        <div className="hud__brand"><Px name="star" size={20} /><span className="wm">TinyVigo</span></div>
+        <div className="hud__brand"><Px name="star" size={20} /><span className="wm">NaviVigo</span></div>
         <div className="hud__right"><ThemeToggle /></div>
       </div>
 
