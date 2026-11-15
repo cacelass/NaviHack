@@ -541,8 +541,7 @@ body.is-city .tv-time-quick, body:has(.tv-sheet.is-open) .tv-time-quick, body:ha
 
 body.is-city .tv-night { display: none !important; }
 
-/* niebla: velo estático claro sobre el mapa (sin animación) */
-body.tv-fog #map::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(225, 230, 236, .55), rgba(225, 230, 236, .3) 60%, rgba(225, 230, 236, .45)); }
+/* niebla fuera: no es buen UX/UI (vela el mapa) */
 .tv-story-card p { white-space: pre-line; }
 
 /* la × sticky de MOB-01 va primero; el hero sube hasta el borde de la hoja */
