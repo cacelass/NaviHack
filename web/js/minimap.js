@@ -25,7 +25,7 @@
 
     const frac = (ix, iy) => [ix / m.width, iy / m.height];
     const place = () => {
-      const r = viewer.viewport.viewportToImageRectangle(viewer.viewport.getBounds());
+      const r = viewer.world.getItemAt(0).viewportToImageRectangle(viewer.viewport.getBounds()); // el mapa: hay más capas (lights.js)
       const [x0, y0] = frac(r.x, r.y);
       const [x1, y1] = frac(r.x + r.width, r.y + r.height);
       const left = Math.max(0, Math.min(1, Math.min(x0, x1)));

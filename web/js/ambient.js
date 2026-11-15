@@ -1,8 +1,6 @@
 // TinyVigo ambiente: el mapa dibujado cambia con la hora y el tiempo, sin lastrar el visor.
 // - Noche gradual: 0 antes de la puesta de sol real (Open-Meteo), sube durante una hora y
-//   baja antes del amanecer. Tinte oscuro y luces de Navidad con esa intensidad.
-// - Ligero: un halo por punto (21 elementos en total), los destellos van dentro del halo;
-//   sin mix-blend-mode ni filtros; solo se anima la opacidad (compositor).
+//   baja antes del amanecer. El tinte y las luces los pinta js/lights.js con ese nivel (tv:night).
 // - Tiempo en canvas a ~20 fps con ≤ 140 partículas (gotas según el código, copos o
 //   relámpagos), en pausa si la pestaña no se ve. Niebla fuera: velaba el mapa.
 // Hora y clima: automáticos o forzados desde Ajustes y el botón rápido.
@@ -60,33 +58,13 @@
   };
 
   // ── capas ────────────────────────────────────────────────────────────────
-  let tint = null, glows = [], viewer = null, built = false;
+  let viewer = null;
   const fx = document.createElement("canvas");
   fx.className = "tv-rain";
   const clouds = document.createElement("div");
   clouds.className = "tv-clouds";
   for (let i = 0; i < 2; i++) clouds.append(Object.assign(document.createElement("span"), { style: "--i:" + i }));
   document.body.append(clouds, fx);
-
-  function build() {
-    if (built || !viewer || !window.tinyvigoPoints) return;
-    built = true;
-    // tinte fijo sobre la pantalla (no una capa pegada al mapa que se recoloca en cada fotograma)
-    tint = document.createElement("div");
-    tint.className = "tv-night";
-    const cv = viewer.drawer && viewer.drawer.canvas; // encima del dibujo, debajo de luces y marcadores
-    if (cv && cv.parentNode) cv.parentNode.insertBefore(tint, cv.nextSibling); else document.getElementById("map").after(tint);
-    const pts = window.tinyvigoPoints.points.filter((p) => p.on_map && ["light", "attraction", "market", "santa_kings"].includes(p.type));
-    pts.forEach((p, i) => {
-      const halo = document.createElement("span");
-      halo.className = "tv-glow tv-glow-" + p.type;
-      halo.style.setProperty("--d", ((i * 0.37) % 3).toFixed(2) + "s");
-      // el halo escala con el mapa (~40 m de radio): de lejos es pequeño, de cerca se ve
-      const r = 0.0075;
-      viewer.addOverlay({ element: halo, location: new OpenSeadragon.Rect(p.x - r, p.y - r * 0.8, 2 * r, 1.6 * r) });
-      glows.push(halo);
-    });
-  }
 
   // tiempo: gotas (densidad por código), copos o relámpagos en un solo canvas.
   // ≤ 140 partículas, ~20 fps, pausa con la pestaña oculta.
@@ -155,9 +133,7 @@
     const lvl = nightLevel(), w = weather(), k = CLIMATES[w] || CLIMATES.clear, city = document.body.classList.contains("is-city");
     document.body.classList.toggle("tv-is-night", lvl > 0.5);
     document.documentElement.style.setProperty("--night", lvl.toFixed(2));
-    if (lvl > 0 && !city) build();
-    if (tint) tint.style.display = lvl > 0 ? "" : "none";
-    glows.forEach((g) => (g.style.display = lvl > 0.15 && !city ? "" : "none"));
+    document.dispatchEvent(new CustomEvent("tv:night", { detail: { level: lvl } })); // js/lights.js
     const weatherOn = (k.snow || k.rain > 0) && !city;
     fx.style.display = weatherOn ? "block" : "none";
     cancelAnimationFrame(raf);
