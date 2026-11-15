@@ -22,6 +22,10 @@
 }
 .tv-topsearch .tv-search::placeholder { color: var(--fg-3); }
 .tv-topsearch:focus-within { border-color: var(--acc-line); }
+/* brand chip: symbol + name in one ink, collapses to the symbol alone on a phone */
+.tv-brand { flex: none; box-sizing: border-box; display: flex; align-items: center; height: var(--tap); padding: 0 var(--sp-3); border: 1px solid var(--line); border-radius: var(--r-panel); background: var(--raised); }
+.tv-brand .tv-nombre { font-size: var(--fs-copy); }
+@media (max-width: 600px) { .tv-brand { width: var(--tap); padding: 0; justify-content: center; } .tv-brand .tv-nombre { display: none; } .tv-brand .tv-lockup { gap: 0; } }
 body .tv-topbar-actions > .tv-theme { display: grid !important; place-items: center; padding: 0; }
 /* the open-sheet rules in points.css hid these everywhere; now only what a sheet covers hides */
 body .tv-topbar-actions > .tv-settings-open { display: grid !important; }

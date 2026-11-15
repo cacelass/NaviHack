@@ -9,6 +9,12 @@
 
   const bar = document.createElement("div");
   bar.className = "tv-topbar";
+  // brand chip: symbol + name, ink follows the theme via --tv-tinta
+  const brand = document.createElement("div");
+  brand.className = "tv-brand";
+  brand.setAttribute("role", "img");
+  brand.setAttribute("aria-label", "NaviVigo");
+  brand.innerHTML = window.MARCA ? MARCA.logotipo({ size: 20 }) : "";
   const field = document.createElement("label");
   field.className = "tv-topsearch";
   field.innerHTML = lu("search", 20);
@@ -20,7 +26,7 @@
   field.append(input);
   const actions = document.createElement("div");
   actions.className = "tv-topbar-actions";
-  bar.append(field, actions);
+  bar.append(brand, field, actions);
 
   const corner = document.createElement("div");
   corner.className = "tv-corner";
