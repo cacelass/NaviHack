@@ -76,17 +76,24 @@ make check           # lint + typecheck + test + arnés
 - **Ficha de cada punto:** foto entera (en grande al tocarla), «Abierto · Cierra 00:30» o
   «Cerrado · Abre 18:00» calculado con el programa oficial 2026-27, horario, dirección con
   mini-mapa, parking más cercano con plazas libres en vivo y próximos buses programados.
-- **Tour a pie:** «¿Cuánto tiempo tienes?» (30–120 min) y «¿Cuándo vas?» (ahora, 18:00, 20:00,
-  22:00); elige lo que cabe y está abierto, lo enruta por calles reales y lo dibuja sobre el
-  mapa con pines numerados (la parada a la que vas, en oscuro; las vistas, en gris).
+- **Tour a pie:** dos ruedas tipo iPhone, «¿Cuánto tiempo tienes?» (15 min–4 h) y «¿A qué hora
+  sales?» (cada cuarto de hora), desde tu ubicación o cualquier calle; elige lo que cabe y está
+  abierto, lo enruta por calles reales y lo dibuja sobre el mapa con pines numerados (la parada a
+  la que vas, en oscuro; las vistas, en verde). «Cómo llegar» compara a pie, bus y coche, con el
+  tráfico del momento; al decir «Ya estoy» queda solo la ruta de Navidad.
   «Empezar el paseo» lo cuenta parada a parada y «Terminar paseo» lo borra todo del mapa.
   Lo lejano queda «para otro día».
 - **Navidad hoy:** línea de tiempo con horas reales (encendido de luces, pases del Árbol,
   salidas), lo abierto ahora y lo navideño de la agenda del Concello, situado en el mapa.
-- **Vista ciudad:** todo Vigo en OpenStreetMap con la foto de cada punto, los 12 parkings en
-  vivo, estaciones y paradas (estas solo a nivel de calle) y la ruta desde casa.
-- **Búsqueda** de puntos, eventos, estaciones y 1921 calles, sin tildes y con erratas.
-- **Ajustes** en un solo botón: idioma (gl/es/en, por el navegador), vista, tema y créditos.
+- **Vista satélite:** todo Vigo en ortofoto (PNOA, y Esri fuera de España) con nombres de calle
+  de OpenStreetMap y las mismas capas que el dibujo: puntos, eventos, parkings en vivo, cámaras,
+  paradas, estaciones, tráfico y la ruta desde casa.
+- **Capas en vivo:** tráfico del Concello coloreado por estado y pegado a la calle, las cámaras de
+  tráfico con su imagen dentro de la app, parkings con plazas libres y próximas salidas de cada
+  parada de Vitrasa y estación de Renfe (horario programado, rehecho cada día).
+- **Búsqueda** de puntos, eventos, estaciones y cualquier calle y número (también fuera de Vigo),
+  sin tildes y con erratas.
+- **Ajustes** en un solo botón: idioma (gl/es/en/pt, por el navegador), vista, tema y créditos.
 - **Compartir:** el enlace guarda el punto (`#p=...`) o el tour (`#tour=60-20`).
 - **Seguimiento en ruta:** «Seguirme», dentro de la tarjeta del paseo, sigue tu posición, pinta
   lo ya andado, dice «A 140 m · 2 min» y pasa sola a la siguiente parada; sin GPS, «Simular paseo».
@@ -104,6 +111,11 @@ make check           # lint + typecheck + test + arnés
 <p align="center"><img src="docs/img/web-hoy-1400.jpg" width="100%" alt="La agenda del día con el tiempo de Vigo"></p>
 
 <p align="center"><img src="docs/img/web-noche-1600.jpg" width="100%" alt="El mapa de noche: farolas encendidas y el Árbol de Porta do Sol iluminado"></p>
+
+Pruebas en el navegador de lo que hace un vecino (buscar, paseo, capas, cámaras, buses, Ajustes,
+accesibilidad con axe), en escritorio y móvil: `cd web/e2e && npm ci && npm test` (también en la CI).
+En Vercel los datos en vivo los sirve `deploy/vercel/api/live.mjs` y los horarios de bus y tren se
+rehacen solos cada día (`.github/workflows/transit.yml`); no hay que redesplegar para tenerlos al día.
 
 El servidor de `make website` es `scripts/serve_web.mjs` (Node, sin dependencias): el
 `http.server` de Python en Windows deja respuestas a medias con varias conexiones y la
@@ -213,14 +225,15 @@ Tabla resumida; la auditoría completa (licencias, atribución y estado) está e
 
 | Fuente | Licencia | Atribución |
 |---|---|---|
-| Concello — parkings, agenda, avisos, GTFS Vitrasa | ODC-BY 1.0 | Concello de Vigo — datos.vigo.org (ODC-BY) |
+| Concello — parkings, agenda, avisos, tráfico, cámaras, GTFS Vitrasa | ODC-BY 1.0 | Concello de Vigo — datos.vigo.org (ODC-BY) |
 | Concello — capa navideña (ArcGIS) | No declarada (público) | Concello de Vigo — Puntos de interés de Navidad 2026-27 |
 | Concello — Edificios 3D | No declarada | Concello de Vigo — Edificios 3D |
 | Renfe GTFS AV/LD/MD | CC BY 4.0 | Renfe Operadora (CC BY 4.0) |
 | Open-Meteo (forecast + marine) | CC BY 4.0 (API no comercial) | Weather data by Open-Meteo.com |
 | IGN — PNOA ortofoto y LiDAR | CC BY 4.0 | PNOA cedido por © Instituto Geográfico Nacional |
 | IGN/CNIG — MDT05 | CC BY 4.0 | MDT05 © Instituto Geográfico Nacional |
-| OpenStreetMap | ODbL 1.0 | © OpenStreetMap contributors |
+| OpenStreetMap (calles, búsqueda Photon, rutas OSRM, OpenFreeMap) | ODbL 1.0 | © OpenStreetMap contributors |
+| Esri World Imagery (satélite fuera de España) | Términos de Esri | Esri, Maxar, Earthstar Geographics |
 | Catastro (fallback de huellas) | Reutilización libre con atribución | Dirección General del Catastro |
 
 Reglas duras: todo vehículo en movimiento se etiqueta «según horario», nunca

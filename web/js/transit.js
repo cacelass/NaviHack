@@ -8,6 +8,8 @@
   const ymd = (d) => d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0");
   const hm = (min) => String(Math.floor(min / 60) % 24).padStart(2, "0") + ":" + String(min % 60).padStart(2, "0");
   const nowMin = (d) => d.getHours() * 60 + d.getMinutes();
+  // feed text (GTFS, Renfe) goes into popup HTML: escaped, never trusted
+  const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const P = () => window.tinyvigoPoints;
   const t = (k, v) => (P() ? P().t(k, v) : k);
 
@@ -120,8 +122,8 @@
   // capa de paradas y estaciones en la vista ciudad
   function addLayers() {
     const C = window.tinyvigoCity; if (!C || !data) return;
-    const stopHtml = (id, name) => { const deps = nextDepartures(id); return "<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : emptyText(id)) + "<br><small>" + t("transit.scheduled") + "</small>"; };
-    const stationHtml = (name) => { const rows = trains().filter((x) => x.station === name); return "<strong>" + name + "</strong><br>" + (rows.length ? rows.map((x) => x.time + " · " + x.train + " → " + x.to).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>"; };
+    const stopHtml = (id, name) => { const deps = nextDepartures(id); return "<strong>" + esc(name) + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + esc(x.line) + " → " + esc(x.headsign)).join("<br>") : emptyText(id)) + "<br><small>" + t("transit.scheduled") + "</small>"; };
+    const stationHtml = (name) => { const rows = trains().filter((x) => x.station === name); return "<strong>" + esc(name) + "</strong><br>" + (rows.length ? rows.map((x) => x.time + " · " + esc(x.train) + " → " + esc(x.to)).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>"; };
     if (C.kind === "3d") { // MAP3D-01
       const POS = { "Vigo Urzaiz": [42.234189, -8.713728], "Vigo-Guixar": [42.2392656, -8.7146089] };
       C.addTransit({ stops: data.stops, stations: ((data.trains && data.trains.stations) || []).map((st) => ({ name: st.name, lat: (POS[st.name] || POS["Vigo-Guixar"])[0], lon: (POS[st.name] || POS["Vigo-Guixar"])[1] })), stopHtml, stationHtml });
@@ -138,7 +140,7 @@
       L.circleMarker([lat, lon], { radius: 3, weight: 1, color: "#3d6a96", fillColor: detour ? "#f4cd80" : "#ffffff", fillOpacity: 1, opacity: 0.9 })
         .on("click", function () {
           const deps = nextDepartures(id);
-          this.bindPopup("<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : emptyText(id)) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
+          this.bindPopup("<strong>" + esc(name) + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + esc(x.line) + " → " + esc(x.headsign)).join("<br>") : emptyText(id)) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
         }).addTo(stopLayer);
     }
     for (const st of (data.trains && data.trains.stations) || []) {
@@ -146,7 +148,7 @@
       L.marker(pos, { icon: L.divIcon({ className: "", html: '<div class="tv-train">' + (window.LU ? LU.svg("train-front", { size: 16 }) : "🚆") + "</div>", iconSize: [28, 28], iconAnchor: [14, 14] }), title: st.name })
         .on("click", function () {
           const rows = trains().filter((x) => x.station === st.name);
-          this.bindPopup("<strong>" + st.name + "</strong><br>" + (rows.length ? rows.map((x) => x.time + " · " + x.train + " → " + x.to).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
+          this.bindPopup("<strong>" + esc(st.name) + "</strong><br>" + (rows.length ? rows.map((x) => x.time + " · " + esc(x.train) + " → " + esc(x.to)).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>").openPopup();
         }).addTo(layer);
     }
   }

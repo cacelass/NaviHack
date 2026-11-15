@@ -214,7 +214,8 @@ def main() -> int:
     gtfs = zipfile.ZipFile(io.BytesIO(gtfs_vitrasa._download(gtfs_vitrasa.GTFS_URL)))
     points = json.loads(POINTS.read_text(encoding="utf-8"))["points"]
     renfe = json.loads(RENFE.read_text(encoding="utf-8")) if RENFE.exists() else None
-    if renfe is None and OUT.exists():  # en CI no está data/transit/ (gitignored): se conservan los trenes publicados
+    # en CI no está data/transit/ (gitignored): se conservan los trenes ya publicados
+    if renfe is None and OUT.exists():
         renfe = json.loads(OUT.read_text(encoding="utf-8")).get("trains")
     data = build(gtfs, points, renfe)
     OUT.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

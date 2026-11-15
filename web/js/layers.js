@@ -209,12 +209,16 @@
   // each section coloured by its state on the drawn map and on the 3D city. Colour means state here.
   const TRAFFIC_CLASS = { "Muy fluido": "ok", "Fluido": "ok", "Normal": "normal", "Lento": "slow" }; // the rest: congested
   const trafficClass = (estado) => TRAFFIC_CLASS[estado] || "jam";
-  let trafficSvg = null, trafficTimer = 0;
+  let trafficSvg = null, trafficTimer = 0, trafficShapes = null;
   async function loadTrafico() {
     const viewer = window.tinyvigo && window.tinyvigo.viewer, project = window.tinyvigoGeo && window.tinyvigoGeo.project;
     if (!viewer || !project) return;
     let doc;
     try { doc = await window.tinyvigoData.trafico(); } catch (err) { return; } // sin feed: el aviso de data.js ya lo dice
+    // TRAFFIC-02: the feed's sections have a handful of vertices and cut across blocks; their shape
+    // snapped to the street (scripts/build_traffic_geom.py) replaces it, the live state stays
+    const shape = await (trafficShapes ||= fetch("data/layers/trafico_geom.json").then((r) => r.json()).catch(() => ({})));
+    doc = { ...doc, data: { ...doc.data, features: doc.data.features.map((f) => (shape[f.properties.nombre_tramo] ? { ...f, geometry: { type: "LineString", coordinates: shape[f.properties.nombre_tramo] } } : f)) } };
     const SVG = "http://www.w3.org/2000/svg";
     if (!trafficSvg) {
       trafficSvg = document.createElementNS(SVG, "svg");
