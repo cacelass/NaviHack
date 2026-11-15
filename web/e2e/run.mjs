@@ -112,6 +112,16 @@ const TESTS = [
     ok(labels.includes("Parking Vialia Interior"), "falta el parking de Vialia (al este del lienzo viejo)");
     ok(await page.locator(".tv-lmark.is-cam").count() > 20, "menos de 21 cámaras");
     ok(await page.locator(".tv-traffic polyline").count() > 0, "sin tramos de tráfico");
+    // GEO-02: ningún tramo encima de un edificio que tape la calle
+    const onRoofs = await page.evaluate(() => {
+      let n = 0, bad = 0;
+      for (const pl of document.querySelectorAll(".tv-traffic polyline"))
+        for (const pt of pl.getAttribute("points").split(" ")) { const [x, y] = pt.split(",").map(Number); n++; if (tinyvigoOcclusion.hidden(x, y)) bad++; }
+      return bad / Math.max(1, n);
+    });
+    ok(onRoofs < 0.03, `${(onRoofs * 100).toFixed(1)} % del tráfico encima de edificios`);
+    await page.click('[data-layer="trafico"]'); await wait(400);
+    eq(await page.evaluate(() => getComputedStyle(document.querySelector(".tv-traffic")).visibility), "hidden", "el tráfico sigue a la vista tras apagarlo");
   }],
   ["buses: casi todas las paradas tienen salidas, también fuera de la semana publicada", async (page) => {
     await open(page);

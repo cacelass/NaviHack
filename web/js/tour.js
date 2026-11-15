@@ -37,24 +37,21 @@
     const row = elev.rows[i];
     return row && row[j] != null ? row[j] - (elev.origin_z || 0) : 0;
   }
-  // (lat, lon) -> coordenadas del visor (0..1 sobre el ancho del lienzo); igual que scripts/build_web_data.py
+  // (lat, lon) de la calle -> píxel del lienzo. GEO-02: el dibujo se pintó sobre un render de suelo
+  // PLANO (pipeline/render/templates/render.html: proj(x, y, 0)), así que lo que va a ras de calle
+  // (rutas, tráfico, paradas, farolas…) se proyecta con z = 0; con la cota del terreno se desviaba
+  // hasta 40 px en las zonas altas y bajas y cruzaba manzanas. Los puntos de Navidad conservan su
+  // posición precalculada (points.json), comprobada sobre cada monumento dibujado.
   function project(lat, lon) {
     const x = (lon - ORIGIN[1]) * MLAT * Math.cos(rad(ORIGIN[0])), y = (lat - ORIGIN[0]) * MLAT;
     const u = Math.cos(HEAD) * x - Math.sin(HEAD) * y, d = Math.sin(HEAD) * x + Math.cos(HEAD) * y;
-    const v = -Math.sin(TILT) * d - Math.cos(TILT) * z(lat, lon);
-    return [CANVAS / 2 + SCALE * u, CANVAS / 2 + SCALE * v];
+    return [CANVAS / 2 + SCALE * u, CANVAS / 2 - SCALE * Math.sin(TILT) * d];
   }
-  // vuelta: coordenadas del lienzo -> (lat, lon). La altura se corrige con dos pasadas.
+  // vuelta: píxel del lienzo -> (lat, lon) del suelo
   function unproject(cx, cy) {
-    const u = (cx - CANVAS / 2) / SCALE, v = (cy - CANVAS / 2) / SCALE;
-    let lat = ORIGIN[0], lon = ORIGIN[1];
-    for (let k = 0; k < 3; k++) {
-      const d = (-v - Math.cos(TILT) * z(lat, lon)) / Math.sin(TILT);
-      const x = Math.cos(HEAD) * u + Math.sin(HEAD) * d, y = -Math.sin(HEAD) * u + Math.cos(HEAD) * d;
-      lat = ORIGIN[0] + y / MLAT;
-      lon = ORIGIN[1] + x / (MLAT * Math.cos(rad(ORIGIN[0])));
-    }
-    return [lat, lon];
+    const u = (cx - CANVAS / 2) / SCALE, d = -(cy - CANVAS / 2) / SCALE / Math.sin(TILT);
+    const x = Math.cos(HEAD) * u + Math.sin(HEAD) * d, y = -Math.sin(HEAD) * u + Math.cos(HEAD) * d;
+    return [ORIGIN[0] + y / MLAT, ORIGIN[1] + x / (MLAT * Math.cos(rad(ORIGIN[0])))];
   }
   // MAP-01: la proyección también se usa desde el mini-mapa y la ortofoto; queda a mano
   // para poder probarla con node sin arrancar el visor.
@@ -110,10 +107,18 @@
     layer = document.createElementNS(SVG, "svg");
     layer.setAttribute("viewBox", "0 0 " + CANVAS + " " + CANVAS);
     layer.setAttribute("class", "tv-route");
-    const pts = line.map(([lo, la]) => project(la, lo).map((n) => n.toFixed(1)).join(",")).join(" ");
-    for (const cls of ["tv-route-casing", "tv-route-line"]) {
+    const xy = line.map(([lo, la]) => project(la, lo)), fmt = (ps) => ps.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+    // GEO-02: where a building hides the street, the walk shows as a faint dashed line instead of
+    // running over its roof; the visible stretches are drawn solid on top
+    const O = window.tinyvigoOcclusion, runs = O ? O.visibleRuns(xy) : [xy];
+    if (O && !(runs.length === 1 && runs[0] === xy)) for (const cls of ["tv-route-hidden-casing", "tv-route-hidden"]) {
+      const ghost = document.createElementNS(SVG, "polyline");
+      ghost.setAttribute("points", fmt(xy)); ghost.setAttribute("class", cls);
+      layer.append(ghost);
+    }
+    for (const cls of ["tv-route-casing", "tv-route-line"]) for (const run of runs) {
       const pl = document.createElementNS(SVG, "polyline");
-      pl.setAttribute("points", pts); pl.setAttribute("class", cls);
+      pl.setAttribute("points", fmt(run)); pl.setAttribute("class", cls);
       layer.append(pl);
     }
     const s = project(start[0], start[1]);
@@ -124,7 +129,8 @@
     // the stops are HTML pins anchored at the place itself (not floating above it), so they keep their
     // size at any zoom like the other markers; the place marker underneath is hidden by points.js
     pins = stops.map((st, i) => {
-      const [x, y] = project(st.p.lat, st.p.lon);
+      // the pin stands where the place marker stands (points.json), on the drawn monument
+      const [x, y] = st.p.x != null ? [st.p.x * CANVAS, st.p.y * CANVAS] : project(st.p.lat, st.p.lon);
       const b = document.createElement("button");
       b.type = "button"; b.className = "tv-stop-pin";
       b.innerHTML = PIN + '<span class="tv-stop-num">' + (i + 1) + "</span>";

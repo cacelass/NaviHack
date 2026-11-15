@@ -39,6 +39,12 @@ Vitrasa, se usa el mismo día de la semana, así que nunca se queda sin buses.
   abrir y el satélite las respeta.
 - Tráfico: los tramos del Concello traen 2–3 vértices por calle y cruzaban manzanas; se encajan
   una vez sobre OpenStreetMap (`scripts/build_traffic_geom.py`).
+- Mapa ilustrado: lo que va a ras de calle (tráfico, rutas, paradas, parkings, cámaras, farolas) se
+  desviaba hasta 40 px porque se proyectaba con la cota del terreno y el dibujo se pintó sobre suelo
+  plano. Además, en la vista isométrica las calles que pasan detrás de un edificio quedan tapadas: una
+  máscara hecha con los edificios del Concello y la cámara del render (`scripts/build_occlusion.mjs`)
+  evita pintar tráfico y farolas encima de los tejados, y el paseo sigue en puntos donde la calle no
+  se ve.
 - Cámaras: abrían una descarga «.php»; ahora la imagen sale en la app.
 - Parking de Vialia ausente, fondo vacío al mover el mapa, ubicación imprecisa (ahora avisa y deja
   elegir la calle), selectores de tiempo y hora con rueda, flechas de los chips y Ajustes en móvil.

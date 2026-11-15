@@ -37,7 +37,8 @@
   }
   function visible(id) { return state[id]; }
   function apply(id) {
-    for (const n of groups[id] || []) n.style.display = state[id] ? "" : "none";
+    // OpenSeadragon rewrites the inline display of its overlays: visibility is what really hides them
+    for (const n of groups[id] || []) { n.style.display = state[id] ? "" : "none"; n.style.visibility = state[id] ? "" : "hidden"; }
     if (id === "navidad") document.querySelectorAll(".tv-marker").forEach((m) => { m.style.display = state.navidad ? "" : "none"; });
     if (id === "rutas") document.querySelectorAll(".tv-route").forEach((r) => { r.style.display = state.rutas ? "" : "none"; });
   }
@@ -228,17 +229,22 @@
       add("trafico", trafficSvg);
       trafficTimer = setInterval(() => { if (state.trafico && !document.hidden) loadTrafico(); }, 60000);
     }
+    if (window.tinyvigoOcclusion) await window.tinyvigoOcclusion.ready;
     trafficSvg.replaceChildren();
     for (const f of doc.data.features) {
       const pts = f.geometry.coordinates.map(([lo, la]) => project(la, lo));
       if (!pts.some(within)) continue;
-      const pl = document.createElementNS(SVG, "polyline");
-      pl.setAttribute("points", pts.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "));
-      pl.setAttribute("class", "is-" + trafficClass(f.properties.estado));
-      const title = document.createElementNS(SVG, "title");
-      title.textContent = f.properties.nombre_tramo + " · " + f.properties.estado;
-      pl.append(title);
-      trafficSvg.append(pl);
+      // GEO-02: only where the street shows; behind a building the line would sit on its roof
+      const runs = window.tinyvigoOcclusion ? window.tinyvigoOcclusion.visibleRuns(pts) : [pts];
+      for (const run of runs) {
+        const pl = document.createElementNS(SVG, "polyline");
+        pl.setAttribute("points", run.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "));
+        pl.setAttribute("class", "is-" + trafficClass(f.properties.estado));
+        const title = document.createElementNS(SVG, "title");
+        title.textContent = f.properties.nombre_tramo + " · " + f.properties.estado;
+        pl.append(title);
+        trafficSvg.append(pl);
+      }
     }
     if (window.tinyvigoCity && window.tinyvigoCity.setTraffic) window.tinyvigoCity.setTraffic(state.trafico ? doc.data : null);
     apply("trafico");

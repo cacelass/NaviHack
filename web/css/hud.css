@@ -603,3 +603,8 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-accuracy .tv-btn { justify-self: start; }
 .tv-picker-list { cursor: grab; }
 .tv-picker-list:active { cursor: grabbing; }
+
+/* GEO-02: the stretch of a walk hidden behind buildings: gold dots with a dark rim, the way goes on */
+.tv-route .tv-route-hidden, .tv-route .tv-route-hidden-casing { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 0.1 16; }
+.tv-route .tv-route-hidden-casing { stroke: #1b1f2c; stroke-width: 13; }
+.tv-route .tv-route-hidden { stroke: #f4cd80; stroke-width: 8; }

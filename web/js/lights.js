@@ -47,6 +47,7 @@
     const project = window.tinyvigoGeo && window.tinyvigoGeo.project;
     let doc;
     try { doc = await (await fetch("data/street-lamps.json")).json(); } catch (e) { return; }
+    const O = window.tinyvigoOcclusion; if (O) await O.ready; // GEO-02: no lamp glowing on a roof
     const m = window.tinyvigo.manifest, s = LAMP_SCALE;
     const cv = Object.assign(document.createElement("canvas"), { width: Math.round(m.width * s), height: Math.round(m.height * s) });
     const g = cv.getContext("2d");
@@ -67,7 +68,7 @@
         let d = carry;
         while (d <= len) {
           const x = (prev[0] + (dx * d) / len) * s, y = (prev[1] + (dy * d) / len) * s;
-          if (x > -R && y > -R && x < cv.width + R && y < cv.height + R) g.drawImage(spr, x - R, y - R);
+          if (x > -R && y > -R && x < cv.width + R && y < cv.height + R && !(O && O.hidden(x / s, y / s))) g.drawImage(spr, x - R, y - R);
           d += LAMP_EVERY;
         }
         carry = d - len; prev = cur;
