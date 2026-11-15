@@ -97,6 +97,25 @@ Criterios para aceptar o rechazar una respuesta (se rechazaron 9 de 16 recortes 
 - Las rayitas blancas verticales que se ven sobre el mar en el navegador no están en el mapa (también aparecen sobre
   tejados): es un efecto de la web.
 
+## 4b. Luz de noche del Árbol y de la Noria (v20 en adelante, sin versión nueva de mapa)
+
+Antes: líneas vectoriales dibujadas encima con cifras medidas a mano (`web/js/lights.js`), que no seguían la forma pintada y
+eran de una versión antigua del árbol. Ahora cada asset lleva una capa de luz pintada (`web/ui/assets/luces/*.png`, 400 px del
+lienzo, negro = sin luz) que se **suma** al mapa con `screen` en OpenSeadragon y solo cambia de opacidad.
+
+1. Recorte de 400 px del mapa por `NIGHT_TINT` (0,292 / 0,396 / 0,696) = noche apagada, a 1024 px.
+2. Una llamada al modelo con ese recorte, el render y una foto real: «enciende el asset sin tocar nada más»
+   (`zona/lights_r3/prompt_arbol.txt`, `prompt_noria.txt`). La luz sigue la celosía y los radios pintados.
+3. `zona/lights_r3/make_emission.py`: se queda solo con la diferencia positiva respecto a la noche apagada, rodilla suave
+   (sin núcleos blancos), resplandor y bordes difuminados 60 px (si no, se ve el recorte). Variante fría del árbol girando el tono.
+4. Animación en `lights.js`: pulso lento, paso de rosa a azul hielo cada 14 s en el árbol (el real cambia de color) y brillo con
+   saltos irregulares en los pases de música; con «reducir movimiento», fijo.
+
+Referencias de la técnica: luz en el mundo y no filtro encima, fuente / resplandor / iluminación del entorno como tres cosas,
+núcleo pequeño y halo aditivo, parpadeo a saltos y contención (Unity 2D Lighting, PixelLight 2D, Pixel-Editor, AI Game Dev).
+Datos reales: árbol de 45 m con 100.000 leds que cambian de color; noria con cabinas rojas bordeadas de luces azules.
+Pendiente: el bosque de 10 árboles de 8-10 m junto al árbol; el CSS `.tv-tree` / `.tv-wheel` de `points.css` ya no se usa.
+
 ## 5. Trampas de entorno
 
 - `work/` se comparte entre worktrees pero `pipeline/ledger/image-calls.jsonl` es del checkout desde el que se llama a

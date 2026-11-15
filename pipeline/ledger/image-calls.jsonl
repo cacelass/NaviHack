@@ -120,3 +120,5 @@
 {"t":"2026-11-15T16:24:25.278Z","model":"gemini-3.1-flash-image","label":"r3-cuenca","size":"default","status":"OK"}
 {"t":"2026-11-15T16:37:32.507Z","model":"gemini-3.1-flash-image","label":"r3-eliptica","size":"default","status":"OK"}
 {"t":"2026-11-15T17:09:55.967Z","model":"gemini-3.1-flash-image","label":"r3-eliptica2","size":"default","status":"OK"}
+{"t":"2026-11-15T17:21:17.374Z","model":"gemini-3.1-flash-image","label":"r3-luz-arbol","size":"default","status":"OK"}
+{"t":"2026-11-15T17:37:58.975Z","model":"gemini-3.1-flash-image","label":"r3-luz-noria","size":"default","status":"OK"}
