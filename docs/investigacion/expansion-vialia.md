@@ -369,3 +369,11 @@ Costura `H y=2048`, columna 0: salto de color 1,99× lo normal. Tres intentos:
 | Llamadas de imagen | `pipeline/ledger/image-calls.jsonl` |
 | Referencia del método | `docs/video-marcelo.md`, `docs/investigacion/tinygyn-video-trucos.md` (§11: lo que no se trasladó) |
 | Auditoría anterior del 3×3 | `docs/investigacion/auditoria-bloque.md` |
+
+## Ronda 2 (v11-costuras)
+
+- Seis costuras peores del 3×3 (ratio de salto, `seam_metric.py`): V x=1024 f2 1,60→0,87; V x=2048 f1 1,58→1,10; H y=2048 c2 1,37→1,14; V x=2048 f2 1,36→1,10; V x=1024 f1 1,34→1,04; H y=2048 c1 1,30→1,01. Media 1,26→1,03.
+- Método: una ventana de 1024 px pintada desde el render, centrada en la costura (o en el cruce de dos), mezclada con máscara suave (`pipeline/render/seam_window_blend.py`: núcleo 48 px, fundido a 200 px, color ajustado a media y desviación del mapa). Fuera de la máscara no cambia ni un píxel.
+- Gasto: 6 llamadas de imagen, ninguna repetida. Una corrección solo de color (rampa suave) bajó la media a 1,17 pero no pasó de 1,46 en la peor: el salto que queda es de contenido, no de tono.
+- Lo aprendido: dos ventanas distintas solapadas en un fundido dejan un fantasma; se evita recortando cada ventana a su tramo (`--clip`). Una ventana con mar encima se recorta fuera del agua.
+- Pendiente: H y=1024 col0 (1,22, sin tocar), un círculo naranja suelto en el parque de x≈2100, y=2480, y la fidelidad al render de las ventanas nuevas sin medir.
