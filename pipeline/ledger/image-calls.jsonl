@@ -78,3 +78,10 @@
 {"t":"2026-11-14T23:52:20.205Z","model":"gemini-3.1-flash-image","label":"seam-h-r2c0-vialia","size":"default","status":"OK"}
 {"t":"2026-11-14T23:55:06.743Z","model":"gemini-3.1-flash-image","label":"seam2-h-r2c0-anclada","size":"default","status":"OK"}
 {"t":"2026-11-14T23:56:48.978Z","model":"gemini-3.1-flash-image","label":"seamwin-h-r2c0","size":"default","status":"OK"}
+{"t":"2026-11-15T11:00:24.350Z","model":"gemini-3.1-flash-image","label":"r2-seamA","size":"default","status":"OK"}
+{"t":"2026-11-15T11:01:22.323Z","model":"gemini-3.1-flash-image","label":"r2-seamB","size":"default","status":"OK"}
+{"t":"2026-11-15T11:01:32.703Z","model":"gemini-3.1-flash-image","label":"r2-seamX","size":"default","status":"OK"}
+{"t":"2026-11-15T11:02:46.088Z","model":"gemini-3.1-flash-image","label":"r2-seamY","size":"default","status":"OK"}
+{"t":"2026-11-15T11:02:57.488Z","model":"gemini-3.1-flash-image","label":"r2-seamD","size":"default","status":"OK"}
+{"t":"2026-11-15T11:03:05.316Z","model":"gemini-3.1-flash-image","label":"r2-seamE","size":"default","status":"429"}
+{"t":"2026-11-15T11:04:00.729Z","model":"gemini-3.1-flash-image","label":"r2-seamE","size":"default","status":"OK"}
