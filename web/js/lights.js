@@ -17,7 +17,7 @@
   // SUMAN al mapa («screen») sobre la forma que ya tiene. Salen de una versión nocturna encendida de cada recorte
   // (pipeline/render/zona/lights_r3/): la luz sigue la celosía y los radios pintados, no unas cifras medidas a mano.
   const GLOWS = [
-    { id: "concello-2552", box: [1415, 1300, 400], srcs: ["arbol-a.png", "arbol-b.png"], tree: true }, // rosa y azul hielo: el real cambia de color
+    { id: "concello-2552", box: [1415, 1300, 400], srcs: ["arbol-a.png"] },
     { id: "concello-3494", box: [4113, 1980, 400], srcs: ["noria-a.png"] },
   ];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -127,21 +127,12 @@
       return o;
     });
   }
-  // sin animación (reduced motion) o con ella: pulso lento y, en el Árbol, paso de rosa a azul hielo cada ~14 s;
-  // en los pases de música (treeShow) el brillo sube y parpadea a saltos, no con una onda suave
+  // luz fija, sin parpadeo ni pulso ni cambio de color: solo se enciende y se apaga con el horario
   function animate() {
-    const t = performance.now() / 1000, on = Math.max(0, Math.min(1, (level - 0.3) / 0.4));
+    const on = Math.max(0, Math.min(1, (level - 0.3) / 0.4));
     for (const g of glows) {
       const lightOn = on > 0 && lit(g.p);
-      const it = g.items;
-      if (!it.length) continue;
-      if (!lightOn) { it.forEach((i) => i && i.setOpacity(0)); continue; }
-      let gain = reduced ? 0.9 : 0.86 + 0.1 * Math.sin(t * (g.tree ? 1.3 : 0.9));
-      if (g.tree && treeShow()) gain = Math.min(1, gain + 0.1 + (Math.floor(t * 10) % 3 === 0 ? 0.1 : 0));
-      let mix = 0;
-      if (g.tree && !reduced) mix = 0.5 - 0.5 * Math.cos((t / 14) * Math.PI * 2); // 0 → 1 → 0
-      if (it[0]) it[0].setOpacity(on * gain * (g.tree ? 1 - mix : 1));
-      if (it[1]) it[1].setOpacity(on * gain * mix);
+      g.items.forEach((i) => i && i.setOpacity(lightOn ? on * 0.9 : 0));
     }
   }
 
@@ -153,11 +144,6 @@
     const at = new Date(); if (forced) at.setHours(20, 0, 0, 0);
     const st = P.status(p, at);
     return st ? st.open : true; // sin horario publicado: se da por encendido de noche
-  }
-  // los pases de música del Árbol (18:00, 19:00, 20:00, 21:00 y 21:50, 10 min): más brillo
-  function treeShow() {
-    const d = new Date(), m = d.getHours() * 60 + d.getMinutes();
-    return [1080, 1140, 1200, 1260, 1310].some((s) => m >= s && m < s + 10);
   }
 
   function paint() {
@@ -177,7 +163,6 @@
     viewer = window.tinyvigo && window.tinyvigo.viewer; P = window.tinyvigoPoints;
     if (!viewer || !P || !window.tinyvigoAmbient || !viewer.world.getItemCount()) { setTimeout(init, 200); return; }
     buildTint(); buildHalos(); buildGlows();
-    if (!reduced) setInterval(() => { if (document.visibilityState === "visible" && level > 0.3) animate(); }, 66); // ~15 imágenes/s solo de noche
     level = window.tinyvigoAmbient.nightLevel();
     document.addEventListener("tv:night", (e) => { level = e.detail.level; paint(); });
     new MutationObserver(paint).observe(document.body, { attributes: true, attributeFilter: ["class"] });
