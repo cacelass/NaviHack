@@ -13,9 +13,9 @@
   const TINT = "rgb(74, 101, 177)"; // NIGHT_TINT (0.292, 0.396, 0.696) × 255
   const LAMP_EVERY = 64; // px del lienzo entre farolas (2 px/m → 32 m, lo habitual en una calle)
   const LAMP_SCALE = 0.5; // la capa de farolas se pinta a media resolución: es luz difusa
-  // forma pintada del Árbol y de la Noria en las teselas actuales (px del lienzo, medido en v11)
-  const TREE = { apex: [1620, 1408], base: [1613, 1596], rx: 36, ry: 10 };
-  const WHEEL = { c: [4314, 2182], r: 53 };
+  // forma pintada del Árbol y de la Noria en las teselas actuales (px del lienzo, medido en v20)
+  const TREE = { apex: [1614, 1413], base: [1613, 1596], rx: 36, ry: 10 };
+  const WHEEL = { c: [4313.5, 2180], r: 53 };
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let viewer = null, P = null, tint = null, lamps = null, lampsLoading = false;
   let halos = [], tree = null, wheel = null, level = 0;
