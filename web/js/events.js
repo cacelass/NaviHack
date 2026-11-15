@@ -25,8 +25,16 @@
       const hit = places.find((p) => d.includes(p.key) || p.key.includes(d));
       return hit ? { lat: hit.lat, lon: hit.lon, name: e.direccion } : null;
     };
+    // the Christmas point an event is about, for its photo on the agenda row: named in the title, or
+    // the Árbol for the lights switch-on. The address alone is not enough: several points share a street.
+    const tree = points.find((p) => p.id === "concello-2552");
+    const pointOf = (e) => {
+      const ti = norm(e.titulo);
+      return points.find((p) => norm(p.name.es).length > 5 && ti.includes(norm(p.name.es)))
+        || (/encend|acend|luces|luz/.test(ti) ? tree : null) || null;
+    };
     const today = new Date().toISOString().slice(0, 10);
-    return agenda.map((e) => ({ ...e, where: locate(e), today: !e.permanente && e.fecha_inicio <= today && today <= (e.fecha_fin || e.fecha_inicio) }));
+    return agenda.map((e) => ({ ...e, where: locate(e), point: pointOf(e), today: !e.permanente && e.fecha_inicio <= today && today <= (e.fecha_fin || e.fecha_inicio) }));
   }
 
   function init() {
@@ -73,7 +81,7 @@
       const go = e.where ? el("button", "tv-btn tv-btn-quiet tv-ev-go", lu("map-pin", 16), t("events.on_map")) : null;
       if (go) go.onclick = () => show(e);
       return el("li", "tv-ev",
-        el("span", "tv-thumb", lu(/belen|bel[eé]n|nacimiento/i.test(e.titulo) ? "star" : /disney|desfile|parade|cabalgata/i.test(e.titulo) ? "ticket" : "calendar-days")),
+        e.point && e.point.photo ? Object.assign(el("img", "tv-thumb"), { src: e.point.photo, alt: "", width: 84, height: 56, loading: "lazy", decoding: "async" }) : el("span", "tv-thumb", lu(/belen|bel[eé]n|nacimiento/i.test(e.titulo) ? "star" : /disney|desfile|parade|cabalgata/i.test(e.titulo) ? "ticket" : "calendar-days")),
         el("div", "tv-ev-main",
           el("p", "tv-ev-title", e.titulo),
           place ? el("p", "tv-ev-place", lu("map-pin", 14), place) : null,

@@ -1,9 +1,9 @@
 {
   "concello-2552": {
     "story": {
-      "es": "El maestro de ceremonias de la Navidad: un árbol de 46 metros de luz en la Puerta del Sol. Entra en su interior, escucha la música y contempla el juego de luces desde fuera.",
-      "gl": "O mestre de cerimonias do Nadal: unha árbore de 46 metros de luz na Porta do Sol. Entra no seu interior, escoita a música e contempla o xogo de luces desde fóra.",
-      "en": "The master of ceremonies of the season: a 46-metre tree of light in Puerta del Sol. Step inside, hear the music and watch the lights play from outside."
+      "es": "El árbol de luz de Porta do Sol. Se puede entrar: dentro suena música y desde fuera se ve el juego de luces.",
+      "gl": "A árbore de luz da Porta do Sol. Pódese entrar: dentro soa música e desde fóra vese o xogo de luces.",
+      "en": "The tree of lights in Porta do Sol. You can walk inside: music plays in there, and from outside you see the lights change."
     },
     "fact": {
       "es": "Mide 46,40 metros de altura.",
@@ -19,17 +19,17 @@
       },
       {
         "kind": "schedule",
-        "es": "Animación musical cada hora, de 18:00 a 22:00.",
-        "gl": "Animación musical cada hora, de 18:00 a 22:00.",
-        "en": "Musical show every hour, 18:00–22:00."
+        "es": "Música 10 min a las 18:00, 19:00, 20:00, 21:00 y 21:50.",
+        "gl": "Música 10 min ás 18:00, 19:00, 20:00, 21:00 e 21:50.",
+        "en": "10-min music show at 18:00, 19:00, 20:00, 21:00 and 21:50."
       }
     ]
   },
   "concello-2553": {
     "story": {
-      "es": "Un muñeco de nieve de 12 metros de luz y color en García Barbón. Entra en su barriga durante el paseo.",
-      "gl": "Un boneco de neve de 12 metros de luz e cor en García Barbón. Entra no seu bandullo durante o paseo.",
-      "en": "A 12-metre snowman of light and colour on García Barbón. Step right into its belly as you pass."
+      "es": "Un muñeco de nieve hecho de luces. Se puede entrar en su barriga.",
+      "gl": "Un boneco de neve feito de luces. Pódese entrar no seu bandullo.",
+      "en": "A snowman made of lights. You can walk into its belly."
     },
     "fact": {
       "es": "Mide 12 metros de altura.",
@@ -53,9 +53,9 @@
   },
   "concello-2566": {
     "story": {
-      "es": "Una caja de regalo gigante y transitable en el cruce de Gran Vía con Urzáiz. Un regalo de luz en el corazón de la ciudad.",
-      "gl": "Unha caixa de agasallo xigante e transitable no cruce de Gran Vía con Urzáiz. Un agasallo de luz no corazón da cidade.",
-      "en": "A giant walk-through gift box at the Gran Vía–Urzáiz junction. A present of light in the heart of the city."
+      "es": "Una caja de regalo gigante que se puede atravesar a pie.",
+      "gl": "Unha caixa de agasallo xigante que se pode atravesar a pé.",
+      "en": "A giant gift box you can walk through."
     },
     "fact": null,
     "facts": [
@@ -75,9 +75,9 @@
   },
   "concello-2567": {
     "story": {
-      "es": "Una bola de 12 metros que rodó desde Laponia y se plantó entre Príncipe y Urzáiz. Atraviésala por dentro.",
-      "gl": "Unha bóla de 12 metros que rodou desde Laponia e plantouse entre Príncipe e Urzáiz. Atravésaa por dentro.",
-      "en": "A 12-metre ball that rolled in from Lapland between Príncipe and Urzáiz. Walk right through it."
+      "es": "Rodó desde Laponia y se quedó en A Farola. Es hueca: se cruza por dentro.",
+      "gl": "Rodou desde Laponia e quedou na Farola. É oca: crúzase por dentro.",
+      "en": "It rolled all the way from Lapland and stopped at A Farola. It is hollow, so you can walk through it."
     },
     "fact": {
       "es": "Mide 12 metros.",
@@ -101,9 +101,9 @@
   },
   "concello-3494": {
     "story": {
-      "es": "Noria gigante en el aparcamiento exterior de Vialia.",
-      "gl": "Nora xigante no aparcadoiro exterior de Vialia.",
-      "en": "A giant Ferris wheel at the Vialia car park."
+      "es": "La noria está en el aparcamiento exterior de Vialia, junto a la estación de Urzáiz.",
+      "gl": "A noria está no aparcadoiro exterior de Vialia, xunto á estación de Urzáiz.",
+      "en": "The Ferris wheel stands in the outdoor car park of Vialia, next to Urzáiz station."
     },
     "fact": null,
     "facts": [
@@ -115,31 +115,25 @@
       },
       {
         "kind": "schedule",
-        "es": "Laborables 17:00 · viernes–domingo 11:00.",
-        "gl": "Laborables 17:00 · venres–domingo 11:00.",
-        "en": "Weekdays 17:00 · Fri–Sun 11:00."
-      },
-      {
-        "kind": "payment",
-        "es": "Pago con tarjeta PassVigo (−1 €).",
-        "gl": "Pagamento coa tarxeta PassVigo (−1 €).",
-        "en": "PassVigo card accepted (−€1)."
+        "es": "Abre a las 17:00; de viernes a domingo, a las 11:00.",
+        "gl": "Abre ás 17:00; de venres a domingo, ás 11:00.",
+        "en": "Opens 17:00; Fri–Sun from 11:00."
       }
     ]
   },
   "concello-3496": {
     "story": {
-      "es": "Casetas de madera con artesanía, decoración navideña y gastronomía de temporada en la plaza de Vialia.",
-      "gl": "Casetas de madeira con artesanía, decoración de Nadal e gastronomía de tempada na praza de Vialia.",
-      "en": "Wooden stalls with crafts, Christmas décor and seasonal food in Plaza de Vialia."
+      "es": "Casetas de madera con artesanía, adornos de Navidad y comida de temporada.",
+      "gl": "Casetas de madeira con artesanía, adornos de Nadal e comida de tempada.",
+      "en": "Wooden stalls selling crafts, Christmas decorations and seasonal food."
     },
     "fact": null,
     "facts": [
       {
         "kind": "schedule",
-        "es": "Laborables 17:00 · viernes–domingo 11:00.",
-        "gl": "Laborables 17:00 · venres–domingo 11:00.",
-        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+        "es": "Abre a las 17:00; de viernes a domingo, a las 11:00.",
+        "gl": "Abre ás 17:00; de venres a domingo, ás 11:00.",
+        "en": "Opens 17:00; Fri–Sun from 11:00."
       },
       {
         "kind": "where",
@@ -151,9 +145,9 @@
   },
   "concello-3499": {
     "story": {
-      "es": "Las letras gigantes y de colores de VIGO para tu foto navideña, en la zona de Urzáiz–Colón.",
-      "gl": "As letras xigantes e de cores de VIGO para a túa foto de Nadal, na zona de Urzáiz–Colón.",
-      "en": "The giant, colourful VIGO letters for your Christmas photo, in the Urzáiz–Colón area."
+      "es": "Las letras de VIGO, grandes y de colores, para la foto de Navidad.",
+      "gl": "As letras de VIGO, grandes e de cores, para a foto de Nadal.",
+      "en": "The big, colourful VIGO letters, for your Christmas photo."
     },
     "fact": null,
     "facts": [
@@ -167,9 +161,9 @@
   },
   "concello-3502": {
     "story": {
-      "es": "El enviado de los Reyes Magos recoge las cartas con los deseos de las niñas y niños.",
-      "gl": "O enviado dos Reis Magos recolle as cartas cos desexos das nenas e nenos.",
-      "en": "The Three Kings' messenger collects the letters with children's wishes."
+      "es": "El Cartero Real recoge las cartas de niñas y niños para los Reyes Magos.",
+      "gl": "O Carteiro Real recolle as cartas de nenas e nenos para os Reis Magos.",
+      "en": "The Royal Postman collects children's letters to the Three Kings."
     },
     "fact": null,
     "facts": [
@@ -189,9 +183,9 @@
   },
   "concello-3503": {
     "story": {
-      "es": "Acrobacias, humor y destellos de luz en un viaje al corazón de la Navidad, para todos los públicos.",
-      "gl": "Acrobacias, humor e destellos de luz nunha viaxe ao corazón do Nadal, para todos os públicos.",
-      "en": "Acrobatics, humour and flashes of light in a journey to the heart of Christmas, for all ages."
+      "es": "Acrobacias, humor y números de luz para todas las edades. Este año presenta «O máxico reino dos xoguetes».",
+      "gl": "Acrobacias, humor e números de luz para todas as idades. Este ano presenta «O máxico reino dos xoguetes».",
+      "en": "Acrobatics, comedy and light acts for all ages. This year the show is «O máxico reino dos xoguetes» (the magic kingdom of toys)."
     },
     "fact": null,
     "facts": [
@@ -206,22 +200,28 @@
         "es": "Horarios y precios en ticketrona.com.",
         "gl": "Horarios e prezos en ticketrona.com.",
         "en": "Times and prices at ticketrona.com."
+      },
+      {
+        "kind": "where",
+        "es": "Avenida de Castelao.",
+        "gl": "Avenida de Castelao.",
+        "en": "Avenida de Castelao."
       }
     ]
   },
   "concello-3508": {
     "story": {
-      "es": "Puestos de artesanía para regalar, con animación de calle, cuentacuentos y visitas sorpresa de personajes navideños.",
-      "gl": "Postos de artesanía para agasallar, con animación de rúa, contacontos e visitas sorpresa de personaxes de Nadal.",
-      "en": "Craft stalls for gift hunting, with street shows, storytelling and surprise visits from Christmas characters."
+      "es": "Puestos de artesanía para regalar. Hay animación en la calle, cuentacuentos y, a ratos, personajes de Navidad de visita.",
+      "gl": "Postos de artesanía para agasallar. Hai animación na rúa, contacontos e, ás veces, personaxes de Nadal de visita.",
+      "en": "Craft stalls for gift shopping, with street performers, storytelling and the odd visit from Christmas characters."
     },
     "fact": null,
     "facts": [
       {
         "kind": "schedule",
-        "es": "Laborables 17:00 · viernes–domingo 11:00.",
-        "gl": "Laborables 17:00 · venres–domingo 11:00.",
-        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+        "es": "Abre a las 17:00; de viernes a domingo, a las 11:00.",
+        "gl": "Abre ás 17:00; de venres a domingo, ás 11:00.",
+        "en": "Opens 17:00; Fri–Sun from 11:00."
       },
       {
         "kind": "where",
@@ -233,9 +233,9 @@
   },
   "concello-3512": {
     "story": {
-      "es": "Pista de patinaje sobre hielo cubierta, en la playa de Samil.",
-      "gl": "Pista de patinaxe sobre xeo cuberta, na praia de Samil.",
-      "en": "A covered ice-skating rink on Samil beach."
+      "es": "Pista de hielo cubierta en Samil.",
+      "gl": "Pista de xeo cuberta en Samil.",
+      "en": "Covered ice rink at Samil."
     },
     "fact": null,
     "facts": [
@@ -247,17 +247,17 @@
       },
       {
         "kind": "schedule",
-        "es": "Laborables 14:30 · sábados y domingos 11:00.",
-        "gl": "Laborables 14:30 · sábados e domingos 11:00.",
-        "en": "Weekdays 14:30 · Sat & Sun 11:00."
+        "es": "Abre a las 14:30; sábados y domingos, a las 11:00.",
+        "gl": "Abre ás 14:30; sábados e domingos, ás 11:00.",
+        "en": "Opens 14:30; Sat–Sun from 11:00."
       }
     ]
   },
   "concello-3513": {
     "story": {
-      "es": "Pista de karts para niños y adultos, en la playa de Samil.",
-      "gl": "Pista de karts para nenos e adultos, na praia de Samil.",
-      "en": "A go-kart track for kids and adults on Samil beach."
+      "es": "Karts para niños y adultos en Samil.",
+      "gl": "Karts para nenos e adultos en Samil.",
+      "en": "Go-karts for kids and adults at Samil."
     },
     "fact": null,
     "facts": [
@@ -269,17 +269,17 @@
       },
       {
         "kind": "schedule",
-        "es": "Laborables 17:00 · viernes–domingo 11:00.",
-        "gl": "Laborables 17:00 · venres–domingo 11:00.",
-        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+        "es": "Abre a las 17:00; de viernes a domingo, a las 11:00.",
+        "gl": "Abre ás 17:00; de venres a domingo, ás 11:00.",
+        "en": "Opens 17:00; Fri–Sun from 11:00."
       }
     ]
   },
   "concello-3516": {
     "story": {
-      "es": "Un castillo de luz de 6 metros y medio de altura en Policarpo Sanz, donde Papá Noel y los Reyes pueden reposar. Entra a visitarlo.",
-      "gl": "Un castelo de luz de 6 metros e medio de altura en Policarpo Sanz, onde Papá Noel e os Reis poden repousar. Entra a visitalo.",
-      "en": "A castle of light six and a half metres tall on Policarpo Sanz, where Santa and the Three Kings can rest. Step inside to visit."
+      "es": "Un castillo de luz donde, dicen, descansan Papá Noel y los Reyes. Se puede entrar.",
+      "gl": "Un castelo de luz onde, din, descansan Papá Noel e os Reis. Pódese entrar.",
+      "en": "A castle of lights where, they say, Santa and the Three Kings take a rest. You can go inside."
     },
     "fact": {
       "es": "Mide 6,5 metros de altura.",
@@ -303,9 +303,9 @@
   },
   "concello-3527": {
     "story": {
-      "es": "Representación tradicional del nacimiento de Jesús con figuras luminosas, a las puertas de la Concatedral.",
-      "gl": "Representación tradicional do nacemento de Xesús con figuras luminosas, ás portas da Concatedral.",
-      "en": "A traditional nativity scene with glowing figures at the doors of the Concatedral."
+      "es": "Un belén de figuras de luz a las puertas de la Concatedral.",
+      "gl": "Un belén de figuras de luz ás portas da Concatedral.",
+      "en": "A nativity scene of light figures at the doors of the Co-cathedral."
     },
     "fact": null,
     "facts": [
@@ -319,9 +319,9 @@
   },
   "concello-3534": {
     "story": {
-      "es": "Autobús turístico que recorre la iluminación navideña y los principales elementos decorativos de la ciudad.",
-      "gl": "Autobús turístico que percorre a iluminación de Nadal e os principais elementos decorativos da cidade.",
-      "en": "A sightseeing bus that tours the city's Christmas lights and main decorations."
+      "es": "Un autobús turístico que recorre las luces y la decoración de Navidad del centro.",
+      "gl": "Un autobús turístico que percorre as luces e a decoración de Nadal do centro.",
+      "en": "A sightseeing bus that tours the Christmas lights and decorations in the centre."
     },
     "fact": null,
     "facts": [
@@ -345,17 +345,17 @@
       },
       {
         "kind": "access",
-        "es": "48 plazas online + 1 PMR.",
-        "gl": "48 prazas online + 1 PMR.",
-        "en": "48 online seats + 1 PMR."
+        "es": "48 plazas con reserva online y 1 para movilidad reducida.",
+        "gl": "48 prazas con reserva en liña e 1 para mobilidade reducida.",
+        "en": "48 seats booked online, plus 1 wheelchair space."
       }
     ]
   },
   "concello-3535": {
     "story": {
-      "es": "Un paseo en barco por la ría para ver la ciudad iluminada desde el mar, en un barco decorado con más de 65.000 luces.",
-      "gl": "Un paseo en barco pola ría para ver a cidade iluminada desde o mar, nun barco decorado con máis de 65.000 luces.",
-      "en": "A boat trip around the ría to see the lit-up city from the sea, on a boat dressed with more than 65,000 lights."
+      "es": "Un paseo en barco por la ría para ver Vigo iluminado desde el agua. El barco también va lleno de luces.",
+      "gl": "Un paseo en barco pola ría para ver Vigo iluminado desde a auga. O barco tamén vai cheo de luces.",
+      "en": "A boat trip on the ría to see Vigo lit up from the water. The boat itself is covered in lights."
     },
     "fact": {
       "es": "Lleva más de 65.000 luces microled.",
@@ -391,9 +391,9 @@
   },
   "concello-3554": {
     "story": {
-      "es": "Parque con todo tipo de atracciones infantiles para disfrutar en familia: noria, carrusel, tren y más.",
-      "gl": "Parque con todo tipo de atraccións infantís para gozar en familia: nora, carrusel, tren e máis.",
-      "en": "A park full of children's rides for the whole family: Ferris wheel, carousel, train and more."
+      "es": "Atracciones infantiles en Vialia: noria, carrusel, tren y más.",
+      "gl": "Atraccións infantís en Vialia: noria, carrusel, tren e máis.",
+      "en": "Children's rides at Vialia: a small Ferris wheel, a carousel, a train and more."
     },
     "fact": null,
     "facts": [
@@ -405,25 +405,25 @@
       },
       {
         "kind": "schedule",
-        "es": "Laborables 17:00 · viernes–domingo 11:00.",
-        "gl": "Laborables 17:00 · venres–domingo 11:00.",
-        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+        "es": "Abre a las 17:00; de viernes a domingo, a las 11:00.",
+        "gl": "Abre ás 17:00; de venres a domingo, ás 11:00.",
+        "en": "Opens 17:00; Fri–Sun from 11:00."
       }
     ]
   },
   "concello-3701": {
     "story": {
-      "es": "Visita la casa de Papá Noel y deja tu carta de deseos en su buzón.",
-      "gl": "Visita a casa de Papá Noel e deixa a túa carta de desexos no seu buzón.",
-      "en": "Visit Santa's house and drop your wish list in his letterbox."
+      "es": "La casa de Papá Noel, con su buzón para dejarle la carta.",
+      "gl": "A casa de Papá Noel, co seu buzón para deixarlle a carta.",
+      "en": "Santa's house, with a mailbox for your letter."
     },
     "fact": null,
     "facts": [
       {
         "kind": "schedule",
-        "es": "Diario 17:00–21:00 · findes 11:00–14:00.",
-        "gl": "Diario 17:00–21:00 · fins de semana 11:00–14:00.",
-        "en": "Daily 17:00–21:00 · weekends 11:00–14:00."
+        "es": "Todos los días 17:00–21:00; fines de semana también 11:00–14:00.",
+        "gl": "Todos os días 17:00–21:00; fins de semana tamén 11:00–14:00.",
+        "en": "Daily 17:00–21:00; weekends also 11:00–14:00."
       },
       {
         "kind": "where",
@@ -435,9 +435,9 @@
   },
   "concello-3703": {
     "story": {
-      "es": "Unos muñecos de nieve juegan en la calle; uno saluda con su sombrero subido a una farola.",
-      "gl": "Uns bonecos de neve xogan na rúa; un saúda co seu sombreiro subido a unha farola.",
-      "en": "Snowmen at play on the street; one tips his hat from the top of a lamppost."
+      "es": "Muñecos de nieve jugando en la calle. Uno saluda con el sombrero desde lo alto de una farola.",
+      "gl": "Bonecos de neve xogando na rúa. Un saúda co sombreiro desde o alto dunha farola.",
+      "en": "Snowmen playing in the street. One waves his hat from the top of a lamppost."
     },
     "fact": null,
     "facts": [
@@ -451,25 +451,25 @@
   },
   "concello-3709": {
     "story": {
-      "es": "Trineos cargados de regalos y árboles decoran toda la calle del Príncipe.",
-      "gl": "Zorras cargadas de agasallos e árbores decoran toda a rúa do Príncipe.",
-      "en": "Sleighs laden with presents and trees line the whole of Calle del Príncipe."
+      "es": "Trineos cargados de regalos entre árboles de Navidad, a lo largo de toda la calle.",
+      "gl": "Trineos cargados de agasallos entre árbores de Nadal, ao longo de toda a rúa.",
+      "en": "Sleighs loaded with presents among Christmas trees, all along the street."
     },
     "fact": null,
     "facts": [
       {
         "kind": "where",
-        "es": "Mediana de la calle del Príncipe.",
-        "gl": "Mediana da rúa do Príncipe.",
-        "en": "The median of Calle del Príncipe."
+        "es": "Mediana de la Rúa do Príncipe.",
+        "gl": "Mediana da Rúa do Príncipe.",
+        "en": "Central reservation of Rúa do Príncipe."
       }
     ]
   },
   "concello-3711": {
     "story": {
-      "es": "Un pequeño violinista inunda las calles con sus melodías, junto a unas letras de Vigo retroiluminadas.",
-      "gl": "Un pequeno violinista inunda as rúas coas súas melodías, xunto a unhas letras de Vigo retroiluminadas.",
-      "en": "A little violinist fills the streets with his melodies, beside backlit VIGO letters."
+      "es": "Un pequeño violinista junto a unas letras de VIGO iluminadas por detrás.",
+      "gl": "Un pequeno violinista xunto a unhas letras de VIGO iluminadas por detrás.",
+      "en": "A small violinist beside backlit VIGO letters."
     },
     "fact": null,
     "facts": [
@@ -483,9 +483,9 @@
   },
   "concello-3712": {
     "story": {
-      "es": "Papá Noel tararea villancicos junto a una farola, en tu paso por Eduardo Iglesias.",
-      "gl": "Papá Noel cantaruxa panxoliñas xunto a unha farola, no teu paso por Eduardo Iglesias.",
-      "en": "Santa hums carols beside a lamppost as you pass through Eduardo Iglesias."
+      "es": "Papá Noel canta villancicos junto a una farola.",
+      "gl": "Papá Noel canta panxoliñas xunto a unha farola.",
+      "en": "Santa sings carols next to a lamppost."
     },
     "fact": null,
     "facts": [
@@ -499,9 +499,9 @@
   },
   "concello-3713": {
     "story": {
-      "es": "Un bosque luminoso de más de 6 metros de altura; atento, quizá unos elfos luminosos te observan.",
-      "gl": "Un bosque luminoso de máis de 6 metros de altura; atento, quizais uns elfos luminosos te observan.",
-      "en": "A forest of light more than six metres tall — keep an eye out for the glowing elves watching you."
+      "es": "Un bosque de luz. Mira bien: entre los árboles se esconden elfos.",
+      "gl": "Un bosque de luz. Mira ben: entre as árbores escóndense elfos.",
+      "en": "A forest of lights. Look closely: there are elves hiding among the trees."
     },
     "fact": {
       "es": "Supera los 6 metros de altura.",
@@ -525,9 +525,9 @@
   },
   "concello-3714": {
     "story": {
-      "es": "Cruza bajo la Estrella Polar, que se detuvo en Vigo camino de Belén, en García Barbón.",
-      "gl": "Cruza baixo a Estrela Polar, que parou en Vigo camiño de Belén, en García Barbón.",
-      "en": "Pass under the North Star, which paused in Vigo on its way to Bethlehem, on García Barbón."
+      "es": "La estrella que iba camino de Belén hizo parada en Vigo. Se pasa por debajo.",
+      "gl": "A estrela que ía camiño de Belén fixo parada en Vigo. Pásase por debaixo.",
+      "en": "The star on its way to Bethlehem made a stop in Vigo. You walk right under it."
     },
     "fact": null,
     "facts": [
@@ -547,9 +547,9 @@
   },
   "concello-3715": {
     "story": {
-      "es": "Cruza esta puerta a las estrellas de 5 metros y hazte un selfie para recordar el momento.",
-      "gl": "Cruza esta porta ás estrelas de 5 metros e faite un selfie para lembrar o momento.",
-      "en": "Step through this 5-metre gateway to the stars and grab a selfie to remember the moment."
+      "es": "Un arco de estrellas que se cruza a pie. Buen sitio para una foto.",
+      "gl": "Un arco de estrelas que se cruza a pé. Bo sitio para unha foto.",
+      "en": "An arch of stars you can walk through. A good spot for a photo."
     },
     "fact": {
       "es": "Mide 5 metros de altura.",
@@ -573,9 +573,9 @@
   },
   "concello-3720": {
     "story": {
-      "es": "Una carroza luminosa en la que fotografiar a los pequeños reyes de tu casa.",
-      "gl": "Unha carruaxe luminosa na que fotografar os pequenos reis da túa casa.",
-      "en": "A glowing carriage where you can photograph the little kings and queens at home."
+      "es": "Una carroza de luz para hacer fotos a los pequeños reyes de la casa.",
+      "gl": "Unha carroza de luz para facerlles fotos aos pequenos reis da casa.",
+      "en": "A carriage of lights, for photos of the little royals in your family."
     },
     "fact": null,
     "facts": [
@@ -595,9 +595,9 @@
   },
   "concello-3721": {
     "story": {
-      "es": "Cuatro ángeles guardan la iglesia de Santiago de Vigo con sus fulgurantes trompetas.",
-      "gl": "Catro anxos gardan a igrexa de Santiago de Vigo coas súas fulgurantes trompetas.",
-      "en": "Four angels guard the church of Santiago de Vigo with their shining trumpets."
+      "es": "Cuatro ángeles con trompetas de luz guardan la iglesia de Santiago de Vigo.",
+      "gl": "Catro anxos con trompetas de luz gardan a igrexa de Santiago de Vigo.",
+      "en": "Four angels with trumpets of light guard the church of Santiago de Vigo."
     },
     "fact": null,
     "facts": [
@@ -617,9 +617,9 @@
   },
   "concello-3729": {
     "story": {
-      "es": "Selección de imágenes del ambiente navideño que llena las calles de Vigo: luces, rincones y paseos luminosos.",
-      "gl": "Selección de imaxes do ambiente de Nadal que enche as rúas de Vigo: luces, recunchos e paseos luminosos.",
-      "en": "A selection of images of the Christmas atmosphere filling Vigo's streets: lights, corners and glowing promenades."
+      "es": "Fotos del ambiente de Navidad en las calles de Vigo: luces, rincones y paseos.",
+      "gl": "Fotos do ambiente de Nadal nas rúas de Vigo: luces, recunchos e paseos.",
+      "en": "Photos of Christmas on the streets of Vigo: lights, corners and walks."
     },
     "fact": null,
     "facts": [
@@ -633,9 +633,9 @@
   },
   "concello-3730": {
     "story": {
-      "es": "Otra selección de imágenes del ambiente navideño: luces, rincones y paseos luminosos por la ciudad.",
-      "gl": "Outra selección de imaxes do ambiente de Nadal: luces, recunchos e paseos luminosos pola cidade.",
-      "en": "Another selection of images of the Christmas atmosphere: lights, corners and glowing promenades."
+      "es": "Segunda tanda de fotos de la Navidad en las calles de Vigo.",
+      "gl": "Segunda tanda de fotos do Nadal nas rúas de Vigo.",
+      "en": "A second set of photos of Christmas on the streets of Vigo."
     },
     "fact": null,
     "facts": [
@@ -649,9 +649,9 @@
   },
   "concello-3731": {
     "story": {
-      "es": "Tren navideño que recorre la iluminación y la decoración del centro de la ciudad.",
-      "gl": "Tren de Nadal que percorre a iluminación e a decoración do centro da cidade.",
-      "en": "A Christmas train that tours the city centre's lights and decorations."
+      "es": "Un tren de Navidad que recorre las luces y la decoración del centro.",
+      "gl": "Un tren de Nadal que percorre as luces e a decoración do centro.",
+      "en": "A Christmas train that tours the lights and decorations in the centre."
     },
     "fact": null,
     "facts": [
@@ -662,24 +662,18 @@
         "en": "€6 · ages 2–11 €4 · 65+ €5."
       },
       {
-        "kind": "route",
-        "es": "Recorrido por el centro de la ciudad.",
-        "gl": "Percorrido polo centro da cidade.",
-        "en": "Route through the city centre."
-      },
-      {
         "kind": "schedule",
-        "es": "Laborables 17:00 · viernes–domingo 11:00.",
-        "gl": "Laborables 17:00 · venres–domingo 11:00.",
-        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+        "es": "Abre a las 17:00; de viernes a domingo, a las 11:00.",
+        "gl": "Abre ás 17:00; de venres a domingo, ás 11:00.",
+        "en": "Opens 17:00; Fri–Sun from 11:00."
       }
     ]
   },
   "concello-4872": {
     "story": {
-      "es": "Los renos de Papá Noel exploran Vigo: encuéntralos antes de que vuelvan al Polo Norte y hazte una foto.",
-      "gl": "Os renos de Papá Noel exploran Vigo: atópaos antes de que volvan ao Polo Norte e faite unha foto.",
-      "en": "Santa's reindeer are exploring Vigo — find them before they head back to the North Pole and snap a photo."
+      "es": "Los renos de Papá Noel andan sueltos por Príncipe. Encuéntralos antes de que vuelvan al Polo Norte.",
+      "gl": "Os renos de Papá Noel andan soltos polo Príncipe. Atópaos antes de que volvan ao Polo Norte.",
+      "en": "Santa's reindeer are loose on Príncipe. Find them before they head back to the North Pole."
     },
     "fact": null,
     "facts": [
@@ -693,9 +687,9 @@
   },
   "concello-4873": {
     "story": {
-      "es": "Un bosque encantado de árboles luminosos en la Puerta del Sol: encuéntralos todos y hazte una foto mágica.",
-      "gl": "Un bosque encantado de árbores luminosas na Porta do Sol: atópaos todos e faite unha foto máxica.",
-      "en": "An enchanted forest of glowing trees in Puerta del Sol: find them all and take a magical photo."
+      "es": "Árboles de luz repartidos por Porta do Sol. Encuéntralos todos.",
+      "gl": "Árbores de luz repartidas pola Porta do Sol. Atópaas todas.",
+      "en": "Trees of light scattered around Porta do Sol. See if you can find them all."
     },
     "fact": null,
     "facts": [
@@ -715,9 +709,9 @@
   },
   "concello-4876": {
     "story": {
-      "es": "Pide tu deseo navideño: una lámpara mágica que brilla con toda la energía de la Navidad.",
-      "gl": "Pide o teu desexo de Nadal: unha lámpada máxica que brilla con toda a enerxía do Nadal.",
-      "en": "Make your Christmas wish: a magic lamp glowing with all the season's energy."
+      "es": "Una lámpara mágica de luz: pide un deseo.",
+      "gl": "Unha lámpada máxica de luz: pide un desexo.",
+      "en": "A magic lamp made of lights: make a wish."
     },
     "fact": null,
     "facts": [
@@ -731,9 +725,9 @@
   },
   "concello-4940": {
     "story": {
-      "es": "Experiencia inmersiva, gratuita y exclusiva de Vigo que lleva los personajes de Disney+ más allá de la pantalla, con luz y espectáculos.",
-      "gl": "Experiencia inmersiva, gratuíta e exclusiva de Vigo que leva as personaxes de Disney+ máis alá da pantalla, con luz e espectáculos.",
-      "en": "An immersive, free, Vigo-only experience that takes Disney+ characters beyond the screen, with light shows."
+      "es": "Los personajes de Disney+ salen de la pantalla con luces y espectáculos. Solo en Vigo.",
+      "gl": "As personaxes de Disney+ saen da pantalla con luces e espectáculos. Só en Vigo.",
+      "en": "Disney+ characters step off the screen with lights and shows. Only in Vigo."
     },
     "fact": null,
     "facts": [
@@ -753,9 +747,9 @@
   },
   "concello-4941": {
     "story": {
-      "es": "Un simpático Papá Noel gigante en su balancín luminoso, rodeado de un saco de regalos, invita a hacerse una foto.",
-      "gl": "Un simpático Papá Noel xigante no seu balancín luminoso, rodeado dun saco de agasallos, convida a facerse unha foto.",
-      "en": "A jolly giant Santa on his glowing rocking horse, surrounded by a sack of presents, invites you for a photo."
+      "es": "Un Papá Noel gigante en un balancín de luz, con su saco de regalos. Para la foto.",
+      "gl": "Un Papá Noel xigante nun balancín de luz, co seu saco de agasallos. Para a foto.",
+      "en": "A giant Santa on a light-up rocker, with his sack of presents. Made for photos."
     },
     "fact": null,
     "facts": [
