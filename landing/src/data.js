@@ -2,8 +2,6 @@
 // Every figure here comes from the app's data (web/data/points.json, stories.json, live/parkings.json).
 
 import shotMapa from './assets/app-mapa-1440.webp'
-import shotNoche from './assets/app-noche-1600.webp'
-import shotHoy from './assets/app-hoy-1440.webp'
 
 export const site = {
   name: 'NaviVigo',
@@ -20,7 +18,6 @@ export const nav = [
 ]
 
 export const hero = {
-  kicker: 'Navidad 2026–27 en Vigo',
   title: ['La Navidad de Vigo,', 'en un mapa'],
   text: 'Las luces del Concello, los mercados y la noria, sobre un dibujo del centro. Mira qué está encendido ahora y sal a dar un paseo que cabe en el tiempo que tienes.',
 }
@@ -48,17 +45,11 @@ export const map = {
       key: 'noche',
       title: 'De noche, con sus luces',
       text: 'Al ponerse el sol se encienden las farolas y cada luz de Navidad a su hora. El Árbol de Porta do Sol brilla más en sus pases de música.',
-      img: shotNoche,
-      w: 1600, h: 900,
-      alt: 'El mapa de noche: farolas encendidas y el Árbol de Porta do Sol iluminado',
     },
     {
       key: 'hoy',
       title: 'Lo que pasa hoy',
       text: 'El encendido, los pases del Árbol, las salidas del Nadal Bus y el tiempo de Vigo hora a hora, para saber si hace falta paraguas.',
-      img: shotHoy,
-      w: 1440, h: 900,
-      alt: 'La agenda del día con el tiempo de Vigo y los horarios del Árbol y del Nadal Bus',
     },
   ],
 }
@@ -127,7 +118,4 @@ export const footer = {
     { label: 'Renfe', note: 'GTFS de Renfe Operadora (CC BY 4.0)', href: 'https://data.renfe.com' },
     { label: 'Open-Meteo', note: 'Weather data by Open-Meteo.com (CC BY 4.0)', href: 'https://open-meteo.com' },
   ],
-  origin: 'Hecho en un día en 1Hack (A Coruña, 14 de noviembre de 2026).',
-  disclaimer:
-    'Proyecto independiente: no es una web oficial del Concello de Vigo. Las fotos de los puntos son del Concello y los derechos son de sus autores. Los horarios son orientativos: confírmalos con la organización.',
 }

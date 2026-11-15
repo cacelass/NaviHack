@@ -7,6 +7,7 @@ import Walk from './components/Walk.jsx'
 import TeamCard from './components/TeamCard.jsx'
 import LightsNow from './components/LightsNow.jsx'
 import Footer from './components/Footer.jsx'
+import ScrollBar from './components/ScrollBar.jsx'
 import Icon from './components/Icon.jsx'
 import { map, team, site } from './data.js'
 
@@ -63,6 +64,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <ScrollBar />
       <Analytics />
     </>
   )

@@ -1,6 +1,8 @@
 import useReveal from './useReveal.js'
 import Phone from './Phone.jsx'
 import FichaMock from './FichaMock.jsx'
+import ChristmasLights from './ChristmasLights.jsx'
+import TodayAgenda from './TodayAgenda.jsx'
 
 // One flat card per thing the map does: the real screen on a sunk panel, then title and text.
 // Its place in the bento grid comes from `item.key` (index.css, .map-card.is-<key>).
@@ -10,8 +12,18 @@ export default function FeatureCard({ item, delay = 0 }) {
 
   return (
     <article ref={ref} className={cls} style={style}>
+      {item.key === 'noche' && (
+        <div className="xmas-wrap">
+          <ChristmasLights />
+        </div>
+      )}
+      {item.key === 'hoy' && (
+        <div className="today-wrap">
+          <TodayAgenda />
+        </div>
+      )}
       <div className="map-media">
-        {item.key === 'ficha' ? (
+        {item.key === 'noche' || item.key === 'hoy' ? null : item.key === 'ficha' ? (
           <Phone className="phone-sm"><FichaMock /></Phone>
         ) : item.phone ? (
           <Phone className="phone-sm">
