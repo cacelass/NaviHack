@@ -6,8 +6,8 @@ import shotMapa from './assets/app-mapa-1440.webp'
 export const site = {
   name: 'NaviVigo',
   url: 'https://navivigo.vercel.app',
-  repo: 'https://github.com/cacelass/navivigo',
-  readme: 'https://github.com/cacelass/navivigo/blob/main/README.md',
+  repo: 'https://github.com/cacelass/NaviHack',
+  readme: 'https://github.com/cacelass/NaviHack/blob/main/README.md',
   demo: 'demo/',
 }
 
