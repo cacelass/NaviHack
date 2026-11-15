@@ -10,6 +10,8 @@ Necesita numpy y OpenCV (no están en el entorno base del proyecto): sin ellos e
 
 from __future__ import annotations
 
+from typing import Any
+
 import pytest
 
 np = pytest.importorskip("numpy")
@@ -23,6 +25,8 @@ CANVAS = "wide"
 SEARCH = 16
 # Caja del lienzo con costa de muelles y dársenas dentro del recorte del MDT05 (no cruza su borde norte).
 INNER = (520, 840, 1180, 1260)
+# numpy llega por importorskip, así que mypy no lo ve como tipo: el array del MDT va como Any
+World = tuple[georef.RenderParams, elevation.Grid, Any]
 
 
 def _moved(params: georef.RenderParams, dx: float, dy: float) -> georef.RenderParams:
@@ -34,14 +38,14 @@ def _moved(params: georef.RenderParams, dx: float, dy: float) -> georef.RenderPa
 
 
 @pytest.fixture(scope="module")
-def world() -> tuple[georef.RenderParams, elevation.Grid, np.ndarray]:
+def world() -> World:
     grid = elevation.load()
     assert grid is not None, "falta data/elevation/mdt05_core.asc.gz"
     return georef.params(), grid, co.dem_array(grid)
 
 
 @pytest.mark.parametrize(("dx", "dy"), [(0.0, 0.0), (7.0, -5.0), (-12.0, 9.0), (4.0, 11.0)])
-def test_recupera_un_desfase_conocido(world, dx: float, dy: float) -> None:
+def test_recupera_un_desfase_conocido(world: World, dx: float, dy: float) -> None:
     params, grid, dem = world
     x0, y0, x1, y1 = INNER
     sea, valid = co.sea_on_canvas(params, grid, dem, CANVAS, INNER)
@@ -67,7 +71,7 @@ def test_un_desfase_de_un_pixel_se_ve() -> None:
     assert co.best_shift(sea, valid, water, SEARCH).dx == pytest.approx(1.0, abs=0.4)
 
 
-def test_el_agua_con_el_tamano_equivocado_se_rechaza(world) -> None:
+def test_el_agua_con_el_tamano_equivocado_se_rechaza(world: World) -> None:
     params, grid, dem = world
     sea, valid = co.sea_on_canvas(params, grid, dem, CANVAS, INNER)
     with pytest.raises(ValueError, match="water debe medir"):
