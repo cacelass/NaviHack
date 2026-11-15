@@ -163,7 +163,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 
 /* ── Hero: the illustrated map behind a night scrim, copy left, the app right ── */
 .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; min-height: min(100svh, 56rem); padding-block: calc(var(--header-h) + 3rem) 4rem; background: var(--night); color: var(--night-fg); }
-.hero-bg { position: absolute; inset: -4%; z-index: -2; width: 108%; height: 108%; object-fit: cover; image-rendering: pixelated; animation: hero-drift 60s ease-in-out infinite alternate; }
+.hero-bg { position: absolute; inset: -4%; z-index: -2; width: 108%; max-width: none; height: 108%; object-fit: cover; image-rendering: pixelated; animation: hero-drift 60s ease-in-out infinite alternate; }
 @keyframes hero-drift { from { transform: translate3d(0, 0, 0) scale(1.02); } to { transform: translate3d(-2%, -1.5%, 0) scale(1.06); } }
 /* a scrim for legibility, not decoration: heavier behind the copy */
 .hero-veil { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(16, 18, 26, 0.92) 0%, rgba(16, 18, 26, 0.74) 48%, rgba(16, 18, 26, 0.42) 100%); }

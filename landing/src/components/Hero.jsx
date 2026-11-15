@@ -8,7 +8,7 @@ import { hero, site } from '../data.js'
 export default function Hero() {
   return (
     <section className="hero" id="top">
-      <img className="hero-bg" src={heroBg} alt="" aria-hidden="true" width="1920" height="1080" fetchPriority="high" decoding="async" />
+      <img className="hero-bg" src={heroBg} alt="" aria-hidden="true" width="1600" height="900" fetchPriority="high" decoding="async" />
       <div className="hero-veil" aria-hidden="true" />
 
       <div className="wrap hero-grid">

@@ -86,12 +86,28 @@
     });
   }
 
+  // Each animated part is its own <svg> inside an HTML box and only whole elements animate
+  // (opacity, transform): the compositor moves them. Animating nodes inside one SVG made the browser
+  // recalculate style every frame (~80 ms/s at night with the map still, LIGHT-03 measure).
+  function layer(cls, viewBox, ...kids) {
+    const s = svgEl("svg", { viewBox, class: cls, preserveAspectRatio: "none" });
+    s.append(...kids);
+    return s;
+  }
+  function box(cls, x, y, w, h, ...layers) {
+    const d = document.createElement("div");
+    d.className = "tv-light " + cls;
+    d.append(...layers);
+    viewer.addOverlay({ element: d, location: rect(x, y, w, h) });
+    return d;
+  }
+
   // el Árbol real: celosía cónica con tiras LED blancas y cian de arriba abajo, aros y la estrella roja
   function buildTree() {
     const [ax, ay] = TREE.apex, [bx, by] = TREE.base, pad = 30;
     const x0 = bx - TREE.rx - pad, y0 = ay - pad - 14, w = 2 * (TREE.rx + pad), h = by + TREE.ry + pad - y0;
-    const svg = svgEl("svg", { viewBox: [x0, y0, w, h].join(" "), class: "tv-light tv-tree" });
-    const back = svgEl("g", { class: "tv-tree-back" }), front = svgEl("g", { class: "tv-tree-front" }), twinkle = svgEl("g", { class: "tv-tree-twinkle" });
+    const vb = [x0, y0, w, h].join(" ");
+    const back = svgEl("g", { class: "tv-tree-back" }), front = svgEl("g", { class: "tv-tree-front" });
     const N = 22;
     for (let k = 0; k < N; k++) {
       const a = (k / N) * Math.PI * 2, ex = bx + Math.cos(a) * TREE.rx, ey = by + Math.sin(a) * TREE.ry;
@@ -102,39 +118,44 @@
       const t = j / 6.4, cx = ax + (bx - ax) * t, cy = ay + 6 + (by - ay - 6) * t;
       front.append(svgEl("ellipse", { cx, cy, rx: TREE.rx * t, ry: TREE.ry * t }));
     }
-    for (let k = 0; k < 26; k++) { // destellos sueltos sobre la celosía
+    // destellos sueltos sobre la celosía, en dos tandas que se alternan
+    const sparks = [svgEl("g", {}), svgEl("g", {})];
+    for (let k = 0; k < 26; k++) {
       const t = 0.12 + ((k * 37) % 100) / 115, a = k * 2.4;
-      twinkle.append(svgEl("circle", { cx: ax + (bx - ax) * t + Math.cos(a) * TREE.rx * t * 0.9, cy: ay + 6 + (by - ay - 6) * t + Math.sin(a) * TREE.ry * t, r: 1.3, style: "--d:" + ((k * 0.29) % 2.4).toFixed(2) + "s" }));
+      sparks[k % 2].append(svgEl("circle", { cx: ax + (bx - ax) * t + Math.cos(a) * TREE.rx * t * 0.9, cy: ay + 6 + (by - ay - 6) * t + Math.sin(a) * TREE.ry * t, r: 0.9 }));
     }
     const star = svgEl("g", { class: "tv-tree-star" });
     const sg = svgEl("radialGradient", { id: "tv-star-glow" });
     sg.append(svgEl("stop", { offset: "0", "stop-color": "rgba(255,90,60,.55)" }), svgEl("stop", { offset: "1", "stop-color": "rgba(255,60,40,0)" }));
     const pg = svgEl("radialGradient", { id: "tv-pool-glow" });
     pg.append(svgEl("stop", { offset: "0", "stop-color": "rgba(140,225,255,.3)" }), svgEl("stop", { offset: "1", "stop-color": "rgba(120,220,255,0)" }));
-    const defs = svgEl("defs", {}); defs.append(sg, pg); svg.append(defs);
+    const defs = svgEl("defs", {}); defs.append(sg, pg);
     star.append(svgEl("circle", { cx: ax, cy: ay - 2, r: 18, class: "tv-tree-star-halo" }));
     for (let k = 0; k < 12; k++) { const a = (k / 12) * Math.PI * 2, l = k % 2 ? 9 : 14; star.append(svgEl("line", { x1: ax, y1: ay - 2, x2: ax + Math.cos(a) * l, y2: ay - 2 + Math.sin(a) * l })); }
     const pool = svgEl("ellipse", { cx: bx, cy: by + 2, rx: TREE.rx + 22, ry: TREE.ry + 12, class: "tv-tree-pool" }); // luz sobre la plaza
     const bloom = front.cloneNode(true); bloom.setAttribute("class", "tv-tree-bloom"); // brillo: la misma celosía, ancha y tenue
-    svg.append(pool, back, bloom, front, twinkle, star);
-    viewer.addOverlay({ element: svg, location: rect(x0, y0, w, h) });
-    tree = { el: svg, p: P.points.find((p) => p.id === "concello-2552") };
+    const el = box("tv-tree", x0, y0, w, h,
+      layer("tv-tree-still", vb, defs, pool, back),
+      layer("tv-tree-glow", vb, bloom, front, star), // respira
+      layer("tv-tree-spark tv-tree-spark-a", vb, sparks[0]),
+      layer("tv-tree-spark tv-tree-spark-b", vb, sparks[1]));
+    tree = { el, p: P.points.find((p) => p.id === "concello-2552") };
   }
 
   // la Noria: aro de bombillas de colores que gira despacio, radios encendidos y su resplandor
   function buildWheel() {
-    const { c: [cx, cy], r } = WHEEL, pad = 26, box = 2 * (r + pad);
-    const svg = svgEl("svg", { viewBox: [cx - r - pad, cy - r - pad, box, box].join(" "), class: "tv-light tv-wheel" });
+    const { c: [cx, cy], r } = WHEEL, pad = 26, size = 2 * (r + pad), vb = [cx - r - pad, cy - r - pad, size, size].join(" ");
     const wg = svgEl("radialGradient", { id: "tv-wheel-glow" });
     wg.append(svgEl("stop", { offset: ".55", "stop-color": "rgba(255,120,200,.22)" }), svgEl("stop", { offset: "1", "stop-color": "rgba(255,120,200,0)" }));
     const defs = svgEl("defs", {}); defs.append(wg);
-    svg.append(defs, svgEl("circle", { cx, cy, r: r + 22, class: "tv-wheel-halo" }));
-    const spin = svgEl("g", { class: "tv-wheel-spin", style: "transform-origin:" + cx + "px " + cy + "px" });
-    for (let k = 0; k < 16; k++) { const a = (k / 16) * Math.PI * 2; spin.append(svgEl("line", { x1: cx, y1: cy, x2: cx + Math.cos(a) * r, y2: cy + Math.sin(a) * r, class: "tv-wheel-spoke" })); }
-    ["#ff5b9a", "#ffd166", "#5be1ff"].forEach((col, i) => spin.append(svgEl("circle", { cx, cy, r, class: "tv-wheel-rim", stroke: col, "stroke-dashoffset": (i * 7).toFixed(1) })));
-    svg.append(spin, svgEl("circle", { cx, cy, r: 4, class: "tv-wheel-hub" }));
-    viewer.addOverlay({ element: svg, location: rect(cx - r - pad, cy - r - pad, box, box) });
-    wheel = { el: svg, p: P.points.find((p) => p.id === "concello-3494") };
+    const spin = [];
+    for (let k = 0; k < 16; k++) { const a = (k / 16) * Math.PI * 2; spin.push(svgEl("line", { x1: cx, y1: cy, x2: cx + Math.cos(a) * r, y2: cy + Math.sin(a) * r, class: "tv-wheel-spoke" })); }
+    ["#ff5b9a", "#ffd166", "#5be1ff"].forEach((col, i) => spin.push(svgEl("circle", { cx, cy, r, class: "tv-wheel-rim", stroke: col, "stroke-dashoffset": (i * 7).toFixed(1) })));
+    const el = box("tv-wheel", cx - r - pad, cy - r - pad, size, size,
+      layer("tv-wheel-still", vb, defs, svgEl("circle", { cx, cy, r: r + 22, class: "tv-wheel-halo" })),
+      layer("tv-wheel-spin", vb, ...spin), // gira entero: el centro de la caja es el eje
+      layer("tv-wheel-still", vb, svgEl("circle", { cx, cy, r: 2.5, class: "tv-wheel-hub" })));
+    wheel = { el, p: P.points.find((p) => p.id === "concello-3494") };
   }
 
   // ¿encendido? El horario oficial manda; con «Noche» forzada se mira a las 20:00 de hoy, para que
@@ -170,6 +191,11 @@
     viewer = window.tinyvigo && window.tinyvigo.viewer; P = window.tinyvigoPoints;
     if (!viewer || !P || !window.tinyvigoAmbient || !viewer.world.getItemCount()) { setTimeout(init, 200); return; }
     buildTint(); buildHalos(); buildTree(); buildWheel();
+    // the Árbol and the Noria only animate while they are on screen
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle("is-offscreen", !e.isIntersecting)));
+      io.observe(tree.el); io.observe(wheel.el);
+    }
     level = window.tinyvigoAmbient.nightLevel();
     document.addEventListener("tv:night", (e) => { level = e.detail.level; paint(); });
     new MutationObserver(paint).observe(document.body, { attributes: true, attributeFilter: ["class"] });
