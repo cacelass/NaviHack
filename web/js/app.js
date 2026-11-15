@@ -27,7 +27,8 @@
     id: "map",
     showNavigationControl: false,
     showRotationControl: false,
-    gestureSettingsMouse: { clickToZoom: false },
+    // Un clic suelto no acerca (selecciona), pero el doble clic sí: OpenSeadragon lo trae apagado para el ratón.
+    gestureSettingsMouse: { clickToZoom: false, dblClickToZoom: true },
     animationTime: 0.6,
     maxZoomPixelRatio: 6,
     homeFillsViewer: true,
