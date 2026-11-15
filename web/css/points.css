@@ -703,3 +703,11 @@ body.is-city .tv-light, body.is-city .tv-glow { display: none !important; }
 /* TOUR-05: the stops of the walk on the satellite view: visited, current, to come */
 .tv-stopnum.is-current { background: #1b1f2c; color: #f4cd80; box-shadow: inset 0 0 0 2px #f4cd80; transform: scale(1.2); }
 .tv-stopnum.is-done { background: #3f7a4c; color: #fff; box-shadow: inset 0 0 0 2px #2c5636; }
+
+/* pestaña de horarios: filas «cuándo / horas», sin párrafo corrido */
+.tv-hours { display: block; margin: 0; }
+.tv-hrow { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.tv-hk { flex: 1 1 auto; min-width: 0; color: var(--fg-2); }
+.tv-hv { flex: 0 1 auto; max-width: 62%; color: var(--fg); text-align: right; font-variant-numeric: tabular-nums; }
+.tv-hours + .tv-btn, .tv-note + .tv-hours { margin-top: 12px; }
+.tv-hv.is-short { white-space: nowrap; }

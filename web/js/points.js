@@ -86,6 +86,74 @@
   }
   const hm = (d) => String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
 
+  // ── pestaña de horarios: sale de p.programme (estructurado), en el idioma activo, no del texto del Concello ──
+  // el gallego no siempre viene en Intl (sin él saldrían «Thu» y «Dec»): se dan a mano
+  const GL = { wd: ["lun", "mar", "mér", "xov", "ven", "sáb", "dom"], mo: ["xan", "feb", "mar", "abr", "mai", "xuñ", "xul", "ago", "set", "out", "nov", "dec"] };
+  const wd = (i) => lang === "gl" ? GL.wd[i] : new Intl.DateTimeFormat(lang, { weekday: "short" }).format(new Date(2024, 0, 1 + i)).replace(/\.$/, ""); // 0 = lunes
+  const mon = (m) => lang === "gl" ? GL.mo[m] : new Intl.DateTimeFormat(lang, { month: "short" }).format(new Date(2024, m, 1)).replace(/\.$/, "");
+  const parts3 = (iso) => iso.split("-").map(Number);
+  const dateFmt = (iso) => { const [, m, d] = parts3(iso); return lang === "en" ? mon(m - 1) + " " + d : d + " " + mon(m - 1); };
+  // «23, 24, 25 dic · 1, 5, 6 ene» (en inglés «Dec 23, 24, 25 · Jan 1, 5, 6»): un mes, un grupo
+  function dateList(list) {
+    const groups = [];
+    for (const iso of list) { const [, m, d] = parts3(iso), g = groups[groups.length - 1]; if (g && g.m === m) g.d.push(d); else groups.push({ m, d: [d] }); }
+    return groups.map((g) => (lang === "en" ? mon(g.m - 1) + " " + g.d.join(", ") : g.d.join(", ") + " " + mon(g.m - 1))).join(" \u00b7 ");
+  }
+  const spanTxt = (a, b) => a + " \u2013 " + b;
+  function daysLabel(days) {
+    const order = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], on = order.map((d) => days.includes(d));
+    // una racha puede cruzar el domingo (dom–mié): se empieza justo después de un día apagado
+    const gap = on.indexOf(false), start = gap < 0 ? 0 : (gap + 1) % 7, seq = Array.from({ length: 7 }, (_, k) => (start + k) % 7);
+    const parts = [];
+    for (let i = 0; i < 7; ) {
+      if (!on[seq[i]]) { i++; continue; }
+      let j = i; while (j + 1 < 7 && on[seq[j + 1]]) j++;
+      parts.push(j - i >= 2 ? wd(seq[i]) + "\u2013" + wd(seq[j]) : Array.from({ length: j - i + 1 }, (_, k) => wd(seq[i + k])).join(", "));
+      i = j + 1;
+    }
+    if (days.includes("eve")) parts.push(t("hours.eve").toLowerCase());
+    if (days.includes("holiday")) parts.push(t("hours.holiday").toLowerCase());
+    const out = parts.join(", ");
+    return out.charAt(0).toUpperCase() + out.slice(1);
+  }
+  function rangeLabel(from, to) {
+    if (from && to) return t("hours.range", { from: dateFmt(from), to: dateFmt(to) });
+    if (from) return t("hours.from", { date: dateFmt(from) });
+    if (to) return t("hours.until", { date: dateFmt(to) });
+    return "";
+  }
+  function hoursRows(p) {
+    const e = p.programme, rows = [];
+    if (!e) return rows;
+    for (const r of e.rules || []) {
+      const slotsTxt = (r.slots || [[r.open, r.close]]).map(([a, b]) => spanTxt(a, b)).join(", ");
+      const when = rangeLabel(r.from, r.to);
+      rows.push([daysLabel(r.days) + (when ? " (" + when + ")" : ""), slotsTxt]);
+    }
+    const byVal = new Map();
+    for (const [d, sl] of Object.entries(e.dates || {})) { const v = sl.map(([a, b]) => spanTxt(a, b)).join(", "); byVal.set(v, (byVal.get(v) || []).concat(d)); }
+    for (const [v, ds] of byVal) rows.push([dateList(ds.sort()), v]);
+    if ((e.all_night || []).length) rows.push([t("hours.all_night"), dateList(e.all_night)]);
+    for (const sh of e.shows || []) rows.push([t("hours.music") + " (" + t("hours.music_len", { min: sh.minutes }) + ")", sh.times.join(" \u00b7 ")]);
+    for (const d of e.departures || []) { const when = rangeLabel(d.from, d.to); rows.push([t("hours.departures") + ": " + daysLabel(d.days) + (when ? " (" + when + ")" : ""), d.times.join(" \u00b7 ")]); }
+    if ((e.closed_dates || []).length) rows.push([t("hours.closed_on"), dateList(e.closed_dates)]);
+    if (e.meeting_point) rows.push([t("hours.meeting"), e.meeting_point]);
+    if (e.duration_min) rows.push([t("hours.duration"), t("hours.duration_val", { min: e.duration_min })]);
+    if (e.prices_eur) {
+      const pr = e.prices_eur, f = (n) => (n ? n + " \u20ac" : t("common.free"));
+      rows.push([t("hours.price_over12"), f(pr.over_12)], [t("hours.price_2to12"), f(pr["2_to_12"])], [t("hours.price_under2"), f(pr.under_2)]);
+    }
+    return rows;
+  }
+  function hoursPane(p) {
+    const rows = hoursRows(p), e = p.programme || {}, kids = [];
+    if (e.hours_unknown) kids.push(el("p", "tv-note", t("hours.unknown")));
+    if (rows.length) kids.push(el("div", "tv-hours", ...rows.map(([k, v]) => el("div", "tv-hrow", el("span", "tv-hk", k), el("span", "tv-hv" + (v.length > 16 ? "" : " is-short"), v)))));
+    if (e.booking_url) { const a = el("a", "tv-btn tv-btn-quiet", lu("ticket"), t("hours.book")); a.href = e.booking_url; a.target = "_blank"; a.rel = "noopener"; kids.push(a); }
+    if (!kids.length) kids.push(el("p", "tv-note", t("common.no_data")));
+    return kids;
+  }
+
   // ── DOM ──────────────────────────────────────────────────────────────────
   const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null)); return n; };
   const narrow = matchMedia("(max-width: 700px)");
@@ -120,8 +188,8 @@
 
   // marcadores
   const markers = new Map();
-  const PAINTED = new Set(["concello-2552", "concello-3494"]); // árbol y noria ya están pintados en el bloque (ASSETS-03)
-  for (const p of points.filter((p) => p.on_map && !PAINTED.has(p.id))) {
+  // el Árbol y la Noria también llevan pin: sus posiciones apuntan a lo que está dibujado (data/map_positions.json)
+  for (const p of points.filter((p) => p.on_map)) {
     const m = el("button", "tv-marker" + (status(p) && status(p).open ? " is-open" : ""));
     m.setAttribute("aria-label", txt(p.name));
     m.title = txt(p.name);
@@ -272,7 +340,6 @@
     const dir = el("a", "tv-btn", lu("footprints"), t("detail.directions"));
     dir.href = "https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=" + p.lat + "," + p.lon;
     dir.target = "_blank"; dir.rel = "noopener";
-    const sched = txt(p.schedule_text);
     // la imagen manda: chip del tipo arriba a la izquierda, estado abajo a la izquierda, cerrar arriba a la derecha
     const hero = el("div", "tv-hero" + (p.photo ? "" : " is-ph"));
     const typeChip = el("span", "tv-chip tv-chip-type is-" + p.type, lu(ICON[p.type] || "map-pin", 16), t(TYPE_KEY[p.type] || "points.filter_all"));
@@ -299,7 +366,7 @@
         !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) window.tinyvigoCity.focus(p.lat, p.lon, null, 17); }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
         freshness(p),
       ],
-      sched: [sched ? el("p", "tv-sched-text", sched) : el("p", "tv-note", t("common.no_data"))],
+      sched: hoursPane(p),
       go: [el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null), parkingBlock(p)],
     };
     const paneEls = {};

@@ -33,6 +33,11 @@ ROOT = Path(__file__).resolve().parent.parent
 POINTS = ROOT / "data" / "points.json"
 PROGRAMME = ROOT / "data" / "programme_2026.json"
 OUT = ROOT / "web" / "data"
+# Píxel del lienzo donde está DIBUJADO un elemento cuando su coordenada del Concello cae a un lado (el Árbol y la Noria
+# están pintados en la plaza / el aparcamiento, no en el punto exacto del dato). {id: [x, y]}
+MAP_POSITIONS = ROOT / "data" / "map_positions.json"
+# nombres y descripciones que el Concello solo publica en es/gl (y a veces con gallego dentro del es): en, pt y correcciones
+TRANSLATIONS = ROOT / "data" / "points_translations.json"
 
 ORIGIN = (42.23807, -8.72581)  # Árbol de Porta do Sol = centro del lienzo (render-params de GEO-01)
 CANVAS = 3072
@@ -77,19 +82,21 @@ def web_points(
     points: list[dict[str, Any]], holidays: list[str], grid: elevation.Grid | None
 ) -> list[dict[str, Any]]:
     origin_z = (grid.elevation(*ORIGIN) if grid else None) or 0.0
+    tr = json.loads(TRANSLATIONS.read_text(encoding="utf-8")) if TRANSLATIONS.exists() else {}
+    painted = json.loads(MAP_POSITIONS.read_text(encoding="utf-8")) if MAP_POSITIONS.exists() else {}
     out = []
     for p in points:
         if p.get("lat") is None or p.get("lon") is None:
             continue
         z = (grid.elevation(p["lat"], p["lon"]) if grid else None) or origin_z
-        cx, cy = project(p["lat"], p["lon"], z - origin_z)
+        cx, cy = painted[p["id"]] if p["id"] in painted else project(p["lat"], p["lon"], z - origin_z)
         programme = p.get("programme")
         out.append(
             {
                 "id": p["id"],
                 "type": p["type"],
-                "name": p["name"],
-                "short": p.get("short"),
+                "name": {**p["name"], **tr.get(p["id"], {}).get("name", {})},
+                "short": ({**(p.get("short") or {}), **tr[p["id"]]["short"]} if "short" in tr.get(p["id"], {}) else p.get("short")),
                 "long": p.get("long"),
                 "schedule_text": p.get("schedule_text"),
                 "address": p.get("address"),

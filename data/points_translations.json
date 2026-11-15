@@ -1,0 +1,377 @@
+{
+ "concello-2552": {
+  "name": {
+   "es": "Árbol gigante de Navidad",
+   "en": "Giant Christmas Tree",
+   "pt": "Árvore gigante de Natal"
+  },
+  "short": {
+   "en": "46.4 m LED light tree in Porta do Sol.",
+   "pt": "Árvore de luzes LED de 46,40 metros na Porta do Sol."
+  }
+ },
+ "concello-2553": {
+  "name": {
+   "es": "Muñeco de nieve",
+   "en": "Snowman",
+   "pt": "Boneco de neve"
+  },
+  "short": {
+   "en": "Giant snowman on García Barbón street, a warm smile of excitement. You can go inside.",
+   "pt": "Boneco de neve gigante na rua García Barbón, um sorriso de entusiasmo num ambiente caloroso. Pode visitar-se o interior."
+  }
+ },
+ "concello-2566": {
+  "name": {
+   "es": "Caja gigante de regalo",
+   "en": "Giant Gift Box",
+   "pt": "Caixa de presente gigante"
+  },
+  "short": {
+   "en": "The biggest gift in the world!",
+   "pt": "O maior presente do mundo!"
+  }
+ },
+ "concello-2567": {
+  "name": {
+   "es": "Bola gigante",
+   "en": "Giant Bauble",
+   "pt": "Bola gigante"
+  },
+  "short": {
+   "en": "A 12 m \"spaceship\" that takes you to a magical universe. You can go inside.",
+   "pt": "Uma \"nave espacial\" de 12 metros que o leva a um universo mágico. Pode visitar-se o interior."
+  }
+ },
+ "concello-3494": {
+  "name": {
+   "es": "Noria gigante",
+   "en": "Giant Ferris Wheel",
+   "pt": "Roda-gigante"
+  }
+ },
+ "concello-3496": {
+  "name": {
+   "es": "Mercado de Navidad - Cíes Market (Plaza de Vialia)",
+   "en": "Christmas Market – Cíes Market (Vialia Square)",
+   "pt": "Mercado de Natal – Cíes Market (Praça de Vialia)"
+  },
+  "short": {
+   "en": "Market with Christmas, food, gift and craft products in Vialia square.",
+   "pt": "Mercado com produtos de Natal, gastronomia, presentes e artesanato na praça de Vialia."
+  }
+ },
+ "concello-3499": {
+  "name": {
+   "es": "Photocall «Vigo Nadal» (Urzáiz)",
+   "en": "“Vigo Nadal” Photocall (Urzáiz)",
+   "pt": "Photocall «Vigo Nadal» (Urzáiz)"
+  },
+  "short": {
+   "en": "Christmas VIGO photocall in the Urzáiz–Colón area.",
+   "pt": "Photocall natalício de VIGO na zona de Urzáiz–Colón."
+  }
+ },
+ "concello-3502": {
+  "name": {
+   "es": "Cartero Real",
+   "en": "Royal Postman",
+   "pt": "Carteiro Real"
+  },
+  "short": {
+   "en": "Visit the Royal Postman (from 25 December).",
+   "pt": "Visita ao Carteiro Real (a partir de 25 de dezembro)."
+  }
+ },
+ "concello-3503": {
+  "name": {
+   "es": "Circo de Navidad",
+   "en": "Christmas Circus",
+   "pt": "Circo de Natal"
+  },
+  "short": {
+   "en": "A show full of magic and surprises for all audiences.",
+   "pt": "Um espetáculo cheio de magia e surpresas para todos os públicos."
+  }
+ },
+ "concello-3508": {
+  "name": {
+   "es": "Mercado de Navidad de O Calvario (zona peatonal)",
+   "en": "O Calvario Christmas Market (pedestrian area)",
+   "pt": "Mercado de Natal de O Calvario (zona pedonal)"
+  },
+  "short": {
+   "en": "Craft market in the pedestrian area of O Calvario.",
+   "pt": "Mercado de artesanato na zona pedonal de O Calvario."
+  }
+ },
+ "concello-3512": {
+  "name": {
+   "es": "Pista de hielo (Samil)",
+   "en": "Ice Rink (Samil)",
+   "pt": "Pista de gelo (Samil)"
+  },
+  "short": {
+   "en": "Covered ice-skating rink on Samil beach.",
+   "pt": "Pista coberta de patinagem no gelo na praia de Samil."
+  }
+ },
+ "concello-3513": {
+  "name": {
+   "es": "Pista de karts (Samil)",
+   "en": "Go-Kart Track (Samil)",
+   "pt": "Pista de karts (Samil)"
+  },
+  "short": {
+   "en": "Go-kart track for children and adults on Samil beach.",
+   "pt": "Pista de karts para crianças e adultos na praia de Samil."
+  }
+ },
+ "concello-3516": {
+  "name": {
+   "es": "Palacio Navideño",
+   "en": "Christmas Palace",
+   "pt": "Palácio de Natal"
+  },
+  "short": {
+   "en": "A castle full of light that you can go inside.",
+   "pt": "Um castelo cheio de luz que pode visitar por dentro."
+  }
+ },
+ "concello-3527": {
+  "name": {
+   "es": "Belén luminoso (Plaza de la Colegiata)",
+   "en": "Illuminated Nativity Scene (Colegiata Square)",
+   "pt": "Presépio luminoso (Praça da Colegiata)"
+  },
+  "short": {
+   "en": "Depiction of the birth of Jesus.",
+   "pt": "Representação do nascimento de Jesus.",
+   "es": "Representación del nacimiento de Jesús."
+  }
+ },
+ "concello-3534": {
+  "name": {
+   "es": "Nadal Bus",
+   "en": "Nadal Bus",
+   "pt": "Nadal Bus"
+  },
+  "short": {
+   "en": "Tourist bus to see the Christmas lights and the main decorations of the city.",
+   "pt": "Autocarro turístico para ver a iluminação de Natal e os principais elementos decorativos da cidade.",
+   "es": "Autobús turístico para recorrer la iluminación navideña y los principales elementos decorativos de la ciudad"
+  }
+ },
+ "concello-3535": {
+  "name": {
+   "es": "El barco de la Navidad",
+   "en": "The Christmas Boat",
+   "pt": "O barco do Natal"
+  },
+  "short": {
+   "en": "A trip along the ría to see the lit-up city from another point of view, on a boat decorated for Christmas.",
+   "pt": "Um passeio pela ria para ver a cidade iluminada de outro ponto de vista, num barco com ambiente natalício."
+  }
+ },
+ "concello-3554": {
+  "name": {
+   "es": "Parque de atracciones infantil (Vialia)",
+   "en": "Children's Fun Fair (Vialia)",
+   "pt": "Parque de diversões infantil (Vialia)"
+  },
+  "short": {
+   "en": "A park with all kinds of rides to enjoy as a family.",
+   "pt": "Um parque com todo o tipo de atrações para desfrutar em família."
+  }
+ },
+ "concello-3701": {
+  "name": {
+   "es": "Casa de Papá Noel",
+   "en": "Santa's House",
+   "pt": "Casa do Pai Natal"
+  },
+  "short": {
+   "en": "Visit the recreation of Santa's house, with a postbox where children can leave their letters (from 23 November).",
+   "pt": "Visite a recriação da casa do Pai Natal, com uma caixa de correio onde as crianças podem deixar as suas cartas (a partir de 23 de novembro)."
+  }
+ },
+ "concello-3703": {
+  "name": {
+   "es": "Muñeco de nieve en la farola",
+   "en": "Snowman on the Lamp Post",
+   "pt": "Boneco de neve no candeeiro"
+  },
+  "short": {
+   "en": "Snowmen having fun on a snowy street.",
+   "pt": "Bonecos de neve a divertir-se numa rua nevada."
+  }
+ },
+ "concello-3709": {
+  "name": {
+   "es": "Trineos y árboles",
+   "en": "Sleighs and Trees",
+   "pt": "Trenós e árvores"
+  },
+  "short": {
+   "en": "Sleighs loaded with gifts and trees, all along Príncipe street.",
+   "pt": "Trenós carregados de presentes e árvores ao longo da rua do Príncipe."
+  }
+ },
+ "concello-3711": {
+  "name": {
+   "es": "Violinista",
+   "en": "Violinist",
+   "pt": "Violinista"
+  },
+  "short": {
+   "en": "A violinist plays next to backlit VIGO letters.",
+   "pt": "Um violinista toca junto a letras de VIGO retroiluminadas."
+  }
+ },
+ "concello-3712": {
+  "name": {
+   "es": "Papá Noel en la farola",
+   "en": "Santa on the Lamp Post",
+   "pt": "Pai Natal no candeeiro"
+  },
+  "short": {
+   "en": "Santa sings carols on the lamp post.",
+   "pt": "O Pai Natal canta canções de Natal no candeeiro."
+  }
+ },
+ "concello-3713": {
+  "name": {
+   "es": "Bosque de Navidad",
+   "en": "Christmas Forest",
+   "pt": "Bosque de Natal"
+  },
+  "short": {
+   "en": "Walk through this luminous forest over 6 m tall.",
+   "pt": "Atravesse este bosque luminoso com mais de 6 metros de altura."
+  }
+ },
+ "concello-3714": {
+  "name": {
+   "es": "Estrella de la Navidad",
+   "en": "Christmas Star",
+   "pt": "Estrela de Natal"
+  },
+  "short": {
+   "en": "Walk under this giant shooting star flying to Bethlehem.",
+   "pt": "Passe sob esta estrela cadente gigante que voa para Belém."
+  }
+ },
+ "concello-3715": {
+  "name": {
+   "es": "Estrella pórtico",
+   "en": "Star Gate",
+   "pt": "Pórtico da Estrela"
+  },
+  "short": {
+   "en": "Take your selfie in this star gate!",
+   "pt": "Tire a sua selfie neste pórtico estelar!"
+  }
+ },
+ "concello-3720": {
+  "name": {
+   "es": "Carroza real",
+   "en": "Royal Carriage",
+   "pt": "Carruagem real"
+  },
+  "short": {
+   "en": "A luminous carriage where you can take a souvenir photo of Vigo.",
+   "pt": "Uma carruagem luminosa onde pode levar uma recordação de Vigo."
+  }
+ },
+ "concello-3721": {
+  "name": {
+   "es": "Ángeles anunciadores",
+   "en": "Announcing Angels",
+   "pt": "Anjos anunciadores"
+  },
+  "short": {
+   "en": "Four angels with shining trumpets guard the church of Santiago de Vigo.",
+   "pt": "Quatro anjos com trombetas luminosas guardam a igreja de Santiago de Vigo."
+  }
+ },
+ "concello-3729": {
+  "name": {
+   "es": "Navidad en imágenes",
+   "en": "Christmas in Pictures",
+   "pt": "Natal em imagens"
+  },
+  "short": {
+   "en": "A selection of images of Vigo at Christmas.",
+   "pt": "Uma seleção de imagens do ambiente de Vigo no Natal."
+  }
+ },
+ "concello-3730": {
+  "name": {
+   "es": "Navidad en imágenes II",
+   "en": "Christmas in Pictures II",
+   "pt": "Natal em imagens II"
+  },
+  "short": {
+   "en": "A selection of images of Vigo at Christmas.",
+   "pt": "Uma seleção de imagens do ambiente de Vigo no Natal."
+  }
+ },
+ "concello-3731": {
+  "name": {
+   "es": "Tren de Navidad (Plaza de Vialia)",
+   "en": "Christmas Train (Vialia Square)",
+   "pt": "Comboio de Natal (Praça de Vialia)"
+  },
+  "short": {
+   "en": "Christmas train touring the lights and decorations of the city centre.",
+   "pt": "Comboio de Natal que percorre a iluminação e a decoração do centro da cidade."
+  }
+ },
+ "concello-4872": {
+  "name": {
+   "es": "Renos",
+   "en": "Reindeer",
+   "pt": "Renas"
+  },
+  "short": {
+   "en": "Santa's reindeer are exploring Vigo. How many can you find before they head back to the North Pole? Take a photo with them!",
+   "pt": "As renas do Pai Natal andam a explorar Vigo. Quantas consegue encontrar antes de voltarem ao Polo Norte? Tire uma foto com elas!"
+  }
+ },
+ "concello-4873": {
+  "name": {
+   "es": "Bosque de árboles luminosos",
+   "en": "Forest of Luminous Trees",
+   "pt": "Bosque de árvores luminosas"
+  },
+  "short": {
+   "en": "You have entered the enchanted forest of luminous trees! Can you find them all? Don't forget a magic photo!",
+   "pt": "Entrou no bosque encantado de árvores luminosas! Consegue encontrá-las todas? Não se esqueça de uma foto mágica!"
+  }
+ },
+ "concello-4876": {
+  "name": {
+   "es": "Lámpara mágica de Navidad",
+   "en": "Magic Christmas Lamp",
+   "pt": "Lâmpada mágica de Natal"
+  },
+  "short": {
+   "en": "Time to make your Christmas wish. This magic lamp shines with all the energy of Christmas.",
+   "pt": "É hora de pedir o seu desejo de Natal. Esta lâmpada mágica brilha com toda a energia do Natal."
+  }
+ },
+ "concello-4940": {
+  "name": {
+   "es": "Experiencia «Dentro de Disney+»",
+   "en": "“Inside Disney+” Experience",
+   "pt": "Experiência «Dentro da Disney+»"
+  }
+ },
+ "concello-4941": {
+  "name": {
+   "es": "Papá Noel con balancín",
+   "en": "Santa on a Rocking Horse",
+   "pt": "Pai Natal no cavalo de baloiço"
+  }
+ }
+}
