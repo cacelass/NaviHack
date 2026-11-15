@@ -176,7 +176,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .fm-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .fm-top { display: flex; align-items: flex-start; gap: 0.5em; }
 .fm-top > div { flex: 1; min-width: 0; }
-.fm-type { margin: 0; font-size: 3.4cqi; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: var(--gold-ink); }
+.fm-type { margin: 0; font-size: 3.4cqi; font-weight: 600; color: var(--gold-ink); }
 .fm-title { margin: 0.35em 0 0; font-size: 7.4cqi; font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; }
 .fm-close { display: grid; place-items: center; flex: none; width: 7.5cqi; height: 7.5cqi; border-radius: var(--r-ctl); background: var(--sunk); color: var(--fg-3); }
 .fm-state { display: flex; align-items: center; gap: 0.35em; margin: 0.9em 0 0; font-size: 4cqi; font-weight: 500; color: var(--fg-2); }
@@ -190,7 +190,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .fm-btn.is-sec { border: 1px solid var(--line-strong); color: var(--fg); }
 .fm-btn.is-pri { background: var(--gold); color: var(--on-gold); }
 .fm-story { margin-top: 1.2em; padding-top: 1em; border-top: 1px solid var(--line); }
-.fm-h { margin: 0; font-size: 3.4cqi; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--fg-3); }
+.fm-h { margin: 0; font-size: 3.4cqi; font-weight: 700; color: var(--fg-3); }
 .fm-p { margin: 0.55em 0 0; font-size: 3.6cqi; line-height: 1.45; color: var(--fg-2); }
 
 

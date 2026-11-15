@@ -48,7 +48,7 @@ export default function Walk() {
           <Reveal className="walk-visual" delay={120}>
             <img className="walk-night" src={shotNoche} alt="El centro de Vigo de noche en el mapa, con las farolas y el Árbol de Porta do Sol encendidos" width="1200" height="900" loading="lazy" decoding="async" />
             <Phone className="phone-float">
-              <img src={shotPaseo} alt="La tarjeta del paseo en el móvil: parada 2 de 9, Papá Noel en la Farola, a 2 minutos andando" width="780" height="1688" loading="lazy" decoding="async" />
+              <img src={shotPaseo} alt="La tarjeta del paseo en el móvil: parada 4 de 10, Papa Noel con balancín, a 2 minutos andando" width="780" height="1688" loading="lazy" decoding="async" />
             </Phone>
           </Reveal>
         </div>
