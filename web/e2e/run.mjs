@@ -95,6 +95,22 @@ const TESTS = [
     eq(await page.locator(".tv-stop-pin").count(), 0, "pines tras terminar");
     eq(await page.locator("svg.tv-route").count(), 0, "línea tras terminar");
   }],
+  ["compartir el paseo: el enlace abre ese mismo paseo", async (page, ctx) => {
+    await open(page);
+    await page.evaluate(() => { tinyvigoTour.setStart2("urzaiz"); tinyvigoTour.setBudget(90); tinyvigoTour.run(); });
+    await page.waitForFunction(() => tinyvigoTour.result() && tinyvigoTour.result().line, null, { timeout: 45_000 });
+    await wait(500);
+    const ids = await page.evaluate(() => tinyvigoTour.result().stops.map((s) => s.p.id));
+    await page.evaluate(() => tinyvigoTour.startWalk(1)); await wait(500); // abrir una parada no debe borrar el paseo del enlace
+    const url = page.url();
+    ok(/#ruta=/.test(url) && /&s=42\.23/.test(url), "el enlace no lleva el paseo: " + url);
+    const other = await ctx.context.newPage();
+    await other.goto(url, { waitUntil: "load" });
+    await other.waitForFunction(() => window.tinyvigoTour && tinyvigoTour.result() && tinyvigoTour.result().line, null, { timeout: 45_000 });
+    eq(JSON.stringify(await other.evaluate(() => tinyvigoTour.result().stops.map((s) => s.p.id))), JSON.stringify(ids), "otras paradas u otro orden");
+    ok(await other.locator(".tv-stop-pin").count() > 0, "el enlace no dibuja el paseo");
+    await other.close();
+  }],
   ["la rueda del paseo cambia el tiempo (teclado y arrastre)", async (page) => {
     await open(page);
     await page.click("#dock-ruta"); await wait(800);

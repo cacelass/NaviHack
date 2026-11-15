@@ -1,6 +1,7 @@
 import heroBg from '../assets/hero-vigo.webp'
 import shotMovil from '../assets/app-movil-390.webp'
 import Icon from './Icon.jsx'
+import Phone from './Phone.jsx'
 import { hero, site } from '../data.js'
 
 // The illustrated map fills the hero; copy on the left, the real app on a phone on the right.
@@ -35,9 +36,9 @@ export default function Hero() {
         </div>
 
         <div className="hero-phone load" style={{ '--load': 5 }} aria-hidden="true">
-          <div className="phone">
+          <Phone>
             <img src={shotMovil} alt="" width="780" height="1688" decoding="async" />
-          </div>
+          </Phone>
         </div>
       </div>
     </section>

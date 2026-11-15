@@ -1,4 +1,5 @@
 import useReveal from './useReveal.js'
+import Phone from './Phone.jsx'
 
 // One flat card per thing the map does: the real screen on a sunk panel, then title and text.
 // Its place in the bento grid comes from `item.key` (index.css, .map-card.is-<key>).
@@ -10,9 +11,9 @@ export default function FeatureCard({ item, delay = 0 }) {
     <article ref={ref} className={cls} style={style}>
       <div className="map-media">
         {item.phone ? (
-          <div className="phone phone-sm">
+          <Phone className="phone-sm">
             <img src={item.img} alt={item.alt} loading="lazy" decoding="async" width={item.w} height={item.h} />
-          </div>
+          </Phone>
         ) : (
           <img src={item.img} alt={item.alt} loading="lazy" decoding="async" width={item.w} height={item.h} />
         )}

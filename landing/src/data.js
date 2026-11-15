@@ -30,7 +30,7 @@ export const stats = [
   { value: '35', label: 'puntos de Navidad del Concello' },
   { value: '16', label: 'luces de Navidad en el mapa' },
   { value: '12', label: 'parkings con plazas libres al minuto' },
-  { value: '3', label: 'idiomas: galego, castellano e inglés' },
+  { value: '4', label: 'idiomas: galego, castellano, inglés y portugués' },
 ]
 
 export const map = {
@@ -79,7 +79,7 @@ export const walk = {
   title: 'Pasea por la Navidad',
   intro: 'Dices cuánto tiempo tienes y desde dónde sales. El mapa elige lo que está abierto a esa hora y te lleva parada a parada por calles reales.',
   steps: [
-    { title: 'Elige el tiempo', text: '30, 60, 90 o 120 minutos. Ahora, o a las 18:00, 20:00 o 22:00.' },
+    { title: 'Elige el tiempo', text: 'El que tengas, de 15 minutos a 4 horas, y la hora a la que sales, con una rueda como la del móvil. Desde donde estás o desde cualquier calle.' },
     { title: 'Sigue las paradas', text: 'Cada una con su foto y lo que vas a ver. Con «Seguirme» sabes a cuántos metros estás, y la tarjeta pasa sola a la siguiente.' },
     { title: 'Llévatelo', text: 'Comparte el paseo con un enlace o ábrelo en Google Maps.' },
   ],

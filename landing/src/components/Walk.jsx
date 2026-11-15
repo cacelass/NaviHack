@@ -2,6 +2,7 @@ import shotPaseo from '../assets/app-paseo-390.webp'
 import shotNoche from '../assets/app-noche-limpia-1200.webp'
 import Reveal from './Reveal.jsx'
 import Icon from './Icon.jsx'
+import Phone from './Phone.jsx'
 import { walk, site } from '../data.js'
 
 // «Pasea por la Navidad»: how a walk works, told with the app's own stop pins (the numbered gold
@@ -46,9 +47,9 @@ export default function Walk() {
 
           <Reveal className="walk-visual" delay={120}>
             <img className="walk-night" src={shotNoche} alt="El centro de Vigo de noche en el mapa, con las farolas y el Árbol de Porta do Sol encendidos" width="1200" height="900" loading="lazy" decoding="async" />
-            <div className="phone phone-float">
+            <Phone className="phone-float">
               <img src={shotPaseo} alt="La tarjeta del paseo en el móvil: parada 2 de 9, Papá Noel en la Farola, a 2 minutos andando" width="780" height="1688" loading="lazy" decoding="async" />
-            </div>
+            </Phone>
           </Reveal>
         </div>
 

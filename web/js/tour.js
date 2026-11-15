@@ -808,10 +808,35 @@
       await finish(from, planned, arrive);
     }
 
+    // SHARE-02: a shared link carries THIS walk (stops in order, start, time) and opens it as it was,
+    // without planning again: same stops, same order, same line
+    function shareState() {
+      if (!result || !result.stops || !result.stops.length) return null;
+      return { ids: result.stops.map((s) => s.p.id), from: result.from, when, budget };
+    }
+    async function openShared(s) {
+      const pts = (s.ids || []).map((id) => P.points.find((p) => p.id === id)).filter(Boolean);
+      if (!pts.length) return false;
+      if (s.when) when = s.when;
+      if (s.budget) budget = s.budget;
+      const from = s.from || ORIGIN;
+      let here = from, used = 0;
+      const stops = pts.map((p) => {
+        const w = walkMin(here, [p.lat, p.lon]), stay = STAY[p.type] || 5, st = { p, arrive: used + w, stay };
+        used += w + stay; here = [p.lat, p.lon];
+        return st;
+      });
+      trip = null; offset = 0; editing = false; startPos = from;
+      result = { stops, later: [], closed: [], used, options: null, source: null, from, mode: null };
+      busy = t("tour.routing"); openBox(); render();
+      await applyMode(null);
+      return true;
+    }
+
     btn.onclick = () => { if (box.classList.contains("is-open")) closeBox(); else openBox(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, unproject, run, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: openBox, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; startKind = v ? "here" : "centre"; startPick = v ? null : { pos: STARTS.centre.pos, label: "Porta do Sol" }; }, setStart2: (k) => { startKind = k; fromHere = k === "here"; startPick = STARTS[k].pos ? { pos: STARTS[k].pos, label: k } : null; }, result: () => result };
+    window.tinyvigoTour = { plan, project, unproject, run, shareState, openShared, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: openBox, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; startKind = v ? "here" : "centre"; startPick = v ? null : { pos: STARTS.centre.pos, label: "Porta do Sol" }; }, setStart2: (k) => { startKind = k; fromHere = k === "here"; startPick = STARTS[k].pos ? { pos: STARTS[k].pos, label: k } : null; }, result: () => result };
   }
 
   if (window.tinyvigoPoints) init();
