@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<script>if(!/\/$|\.html$/.test(location.pathname))document.write('<base href="'+location.pathname+'/">')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinyVigo</title>
+<link rel="icon" href="img/logo.svg">
+<style>
+  @font-face { font-family: Inter; src: url(fonts/Inter.ttf) format("truetype"); font-weight: 100 900; font-display: block; }
+  /* the app's dark theme (web/ui/css/tokens.css): warm neutrals, no shadows, gold only as accent */
+  :root { --bg:#10121a; --surface:#171a24; --sunk:#0b0d14; --raised:#222634; --line:rgba(255,255,255,.12);
+          --fg:#f4ecd9; --fg2:#bcb6a6; --fg3:#9a9484; --gold:#f4cd80; --gold-d:#a9802e; --ok:#97c46f; --chip:#1b1f2c; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; background: var(--sunk); overflow: hidden; font-family: Inter, system-ui, sans-serif; color: var(--fg); font-feature-settings: "tnum"; }
+  #viewport { position: fixed; inset: 0; overflow: hidden; }
+  #stage { width: 1920px; height: 1080px; position: absolute; left: 50%; top: 50%; transform-origin: center; background: var(--bg); overflow: hidden; }
+  #wipe { position: absolute; inset: 0; z-index: 50; pointer-events: none; }
+  .slide { position: absolute; inset: 0; visibility: hidden; }
+  .slide.active { visibility: visible; }
+  h1, h2 { font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; }
+  .kicker { font-size: 28px; font-weight: 500; color: var(--gold); letter-spacing: -0.01em; }
+  .title { position: absolute; left: 120px; top: 110px; font-size: 76px; max-width: 760px; }
+  .sub { font-size: 32px; font-weight: 400; color: var(--fg2); line-height: 1.35; letter-spacing: -0.01em; }
+  .muted { color: var(--fg3); }
+  .gold { color: var(--gold); }
+  .lu { flex: none; }
+
+  /* entrances: each .in waits its turn (--i) after the slide is shown */
+  .in { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+  .active.go .in { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 340ms + 150ms); }
+  /* steps inside a slide: a click shows the next .step before moving on */
+  .step { opacity: 0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+  .s1 .step { opacity: 1; transform: none; }
+
+  /* screens and phones: flat, a 1px edge, no shadow */
+  .screen { position: absolute; border-radius: 12px; border: 1px solid var(--line); overflow: hidden; background: var(--sunk); }
+  .screen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .phone { position: absolute; width: 400px; height: 866px; border-radius: 52px; background: var(--raised); padding: 12px; border: 1px solid var(--line); }
+  .phone img { width: 100%; height: 100%; border-radius: 41px; display: block; object-fit: cover; object-position: top; }
+
+  .list { position: absolute; left: 120px; display: flex; flex-direction: column; gap: 34px; }
+  .row { display: flex; gap: 22px; align-items: flex-start; font-size: 32px; line-height: 1.3; letter-spacing: -0.01em; color: var(--fg); max-width: 760px; }
+  .row .lu { color: var(--gold); margin-top: 3px; }
+  .row small { display: block; font-size: 24px; color: var(--fg3); margin-top: 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; background: var(--chip); color: #fff; font-size: 22px; font-weight: 500; padding: 10px 16px; border-radius: 8px; }
+  .chip .lu { color: var(--gold); }
+  .chip.ok .lu { color: var(--ok); }
+  .stats { position: absolute; left: 120px; bottom: 110px; display: flex; gap: 72px; }
+  .stat b { display: block; font-size: 84px; font-weight: 600; letter-spacing: -0.04em; color: var(--gold); line-height: 1; }
+  .stat span { display: block; font-size: 24px; color: var(--fg2); margin-top: 12px; }
+
+  /* 1 · cold open */
+  .cold { position: absolute; left: 160px; right: 160px; top: 50%; transform: translateY(-50%); text-align: center; }
+  .cold h1 { font-size: 132px; }
+  .cold .q { font-size: 132px; color: var(--gold); margin-top: 40px; }
+
+  /* 2 · the lights come on */
+  .tree { position: absolute; right: 0; top: 0; width: 1080px; height: 1080px; }
+  .tree img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .tree .night { opacity: 0; transition: opacity 1.6s ease 1.6s; }
+  .go .tree .night { opacity: 1; }
+  .tree .chip { position: absolute; left: 40px; bottom: 40px; opacity: 0; transition: opacity .6s ease 3.2s; }
+  .go .tree .chip { opacity: 1; }
+
+
+  /* 3 · garlands */
+  .garland { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .garland path { fill: none; stroke: #2a2e3c; stroke-width: 3; }
+  .garland .cap { fill: #3a3f50; }
+  .garland .bulb { fill: #3a2b14; transition: fill .25s ease; }
+  .go .garland .bulb { fill: var(--c); transition-delay: calc(var(--d) + var(--g, 0s)); animation: twinkle var(--t) ease-in-out calc(var(--d) + var(--g, 0s) + 1.2s) infinite alternate; }
+  /* a photo that shows for a second before the slide lights up */
+  .flash { position: absolute; left: 50%; top: 50%; width: 1140px; height: 570px; margin: -285px 0 0 -570px; border-radius: 24px; object-fit: cover; opacity: 0; z-index: 5; }
+  .word { display: inline-block; opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .45s cubic-bezier(.22,1,.36,1); }
+  .go .word { opacity: 1; transform: none; transition-delay: calc(2s + var(--w) * 220ms); }
+  .go .flash { animation: flash 1.9s ease forwards; }
+  @keyframes flash { 0% { opacity: 0; transform: scale(.97) } 12% { opacity: 1; transform: none } 72% { opacity: 1 } 100% { opacity: 0; transform: scale(1.02) } }
+  @keyframes twinkle { from { opacity: 1 } to { opacity: .7 } }
+
+  /* 3 · the questions */
+  .qs { position: absolute; left: 50%; top: 340px; transform: translateX(-50%); display: flex; flex-direction: column; gap: 46px; }
+  .qs div { display: flex; align-items: center; gap: 34px; font-size: 76px; font-weight: 600; letter-spacing: -0.035em; }
+  .qs .lu { color: var(--gold); }
+
+  /* 4 · brand */
+  .brand { position: absolute; left: 120px; top: 120px; display: flex; align-items: center; gap: 28px; }
+  .brand img { width: 96px; height: 96px; }
+  .brand span { font-size: 96px; font-weight: 600; letter-spacing: -0.045em; }
+
+  /* 5 · map versions */
+  .versions { position: absolute; left: 120px; right: 120px; top: 360px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
+  .versions figure { margin: 0; }
+  .versions img { width: 100%; aspect-ratio: 1; display: block; border-radius: 12px; border: 1px solid var(--line); }
+  .versions figcaption { font-size: 22px; color: var(--fg3); margin-top: 14px; text-align: center; }
+  .versions figure:last-child figcaption { color: var(--gold); font-weight: 500; }
+
+
+  /* 8 · agenda */
+  .agenda { position: absolute; left: 820px; top: 110px; width: 980px; background: var(--surface); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .ag-head { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 600; padding: 14px 16px 18px; }
+  .ag-head .lu { color: var(--gold); }
+  .ag-row { display: grid; grid-template-columns: 96px 150px 1fr auto; align-items: center; gap: 24px; padding: 14px 16px; border-radius: 10px; }
+  .ag-row.now { background: var(--raised); }
+  .ag-t { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  .ag-row.now .ag-t { color: var(--gold); }
+  .ag-row img, .ag-ph { width: 150px; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--sunk); color: var(--fg3); }
+  .ag-tx strong { display: block; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  .ag-tx span { display: block; font-size: 22px; color: var(--fg3); margin-top: 6px; }
+  .ag-st { display: inline-flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 500; color: var(--fg2); background: var(--chip); padding: 8px 12px; border-radius: 8px; }
+  .ag-st.gold .lu { color: var(--gold); } .ag-st.ok { color: var(--ok); } .ag-st.warn { color: #e0b06a; }
+
+  /* 10 · pipeline */
+  .pipe { position: absolute; left: 120px; right: 120px; top: 400px; display: grid; grid-template-columns: 1fr 60px 1fr 60px 1fr 60px 1fr; align-items: stretch; }
+  .pipe .box { background: var(--surface); border-radius: 12px; padding: 34px 30px; text-align: center; }
+  .pipe .box .lu { color: var(--gold); }
+  .pipe .box h3 { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; margin: 22px 0 14px; }
+  .pipe .box p { font-size: 22px; color: var(--fg2); line-height: 1.4; }
+  .pipe .arr { display: flex; align-items: center; justify-content: center; color: var(--fg3); }
+  .rule { position: absolute; left: 0; right: 0; justify-content: center; bottom: 120px; font-size: 30px; color: var(--fg2); display: flex; gap: 18px; align-items: center; }
+  .rule .lu { color: var(--gold); }
+
+  /* 11 · closing */
+  .qr { width: 460px; height: 460px; background: var(--fg); border-radius: 16px; padding: 30px; }
+  .qr svg { width: 100%; height: 100%; display: block; }
+
+  .shh { position: absolute; left: 120px; bottom: 40px; font-size: 14px; color: rgba(244,236,217,.22); opacity: 0; transition: opacity 1s ease 4s; }
+  .go .shh { opacity: 1; }
+  #dots { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 60; }
+  #dots i { width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.18); transition: width .3s, background .3s; }
+  #dots i.on { width: 22px; background: var(--gold); }
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+  <!-- 1 · cold open -->
+  <section class="slide">
+    <div class="cold">
+      <h1 class="in">Hoy es un día muy, muy especial.</h1>
+    </div>
+  </section>
+
+  <!-- 2 · the date -->
+  <section class="slide">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px">
+      <p class="kicker in" style="--i:0;font-size:40px">Hoy</p>
+      <h1 class="in" style="--i:1;font-size:220px;letter-spacing:-0.05em">14 de noviembre</h1>
+    </div>
+  </section>
+
+  <!-- 3 · the lights come on: garlands whose bulbs light up left to right -->
+  <section class="slide" data-wipe style="--g:1.9s">
+    <svg class="garland" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+    <img class="flash" src="img/abel-encendido.webp" alt="Abel Caballero bajo el Árbol de Porta do Sol en un encendido">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center">
+      <h1 class="words" style="font-size:120px;max-width:1500px"><span class="word" style="--w:0">Se</span> <span class="word" style="--w:1">encienden</span> <span class="word" style="--w:2">las</span> <span class="word" style="--w:3">luces</span> <span class="word" style="--w:4">de</span> <span class="word" style="--w:5">Navidad</span> <span class="word" style="--w:6">en</span> <span class="word" style="--w:7">Vigo.</span></h1>
+    </div>
+  </section>
+
+  <!-- 3 · the problem, in the street's words -->
+  <section class="slide">
+    <p class="kicker in" style="position:absolute;left:0;right:0;top:200px;text-align:center;--i:0">Y esta noche, media ciudad se pregunta lo mismo</p>
+    <div class="qs">
+      <div class="in" style="--i:1"><span data-lu="map-pin" data-size="72"></span>¿Qué hay y dónde?</div>
+      <div class="in" style="--i:3"><span data-lu="clock" data-size="72"></span>¿Está encendido ya?</div>
+      <div class="in" style="--i:5"><span data-lu="footprints" data-size="72"></span>¿Qué me da tiempo a ver?</div>
+    </div>
+  </section>
+
+  <!-- 4 · the product -->
+  <section class="slide" data-wipe>
+    <div class="brand in" style="--i:0;left:0;right:0;top:90px;justify-content:center"><img src="img/logo-dark.svg" alt=""><span>TinyVigo</span></div>
+    <div class="screen in" style="--i:1;left:50%;margin-left:-640px;top:270px;width:1280px;height:720px"><img src="img/app-home.webp" alt="TinyVigo en escritorio: el mapa con los 35 puntos y la lista"></div>
+  </section>
+
+  <!-- 5 · the map, drawn once -->
+  <section class="slide">
+    <h2 class="title in" style="--i:0;left:0;right:0;max-width:none;text-align:center">Un mapa dibujado una vez.</h2>
+    <p class="sub in" style="--i:1;position:absolute;left:0;right:0;top:220px;text-align:center">Una imagen de 4096 × 3072 px, cortada en teselas de 512 que se cargan al hacer zoom.</p>
+    <div class="versions">
+      <figure class="in" style="--i:2"><img src="img/v1.webp" alt="Versión 1"><figcaption>v1 · píxel por código</figcaption></figure>
+      <figure class="in" style="--i:3"><img src="img/v2.webp" alt="Versión 2"><figcaption>v2 · más luz</figcaption></figure>
+      <figure class="in" style="--i:4"><img src="img/v3.webp" alt="Versión 3"><figcaption>v3 · más detalle</figcaption></figure>
+      <figure class="in" style="--i:5"><img src="img/v4.webp" alt="Versión 4"><figcaption>v4 · por bloques</figcaption></figure>
+      <figure class="in" style="--i:6"><img src="img/v5.webp" alt="Versión 5"><figcaption>v5 · el mar</figcaption></figure>
+      <figure class="in" style="--i:7"><img src="img/v7.webp" alt="Versión 7, la publicada"><figcaption>v7 · puerto y Vialia</figcaption></figure>
+    </div>
+    <div class="stats" style="left:0;right:0;justify-content:center;text-align:center;gap:140px">
+      <div class="stat in" style="--i:8"><b>35</b><span>puntos del Concello</span></div>
+      <div class="stat in" style="--i:9"><b>16</b><span>de luces</span></div>
+      <div class="stat in" style="--i:10"><b>12</b><span>parkings en vivo</span></div>
+    </div>
+  </section>
+
+  <!-- 6 · a spot -->
+  <section class="slide">
+    <h2 class="title in" style="--i:0">Cada punto, con su hora real.</h2>
+    <div class="list" style="top:400px">
+      <div class="row in" style="--i:1"><span data-lu="circle-check" data-size="36"></span><div>«Abierto · Cierra 00:30»<small>Calculado con el programa oficial 2026-27</small></div></div>
+      <div class="row in" style="--i:2"><span data-lu="square-parking" data-size="36"></span><div>El parking más cercano<small>Con sus plazas libres ahora</small></div></div>
+      <div class="row in" style="--i:3"><span data-lu="bus" data-size="36"></span><div>Los próximos buses<small>Vitrasa, según horario</small></div></div>
+    </div>
+    <div class="phone in" style="--i:1;left:1000px;top:107px"><img src="img/m-ficha.webp" alt="Ficha de la Noria en el móvil"></div>
+    <div class="phone in" style="--i:2;left:1440px;top:107px;"><img src="img/m-home.webp" alt="El mapa en el móvil"></div>
+  </section>
+
+  <!-- 7 · the walk -->
+  <section class="slide">
+    <h2 class="title in" style="--i:0;max-width:560px">¿Cuánto tiempo tienes?</h2>
+    <div class="list" style="top:420px;gap:30px">
+      <div class="row in" style="--i:2;max-width:520px"><span data-lu="clock" data-size="36"></span><div>De 30 a 120 minutos, ahora o a las 20:00</div></div>
+      <div class="row in" style="--i:3;max-width:520px"><span data-lu="route" data-size="36"></span><div>Lo que cabe y está abierto, por calles reales</div></div>
+      <div class="row in" style="--i:4;max-width:520px"><span data-lu="footprints" data-size="36"></span><div>«Empezar el paseo», parada a parada</div></div>
+    </div>
+    <div class="screen in" style="--i:1;left:720px;top:150px;width:1110px;height:710px"><img src="img/app-tour.webp" alt="Un tour de 60 minutos a las 20:00 dibujado sobre el mapa"></div>
+    <p class="in" style="--i:5;position:absolute;left:720px;top:900px;font-size:30px;font-weight:500"><span class="gold">60 min a las 20:00</span> → 10 cosas, 0,6 km a pie</p>
+  </section>
+
+  <!-- 8 · today: a simulated agenda for the lights-on day, drawn from parts -->
+  <section class="slide">
+    <h2 class="title in" style="--i:0;max-width:640px">Qué pasa hoy, hora a hora.</h2>
+    <p class="sub in" style="--i:1;position:absolute;left:120px;top:300px;max-width:560px">El encendido, la agenda del Concello y el tiempo, en una línea. Cada cosa, situada en el mapa.</p>
+    <p class="in muted" style="--i:2;position:absolute;left:120px;bottom:120px;font-size:22px">Agenda de ejemplo para hoy.</p>
+    <div class="agenda">
+      <div class="ag-head in" style="--i:1"><span data-lu="calendar-days" data-size="28"></span>Navidad hoy<span class="muted" style="margin-left:auto;font-weight:400">sábado 14 nov</span></div>
+      <div class="ag-row in now" style="--i:2"><b class="ag-t">18:00</b><img src="img/p-2552.webp" alt=""><div class="ag-tx"><strong>Se encienden las luces</strong><span>Árbol gigante de Nadal · Porta do Sol</span></div><span class="ag-st gold"><span data-lu="lightbulb" data-size="20"></span>Encendido</span></div>
+      <div class="ag-row in" style="--i:3"><b class="ag-t">18:30</b><img src="img/p-3496.webp" alt=""><div class="ag-tx"><strong>Abre el mercado</strong><span>Cíes Market · Plaza de Vialia</span></div><span class="ag-st ok"><span data-lu="store" data-size="20"></span>Abierto</span></div>
+      <div class="ag-row in" style="--i:4"><b class="ag-t">19:00</b><span class="ag-ph"><span data-lu="cloud-rain" data-size="40"></span></span><div class="ag-tx"><strong>Lluvia probable, 80 %</strong><span>Lleva paraguas · Open-Meteo</span></div><span class="ag-st warn"><span data-lu="cloud-rain" data-size="20"></span>Aviso</span></div>
+      <div class="ag-row in" style="--i:5"><b class="ag-t">19:30</b><img src="img/p-3494.webp" alt=""><div class="ag-tx"><strong>Noria Gigante</strong><span>Vialia · abierta hasta las 00:30</span></div><span class="ag-st ok"><span data-lu="ferris-wheel" data-size="20"></span>Abierto</span></div>
+      <div class="ag-row in" style="--i:6"><b class="ag-t">20:00</b><img src="img/p-2567.webp" alt=""><div class="ag-tx"><strong>Pase musical, 10 min</strong><span>Bola Gigante · Plaza de Urzaiz</span></div><span class="ag-st "><span data-lu="star" data-size="20"></span>En 1 h</span></div>
+      <div class="ag-row in" style="--i:7"><b class="ag-t">21:00</b><img src="img/p-3512.webp" alt=""><div class="ag-tx"><strong>Pista de hielo</strong><span>Avenida de Samil</span></div><span class="ag-st ok"><span data-lu="ticket" data-size="20"></span>Abierto</span></div>
+    </div>
+  </section>
+
+  <!-- 9 · getting there -->
+  <section class="slide">
+    <h2 class="title in" style="--i:0;max-width:600px">Y para llegar, todo Vigo.</h2>
+    <div class="list" style="top:420px;gap:30px">
+      <div class="row in" style="--i:2;max-width:540px"><span data-lu="square-parking" data-size="36"></span><div>12 parkings con plazas en vivo</div></div>
+      <div class="row in" style="--i:3;max-width:540px"><span data-lu="train-front" data-size="36"></span><div>Paradas de Vitrasa y estaciones de Renfe</div></div>
+      <div class="row in" style="--i:4;max-width:540px"><span data-lu="search" data-size="36"></span><div>1.921 calles en la búsqueda, sin tildes y con erratas</div></div>
+      <div class="row in" style="--i:5;max-width:540px"><span data-lu="type" data-size="36"></span><div>En galego, castellano e inglés</div></div>
+    </div>
+    <div class="screen in" style="--i:1;left:740px;top:150px;width:1060px;height:780px"><img src="img/app-ciudad.webp" alt="Vista ciudad con parkings y puntos" style="object-position:30% 30%"></div>
+    <div class="screen in" style="--i:4;left:1460px;top:190px;width:315px;height:420px"><img src="img/app-buscar.webp" alt="Búsqueda de «noria»"></div>
+  </section>
+
+  <!-- 10 · how it is made -->
+  <section class="slide">
+    <h2 class="title in" style="--i:0;left:0;right:0;max-width:none;text-align:center">Cómo está hecho.</h2>
+    <p class="sub in" style="--i:1;position:absolute;left:0;right:0;top:220px;text-align:center">Datos abiertos, un mapa pintado una vez y una web estática.</p>
+    <div class="pipe">
+      <div class="box in" style="--i:2"><span data-lu="layers" data-size="40"></span><h3>Fuentes abiertas</h3><p>Concello de Vigo, IGN, OpenStreetMap, GTFS de Vitrasa y Renfe, Open-Meteo</p></div>
+      <div class="arr in" style="--i:3"><span data-lu="arrow-right" data-size="36"></span></div>
+      <div class="box in" style="--i:3"><span data-lu="download" data-size="40"></span><h3>Snapshots</h3><p>Cada fuente, descargada con su fecha y normalizada a JSON</p></div>
+      <div class="arr in" style="--i:4"><span data-lu="arrow-right" data-size="36"></span></div>
+      <div class="box in" style="--i:4"><span data-lu="image" data-size="40"></span><h3>Mapa en teselas</h3><p>Isométrico, dibujado una vez a partir de la ortofoto y los edificios 3D</p></div>
+      <div class="arr in" style="--i:5"><span data-lu="arrow-right" data-size="36"></span></div>
+      <div class="box in" style="--i:5"><span data-lu="map-pin" data-size="40"></span><h3>Web estática</h3><p>Móvil primero, una mano, de noche y a la intemperie</p></div>
+    </div>
+    <p class="rule in" style="--i:6"><span data-lu="bus" data-size="32"></span>Lo que se mueve va «según horario», nunca «en directo».</p>
+  </section>
+
+  <!-- 11 · closing -->
+  <section class="slide" data-wipe>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px">
+      <div class="brand in" style="--i:0;position:static"><img src="img/logo-dark.svg" alt=""><span>TinyVigo</span></div>
+      <div class="qr in" style="--i:1"><svg id="qr" aria-label="QR a navihack.vercel.app/demo"></svg></div>
+      <p class="in gold" style="--i:2;font-size:40px;font-weight:500">navihack.vercel.app</p>
+    </div>
+  </section>
+
+  <!-- 12 · Merry Christmas, the way the mayor says it -->
+  <section class="slide" data-wipe>
+    <svg class="garland" data-wires="top" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+    <div style="position:absolute;left:0;right:0;top:200px;text-align:center">
+      <h1 class="in" style="--i:1;font-size:88px">¡Feliz Navidad!</h1>
+      <h1 class="in" style="--i:2;font-size:88px;margin-top:6px">Merry Christmas!</h1>
+    </div>
+    <div class="in" style="--i:3;position:absolute;left:50%;margin-left:-560px;top:440px;width:1120px;height:560px;border-radius:24px;overflow:hidden">
+      <img src="img/abel-caballero.webp" alt="Abel Caballero saludando bajo el Árbol de Porta do Sol en el encendido de 2022" style="width:100%;height:100%;display:block;object-fit:cover">
+    </div>
+    <p class="shh">*sí, a 14 de noviembre</p>
+  </section>
+
+  <canvas id="wipe" width="1920" height="1080"></canvas>
+</div></div>
+<div id="dots"></div>
+
+<script src="lucide.js"></script>
+<script>
+const stage = document.getElementById('stage'), cv = document.getElementById('wipe'), ctx = cv.getContext('2d')
+const slides = [...document.querySelectorAll('.slide')]
+const dots = document.getElementById('dots')
+slides.forEach(() => dots.appendChild(document.createElement('i')))
+let cur = -1, step = 0, busy = false
+
+function fit() { const k = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transform = `translate(-50%,-50%) scale(${k})` }
+addEventListener('resize', fit); fit()
+
+// QR to the demo, drawn as SVG: dark modules in the page colour, finder squares in gold
+;(function qr() {
+  const M = ["11111110100100011010001111111","10000010001111101010101000001","10111010110110111111001011101","10111010010100100100001011101","10111010010111110010001011101","10000010100010010110101000001","11111110101010101010101111111","00000000010100111001000000000","10100011000111101001100100101","01000101111001100001101100011","01010110111100011111110011101","10101101010001000011000011000","11101010001001011001001100001","01110101110010000011101100011","11011011011111110111011100001","11110101101010111000110100000","11000111001011101001101000001","01011000100101110011101100111","11110010011110010111111011001","00010001101101011001111000000","11011011000111001011111111010","00000000101010011101100011101","11111110101011110000101010001","10000010001010101011100010010","10111010011101101001111111011","10111010010010111000110011101","10111010100000010100010010011","10000010011101001000101011000","11111110100110111001100001001"]
+  const n = M.length, finder = (r, c) => (r < 7 && c < 7) || (r < 7 && c >= n - 7) || (r >= n - 7 && c < 7)
+  let s = ''
+  M.forEach((row, r) => [...row].forEach((v, c) => { if (v === '1' && !finder(r, c)) s += `<rect x="${c + .08}" y="${r + .08}" width=".84" height=".84" rx=".2"/>` }))
+  for (const [r, c] of [[0, 0], [0, n - 7], [n - 7, 0]]) s += `<rect x="${c + .5}" y="${r + .5}" width="6" height="6" rx="1.2" fill="none" stroke="#a9802e" stroke-width="1"/><rect x="${c + 2}" y="${r + 2}" width="3" height="3" rx=".6" fill="#a9802e"/>`
+  const svg = document.getElementById('qr'); svg.setAttribute('viewBox', `0 0 ${n} ${n}`); svg.innerHTML = `<g fill="#10121a">${s}</g>`
+})()
+
+
+// garlands for the lights slide: three swags at the top and two at the bottom, bulbs hang from the wire
+;(function garland() {
+  const NS = 'http://www.w3.org/2000/svg', golds = ['#f4cd80', '#ffe2a0', '#e0b06a', '#fff1c9']
+  const all = [[-40, 60, 210, 6], [-40, 20, 120, 9], [-40, 870, 1000, 6]] // y of the hooks, y of the sag, swags
+  document.querySelectorAll('.garland').forEach(svg => {
+  const wires = svg.dataset.wires === 'top' ? all.slice(1, 2) : all
+  let k = 0
+  for (const [x0, yHook, ySag, n] of wires) {
+    const w = (1920 + 80) / n
+    let d = `M${x0} ${yHook}`
+    for (let i = 0; i < n; i++) d += ` Q${x0 + w * i + w / 2} ${ySag * 2 - yHook} ${x0 + w * (i + 1)} ${yHook}`
+    const path = document.createElementNS(NS, 'path'); path.setAttribute('d', d); svg.appendChild(path)
+    const len = path.getTotalLength(), count = Math.round(len / 78)
+    for (let j = 1; j < count; j++) {
+      const pt = path.getPointAtLength(len * j / count), down = 1
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('transform', `translate(${pt.x} ${pt.y})`)
+      const delay = (pt.x / 1920) * 1.6 + 0.2 + ((j * 37) % 10) / 40
+      g.innerHTML = `<rect class="cap" x="-6" y="${down > 0 ? 0 : -10}" width="12" height="10" rx="2"/><ellipse class="bulb" cx="0" cy="${down * 24}" rx="11" ry="15" style="--c:${golds[(j + k) % 4]};--d:${delay.toFixed(2)}s;--t:${(1.4 + ((j * 53) % 9) / 6).toFixed(2)}s"/>`
+      svg.appendChild(g)
+    }
+    k++
+  }
+  })
+})()
+
+// the string of lights: bulbs come on left to right, swell into dark cells and cover the slide;
+// the slide changes underneath, then the cells shrink back to bulbs and go out in the same direction
+const SIZE = 60, GAP = 30, STEP = SIZE + GAP
+const COLS = Math.ceil(1920 / STEP) + 1, ROWS = Math.ceil(1080 / STEP) + 1
+const OX = (1920 - COLS * STEP + GAP) / 2, OY = (1080 - ROWS * STEP + GAP) / 2
+const hash = (a, b, c = 0) => { const s = Math.sin(a * 127.1 + b * 311.7 + c * 74.7) * 43758.5453; return s - Math.floor(s) }
+const GOLDS = ['#f4cd80', '#ffe2a0', '#e0b06a'], DARK = '#10121a'
+const ease = t => t * t * (3 - 2 * t)
+function cell(x, y, sz, r) { ctx.beginPath(); ctx.roundRect(x + (SIZE - sz) / 2, y + (SIZE - sz) / 2, sz, sz, Math.max(0, r)); ctx.fill() }
+
+function draw(phase, t) {
+  ctx.clearRect(0, 0, 1920, 1080)
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const start = (c / COLS) * 0.55 + hash(c, r) * 0.2
+    const p = Math.min(1, Math.max(0, (t - start) / 0.25))
+    const x = OX + c * STEP, y = OY + r * STEP, gold = GOLDS[Math.floor(hash(c, r, 3) * 3)]
+    if (phase === 'cover') {
+      if (p <= 0) continue
+      const lit = Math.min(1, p / 0.4), swell = ease(Math.max(0, (p - 0.4) / 0.6))
+      ctx.fillStyle = gold; ctx.globalAlpha = lit
+      cell(x, y, 22 * lit, 11) // the bulb
+      if (swell > 0) { ctx.globalAlpha = 1; ctx.fillStyle = DARK; cell(x, y, 22 + (STEP + 2 - 22) * swell, 11 * (1 - swell)) } // the dark cell that covers it
+    } else {
+      const s = ease(p)
+      if (s >= 1) continue
+      if (s < 0.6) { ctx.globalAlpha = 1; ctx.fillStyle = DARK; cell(x, y, (STEP + 2) * (1 - s / 0.6) + 22 * (s / 0.6), 11 * (s / 0.6)) }
+      ctx.globalAlpha = s < 0.6 ? s / 0.6 : 1 - (s - 0.6) / 0.4; ctx.fillStyle = gold
+      cell(x, y, 22, 11)
+    }
+  }
+  ctx.globalAlpha = 1
+}
+const run = (phase, ms) => new Promise(done => { const t0 = performance.now(); (function f(now) { const t = Math.min(1, (now - t0) / ms); draw(phase, t); t < 1 ? requestAnimationFrame(f) : done() })(t0) })
+
+function show(i) {
+  slides.forEach((s, k) => { s.classList.toggle('active', k === i); s.classList.remove('go', 's1') })
+  ;[...dots.children].forEach((d, k) => d.classList.toggle('on', k === i))
+  cur = i; step = 0; history.replaceState(null, '', '#' + (i + 1))
+  requestAnimationFrame(() => requestAnimationFrame(() => slides[i].classList.add('go')))
+}
+
+async function go(i) {
+  if (busy || i === cur) return
+  if (i === cur + 1 && step + 1 < (+slides[cur].dataset.steps || 1)) { step++; slides[cur].classList.add('s' + step); return } // a beat inside the slide first
+  if (i < 0 || i >= slides.length) return
+  if (cur < 0 || matchMedia('(prefers-reduced-motion: reduce)').matches) return show(i)
+  busy = true
+  if (slides[i].hasAttribute('data-wipe')) { // the lights are for a few turning points only
+    await run('cover', 750); show(i); await run('reveal', 750)
+    ctx.clearRect(0, 0, 1920, 1080)
+  } else {
+    slides[cur].style.transition = 'opacity .22s'; slides[cur].style.opacity = 0
+    await new Promise(r => setTimeout(r, 230))
+    slides[cur].style.opacity = ''; slides[cur].style.transition = ''
+    show(i)
+  }
+  busy = false
+}
+
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); go(cur + 1) }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(cur - 1) }
+  else if (e.key === 'Home') go(0)
+  else if (e.key === 'End') go(slides.length - 1)
+  else if (e.key.toLowerCase() === 'f') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()
+})
+addEventListener('click', e => go(e.clientX < innerWidth * 0.25 ? cur - 1 : cur + 1))
+let sx = null
+addEventListener('touchstart', e => sx = e.touches[0].clientX)
+addEventListener('touchend', e => { if (sx == null) return; const d = e.changedTouches[0].clientX - sx; if (Math.abs(d) > 50) go(cur + (d < 0 ? 1 : -1)); sx = null })
+
+show(Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1)) || 1) - 1)))
+</script>
+</body>
+</html>
