@@ -1,0 +1,13 @@
+{
+  "name": "navivigo-e2e",
+  "private": true,
+  "description": "Pruebas de la demo en el navegador (playwright-core): lo que un vecino hace con la app.",
+  "type": "module",
+  "scripts": {
+    "test": "node run.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.10.2",
+    "playwright-core": "1.49.1"
+  }
+}

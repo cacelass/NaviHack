@@ -77,3 +77,24 @@ jobs:
         with:
           file: ./coverage.xml
           fail_ci_if_error: false
+
+  # La demo en un navegador de verdad (web/e2e/run.mjs): carga, búsqueda, Ajustes, paseo, capas,
+  # cámaras, luces de noche, móvil y axe. Aparte del job de Python para que un fallo se lea solo.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install
+        working-directory: web/e2e
+        run: |
+          npm ci
+          npx playwright-core install --with-deps chromium
+
+      - name: Browser tests
+        working-directory: web/e2e
+        run: npm test
