@@ -23,7 +23,9 @@
     for (const p of P.points) if (p.photo) urls.add(p.photo);
     ["data/transit.json", "data/streets.json", "data/street-lamps.json", "data/venues.json", "data/layers/cameras.geojson",
      "data/live/parkings.json", "data/live/weather.json", "data/live/agenda.json", "data/live/centros.json"].forEach((u) => urls.add(u));
-    const local = (u) => { try { const a = new URL(u, location.href); return a.origin === location.origin ? a.pathname.slice(new URL(".", location.href).pathname.length) : null; } catch (e) { return null; } };
+    // only the app's own files (under its folder): not Vercel's analytics or anything else on the host
+    const root = new URL(".", location.href).pathname;
+    const local = (u) => { try { const a = new URL(u, location.href); return a.origin === location.origin && a.pathname.startsWith(root) ? a.pathname.slice(root.length) : null; } catch (e) { return null; } };
     document.querySelectorAll("script[src], link[rel=stylesheet]").forEach((n) => { const u = local(n.src || n.href); if (u) urls.add(u); });
     return { urls: [...urls], version: m.version };
   }
