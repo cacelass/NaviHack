@@ -19,31 +19,46 @@
     if (n.classList.contains("is-open")) n.classList.remove("is-open"); // por si su × no lo hace
   }
 
-  // HUD controls hide only where an open surface actually covers them (HUD v5): on a wide
-  // screen a centred sheet takes the dock and nothing else; on a phone, whatever it reaches.
+  // HUD controls hide only where an open surface will cover them (HUD v5): on a wide screen a
+  // centred sheet takes the dock and nothing else; on a phone, whatever it reaches. The check
+  // uses where the surface ENDS UP, not where its slide-in is now, so the covered controls go
+  // away at the same moment the surface starts to appear, with no timers.
   const HUD = ".tv-dock, .tv-event-chip, .tv-corner, .tv-topsearch, .tv-topbar-actions > *";
-  const CENTRED = ".tv-tour, .tv-step, .tv-settings, .tv-layers-pop";
-  const phone = matchMedia("(max-width: 700px)");
   const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
-  function setCovered(n, on) {
-    n.classList.toggle("tv-covered", on);
-    n.inert = on;
-    if (on) n.setAttribute("aria-hidden", "true"); else n.removeAttribute("aria-hidden");
+  // translate of a transform string; transition keyframes can keep percentages (translate(-50%, 0)),
+  // which DOMMatrix cannot parse, so those resolve against the surface's own size
+  function shift(str, n) {
+    if (!str || str === "none") return [0, 0];
+    try { const m = new DOMMatrixReadOnly(str); return [m.m41, m.m42]; } catch (e) { /* has % */ }
+    const len = (v, size) => (v.trim().endsWith("%") ? (parseFloat(v) / 100) * size : parseFloat(v) || 0);
+    let m, x = 0, y = 0;
+    if ((m = str.match(/translate\(\s*([^,)]+)(?:,\s*([^)]+))?\)/))) { x = len(m[1], n.offsetWidth); y = m[2] ? len(m[2], n.offsetHeight) : 0; }
+    if ((m = str.match(/translateX\(([^)]+)\)/))) x = len(m[1], n.offsetWidth);
+    if ((m = str.match(/translateY\(([^)]+)\)/))) y = len(m[1], n.offsetHeight);
+    return [x, y];
   }
-  let settleTimer = 0;
+  function finalRect(n) {
+    // layout box (transforms excluded; fixed elements measure from the viewport) moved by the
+    // transform it is heading to: the end of a running transition, or the current one when still.
+    // Keyframe slide-ins (tv-in-left / tv-in-up) end at none.
+    const anims = n.getAnimations();
+    let x = 0, y = 0;
+    if (!anims.some((a) => a.animationName)) {
+      const run = anims.find((a) => a.transitionProperty === "transform");
+      [x, y] = shift(run ? run.effect.getKeyframes().at(-1).transform : getComputedStyle(n).transform, n);
+    }
+    const left = n.offsetLeft + x, top = n.offsetTop + y;
+    return { left, top, right: left + n.offsetWidth, bottom: top + n.offsetHeight };
+  }
   function cover(open) {
-    clearTimeout(settleTimer);
-    const huds = [...document.querySelectorAll(HUD)];
-    if (!open.length) { huds.forEach((n) => setCovered(n, false)); return; }
-    // Straight away, hide what is sure to end up covered (sheets slide in for ~0.4 s) ...
-    const bottom = [".tv-dock", ".tv-event-chip", ".tv-corner"];
-    const sure = phone.matches ? bottom : open.some((n) => n.matches(CENTRED)) ? [".tv-dock"] : [];
-    huds.forEach((n) => { if (sure.some((s) => n.matches(s))) setCovered(n, true); });
-    // ... then measure the surfaces where they settled and hide exactly what they cover.
-    settleTimer = setTimeout(() => {
-      const rects = open.filter((n) => n.isConnected).map((n) => n.getBoundingClientRect()).filter((r) => r.width && r.height);
-      huds.forEach((n) => setCovered(n, rects.some((r) => hit(n.getBoundingClientRect(), r))));
-    }, 600);
+    let rects = [];
+    try { rects = open.filter((n) => n.isConnected && n.offsetWidth).map(finalRect); } catch (e) { /* never leave a stale cover */ }
+    document.querySelectorAll(HUD).forEach((n) => {
+      const on = rects.some((r) => hit(n.getBoundingClientRect(), r));
+      n.classList.toggle("tv-covered", on);
+      n.inert = on;
+      if (on) n.setAttribute("aria-hidden", "true"); else n.removeAttribute("aria-hidden");
+    });
   }
 
   let closing = false;

@@ -1,0 +1,770 @@
+{
+  "concello-2552": {
+    "story": {
+      "es": "El maestro de ceremonias de la Navidad: un árbol de 46 metros de luz en la Puerta del Sol. Entra en su interior, escucha la música y contempla el juego de luces desde fuera.",
+      "gl": "O mestre de cerimonias do Nadal: unha árbore de 46 metros de luz na Porta do Sol. Entra no seu interior, escoita a música e contempla o xogo de luces desde fóra.",
+      "en": "The master of ceremonies of the season: a 46-metre tree of light in Puerta del Sol. Step inside, hear the music and watch the lights play from outside."
+    },
+    "fact": {
+      "es": "Mide 46,40 metros de altura.",
+      "gl": "Mide 46,40 metros de altura.",
+      "en": "It stands 46.40 metres tall."
+    },
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "schedule",
+        "es": "Animación musical cada hora, de 18:00 a 22:00.",
+        "gl": "Animación musical cada hora, de 18:00 a 22:00.",
+        "en": "Musical show every hour, 18:00–22:00."
+      }
+    ]
+  },
+  "concello-2553": {
+    "story": {
+      "es": "Un muñeco de nieve de 12 metros de luz y color en García Barbón. Entra en su barriga durante el paseo.",
+      "gl": "Un boneco de neve de 12 metros de luz e cor en García Barbón. Entra no seu bandullo durante o paseo.",
+      "en": "A 12-metre snowman of light and colour on García Barbón. Step right into its belly as you pass."
+    },
+    "fact": {
+      "es": "Mide 12 metros de altura.",
+      "gl": "Mide 12 metros de altura.",
+      "en": "It stands 12 metres tall."
+    },
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Frente a la Casa das Artes.",
+        "gl": "Fronte á Casa das Artes.",
+        "en": "Opposite the Casa das Artes."
+      }
+    ]
+  },
+  "concello-2566": {
+    "story": {
+      "es": "Una caja de regalo gigante y transitable en el cruce de Gran Vía con Urzáiz. Un regalo de luz en el corazón de la ciudad.",
+      "gl": "Unha caixa de agasallo xigante e transitable no cruce de Gran Vía con Urzáiz. Un agasallo de luz no corazón da cidade.",
+      "en": "A giant walk-through gift box at the Gran Vía–Urzáiz junction. A present of light in the heart of the city."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Cruce de Gran Vía con Urzáiz.",
+        "gl": "Cruce de Gran Vía con Urzáiz.",
+        "en": "Gran Vía–Urzáiz junction."
+      }
+    ]
+  },
+  "concello-2567": {
+    "story": {
+      "es": "Una bola de 12 metros que rodó desde Laponia y se plantó entre Príncipe y Urzáiz. Atraviésala por dentro.",
+      "gl": "Unha bóla de 12 metros que rodou desde Laponia e plantouse entre Príncipe e Urzáiz. Atravésaa por dentro.",
+      "en": "A 12-metre ball that rolled in from Lapland between Príncipe and Urzáiz. Walk right through it."
+    },
+    "fact": {
+      "es": "Mide 12 metros.",
+      "gl": "Mide 12 metros.",
+      "en": "It spans 12 metres."
+    },
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Plaza de Urzáiz (La Farola).",
+        "gl": "Praza de Urzáiz (A Farola).",
+        "en": "Plaza de Urzáiz (La Farola)."
+      }
+    ]
+  },
+  "concello-3494": {
+    "story": {
+      "es": "Noria gigante en el aparcamiento exterior de Vialia.",
+      "gl": "Nora xigante no aparcadoiro exterior de Vialia.",
+      "en": "A giant Ferris wheel at the Vialia car park."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "price",
+        "es": "6 € · menores de 6 y +65: 4,20 € · PassVigo −1 €.",
+        "gl": "6 € · menores de 6 e +65: 4,20 € · PassVigo −1 €.",
+        "en": "€6 · under 6 & 65+: €4.20 · PassVigo −€1."
+      },
+      {
+        "kind": "schedule",
+        "es": "Laborables 17:00 · viernes–domingo 11:00.",
+        "gl": "Laborables 17:00 · venres–domingo 11:00.",
+        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+      },
+      {
+        "kind": "payment",
+        "es": "Pago con tarjeta PassVigo (−1 €).",
+        "gl": "Pagamento coa tarxeta PassVigo (−1 €).",
+        "en": "PassVigo card accepted (−€1)."
+      }
+    ]
+  },
+  "concello-3496": {
+    "story": {
+      "es": "Casetas de madera con artesanía, decoración navideña y gastronomía de temporada en la plaza de Vialia.",
+      "gl": "Casetas de madeira con artesanía, decoración de Nadal e gastronomía de tempada na praza de Vialia.",
+      "en": "Wooden stalls with crafts, Christmas décor and seasonal food in Plaza de Vialia."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Laborables 17:00 · viernes–domingo 11:00.",
+        "gl": "Laborables 17:00 · venres–domingo 11:00.",
+        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+      },
+      {
+        "kind": "where",
+        "es": "Plaza de Vialia.",
+        "gl": "Praza de Vialia.",
+        "en": "Plaza de Vialia."
+      }
+    ]
+  },
+  "concello-3499": {
+    "story": {
+      "es": "Las letras gigantes y de colores de VIGO para tu foto navideña, en la zona de Urzáiz–Colón.",
+      "gl": "As letras xigantes e de cores de VIGO para a túa foto de Nadal, na zona de Urzáiz–Colón.",
+      "en": "The giant, colourful VIGO letters for your Christmas photo, in the Urzáiz–Colón area."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa de Urzáiz, junto a Colón.",
+        "gl": "Rúa de Urzáiz, xunto a Colón.",
+        "en": "Urzáiz, near Colón."
+      }
+    ]
+  },
+  "concello-3502": {
+    "story": {
+      "es": "El enviado de los Reyes Magos recoge las cartas con los deseos de las niñas y niños.",
+      "gl": "O enviado dos Reis Magos recolle as cartas cos desexos das nenas e nenos.",
+      "en": "The Three Kings' messenger collects the letters with children's wishes."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "25 dic–5 ene · 11:00–14:00 y 17:00–21:00.",
+        "gl": "25 dec–5 xan · 11:00–14:00 e 17:00–21:00.",
+        "en": "25 Dec–5 Jan · 11:00–14:00 & 17:00–21:00."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3503": {
+    "story": {
+      "es": "Acrobacias, humor y destellos de luz en un viaje al corazón de la Navidad, para todos los públicos.",
+      "gl": "Acrobacias, humor e destellos de luz nunha viaxe ao corazón do Nadal, para todos os públicos.",
+      "en": "Acrobatics, humour and flashes of light in a journey to the heart of Christmas, for all ages."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Del 4 de diciembre al 10 de enero.",
+        "gl": "Do 4 de decembro ao 10 de xaneiro.",
+        "en": "4 December to 10 January."
+      },
+      {
+        "kind": "access",
+        "es": "Horarios y precios en ticketrona.com.",
+        "gl": "Horarios e prezos en ticketrona.com.",
+        "en": "Times and prices at ticketrona.com."
+      }
+    ]
+  },
+  "concello-3508": {
+    "story": {
+      "es": "Puestos de artesanía para regalar, con animación de calle, cuentacuentos y visitas sorpresa de personajes navideños.",
+      "gl": "Postos de artesanía para agasallar, con animación de rúa, contacontos e visitas sorpresa de personaxes de Nadal.",
+      "en": "Craft stalls for gift hunting, with street shows, storytelling and surprise visits from Christmas characters."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Laborables 17:00 · viernes–domingo 11:00.",
+        "gl": "Laborables 17:00 · venres–domingo 11:00.",
+        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+      },
+      {
+        "kind": "where",
+        "es": "Zona peatonal de O Calvario.",
+        "gl": "Zona peonil de O Calvario.",
+        "en": "O Calvario pedestrian area."
+      }
+    ]
+  },
+  "concello-3512": {
+    "story": {
+      "es": "Pista de patinaje sobre hielo cubierta, en la playa de Samil.",
+      "gl": "Pista de patinaxe sobre xeo cuberta, na praia de Samil.",
+      "en": "A covered ice-skating rink on Samil beach."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "price",
+        "es": "8 € · hasta 6 años 6 € · +65 gratis.",
+        "gl": "8 € · ata 6 anos 6 € · +65 de balde.",
+        "en": "€8 · under 6 €6 · 65+ free."
+      },
+      {
+        "kind": "schedule",
+        "es": "Laborables 14:30 · sábados y domingos 11:00.",
+        "gl": "Laborables 14:30 · sábados e domingos 11:00.",
+        "en": "Weekdays 14:30 · Sat & Sun 11:00."
+      }
+    ]
+  },
+  "concello-3513": {
+    "story": {
+      "es": "Pista de karts para niños y adultos, en la playa de Samil.",
+      "gl": "Pista de karts para nenos e adultos, na praia de Samil.",
+      "en": "A go-kart track for kids and adults on Samil beach."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "price",
+        "es": "Kart 5 € (3 vueltas) · infantil 3 € · bipraza 6 €.",
+        "gl": "Kart 5 € (3 voltas) · infantil 3 € · bipraza 6 €.",
+        "en": "Kart €5 (3 laps) · kids €3 · two-seat €6."
+      },
+      {
+        "kind": "schedule",
+        "es": "Laborables 17:00 · viernes–domingo 11:00.",
+        "gl": "Laborables 17:00 · venres–domingo 11:00.",
+        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+      }
+    ]
+  },
+  "concello-3516": {
+    "story": {
+      "es": "Un castillo de luz de 6 metros y medio de altura en Policarpo Sanz, donde Papá Noel y los Reyes pueden reposar. Entra a visitarlo.",
+      "gl": "Un castelo de luz de 6 metros e medio de altura en Policarpo Sanz, onde Papá Noel e os Reis poden repousar. Entra a visitalo.",
+      "en": "A castle of light six and a half metres tall on Policarpo Sanz, where Santa and the Three Kings can rest. Step inside to visit."
+    },
+    "fact": {
+      "es": "Mide 6,5 metros de altura.",
+      "gl": "Mide 6,5 metros de altura.",
+      "en": "It stands 6.5 metres tall."
+    },
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3527": {
+    "story": {
+      "es": "Representación tradicional del nacimiento de Jesús con figuras luminosas, a las puertas de la Concatedral.",
+      "gl": "Representación tradicional do nacemento de Xesús con figuras luminosas, ás portas da Concatedral.",
+      "en": "A traditional nativity scene with glowing figures at the doors of the Concatedral."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Plaza de la Colegiata.",
+        "gl": "Praza da Colexiata.",
+        "en": "Plaza de la Colegiata."
+      }
+    ]
+  },
+  "concello-3534": {
+    "story": {
+      "es": "Autobús turístico que recorre la iluminación navideña y los principales elementos decorativos de la ciudad.",
+      "gl": "Autobús turístico que percorre a iluminación de Nadal e os principais elementos decorativos da cidade.",
+      "en": "A sightseeing bus that tours the city's Christmas lights and main decorations."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "route",
+        "es": "Salida y llegada en Urzáiz–Príncipe (A Farola).",
+        "gl": "Saída e chegada en Urzáiz–Príncipe (A Farola).",
+        "en": "Departs and returns at Urzáiz–Príncipe (A Farola)."
+      },
+      {
+        "kind": "duration",
+        "es": "Duración: 40 min aproximadamente.",
+        "gl": "Duración: 40 min aproximadamente.",
+        "en": "Duration: about 40 min."
+      },
+      {
+        "kind": "price",
+        "es": "General 9 € · PassVigo 5 € · 0–3 años gratis.",
+        "gl": "Xeral 9 € · PassVigo 5 € · 0–3 anos de balde.",
+        "en": "General €9 · PassVigo €5 · under 3 free."
+      },
+      {
+        "kind": "access",
+        "es": "48 plazas online + 1 PMR.",
+        "gl": "48 prazas online + 1 PMR.",
+        "en": "48 online seats + 1 PMR."
+      }
+    ]
+  },
+  "concello-3535": {
+    "story": {
+      "es": "Un paseo en barco por la ría para ver la ciudad iluminada desde el mar, en un barco decorado con más de 65.000 luces.",
+      "gl": "Un paseo en barco pola ría para ver a cidade iluminada desde o mar, nun barco decorado con máis de 65.000 luces.",
+      "en": "A boat trip around the ría to see the lit-up city from the sea, on a boat dressed with more than 65,000 lights."
+    },
+    "fact": {
+      "es": "Lleva más de 65.000 luces microled.",
+      "gl": "Leva máis de 65.000 luces microled.",
+      "en": "It carries more than 65,000 micro-LED lights."
+    },
+    "facts": [
+      {
+        "kind": "price",
+        "es": "+12 años 25 € · 2–12 años 12 € · menores de 2 gratis.",
+        "gl": "+12 anos 25 € · 2–12 anos 12 € · menores de 2 de balde.",
+        "en": "12+ €25 · ages 2–12 €12 · under 2 free."
+      },
+      {
+        "kind": "schedule",
+        "es": "Salida a las 20:00.",
+        "gl": "Saída ás 20:00.",
+        "en": "Departs at 20:00."
+      },
+      {
+        "kind": "duration",
+        "es": "Duración: 1,5 horas.",
+        "gl": "Duración: 1,5 horas.",
+        "en": "Duration: 1.5 hours."
+      },
+      {
+        "kind": "access",
+        "es": "Reservas en mardeons.es.",
+        "gl": "Reservas en mardeons.es.",
+        "en": "Book at mardeons.es."
+      }
+    ]
+  },
+  "concello-3554": {
+    "story": {
+      "es": "Parque con todo tipo de atracciones infantiles para disfrutar en familia: noria, carrusel, tren y más.",
+      "gl": "Parque con todo tipo de atraccións infantís para gozar en familia: nora, carrusel, tren e máis.",
+      "en": "A park full of children's rides for the whole family: Ferris wheel, carousel, train and more."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "price",
+        "es": "Atracciones 4 € · abono 6 usos 18 € · PassVigo −1 €.",
+        "gl": "Atraccións 4 € · abono 6 usos 18 € · PassVigo −1 €.",
+        "en": "Rides €4 · 6-ride pass €18 · PassVigo −€1."
+      },
+      {
+        "kind": "schedule",
+        "es": "Laborables 17:00 · viernes–domingo 11:00.",
+        "gl": "Laborables 17:00 · venres–domingo 11:00.",
+        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+      }
+    ]
+  },
+  "concello-3701": {
+    "story": {
+      "es": "Visita la casa de Papá Noel y deja tu carta de deseos en su buzón.",
+      "gl": "Visita a casa de Papá Noel e deixa a túa carta de desexos no seu buzón.",
+      "en": "Visit Santa's house and drop your wish list in his letterbox."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Diario 17:00–21:00 · findes 11:00–14:00.",
+        "gl": "Diario 17:00–21:00 · fins de semana 11:00–14:00.",
+        "en": "Daily 17:00–21:00 · weekends 11:00–14:00."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3703": {
+    "story": {
+      "es": "Unos muñecos de nieve juegan en la calle; uno saluda con su sombrero subido a una farola.",
+      "gl": "Uns bonecos de neve xogan na rúa; un saúda co seu sombreiro subido a unha farola.",
+      "en": "Snowmen at play on the street; one tips his hat from the top of a lamppost."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3709": {
+    "story": {
+      "es": "Trineos cargados de regalos y árboles decoran toda la calle del Príncipe.",
+      "gl": "Zorras cargadas de agasallos e árbores decoran toda a rúa do Príncipe.",
+      "en": "Sleighs laden with presents and trees line the whole of Calle del Príncipe."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Mediana de la calle del Príncipe.",
+        "gl": "Mediana da rúa do Príncipe.",
+        "en": "The median of Calle del Príncipe."
+      }
+    ]
+  },
+  "concello-3711": {
+    "story": {
+      "es": "Un pequeño violinista inunda las calles con sus melodías, junto a unas letras de Vigo retroiluminadas.",
+      "gl": "Un pequeno violinista inunda as rúas coas súas melodías, xunto a unhas letras de Vigo retroiluminadas.",
+      "en": "A little violinist fills the streets with his melodies, beside backlit VIGO letters."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa de Eduardo Iglesias.",
+        "gl": "Rúa de Eduardo Iglesias.",
+        "en": "Rúa de Eduardo Iglesias."
+      }
+    ]
+  },
+  "concello-3712": {
+    "story": {
+      "es": "Papá Noel tararea villancicos junto a una farola, en tu paso por Eduardo Iglesias.",
+      "gl": "Papá Noel cantaruxa panxoliñas xunto a unha farola, no teu paso por Eduardo Iglesias.",
+      "en": "Santa hums carols beside a lamppost as you pass through Eduardo Iglesias."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa de Eduardo Iglesias.",
+        "gl": "Rúa de Eduardo Iglesias.",
+        "en": "Rúa de Eduardo Iglesias."
+      }
+    ]
+  },
+  "concello-3713": {
+    "story": {
+      "es": "Un bosque luminoso de más de 6 metros de altura; atento, quizá unos elfos luminosos te observan.",
+      "gl": "Un bosque luminoso de máis de 6 metros de altura; atento, quizais uns elfos luminosos te observan.",
+      "en": "A forest of light more than six metres tall — keep an eye out for the glowing elves watching you."
+    },
+    "fact": {
+      "es": "Supera los 6 metros de altura.",
+      "gl": "Supera os 6 metros de altura.",
+      "en": "It rises more than 6 metres."
+    },
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3714": {
+    "story": {
+      "es": "Cruza bajo la Estrella Polar, que se detuvo en Vigo camino de Belén, en García Barbón.",
+      "gl": "Cruza baixo a Estrela Polar, que parou en Vigo camiño de Belén, en García Barbón.",
+      "en": "Pass under the North Star, which paused in Vigo on its way to Bethlehem, on García Barbón."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Avenida de García Barbón.",
+        "gl": "Avenida de García Barbón.",
+        "en": "Avenida de García Barbón."
+      }
+    ]
+  },
+  "concello-3715": {
+    "story": {
+      "es": "Cruza esta puerta a las estrellas de 5 metros y hazte un selfie para recordar el momento.",
+      "gl": "Cruza esta porta ás estrelas de 5 metros e faite un selfie para lembrar o momento.",
+      "en": "Step through this 5-metre gateway to the stars and grab a selfie to remember the moment."
+    },
+    "fact": {
+      "es": "Mide 5 metros de altura.",
+      "gl": "Mide 5 metros de altura.",
+      "en": "It stands 5 metres tall."
+    },
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3720": {
+    "story": {
+      "es": "Una carroza luminosa en la que fotografiar a los pequeños reyes de tu casa.",
+      "gl": "Unha carruaxe luminosa na que fotografar os pequenos reis da túa casa.",
+      "en": "A glowing carriage where you can photograph the little kings and queens at home."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-3721": {
+    "story": {
+      "es": "Cuatro ángeles guardan la iglesia de Santiago de Vigo con sus fulgurantes trompetas.",
+      "gl": "Catro anxos gardan a igrexa de Santiago de Vigo coas súas fulgurantes trompetas.",
+      "en": "Four angels guard the church of Santiago de Vigo with their shining trumpets."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Avenida de García Barbón.",
+        "gl": "Avenida de García Barbón.",
+        "en": "Avenida de García Barbón."
+      }
+    ]
+  },
+  "concello-3729": {
+    "story": {
+      "es": "Selección de imágenes del ambiente navideño que llena las calles de Vigo: luces, rincones y paseos luminosos.",
+      "gl": "Selección de imaxes do ambiente de Nadal que enche as rúas de Vigo: luces, recunchos e paseos luminosos.",
+      "en": "A selection of images of the Christmas atmosphere filling Vigo's streets: lights, corners and glowing promenades."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Por toda la ciudad.",
+        "gl": "Por toda a cidade.",
+        "en": "All over the city."
+      }
+    ]
+  },
+  "concello-3730": {
+    "story": {
+      "es": "Otra selección de imágenes del ambiente navideño: luces, rincones y paseos luminosos por la ciudad.",
+      "gl": "Outra selección de imaxes do ambiente de Nadal: luces, recunchos e paseos luminosos pola cidade.",
+      "en": "Another selection of images of the Christmas atmosphere: lights, corners and glowing promenades."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Por toda la ciudad.",
+        "gl": "Por toda a cidade.",
+        "en": "All over the city."
+      }
+    ]
+  },
+  "concello-3731": {
+    "story": {
+      "es": "Tren navideño que recorre la iluminación y la decoración del centro de la ciudad.",
+      "gl": "Tren de Nadal que percorre a iluminación e a decoración do centro da cidade.",
+      "en": "A Christmas train that tours the city centre's lights and decorations."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "price",
+        "es": "6 € · infantil 2–11 años 4 € · +65 5 €.",
+        "gl": "6 € · infantil 2–11 anos 4 € · +65 5 €.",
+        "en": "€6 · ages 2–11 €4 · 65+ €5."
+      },
+      {
+        "kind": "route",
+        "es": "Recorrido por el centro de la ciudad.",
+        "gl": "Percorrido polo centro da cidade.",
+        "en": "Route through the city centre."
+      },
+      {
+        "kind": "schedule",
+        "es": "Laborables 17:00 · viernes–domingo 11:00.",
+        "gl": "Laborables 17:00 · venres–domingo 11:00.",
+        "en": "Weekdays 17:00 · Fri–Sun 11:00."
+      }
+    ]
+  },
+  "concello-4872": {
+    "story": {
+      "es": "Los renos de Papá Noel exploran Vigo: encuéntralos antes de que vuelvan al Polo Norte y hazte una foto.",
+      "gl": "Os renos de Papá Noel exploran Vigo: atópaos antes de que volvan ao Polo Norte e faite unha foto.",
+      "en": "Santa's reindeer are exploring Vigo — find them before they head back to the North Pole and snap a photo."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa do Príncipe.",
+        "gl": "Rúa do Príncipe.",
+        "en": "Rúa do Príncipe."
+      }
+    ]
+  },
+  "concello-4873": {
+    "story": {
+      "es": "Un bosque encantado de árboles luminosos en la Puerta del Sol: encuéntralos todos y hazte una foto mágica.",
+      "gl": "Un bosque encantado de árbores luminosas na Porta do Sol: atópaos todos e faite unha foto máxica.",
+      "en": "An enchanted forest of glowing trees in Puerta del Sol: find them all and take a magical photo."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "schedule",
+        "es": "Luces de 18:00 a 01:00 (03:00 jue–sáb y vísperas).",
+        "gl": "Luces de 18:00 a 01:00 (03:00 xov–sáb e vésperas).",
+        "en": "Lights 18:00–01:00 (03:00 Thu–Sat and eves)."
+      },
+      {
+        "kind": "where",
+        "es": "Praza da Porta do Sol.",
+        "gl": "Praza da Porta do Sol.",
+        "en": "Praza da Porta do Sol."
+      }
+    ]
+  },
+  "concello-4876": {
+    "story": {
+      "es": "Pide tu deseo navideño: una lámpara mágica que brilla con toda la energía de la Navidad.",
+      "gl": "Pide o teu desexo de Nadal: unha lámpada máxica que brilla con toda a enerxía do Nadal.",
+      "en": "Make your Christmas wish: a magic lamp glowing with all the season's energy."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa Elduayen, esquina Alfonso XII.",
+        "gl": "Rúa Elduayen, esquina Alfonso XII.",
+        "en": "Elduayen, at Alfonso XII."
+      }
+    ]
+  },
+  "concello-4940": {
+    "story": {
+      "es": "Experiencia inmersiva, gratuita y exclusiva de Vigo que lleva los personajes de Disney+ más allá de la pantalla, con luz y espectáculos.",
+      "gl": "Experiencia inmersiva, gratuíta e exclusiva de Vigo que leva as personaxes de Disney+ máis alá da pantalla, con luz e espectáculos.",
+      "en": "An immersive, free, Vigo-only experience that takes Disney+ characters beyond the screen, with light shows."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "access",
+        "es": "Gratuita.",
+        "gl": "Gratuíta.",
+        "en": "Free."
+      },
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  },
+  "concello-4941": {
+    "story": {
+      "es": "Un simpático Papá Noel gigante en su balancín luminoso, rodeado de un saco de regalos, invita a hacerse una foto.",
+      "gl": "Un simpático Papá Noel xigante no seu balancín luminoso, rodeado dun saco de agasallos, convida a facerse unha foto.",
+      "en": "A jolly giant Santa on his glowing rocking horse, surrounded by a sack of presents, invites you for a photo."
+    },
+    "fact": null,
+    "facts": [
+      {
+        "kind": "where",
+        "es": "Rúa de Policarpo Sanz.",
+        "gl": "Rúa de Policarpo Sanz.",
+        "en": "Rúa de Policarpo Sanz."
+      }
+    ]
+  }
+}

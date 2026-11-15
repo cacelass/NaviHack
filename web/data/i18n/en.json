@@ -334,6 +334,7 @@
   "track.far_body": "No GPS or far from the route. You can watch a simulation.",
   "detail.story": "Story",
   "detail.story_source": "Text: Concello de Vigo, Christmas 2026-27 programme",
+  "fact.know": "Did you know…?",
   "layers.title": "Layers",
   "layer.navidad": "Christmas",
   "layer.eventos": "Events",
@@ -347,5 +348,9 @@
   "minimap.label": "Mini-map: overview",
   "detail.tab_info": "Info",
   "detail.tab_sched": "Hours",
-  "detail.tab_go": "Get there"
+  "detail.tab_go": "Get there",
+  "tour.duration": "How much time do you have?",
+  "tour.kind": "Kind of walk",
+  "walk.full_route": "See the whole route · {n} stops",
+  "walk.next_stop": "Next stop: {name}"
 }

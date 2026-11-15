@@ -174,3 +174,238 @@ body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: inline-flex !i
   body:not(.is-city) .tv-topbar-actions > .tv-time-quick { display: none !important; }
   .tv-event-chip .tv-chip-copy { display: none; } /* icon only, as in the prototype */
 }
+
+/* scrollbars: thin and quiet (macOS / Linear style), with the track kept off the panel's header and
+   rounded corners so the thumb never runs up into the title or the photo. Chromium and Safari only:
+   Firefox keeps the thin standard bar from tokens.css. */
+@supports selector(::-webkit-scrollbar) {
+  .tv-panel .tv-list::-webkit-scrollbar, .tv-sheet::-webkit-scrollbar, .tv-tour::-webkit-scrollbar,
+  .tv-step::-webkit-scrollbar, .tv-settings::-webkit-scrollbar, .tv-layers-pop::-webkit-scrollbar,
+  .tv-results::-webkit-scrollbar { width: 10px; }
+  .tv-panel .tv-list::-webkit-scrollbar-thumb, .tv-sheet::-webkit-scrollbar-thumb, .tv-tour::-webkit-scrollbar-thumb,
+  .tv-step::-webkit-scrollbar-thumb, .tv-settings::-webkit-scrollbar-thumb, .tv-layers-pop::-webkit-scrollbar-thumb,
+  .tv-results::-webkit-scrollbar-thumb {
+    min-height: 40px; border: 3px solid transparent; border-radius: 999px;
+    background: var(--scroll-thumb); background-clip: padding-box;
+  }
+  .tv-sheet::-webkit-scrollbar-track, .tv-tour::-webkit-scrollbar-track, .tv-step::-webkit-scrollbar-track,
+  .tv-settings::-webkit-scrollbar-track, .tv-layers-pop::-webkit-scrollbar-track { margin-block: 64px 16px; }
+  .tv-panel .tv-list::-webkit-scrollbar-track, .tv-results::-webkit-scrollbar-track { margin-block: 8px; }
+}
+.tv-panel .tv-list { scrollbar-gutter: auto; }
+
+/* bottom sheets (agenda, walk, settings): the title row stays put with its own surface, so the
+   content scrolls under it instead of under a floating × */
+.tv-tour > h2, .tv-settings > h2 {
+  position: sticky; top: calc(-1 * var(--sp-4)); z-index: 20;
+  margin: calc(-1 * var(--sp-4)) calc(-1 * var(--sp-4)) 0;
+  padding: var(--sp-4) calc(var(--tap) + var(--sp-4)) var(--sp-2) var(--sp-4); max-width: none;
+  background: var(--raised); border-radius: var(--r-panel) var(--r-panel) 0 0;
+}
+.tv-tour > .tv-close, .tv-settings > .tv-close { z-index: 21 !important; background: none !important; box-shadow: none !important; color: var(--fg-2) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.tv-tour > .tv-close:hover, .tv-settings > .tv-close:hover { background: var(--surface) !important; color: var(--fg) !important; }
+/* the title only takes focus so screen readers start there: no ring on it, and the × sits on its line */
+.tv-tour > h2:focus, .tv-settings > h2:focus { outline: none; }
+.tv-tour > h2, .tv-settings > h2 { padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
+.tv-tour > .tv-close, .tv-settings > .tv-close { top: 0 !important; margin-top: calc(-1 * var(--sp-4) + var(--sp-3)) !important; }
+
+/* ── «Paseo a medida» (Google Maps / Komoot / Citymapper): labelled form, the main action pinned
+   at the bottom; with a route, a side sheet that leaves the route visible on the map ── */
+.tv-tour .tv-field-label, .tv-tour .tv-from > label {
+  margin: var(--sp-2) 0 0; font-size: var(--fs-meta); font-weight: var(--w-600); color: var(--fg-3);
+}
+.tv-tour .tv-from { display: flex; flex-direction: column; gap: var(--sp-2); }
+.tv-tour .tv-start {
+  appearance: none; -webkit-appearance: none; height: var(--tap); padding: 0 40px 0 12px;
+  border: 1px solid var(--line); border-radius: var(--r-ctl); color: var(--fg); cursor: pointer;
+  background: var(--raised) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8985' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 16px;
+  font: var(--w-500) var(--fs-label)/1 var(--f-ui);
+}
+.tv-tour .tv-start:focus-visible { outline: 2px solid var(--acc-line); outline-offset: 2px; }
+.tv-sticky-foot {
+  position: sticky; bottom: calc(-1 * var(--sp-4)); z-index: 20; display: flex; align-items: center; gap: var(--sp-2);
+  margin: var(--sp-2) calc(-1 * var(--sp-4)) calc(-1 * var(--sp-4)); padding: var(--sp-3) var(--sp-4) calc(var(--sp-4) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line); background: var(--raised); max-width: none !important;
+}
+.tv-sticky-foot .tv-go {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); width: auto !important;
+  min-height: var(--tap); margin: 0; border: 0; border-radius: var(--r-ctl); background: var(--acc); color: var(--on-acc);
+  font: var(--w-600) var(--fs-label)/1 var(--f-ui); cursor: pointer;
+}
+.tv-sticky-foot .tv-go:disabled { opacity: .5; cursor: default; }
+.tv-foot-icons { display: flex; gap: 4px; }
+.tv-icon-btn {
+  width: var(--tap) !important; height: var(--tap); flex: none; display: grid; place-items: center; padding: 0 !important;
+  border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--raised); color: var(--fg-2);
+  font-size: 0 !important; cursor: pointer;
+}
+.tv-icon-btn .lu, .tv-icon-btn svg { width: 20px; height: 20px; }
+.tv-icon-btn:hover { background: var(--surface); color: var(--fg); }
+
+/* result */
+.tv-tour.has-result .tv-tour-head { display: flex; align-items: center; gap: var(--sp-2); margin-top: calc(-1 * var(--sp-2)); }
+.tv-tour.has-result .tv-tour-head .tv-kicker {
+  flex: 1; min-width: 0; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: var(--fs-meta); color: var(--fg-3);
+}
+.tv-tour .tv-edit {
+  flex: none; width: auto !important; min-height: 32px; margin: 0; padding: 0 10px; border: 1px solid var(--line);
+  border-radius: var(--r-ctl); background: none; color: var(--fg); font: var(--w-500) var(--fs-meta)/1 var(--f-ui); cursor: pointer;
+}
+.tv-result { display: flex; flex-direction: column; gap: var(--sp-3); }
+.tv-result .tv-summary { margin: 0; font-size: var(--fs-title); font-weight: var(--w-600); line-height: 1.25; color: var(--fg); }
+.tv-result .tv-why { margin: 0; font-size: var(--fs-meta); color: var(--fg-3); }
+.tv-planmodes-seg { display: flex; gap: 2px; padding: 2px; border-radius: var(--r-ctl); background: var(--sunk); }
+.tv-planmodes-seg .tv-planmode {
+  flex: 1; min-width: 0; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 6px 8px; border: 0; border-radius: var(--r-sm); background: none; color: var(--fg-2); text-align: center; cursor: pointer;
+}
+.tv-planmodes-seg .tv-planmode.is-on { background: var(--raised); color: var(--fg); }
+.tv-planmodes-seg .tv-set-ico, .tv-planmodes-seg .tv-radio { display: none; }
+.tv-planmodes-seg .tv-planmode-body { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tv-planmodes-seg .tv-planmode-name { font-size: var(--fs-label); font-weight: var(--w-600); }
+.tv-planmodes-seg .tv-planmode-meta { font-size: var(--fs-meta); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+/* stops as a timeline: number, photo, name and «time · stay» */
+.tv-result .tv-story { display: flex !important; flex-direction: column; gap: 0; margin: 0 -8px; padding: 0; list-style: none; }
+.tv-result .tv-story li { position: relative; display: block; width: auto; }
+.tv-result .tv-story li:not(:last-child)::after {
+  content: ""; position: absolute; left: 19px; top: 50px; bottom: -22px; width: 2px; border-radius: 1px; background: var(--line);
+}
+.tv-result .tv-story button {
+  position: relative; display: flex !important; align-items: center; gap: var(--sp-3); width: 100%; min-height: 72px; height: auto;
+  padding: 8px; border: 0; border-radius: var(--r-ctl); background: none; color: var(--fg); text-align: left; cursor: pointer; overflow: visible;
+}
+.tv-result .tv-story button:hover { background: var(--surface); }
+.tv-result .tv-story .tv-num {
+  position: static !important; order: -1; flex: none; width: 24px; height: 24px; display: grid; place-items: center; margin: 0;
+  border-radius: 50%; background: var(--acc); color: var(--on-acc); font: var(--w-600) 12px/1 var(--f-ui); z-index: 1;
+}
+.tv-result .tv-story img, .tv-result .tv-story .tv-story-ph {
+  position: static !important; flex: none; width: 56px !important; height: 56px !important; margin: 0;
+  border-radius: var(--r-ctl); object-fit: cover; background: var(--sunk);
+}
+.tv-story-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.tv-result .tv-story .tv-story-name {
+  position: static; padding: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: var(--fs-label); font-weight: var(--w-600); color: var(--fg); background: none;
+}
+.tv-result .tv-story .tv-badge { position: static; margin: 0; padding: 0; font-size: var(--fs-meta); color: var(--fg-3); background: none; font-variant-numeric: tabular-nums; }
+@media (min-width: 701px) {
+  .tv-tour.has-result {
+    left: auto !important; right: calc(12px + env(safe-area-inset-right)) !important; top: 68px !important; bottom: 12px !important;
+    width: 380px !important; max-height: none !important; transform: none !important; border-radius: var(--r-panel) !important; border-bottom: 1px solid var(--line) !important;
+  }
+}
+@media (max-width: 700px) { .tv-tour.has-result { max-height: 62vh !important; } }
+
+/* «Seguirme»: a quiet HUD control like the dock, not a blue pill */
+.tv-track-go {
+  background: var(--raised) !important; color: var(--fg) !important; border: 1px solid var(--line) !important;
+  border-radius: var(--r-panel) !important; box-shadow: none !important; font-weight: var(--w-600);
+}
+.tv-track-go .lu, .tv-track-go svg { color: var(--acc-line); }
+
+/* ── walking: the stop you are heading to, with the map still in view ── */
+.tv-step {
+  display: flex !important; flex-direction: column; gap: var(--sp-3); overflow-y: auto; overscroll-behavior: contain;
+  padding: var(--sp-4) !important; box-sizing: border-box; transition: transform .4s var(--ease) !important;
+}
+.tv-step:not(.is-open) { visibility: hidden; transition: transform .4s var(--ease), visibility 0s .4s !important; }
+.tv-step > * { margin: 0; max-width: none; }
+.tv-step > .tv-close {
+  position: sticky !important; top: calc(-1 * var(--sp-2)); z-index: 21; align-self: flex-end; flex: none;
+  width: var(--tap); height: var(--tap); margin: calc(-1 * var(--sp-2)) calc(-1 * var(--sp-2)) calc(-1 * var(--tap)) 0 !important;
+  display: grid; place-items: center; border: 0; border-radius: var(--r-ctl); background: none !important; color: var(--fg-2);
+  box-shadow: none !important; backdrop-filter: none !important;
+}
+.tv-step > .tv-close:hover { background: var(--surface) !important; color: var(--fg); }
+.tv-step > .tv-kicker { padding-right: var(--tap); font-size: var(--fs-meta); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.tv-step .tv-step-dots { display: flex; gap: 4px; }
+.tv-step .tv-step-dots span { flex: 1; height: 4px; border-radius: 2px; background: var(--sunk); }
+.tv-step .tv-step-dots span.is-done { background: color-mix(in srgb, var(--acc-line) 55%, transparent); }
+.tv-step .tv-step-dots span.is-on { background: var(--acc-line); }
+.tv-step > h2 { font-size: var(--fs-title); font-weight: var(--w-600); line-height: 1.25; color: var(--fg); }
+.tv-step > h2:focus { outline: none; }
+.tv-step .tv-step-leg { display: flex; align-items: center; gap: 6px; font-size: var(--fs-label); color: var(--fg-2); }
+.tv-step .tv-step-leg .lu { color: var(--acc-line); flex: none; }
+.tv-step .tv-step-photo { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-ctl); background: var(--sunk); display: block; }
+.tv-step .tv-short { font-size: var(--fs-copy); line-height: 1.5; color: var(--fg); }
+.tv-step-story { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
+.tv-step-story p { margin: 0; font-size: var(--fs-label); line-height: 1.55; color: var(--fg-2); }
+.tv-step-story .tv-field-label { display: flex; align-items: center; gap: 6px; font-size: var(--fs-meta); font-weight: var(--w-600); color: var(--fg-3); }
+.tv-step-story .tv-field-label .lu { color: var(--acc-line); }
+.tv-step-story .tv-note { font-size: var(--fs-meta); color: var(--fg-3); }
+/* the whole route, folded: one tap to see it or to jump to a stop */
+.tv-step-route { border-top: 1px solid var(--line); }
+.tv-step-route summary {
+  display: flex; align-items: center; gap: var(--sp-2); min-height: var(--tap); list-style: none; cursor: pointer;
+  font-size: var(--fs-label); font-weight: var(--w-500); color: var(--fg-2);
+}
+.tv-step-route summary::-webkit-details-marker { display: none; }
+.tv-step-route summary::after { content: "›"; margin-left: auto; font-size: 18px; transition: transform .2s var(--ease); }
+.tv-step-route[open] summary::after { transform: rotate(90deg); }
+.tv-step-route ol { margin: 0 -8px; padding: 0; list-style: none; }
+.tv-step-route button {
+  display: flex; align-items: center; gap: var(--sp-3); width: 100%; min-height: var(--tap); padding: 4px 8px;
+  border: 0; border-radius: var(--r-ctl); background: none; color: var(--fg); text-align: left; cursor: pointer;
+}
+.tv-step-route button:hover, .tv-step-route button.is-on { background: var(--surface); }
+.tv-step-route button.is-done { color: var(--fg-3); }
+.tv-step-route .tv-num {
+  position: static; flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--sunk); color: var(--fg-2); font: var(--w-600) 11px/1 var(--f-ui);
+}
+.tv-step-route button.is-on .tv-num { background: var(--acc); color: var(--on-acc); }
+.tv-step-route .tv-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-label); }
+.tv-step-route .tv-badge { flex: none; margin: 0; font-size: var(--fs-meta); color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.tv-step .tv-sticky-foot { margin-top: auto; flex-direction: column; align-items: stretch; gap: var(--sp-2); }
+.tv-step-next-stop { margin: 0; font-size: var(--fs-meta); color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tv-step-nav-row { display: flex; gap: var(--sp-2); }
+.tv-step-nav {
+  flex: 1 1 0; min-width: 0; min-height: var(--tap); display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  padding: 0 var(--sp-3); border: 0; border-radius: var(--r-ctl); font: var(--w-600) var(--fs-label)/1 var(--f-ui); cursor: pointer;
+}
+.tv-step-nav .lu, .tv-step-nav svg { width: 18px; height: 18px; flex: none; }
+.tv-step-nav span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tv-step-prev { border: 1px solid var(--line); background: var(--raised); color: var(--fg); }
+.tv-step-prev:hover:not(:disabled) { background: var(--surface); }
+.tv-step-prev:disabled { opacity: .4; cursor: default; }
+.tv-step-next { border: 1px solid var(--acc); background: var(--acc); color: var(--on-acc); }
+.tv-step-nav:focus-visible { outline: 2px solid var(--acc-line); outline-offset: 2px; }
+
+/* ── contenido editorial (stories.json): cuerpo, «¿Sabías que…?» y filas con icono ── */
+.tv-story-body { margin: 0; font-size: var(--fs-label); line-height: 1.55; color: var(--fg); white-space: pre-line; }
+.tv-fact {
+  display: flex; flex-direction: column; gap: var(--sp-1); margin: 0;
+  padding: var(--sp-3); border: 1px solid var(--acc-line); border-radius: var(--r-ctl); background: var(--accent-1);
+}
+.tv-fact-label { display: flex; align-items: center; gap: 6px; font-size: var(--fs-meta); font-weight: var(--w-600); color: var(--accent-6); }
+.tv-fact-label .lu { color: var(--accent-5); }
+.tv-fact-text { margin: 0; font-size: var(--fs-label); line-height: 1.5; color: var(--fg); }
+.tv-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.tv-facts li { display: flex; align-items: flex-start; gap: var(--sp-2); margin: 0; font-size: var(--fs-label); line-height: 1.45; color: var(--fg); }
+.tv-facts li .lu { flex: none; margin-top: 1px; color: var(--fg-3); }
+
+/* ROUTE-01: el marcador del lugar se oculta bajo el número de parada de la ruta */
+.tv-marker.is-route-hidden, .tv-marker.is-route-near { display: none !important; } /* OSD writes display inline */
+@media (min-width: 701px) {
+  .tv-step {
+    left: auto !important; right: calc(12px + env(safe-area-inset-right)) !important; top: 68px !important; bottom: 12px !important;
+    width: 400px !important; max-height: none !important; transform: translateX(calc(100% + 24px)) !important;
+  }
+  .tv-step.is-open { transform: none !important; }
+}
+@media (max-width: 700px) {
+  .tv-step {
+    left: 8px !important; right: 8px !important; top: auto !important; bottom: 8px !important; width: auto !important;
+    max-height: 48vh !important; transform: translateY(calc(100% + 24px)) !important;
+  }
+  .tv-step.is-open { transform: none !important; }
+  .tv-step .tv-step-photo { aspect-ratio: 16 / 9; } /* la foto sí se ve en el móvil, baja y no muy alta */
+}
+
+/* gold surfaces carry dark text and icons (WCAG AA), whatever the panel's inherited colour */
+.tv-step .tv-step-next, .tv-step .tv-step-next *, .tv-sticky-foot .tv-go, .tv-sticky-foot .tv-go * { color: var(--on-acc) !important; }
+
+/* the card scrolls: its blocks keep their size instead of shrinking (the photo collapsed to 0 px) */
+.tv-step > * { flex-shrink: 0; }

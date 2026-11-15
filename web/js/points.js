@@ -31,6 +31,23 @@
   const t = (key, vars = {}) => (CAT[lang][key] ?? CAT.es[key] ?? key).replace(/\{(\w+)\}/g, (h, n) => (n in vars ? vars[n] : h));
   const txt = (obj) => (obj ? obj[lang] || obj.es || obj.gl || "" : "");
 
+  // ── contenido editorial por punto (STORY-01, web/data/stories.json) ───────
+  // «story» (cuerpo), «fact» (¿Sabías que…?) y «facts» (filas con icono) sustituyen
+  // al volcado plano de p.long. Si falta el fichero o el punto, se cae a p.short/p.long.
+  let stories = null;
+  fetch("data/stories.json").then((r) => r.json()).then((s) => { stories = s; renderSheet(); document.dispatchEvent(new Event("tv:stories")); }).catch(() => {});
+  const FACT_ICON = { price: "ticket", schedule: "clock", route: "route", duration: "timer", access: "accessibility", where: "map-pin", payment: "credit-card" };
+  const factIcon = (kind) => FACT_ICON[kind] || "info";
+  const storyContent = (p) => {
+    const e = (stories && stories[p.id]) || null;
+    const facts = (e && Array.isArray(e.facts) ? e.facts : []).map((f) => ({ kind: f.kind, text: txt(f) })).filter((f) => f.text);
+    return {
+      story: e && e.story && txt(e.story) ? txt(e.story) : (txt(p.long) || txt(p.short)),
+      fact: e && e.fact && txt(e.fact) ? txt(e.fact) : null,
+      facts,
+    };
+  };
+
   // ── horario: puerto de scripts/programme.py (is_open) ─────────────────────
   const iso = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   const addDays = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r; };
@@ -112,15 +129,25 @@
   }
   // WEB-02: los que se solapan en pantalla se agrupan en uno con el número; al pulsarlo se acerca
   const byId = new Map(points.map((p) => [p.id, p]));
+  let routeStops = []; // drawn-route stops on the isometric map (set on tv:route)
   function cluster() {
-    const R = 22, list = [...markers.entries()].map(([id, m]) => {
+    // a stop of the drawn route is shown by the route's own number: it neither shows nor counts here,
+    // and neither does any other marker sitting right on top of one of those numbers
+    const R = 22, px = (x, y) => viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(x, y), true);
+    const stopsPx = routeStops.map((p) => px(p.x, p.y));
+    markers.forEach((m, id) => {
+      if (m.classList.contains("is-route-hidden")) return;
+      const p = byId.get(id), q = px(p.x, p.y);
+      m.classList.toggle("is-route-near", stopsPx.some((s) => Math.hypot(s.x - q.x, s.y - q.y) < 40));
+    });
+    const list = [...markers.entries()].filter(([, m]) => !m.classList.contains("is-route-hidden") && !m.classList.contains("is-route-near")).map(([id, m]) => {
       const p = byId.get(id), px = viewer.viewport.pixelFromPoint(new OpenSeadragon.Point(p.x, p.y), true);
       return { m, x: px.x, y: px.y, done: false };
     });
     for (const a of list) {
       if (a.done) continue;
       a.done = true; let n = 1;
-      for (const b of list) if (!b.done && Math.hypot(a.x - b.x, a.y - b.y) < R) { b.done = true; b.m.style.visibility = "hidden"; n++; }
+      for (const b of list) if (!b.done && Math.hypot(a.x - b.x, a.y - b.y) < R) { b.done = true; b.m.style.visibility = "hidden"; b.m.classList.remove("is-group"); n++; }
       a.m.style.visibility = "";
       a.m.dataset.count = n;
       a.m.classList.toggle("is-group", n > 1);
@@ -133,6 +160,20 @@
   setTimeout(cluster, 300);
   // los clics en el marcador no deben arrastrar el mapa
   markers.forEach((m) => new OpenSeadragon.MouseTracker({ element: m, clickHandler: (e) => { e.preventDefaultAction = true; } }));
+  // ROUTE-01: con una ruta a pie dibujada, los números de parada de la ruta tapan los
+  // marcadores del lugar; se ocultan mientras la ruta está activa y se recuperan al borrarla.
+  document.addEventListener("tv:route", (e) => {
+    markers.forEach((m) => m.classList.remove("is-route-hidden"));
+    const ids = ((e.detail && e.detail.stops) || []).map((s) => s.p && s.p.id).filter(Boolean);
+    for (const id of ids) { const m = markers.get(id); if (m) m.classList.add("is-route-hidden"); }
+    routeStops = ((e.detail && e.detail.stops) || []).map((s) => s.p).filter((p) => p && p.on_map);
+    cluster();
+  });
+  document.addEventListener("tv:clear-route", () => {
+    markers.forEach((m) => m.classList.remove("is-route-hidden", "is-route-near"));
+    routeStops = [];
+    cluster();
+  });
 
   function select(p, fly = true) {
     if (selected !== p) sheetTab = "info";
@@ -205,6 +246,15 @@
   sheet.setAttribute("role", "dialog"); sheet.setAttribute("aria-labelledby", "tv-sheet-title");
   let sheetOpener = null, sheetTab = "info";
   const TABS = [["info", "detail.tab_info"], ["sched", "detail.tab_sched"], ["go", "detail.tab_go"]];
+  // STORY-01: cuerpo + «¿Sabías que…?» + filas con icono en la pestaña Info
+  function storyParts(p) {
+    const c = storyContent(p);
+    const parts = [];
+    if (c.story) parts.push(el("p", "tv-story-body", c.story));
+    if (c.fact) parts.push(el("aside", "tv-fact", el("span", "tv-fact-label", lu("lightbulb", 14), t("fact.know")), el("p", "tv-fact-text", c.fact)));
+    if (c.facts.length) parts.push(el("ul", "tv-facts", ...c.facts.map((f) => el("li", null, lu(factIcon(f.kind), 16), el("span", null, f.text)))));
+    return parts;
+  }
   function renderSheet() {
     const wasOpen = sheet.classList.contains("is-open");
     sheet.replaceChildren();
@@ -240,8 +290,7 @@
     tabs.setAttribute("role", "tablist");
     const panes = {
       info: [
-        p.short ? el("p", "tv-short", txt(p.short)) : null,
-        p.long && txt(p.long) ? el("div", "tv-story", el("p", null, txt(p.long)), el("p", "tv-note", t("detail.story_source"))) : null,
+        ...storyParts(p),
         p.address ? el("div", "tv-addr", el("p", "tv-addr-line", lu("map-pin", 16), p.address), miniMap(p)) : null,
         !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
         freshness(p),
@@ -327,6 +376,6 @@
   document.documentElement.lang = lang;
   renderPanel();
   setInterval(() => { renderPanel(); renderSheet(); }, 60_000); // «abierto ahora» al minuto
-  window.tinyvigoPoints = { points, status, select, t: (k, v) => t(k, v), txt: (o) => txt(o), lang: () => lang };
+  window.tinyvigoPoints = { points, status, select, t: (k, v) => t(k, v), txt: (o) => txt(o), lang: () => lang, storyContent, factIcon };
   document.dispatchEvent(new Event("tv:ready"));
 })();

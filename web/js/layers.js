@@ -256,7 +256,7 @@
     document.body.append(wrap);
     // Closing outside keeps the trigger state synchronized with the sheet manager.
     document.addEventListener("pointerdown", (ev) => {
-      if (!wrap.contains(ev.target)) closePop();
+      if (!wrap.contains(ev.target) && !btn.contains(ev.target)) closePop(); // the button may live in the top bar (HUD v5)
     });
     document.addEventListener("keydown", (ev) => {
       if (ev.key === "Escape" && pop.classList.contains("is-open")) { ev.stopImmediatePropagation(); closePop(true); }

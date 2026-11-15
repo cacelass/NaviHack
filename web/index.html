@@ -71,16 +71,16 @@
     syncSites();
     if (opening) setTimeout(function () { var search = panel.querySelector('.tv-search'); if (search) search.focus(); }, 0);
   };
-  if (ruta) ruta.onclick = function () {
+  // A second press on a trigger closes its own surface instead of reopening it.
+  function toggle(openSel, opener) {
+    var open = document.querySelector(openSel);
     if (window.tinyvigoSheets) window.tinyvigoSheets.closeAll();
-    var button = document.querySelector('.tv-tour-open');
+    if (open) return;
+    var button = document.querySelector(opener);
     if (button) button.click();
-  };
-  if (hoy) hoy.onclick = function () {
-    if (window.tinyvigoSheets) window.tinyvigoSheets.closeAll();
-    var button = document.querySelector('.tv-today-open');
-    if (button) button.click();
-  };
+  }
+  if (ruta) ruta.onclick = function () { toggle('.tv-tour.is-open:not(.tv-events), .tv-step.is-open', '.tv-tour-open'); };
+  if (hoy) hoy.onclick = function () { toggle('.tv-events.is-open', '.tv-today-open'); };
   function bindPanel() {
     var panel = document.querySelector('.tv-panel');
     if (!panel || panel.dataset.dockBound) return;

@@ -334,6 +334,7 @@
   "track.far_body": "Sen GPS ou lonxe do percorrido. Podes ver unha simulación.",
   "detail.story": "Historia",
   "detail.story_source": "Texto: Concello de Vigo, programa de Nadal 2026-27",
+  "fact.know": "Sabías que…?",
   "layers.title": "Capas",
   "layer.navidad": "Nadal",
   "layer.eventos": "Eventos",
@@ -347,5 +348,9 @@
   "minimap.label": "Mini-mapa: vista xeral",
   "detail.tab_info": "Info",
   "detail.tab_sched": "Horario",
-  "detail.tab_go": "Chegar"
+  "detail.tab_go": "Chegar",
+  "tour.duration": "Canto tempo tes?",
+  "tour.kind": "Tipo de paseo",
+  "walk.full_route": "Ver ruta completa · {n} paradas",
+  "walk.next_stop": "Seguinte parada: {name}"
 }
