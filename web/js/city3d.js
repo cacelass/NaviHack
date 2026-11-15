@@ -23,7 +23,7 @@
   let map = null, loading = null, P = null, t = (k) => k, txt = (o) => o;
   const queue = []; // what was asked before the map existed
   const markers = { route: [], park: [], stations: [] };
-  let lastBounds = null, walkedMe = null, transitArgs = null;
+  let lastBounds = null, walkedMe = null, transitArgs = null, pendingTraffic = null;
   const wrap = document.createElement("div");
   wrap.id = "city";
   wrap.className = "tv-city3d";
@@ -92,6 +92,12 @@
         map.addLayer({ id: "route-" + mode, type: "line", source: "route", filter: ["==", ["get", "mode"], mode], layout: { "line-join": "round", "line-cap": "round" },
           paint: Object.assign({ "line-color": s.color, "line-width": s.width }, s.dash ? { "line-dasharray": s.dash } : {}) });
       }
+      // TRAFFIC-01: live traffic under the routes (layers.js hands the data over)
+      map.addSource("traffic", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+      map.addLayer({ id: "traffic", type: "line", source: "traffic", layout: { "line-join": "round", "line-cap": "round" },
+        paint: { "line-width": ["interpolate", ["linear"], ["zoom"], 12, 2, 17, 6], "line-opacity": 0.9,
+          "line-color": ["match", ["get", "estado"], ["Muy fluido", "Fluido"], "#3f9d55", "Normal", "#c9b03a", "Lento", "#e08a2c", "#d4402b"] } }, "route-casing");
+      if (pendingTraffic) map.getSource("traffic").setData(pendingTraffic);
       map.addSource("walked", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
       map.addLayer({ id: "walked", type: "line", source: "walked", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": "#8a8f9c", "line-width": 6, "line-opacity": 0.95 } });
       addPoints(); loadParkings(); setInterval(loadParkings, 120000);
@@ -192,6 +198,11 @@
     if (walkedMe) { walkedMe.remove(); walkedMe = null; }
   }
 
+  function setTraffic(geojson) {
+    pendingTraffic = geojson;
+    if (map && map.getSource("traffic")) map.getSource("traffic").setData(geojson || { type: "FeatureCollection", features: [] });
+  }
+
   // paradas de bus (solo a nivel de calle) y estaciones de tren, con sus próximas salidas
   function addTransit(args) {
     transitArgs = args;
@@ -217,7 +228,7 @@
     document.addEventListener("tv:clear-route", clearRoute);
     document.addEventListener("tv:select", (e) => { if (map && document.body.classList.contains("is-city")) map.flyTo({ center: [e.detail.lon, e.detail.lat], zoom: Math.max(map.getZoom(), 16.5), duration: 1000 }); });
     setCity(false);
-    window.tinyvigoCity = { get map() { return map; }, setCity, focus, popup, setWalked, clearWalked, addTransit, load, kind: "3d" };
+    window.tinyvigoCity = { get map() { return map; }, setCity, focus, popup, setWalked, clearWalked, addTransit, setTraffic, load, kind: "3d" };
   }
   if (window.tinyvigoPoints) init();
   else document.addEventListener("tv:ready", init, { once: true });

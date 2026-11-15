@@ -13,6 +13,7 @@
     { id: "trenes", icon: "train-front", text: "layer.trenes", on: false },
     { id: "parking", icon: "square-parking", text: "layer.parking", on: false },
     { id: "camaras", icon: "camera", text: "layer.camaras", on: false },
+    { id: "trafico", icon: "car", text: "layer.trafico", on: false },
     { id: "rutas", icon: "route", text: "layer.rutas", on: false },
   ];
   const KEY = "tinyvigo.layers";
@@ -195,7 +196,42 @@
     if (camOpener && document.body.contains(camOpener)) camOpener.focus();
   }
 
-  const lazies = { eventos: loadEventos, buses: loadTransit, trenes: loadTransit, parking: loadParking, camaras: loadCamaras };
+  // TRAFFIC-01: the Concello's live traffic state (data/live/trafico.json, refreshed every minute),
+  // each section coloured by its state on the drawn map and on the 3D city. Colour means state here.
+  const TRAFFIC_CLASS = { "Muy fluido": "ok", "Fluido": "ok", "Normal": "normal", "Lento": "slow" }; // the rest: congested
+  const trafficClass = (estado) => TRAFFIC_CLASS[estado] || "jam";
+  let trafficSvg = null, trafficTimer = 0;
+  async function loadTrafico() {
+    const viewer = window.tinyvigo && window.tinyvigo.viewer, project = window.tinyvigoGeo && window.tinyvigoGeo.project;
+    if (!viewer || !project) return;
+    let doc;
+    try { doc = await window.tinyvigoData.trafico(); } catch (err) { return; } // sin feed: el aviso de data.js ya lo dice
+    const SVG = "http://www.w3.org/2000/svg";
+    if (!trafficSvg) {
+      trafficSvg = document.createElementNS(SVG, "svg");
+      trafficSvg.setAttribute("viewBox", "0 0 " + CANVAS + " " + CANVAS);
+      trafficSvg.setAttribute("class", "tv-traffic");
+      viewer.addOverlay({ element: trafficSvg, location: new OpenSeadragon.Rect(0, 0, 1, 1) });
+      add("trafico", trafficSvg);
+      trafficTimer = setInterval(() => { if (state.trafico && !document.hidden) loadTrafico(); }, 60000);
+    }
+    trafficSvg.replaceChildren();
+    for (const f of doc.data.features) {
+      const pts = f.geometry.coordinates.map(([lo, la]) => project(la, lo));
+      if (!pts.some(within)) continue;
+      const pl = document.createElementNS(SVG, "polyline");
+      pl.setAttribute("points", pts.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "));
+      pl.setAttribute("class", "is-" + trafficClass(f.properties.estado));
+      const title = document.createElementNS(SVG, "title");
+      title.textContent = f.properties.nombre_tramo + " · " + f.properties.estado;
+      pl.append(title);
+      trafficSvg.append(pl);
+    }
+    if (window.tinyvigoCity && window.tinyvigoCity.setTraffic) window.tinyvigoCity.setTraffic(state.trafico ? doc.data : null);
+    apply("trafico");
+  }
+
+  const lazies = { eventos: loadEventos, buses: loadTransit, trenes: loadTransit, parking: loadParking, camaras: loadCamaras, trafico: loadTrafico };
 
   // aviso breve para los clics de capa
   let toastTimer = null;
@@ -215,6 +251,7 @@
       group.setAttribute("aria-checked", String(!!on));
     }
     if (on && lazies[id] && !opts.silent) lazies[id]();
+    if (id === "trafico" && !on && window.tinyvigoCity && window.tinyvigoCity.setTraffic) window.tinyvigoCity.setTraffic(null);
     document.dispatchEvent(new CustomEvent("tv:layer", { detail: { id, on: !!on } }));
   }
 

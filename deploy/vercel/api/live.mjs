@@ -11,7 +11,21 @@ const WEATHER_HOURLY = [
 const PARKING_KEYS = ["nombre", "plazaslibres", "totalplazas", "lat", "lon", "fechahora"];
 
 // url, validación y TTL de CDN copiados de scripts/snapshot.py (FEEDS) y deploy/snapshot.cron
+// TRAFFIC-01: same reduction as scripts/snapshot.py slim_trafico (only sections with data, 4 fields, 5 decimals)
+const slimTrafico = (d) => ({ type: "FeatureCollection", features: d.features.filter((f) => f.properties && f.properties.estado && f.properties.estado !== "Sin datos").map((f) => ({
+  type: "Feature",
+  properties: { estado: f.properties.estado, nombre_tramo: f.properties.nombre_tramo, segundos: f.properties.segundos, longitud: f.properties.longitud },
+  geometry: { type: f.geometry.type, coordinates: f.geometry.coordinates.map(([x, y]) => [Math.round(x * 1e5) / 1e5, Math.round(y * 1e5) / 1e5]) },
+})) });
+
 const FEEDS = {
+  trafico: {
+    url: "https://datos.vigo.org/data/trafico/treal.geojson",
+    valid: (d) => d && Array.isArray(d.features) && d.features.length > 0 && d.features.every((f) => f && f.properties && "estado" in f.properties && f.geometry && f.geometry.coordinates),
+    ts: (d) => String(d.features[0].properties.actualizacion || ""),
+    slim: slimTrafico,
+    stale: 15 * 60, ttl: 60,
+  },
   parkings: {
     url: "https://datos.vigo.org/data/trafico/parkings-ocupacion.json",
     valid: (d) => Array.isArray(d) && d.length > 0 && d.every((r) => r && PARKING_KEYS.every((k) => k in r)),
@@ -68,7 +82,7 @@ export async function GET(request) {
       source_url: feed.url,
       source_timestamp: feed.ts(data) || r.headers.get("last-modified"),
       stale_after_s: feed.stale,
-      data,
+      data: feed.slim ? feed.slim(data) : data,
     }, feed.ttl);
   } catch (err) {
     const snap = await fetch(new URL(`/demo/data/live-snapshot/${name}.json`, url.origin));

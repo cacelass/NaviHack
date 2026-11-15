@@ -106,15 +106,58 @@ def _ts_weather(payload: dict[str, dict[str, object]], last_modified: str | None
     return str(payload["current"]["time"])  # hora local Europe/Madrid (timezone= en la URL)
 
 
+def _valid_trafico(payload: object) -> str | None:
+    if not isinstance(payload, dict) or not isinstance(payload.get("features"), list) or not payload["features"]:
+        return "se esperaba un GeoJSON con tramos"
+    for f in payload["features"]:
+        if not isinstance(f, dict) or "estado" not in (f.get("properties") or {}) or not (f.get("geometry") or {}).get("coordinates"):
+            return "tramo sin 'estado' o sin geometría"
+    return None
+
+
+def _ts_trafico(payload: dict[str, Any], last_modified: str | None) -> str | None:
+    # «15/11/2026 16:18:00», hora local de Madrid, la misma en todos los tramos
+    return str(payload["features"][0]["properties"].get("actualizacion") or last_modified)
+
+
+TRAFICO_KEEP = ("estado", "nombre_tramo", "segundos", "longitud")
+
+
+def slim_trafico(payload: dict[str, Any]) -> dict[str, Any]:
+    """Solo los tramos con dato, lo que usa la web y coordenadas a 5 decimales (~1 m).
+
+    El GeoJSON del Concello pesa ~450 KB y se refresca cada minuto: guardarlo entero en cada
+    pasada llenaba el histórico (D-01) de copias casi iguales.
+    """
+    out = []
+    for f in payload["features"]:
+        pr = f.get("properties") or {}
+        if pr.get("estado") in (None, "", "Sin datos"):
+            continue
+        geom = f["geometry"]
+        coords = [[round(x, 5), round(y, 5)] for x, y in geom["coordinates"]]
+        out.append({"type": "Feature", "properties": {k: pr.get(k) for k in TRAFICO_KEEP}, "geometry": {"type": geom["type"], "coordinates": coords}})
+    return {"type": "FeatureCollection", "features": out}
+
+
 @dataclass(frozen=True)
 class Feed:
     url: str
     validate: Callable[[object], str | None]
     source_ts: Callable[[Any, str | None], str | None]
     stale_after_s: int
+    slim: Callable[[Any], Any] | None = None  # se aplica antes de guardar
 
 
 FEEDS = {
+    # TRAFFIC-01: estado del tráfico en tiempo real por tramos (dataset t-estado-trafico, cada minuto)
+    "trafico": Feed(
+        "https://datos.vigo.org/data/trafico/treal.geojson",
+        _valid_trafico,
+        _ts_trafico,
+        stale_after_s=15 * 60,
+        slim=slim_trafico,
+    ),
     "parkings": Feed(
         "https://datos.vigo.org/data/trafico/parkings-ocupacion.json",
         _valid_parkings,
@@ -170,6 +213,9 @@ def publish(
     try:
         payload = json.loads(body)
         error = feed.validate(payload)
+        raw = payload  # la hora de origen se lee del payload entero, antes de reducirlo
+        if not error and feed.slim:
+            payload = feed.slim(payload)
     except json.JSONDecodeError as exc:
         error = f"JSON inválido: {exc.msg}"
     if error:
@@ -179,7 +225,7 @@ def publish(
             "feed": name,
             "source_url": feed.url,
             "fetched_at": now.isoformat(),
-            "source_timestamp": feed.source_ts(payload, last_modified),
+            "source_timestamp": feed.source_ts(raw, last_modified),
             "stale_after_s": feed.stale_after_s,
             "data": payload,
         }
@@ -189,7 +235,8 @@ def publish(
         tmp = folder / "latest.json.tmp"
         tmp.write_text(text, encoding="utf-8")
         tmp.replace(folder / "latest.json")  # atómico: la app nunca lee medio fichero
-        row.update(ok=True, source_timestamp=snap["source_timestamp"], records=len(payload))
+        n = len(payload["features"]) if isinstance(payload, dict) and "features" in payload else len(payload)
+        row.update(ok=True, source_timestamp=snap["source_timestamp"], records=n)
     with (folder / "history.jsonl").open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(row, ensure_ascii=False) + "\n")
     return row

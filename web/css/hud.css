@@ -554,3 +554,11 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-cam-state { margin: 0; color: var(--fg-2); }
 .tv-cam-credit { margin: 0; font-size: var(--fs-meta); color: var(--fg-3); }
 @media (max-width: 700px) { .tv-cam { left: 8px; right: 8px; width: auto; bottom: calc(8px + env(safe-area-inset-bottom)); } }
+
+/* TRAFFIC-01: live traffic on the drawn map, one colour per state (colour carries state only) */
+.tv-traffic { pointer-events: none; overflow: visible; }
+.tv-traffic polyline { fill: none; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+.tv-traffic .is-ok { stroke: #3f9d55; }
+.tv-traffic .is-normal { stroke: #c9b03a; }
+.tv-traffic .is-slow { stroke: #e08a2c; }
+.tv-traffic .is-jam { stroke: #d4402b; stroke-width: 12; }

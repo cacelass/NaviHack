@@ -20,7 +20,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 SNAPSHOTS = ROOT / "data" / "snapshots"
 OUT = ROOT / "web" / "data" / "live"
-FEEDS = ("parkings", "agenda", "weather", "centros")
+FEEDS = ("parkings", "agenda", "weather", "centros", "trafico")
 
 
 def publish(name: str, snapshots: Path = SNAPSHOTS, out: Path = OUT) -> dict[str, Any] | None:

@@ -22,6 +22,7 @@ LIVE = [
     ["scripts/snapshot.py", "agenda"],
     ["scripts/snapshot.py", "weather"],
     ["scripts/snapshot.py", "centros"],
+    ["scripts/snapshot.py", "trafico"],
 ]
 STATIC = [
     ["-m", "scripts.build_web_data"],

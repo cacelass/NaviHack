@@ -4,7 +4,7 @@
 (function () {
   const cache = new Map();
   const warned = new Set();
-  const TTL = { parkings: 60000, weather: 600000, agenda: 3600000, centros: 86400000 };
+  const TTL = { parkings: 60000, weather: 600000, agenda: 3600000, centros: 86400000, trafico: 60000 };
 
   function fail(name, why) {
     const err = new Error("data:" + name + ":" + why);
@@ -52,6 +52,7 @@
     parkings: () => get("parkings").then((d) => d.data),
     agenda: () => get("agenda").then((d) => d.data),
     centros: () => get("centros").then((d) => d.data),
+    trafico: () => get("trafico").then((d) => d), // TRAFFIC-01: el documento entero (fecha incluida)
     weather: () => get("weather").then((d) => fromNow(d.data)),
     fetchedAt: (name) => (cache.get(name) ? cache.get(name).doc.fetched_at : null),
   };
