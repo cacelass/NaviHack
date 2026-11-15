@@ -184,6 +184,11 @@ Detalles del formato en `harness/progress/README.md`.
 
 ## Backlog en GEAS: un ticket, un dueño
 
+> **RETIRADO (2026-11-15, decisión de Jose).** GEAS ya no existe: `harness/geas.json` tiene `enabled: false` y el
+> backlog vive en el repo (`harness/featureslist.json` y `harness/progress/`), que gestiona el agente `harness` en
+> modo local: una sola feature en curso, y `start`, `finish` y `block` escriben el fichero. Lo que sigue describe el
+> modo GEAS, por si se vuelve a él (`enabled: true` y `GEAS_TOKEN` en `.env`).
+
 En una hackathon con 3-4 personas, `harness/featureslist.json` deja de ser la
 fuente de verdad: los tickets viven en GEAS (MongoDB) y el fichero local pasa a
 ser un **espejo de solo lectura** para `init.sh`, el RAG y quien abra el repo
