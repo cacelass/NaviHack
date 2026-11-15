@@ -32,23 +32,24 @@
       que el mismo SVG sirve para un favicon de 16 px y para un cartel.</div>
   </section>
 
-  <!-- 02 · VARIANTES -->
+  <!-- 02 · VERSIONES -->
   <section>
-    <h2><span class="mk__num">02</span>Variantes</h2>
-    <p>Dos versiones, dos usos. No se inventa una tercera.</p>
+    <h2><span class="mk__num">02</span>Dos versiones</h2>
+    <p>Una negra para el modo claro y otra blanca para el modo oscuro. No hay una tercera.</p>
     <div class="mk__fila">
-      <figure class="mk__caja base">
-        <span data-tv="simbolo" data-tv-size="96"></span>
-        <figcaption>Principal<br>líneas + luz dorada</figcaption>
+      <figure class="mk__caja claro">
+        <span data-tv="logo" data-tv-size="48"></span>
+        <figcaption>Negra<br>modo claro</figcaption>
       </figure>
-      <figure class="mk__caja tinta">
-        <span data-tv="simbolo" data-tv-size="96" data-tv-variante="tinta"></span>
-        <figcaption>Una tinta<br>papel, fax, troquel, sello</figcaption>
+      <figure class="mk__caja noche">
+        <span data-tv="logo" data-tv-size="48"></span>
+        <figcaption>Blanca<br>modo oscuro</figcaption>
       </figure>
     </div>
-    <div class="mk__nota" style="margin-top:16px">Un solo trazado para todos los tamaños: el mismo <code>&lt;path&gt;</code>
-      a 16 px que a 200. La variante «una tinta» no cambia la forma, solo quita el color: la luz deja de ser oro
-      y pasa a ser el mismo trazo que el resto del símbolo.</div>
+    <div class="mk__nota" style="margin-top:16px">El logo no lleva color: ni luz dorada ni tintas intermedias. Cambia
+      solo con el tema porque toma <code>--tv-tinta</code> (<code>#000000</code> en claro, <code>#FFFFFF</code> en
+      oscuro). Es el mismo trazado a 16 px que a 200. Donde no se pueda pintar con CSS, los dos ficheros:
+      <code>assets/logo-negro.svg</code> y <code>assets/logo-blanco.svg</code>.</div>
   </section>
 
   <!-- 02b · GIRADA -->
@@ -93,10 +94,10 @@
   <!-- 04 · CONSTRUCCIÓN -->
   <section>
     <h2><span class="mk__num">04</span>Construcción</h2>
-    <p>Caja de 24 × 24. Dos ángulos abiertos —no una forma rellena— del mismo grosor de trazo, uno encima del
-      otro: el de arriba cubre la mitad del ancho, el de abajo casi todo el ancho y es un tercio más alto. Entre
-      los dos queda un hueco de dos tercios del trazo, ni pegados ni sueltos. La luz es un punto que casi toca la
-      punta del ángulo de arriba, con un hilo de aire de por medio.</p>
+    <p>Caja de 24 × 24. Dos ángulos abiertos —no una forma rellena— con el mismo trazo de 3,6, uno encima del
+      otro: el de arriba cubre algo más de la mitad del ancho; el de abajo, casi todo y más tendido. Entre los dos
+      queda un hueco de poco más de la mitad del trazo, ni pegados ni sueltos. La luz es un punto de radio 1,65
+      sobre la punta del ángulo de arriba, con un hilo de aire de por medio. Todo queda centrado en la caja.</p>
     <div class="mk__fila">
       <figure class="mk__caja base">
         <span data-tv="simbolo" data-tv-size="128"></span>
@@ -104,11 +105,11 @@
       </figure>
       <figure class="mk__caja noche">
         <span data-tv="simbolo" data-tv-size="96"></span>
-        <figcaption>Sobre la noche, la luz sube de tono</figcaption>
+        <figcaption>Blanca sobre noche</figcaption>
       </figure>
       <figure class="mk__caja claro">
         <span data-tv="simbolo" data-tv-size="96"></span>
-        <figcaption>Sobre papel, la luz va en oro oscuro</figcaption>
+        <figcaption>Negra sobre papel</figcaption>
       </figure>
     </div>
   </section>
@@ -121,7 +122,7 @@
     <div class="mk__fila">
       <figure class="mk__caja base"><span data-tv="logo" data-tv-size="36"></span><figcaption>Principal</figcaption></figure>
       <figure class="mk__caja base"><span data-tv="logo" data-tv-size="24"></span><figcaption>Mínimo · 24 px</figcaption></figure>
-      <figure class="mk__caja noche"><span data-tv="logo" data-tv-size="32"></span><figcaption>Sobre noche</figcaption></figure>
+      <figure class="mk__caja noche"><span data-tv="logo" data-tv-size="32"></span><figcaption>Blanco, sobre noche</figcaption></figure>
     </div>
     <div class="mk__nota" style="margin-top:16px">Corrección pendiente en el resto de la UI: <code>.wm</code>
       (<code>css/base.css</code>) pone el nombre en Pixelify Sans y la cabecera de <code>mapa.html</code> todavía
@@ -131,16 +132,17 @@
   <!-- 06 · PALETA -->
   <section>
     <h2><span class="mk__num">06</span>Paleta</h2>
-    <p>Siete valores. La marca usa tres: tinta, luz y papel. Los demás son soporte.</p>
+    <p>Ocho valores. El logo usa dos: negro y blanco. Los demás son soporte.</p>
     <table>
       <thead><tr><th>Muestra</th><th>Nombre</th><th>Hex</th><th>Uso</th></tr></thead>
       <tbody>
-        <tr><td><span class="mk__chip" style="background:#1d1d1d"></span></td><td>tinta</td><td><code>#1D1D1D</code></td><td>El trazo sobre fondo claro</td></tr>
+        <tr><td><span class="mk__chip" style="background:#000000"></span></td><td>negro</td><td><code>#000000</code></td><td>El logo en modo claro</td></tr>
+        <tr><td><span class="mk__chip" style="background:#ffffff"></span></td><td>blanco</td><td><code>#FFFFFF</code></td><td>El logo en modo oscuro</td></tr>
         <tr><td><span class="mk__chip" style="background:#10121a"></span></td><td>noche</td><td><code>#10121A</code></td><td>Fondo de la vista nocturna</td></tr>
-        <tr><td><span class="mk__chip" style="background:#d9a441"></span></td><td>luz</td><td><code>#D9A441</code></td><td>El punto, sobre papel y fondos claros</td></tr>
-        <tr><td><span class="mk__chip" style="background:#f4cd80"></span></td><td>luz alta</td><td><code>#F4CD80</code></td><td>El punto, sobre noche</td></tr>
-        <tr><td><span class="mk__chip" style="background:#fbfaf7"></span></td><td>papel</td><td><code>#FBFAF7</code></td><td>Marco de la postal y símbolo invertido</td></tr>
-        <tr><td><span class="mk__chip" style="background:#3d6a96"></span></td><td>ría</td><td><code>#3D6A96</code></td><td>Solo en la ilustración, nunca en el símbolo</td></tr>
+        <tr><td><span class="mk__chip" style="background:#d9a441"></span></td><td>luz</td><td><code>#D9A441</code></td><td>Acento de la interfaz sobre fondos claros, nunca en el logo</td></tr>
+        <tr><td><span class="mk__chip" style="background:#f4cd80"></span></td><td>luz alta</td><td><code>#F4CD80</code></td><td>El mismo acento sobre noche</td></tr>
+        <tr><td><span class="mk__chip" style="background:#fbfaf7"></span></td><td>papel</td><td><code>#FBFAF7</code></td><td>Marco de la postal</td></tr>
+        <tr><td><span class="mk__chip" style="background:#3d6a96"></span></td><td>ría</td><td><code>#3D6A96</code></td><td>Solo en la ilustración, nunca en el logo</td></tr>
         <tr><td><span class="mk__chip" style="background:#b4472b"></span></td><td>sello</td><td><code>#B4472B</code></td><td>Sello de correos y matasellos</td></tr>
       </tbody>
     </table>
@@ -175,7 +177,7 @@
       </div>
     </div>
     <div class="mk__nota" style="margin-top:8px">Símbolo a 20 px y nombre a 16 px. El vidrio oscurece con el
-      tema y la luz pasa a <code>#F4CD80</code>. Mismo marcado que <code>.hud__brand</code>:
+      tema y el logo pasa de negro a blanco. Mismo marcado que <code>.hud__brand</code>:
       <code>&lt;div class="hud__brand tv-hud"&gt;</code>.</div>
 
     <h3 style="margin-top:24px">2 · Matasellos de A Navideña</h3>
@@ -193,14 +195,14 @@
     <h3 style="margin-top:24px">3 · Certificado</h3>
     <div class="tv-cert">
       <div class="tv-cert__filete"></div>
-      <span class="tv-cert__marca tv-tinta" data-tv="simbolo" data-tv-size="56" data-tv-variante="tinta"></span>
+      <span data-tv="simbolo" data-tv-size="56"></span>
       <p class="tv-cert__nombre-doc">A Navideña</p>
       <p class="tv-cert__texto">Certifica que <b>Marta Costas</b> visitó las 43 instalaciones de la Navidad de Vigo
         entre el 14 de noviembre y el 6 de enero.</p>
       <div class="tv-cert__pie"><span>N.º 00184/2026</span><span>14 · 12 · 2026</span></div>
     </div>
-    <div class="mk__nota" style="margin-top:8px">Una tinta: el símbolo toma el color del texto y el punto se funde
-      con el trazo. Es la versión que sobrevive a una impresora de una tinta y a un troquel.</div>
+    <div class="mk__nota" style="margin-top:8px">El mismo logo, sin color: sobrevive igual a una impresora de una tinta
+      y a un troquel.</div>
   </section>
 
   <!-- 09 · REGLAS -->
@@ -210,16 +212,16 @@
       <div class="mk__si">
         <h3><i class="lu" data-lu="circle-check" data-size="16"></i>Sí</h3>
         <ul>
-          <li>Una tinta cuando el soporte solo tiene una</li>
+          <li>Negra sobre fondo claro y blanca sobre fondo oscuro, siempre</li>
           <li>Aire de medio punto alrededor</li>
           <li>Símbolo suelto cuando el nombre ya está cerca</li>
-          <li>Invertir sobre noche: trazo papel, luz alta</li>
           <li>Girarla 180° cuando el soporte lo pida (una postal, un sello)</li>
         </ul>
       </div>
       <div class="mk__no">
         <h3><i class="lu" data-lu="x" data-size="16"></i>No</h3>
         <ul>
+          <li>Color en el logo, ni siquiera la luz dorada</li>
           <li>Tronco, bolas, regalos o nieve: la marca son dos trazos y un punto</li>
           <li>El nombre en Pixelify o en cualquier fuente de píxel</li>
           <li>Sombras, degradados, biseles o contornos</li>
@@ -235,6 +237,8 @@
       <tbody>
         <tr><td><code>assets/marca.js</code></td><td>Dibuja el árbol, el logotipo, la versión girada y el matasellos: <code>MARCA.simbolo()</code>, <code>MARCA.logotipo()</code>, <code>MARCA.matasellos()</code></td></tr>
         <tr><td><code>css/marca.css</code></td><td>Tokens de marca, logotipo y las tres aplicaciones</td></tr>
+        <tr><td><code>assets/logo-negro.svg</code><br><code>assets/logo-blanco.svg</code></td><td>Las dos versiones como fichero, para donde no se pueda pintar con CSS (README, documentos)</td></tr>
+        <tr><td><code>../favicon.svg</code></td><td>El mismo logo para la pestaña: pasa de negro a blanco con el tema del navegador</td></tr>
         <tr><td><code>marca-exploracion.html</code></td><td>Los tres conceptos que se probaron antes de elegir este</td></tr>
       </tbody>
     </table>

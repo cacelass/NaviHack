@@ -31,6 +31,8 @@
   --fg: #1d1d1d;
   --fg-2: #51554c;
   --fg-3: #686d62;
+  /* logo: dos versiones sin color, negra en claro y blanca en oscuro (DESIGN.md) */
+  --tv-tinta: #000000;
   /* vidrio: lo único que flota sobre el mapa. Sin sombra: el filo hace el trabajo */
   --glass: rgba(255, 255, 255, .72);
   --glass-strong: rgba(251, 250, 246, .9);
@@ -64,6 +66,7 @@ html[data-theme="dark"] {
   --fg: #f4ecd9;
   --fg-2: #bcb6a6;
   --fg-3: #9a9484;
+  --tv-tinta: #ffffff;
   --glass: rgba(23, 26, 36, .72);
   --glass-strong: rgba(26, 30, 42, .9);
   --stage: #14161f;

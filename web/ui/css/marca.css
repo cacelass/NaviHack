@@ -1,21 +1,20 @@
-/* TinyVigo · marca — "la V encendida".
-   Símbolo: la V de Vigo con el punto de luz de Porta do Sol en la punta.
-   Dos dibujos (pixel 16 para 16–32 px, vector para 32 en adelante) y una tinta.
+/* NaviVigo · marca — "el árbol que se gira".
+   Símbolo: dos ángulos gruesos y la luz en la punta; girado, la V de Vigo.
+   Dos versiones y sin color: negra en claro y blanca en oscuro (--tv-tinta, en tokens.css).
    El nombre, siempre Inter. Cero sombras, cero degradados, cero píldoras. */
 
 :root {
-  /* paleta de marca (hex, únicos valores permitidos para la marca) */
-  --tv-tinta: #1d1d1d;      /* el trazo */
+  /* paleta de marca (hex). El logo solo usa --tv-tinta (tokens.css): negro o blanco */
   --tv-noche: #10121a;      /* fondo de la vista nocturna */
-  --tv-luz: #d9a441;        /* el punto de luz, sobre fondo claro */
-  --tv-luz-alta: #f4cd80;   /* el punto de luz, sobre fondo oscuro */
+  --tv-luz: #d9a441;        /* acento: la luz de Navidad, nunca en el logo */
+  --tv-luz-alta: #f4cd80;   /* el mismo acento sobre fondo oscuro */
   --tv-papel: #fbfaf7;      /* la postal */
   --tv-ria: #3d6a96;        /* la ría, solo en la ilustración */
   --tv-sello: #b4472b;      /* el sello de correos */
   --tv-tinta-sec: #51554c;  /* texto de apoyo de la marca */
 
   /* reglas de proporción */
-  --tv-luz-r: .067;         /* radio del punto = 6,7 % del símbolo */
+  --tv-luz-r: .069;         /* radio del punto = 6,9 % del símbolo */
   --tv-aire: .5;            /* aire mínimo alrededor = 50 % del punto */
 
   /* vidrio (lo usan layout.css y aviso.css; aquí queda definido para las páginas de marca) */
@@ -25,7 +24,6 @@
 }
 
 html[data-theme="dark"] {
-  --tv-tinta: #f4ecd9;
   --tv-luz: #f4cd80;
   --tv-tinta-sec: #bcb6a6;
   --glass: rgba(16, 18, 26, .62);
@@ -48,7 +46,6 @@ html[data-theme="dark"] {
 
 /* ——— matasellos (A Navideña) ——— */
 .tv-mat { display: block; color: var(--tv-tinta); }
-.tv-mat__luz { fill: var(--tv-luz); }
 .tv-mat__arco, .tv-mat__fecha { fill: currentColor; font-family: var(--f-ui); }
 .tv-mat__fecha { font-variant-numeric: tabular-nums; }
 
@@ -62,10 +59,9 @@ html[data-theme="dark"] {
   padding: 8px 12px 8px 10px; border-radius: var(--r-ctl);
   background: var(--glass, rgba(248, 247, 244, .72));
   -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  color: var(--fg); --tv-tinta: var(--fg); --tv-luz: var(--accent-4);
+  color: var(--fg);
 }
 .tv-hud .tv-nombre { font-size: 16px; }
-html[data-theme="dark"] .tv-hud { --tv-luz: var(--tv-luz-alta); }
 
 /* 2 · matasellos de A Navideña: el sello que cierra los 43 puntos */
 .tv-sello-nav {
@@ -76,7 +72,7 @@ html[data-theme="dark"] .tv-hud { --tv-luz: var(--tv-luz-alta); }
 .tv-sello-nav .tv-mat { color: var(--fg); }
 .tv-sello-nav p { margin: 0; font-size: var(--fs-meta); color: var(--fg-3); }
 
-/* 3 · certificado: una tinta, con filete y número */
+/* 3 · certificado: con filete y número */
 .tv-cert {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   padding: 24px 20px 18px; background: var(--raised);
@@ -84,7 +80,6 @@ html[data-theme="dark"] .tv-hud { --tv-luz: var(--tv-luz-alta); }
   color: var(--fg);
 }
 .tv-cert__filete { width: 64px; height: 3px; background: var(--accent-4); }
-.tv-cert__marca { color: var(--fg); }        /* una tinta: todo el símbolo en el color del texto */
 .tv-cert__nombre-doc {
   font: 600 var(--fs-title)/1.2 var(--f-ui); letter-spacing: -.02em; margin: 2px 0 0;
 }
@@ -116,13 +111,14 @@ html[data-theme="dark"] .tv-hud { --tv-luz: var(--tv-luz-alta); }
   background: var(--surface); border-radius: var(--r-panel);
 }
 .mk__caja.base { background: var(--bg); border: 1px solid var(--line); }
-.mk__caja.noche { background: var(--tv-noche); color: var(--tv-papel); }
-.mk__caja.claro { background: var(--tv-papel); }
-.mk__caja.tinta { background: var(--bg); }
+.mk__caja.noche { background: var(--tv-noche); color: var(--tv-papel); --tv-tinta: #ffffff; }
+.mk__caja.claro { background: var(--tv-papel); --tv-tinta: #000000; }
 .mk__caja figcaption {
   margin-top: 10px; font-size: var(--fs-meta); color: var(--fg-3); text-align: center;
 }
-.mk__caja.claro figcaption, .mk__caja.noche figcaption { color: var(--tv-tinta-sec); }
+/* las cajas fijan su fondo, así que el pie fija su color: no depende del tema de la página */
+.mk__caja.claro figcaption { color: #51554c; }
+.mk__caja.noche figcaption { color: #bcb6a6; }
 .mk figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
 
 .mk__escala { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; }

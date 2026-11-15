@@ -15,7 +15,7 @@ body {
 ::selection { background: var(--hi); color: var(--bg); }
 
 /* marca: texto en Inter, nunca en fuente de píxel */
-.wm { font: 600 22px/1 var(--f-ui); letter-spacing: -.01em; color: var(--ink); }
+.wm { font: 600 22px/1 var(--f-ui); letter-spacing: -.01em; color: var(--tv-tinta, var(--ink)); }
 
 /* iconos de interfaz: Lucide, línea fina, heredan el color del texto */
 .lu { display: block; flex: none; }

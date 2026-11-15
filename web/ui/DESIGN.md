@@ -37,6 +37,9 @@
   `web/ui/assets/vendor/lucide/` y `tools/build-lucide.py` genera `lucide.js`.
 - **Nada de pixel art en la interfaz:** ni iconos, ni texto, ni marcadores, ni la «prohibida».
   El píxel solo existe como ilustración de fondo (el mapa isométrico).
+- **El logo tiene solo dos versiones y ninguna lleva color:** negra en modo claro y blanca en modo
+  oscuro. Cambia sola con el tema (`--tv-tinta`, en `css/tokens.css`) y el trazo es de 3,6 sobre 24.
+  Nada de luz dorada ni variantes «de una tinta».
 - **Imagen antes que texto**, icono antes que frase. Frases cortas y llanas.
 - **Fotos reales** para los puntos; nunca ilustraciones genéricas de relleno.
 
@@ -131,7 +134,7 @@ Frases cortas en presente, cero adjetivos, la tecnología real por su nombre
 1. ¿Ningún texto en fuente de píxel? (ni marca, ni títulos, ni números de interfaz).
 2. ¿Solo Inter y solo tamaños 28/20/16/14/12 con pesos 400/500/600?
 3. ¿Cero sombras decorativas y cero degradados?
-4. ¿Color solo en estado o en el acento dorado, nunca decorativo?
+4. ¿Color solo en estado o en el acento dorado, nunca decorativo? (el logo no lleva: negro en claro, blanco en oscuro)
 5. ¿Controles sobre el mapa con superficie sólida y contraste AA medido?
 6. ¿Todos los iconos son Lucide (también marcadores y estado) y no hay píxel salvo el mapa ilustrado?
 7. ¿Las imágenes tienen proporción fija, `width`/`height` y el tipo y el estado van sobre ellas? ¿Se recoloca según el ancho (izquierda con sitio, arriba en móvil, o sin ella en compacto) sin cambiar la jerarquía?

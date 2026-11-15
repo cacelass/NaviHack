@@ -117,7 +117,7 @@
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-position: top left, bottom left, left top, right top;
 }
-.pc__sello .tv-simbolo { color: #1d1d1d; }
+.pc__sello .tv-simbolo { color: #000; }
 .pc__sello b { font: 600 7px/1 var(--f-ui); letter-spacing: .1em; color: #1d1d1d; }
 
 .pc__matasellos { position: absolute; right: 30px; top: 44px; color: var(--tv-sello); --tv-tinta: var(--tv-sello); opacity: .78; transform: rotate(-9deg); mix-blend-mode: multiply; }
