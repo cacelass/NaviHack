@@ -467,14 +467,18 @@ body.is-walking .tv-track-go, body.is-walking .tv-track.is-following { display: 
   .tv-topsearch .tv-results { position: fixed; left: calc(8px + env(safe-area-inset-left)); right: calc(8px + env(safe-area-inset-right)); top: calc(62px + env(safe-area-inset-top)); max-height: calc(100dvh - 150px); }
 }
 
-/* chips that scroll sideways say so: an edge fade and an arrow, both gone at the end */
+/* chips that scroll sideways say so: an edge fade with a quiet chevron on each side that has more */
 .tv-scroll-hint { position: relative; }
-.tv-scroll-hint::after { content: ""; position: absolute; top: 0; right: 0; bottom: 8px; width: 56px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--raised) 70%); opacity: 0; transition: opacity .2s var(--ease); }
-.tv-scroll-hint.can-right::after { opacity: 1; }
-.tv-scroll-more { position: absolute; z-index: 1; right: 0; top: 2px; width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--raised); color: var(--fg); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease); }
-.tv-scroll-hint.can-right .tv-scroll-more { opacity: 1; pointer-events: auto; }
-.tv-scroll-more::after { content: ""; position: absolute; inset: -4px; }
-.tv-scroll-more:hover { background: var(--surface); }
+.tv-scroll-hint::before, .tv-scroll-hint::after { content: ""; position: absolute; top: 0; bottom: 8px; width: 48px; pointer-events: none; opacity: 0; transition: opacity .2s var(--ease); z-index: 1; }
+.tv-scroll-hint::before { left: 0; background: linear-gradient(270deg, transparent, var(--raised) 75%); }
+.tv-scroll-hint::after { right: 0; background: linear-gradient(90deg, transparent, var(--raised) 75%); }
+.tv-scroll-hint.can-left::before, .tv-scroll-hint.can-right::after { opacity: 1; }
+.tv-scroll-more { position: absolute; z-index: 2; top: 2px; width: 24px; height: 36px; display: grid; place-items: center; padding: 0; border: 0; background: none; color: var(--fg-2); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease), color .15s var(--ease); }
+.tv-scroll-more.is-left { left: 0; }
+.tv-scroll-more.is-right { right: 0; }
+.tv-scroll-hint.can-left .tv-scroll-more.is-left, .tv-scroll-hint.can-right .tv-scroll-more.is-right { opacity: 1; pointer-events: auto; }
+.tv-scroll-more::after { content: ""; position: absolute; inset: -4px -10px; } /* 44 px to tap, 24 px to see */
+.tv-scroll-more:hover { color: var(--fg); }
 
 /* a searched address on the drawn map: a pin with its name */
 .tv-addr-pin { display: flex; flex-direction: column; align-items: center; color: var(--acc-line); pointer-events: none; }
@@ -582,3 +586,11 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-picker-item.is-on { color: var(--fg); font-weight: var(--w-600); }
 .tv-picker { -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); }
 .tv-when-hint { margin: var(--sp-2) 0 0; font-size: var(--fs-meta); color: var(--fg-3); }
+
+/* LOC-01: approximate location, with a way out */
+.tv-accuracy { display: grid; gap: var(--sp-2); margin-top: var(--sp-2); padding: var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); }
+.tv-accuracy .tv-note { display: flex; gap: 6px; align-items: flex-start; margin: 0; }
+.tv-accuracy .tv-note svg { flex: none; color: var(--warning); margin-top: 1px; }
+.tv-accuracy .tv-btn { justify-self: start; }
+.tv-picker-list { cursor: grab; }
+.tv-picker-list:active { cursor: grabbing; }

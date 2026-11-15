@@ -5,21 +5,23 @@
 (function () {
   const lu = (name, size = 20) => (window.LU ? LU.svg(name, { size }) : "");
 
-  // SEARCH-02: a row of chips that scrolls sideways says so: a fade on the edge with more to see and
-  // an arrow button that moves it on (both go away at the end). Used by search and «Ver sitios».
+  // SEARCH-02: a row of chips that scrolls sideways says so: an edge fade and a quiet chevron on
+  // each side that has more (both go away at the ends). Used by search and «Ver sitios».
   window.tvScrollHint = (row) => {
     const wrap = document.createElement("div");
     wrap.className = "tv-scroll-hint";
-    const more = document.createElement("button");
-    more.type = "button";
-    more.className = "tv-scroll-more";
-    more.innerHTML = lu("chevron-right", 18);
-    const label = () => (window.tinyvigoPoints ? window.tinyvigoPoints.t("search.more_filters") : "");
-    more.title = label() || "›";
-    // a pointer shortcut only: keyboard and screen-reader users reach every chip with Tab already
-    more.tabIndex = -1; more.setAttribute("aria-hidden", "true");
-    more.onmousedown = (e) => e.preventDefault(); // keep the search box focused
-    more.onclick = () => row.scrollBy({ left: Math.max(120, row.clientWidth * 0.7), behavior: "smooth" });
+    // a quiet chevron on each edge with more to see (not a button with a box): a pointer shortcut,
+    // keyboard and screen readers reach every chip with Tab already
+    const arrow = (dir) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "tv-scroll-more is-" + dir;
+      b.innerHTML = lu(dir === "left" ? "chevron-left" : "chevron-right", 18);
+      b.tabIndex = -1; b.setAttribute("aria-hidden", "true");
+      b.onmousedown = (e) => e.preventDefault(); // keep the search box focused
+      b.onclick = () => row.scrollBy({ left: (dir === "left" ? -1 : 1) * Math.max(120, row.clientWidth * 0.7), behavior: "smooth" });
+      return b;
+    };
     const sync = () => {
       const max = row.scrollWidth - row.clientWidth;
       wrap.classList.toggle("can-left", row.scrollLeft > 4);
@@ -27,10 +29,11 @@
     };
     row.addEventListener("scroll", sync, { passive: true });
     new ResizeObserver(sync).observe(row);
-    wrap.append(row, more);
+    wrap.append(arrow("left"), row, arrow("right"));
     requestAnimationFrame(sync);
     return wrap;
   };
+
   // right-hand actions, in this order: time, view, layers, theme, settings
   // UI-08: the theme lives in Ajustes only (a second sun/moon next to «Ahora» confused people)
   const ACTIONS = [".tv-time-quick", ".tv-view", ".tv-layers-btn", ".tv-settings-open"];
@@ -67,6 +70,15 @@
     input.placeholder = P.t("points.search");
     input.setAttribute("aria-label", P.t("points.search"));
     skip.textContent = P.t("a11y.skip");
+    // the dock was written in Spanish in index.html and never translated; on a phone it shows only
+    // its icons, so each button carries its full name for screen readers too
+    for (const [id, key] of [["dock-sitios", "dock.sites"], ["dock-ruta", "dock.route"]]) {
+      const b = document.getElementById(id); if (!b) continue;
+      const full = b.querySelector(".tv-dock-label"), short = b.querySelector(".tv-dock-label-short");
+      if (full) full.textContent = P.t(key);
+      if (short) short.textContent = P.t(key + "_short");
+      b.setAttribute("aria-label", P.t(key));
+    }
   }
 
   // Adopt the controls as their modules create them (some arrive after tv:ready).

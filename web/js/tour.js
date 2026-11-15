@@ -252,6 +252,31 @@
         clearTimeout(settle);
         settle = setTimeout(() => { const i = Math.round(list.scrollTop / ITEM); if (i !== idx) { idx = Math.max(0, Math.min(values.length - 1, i)); mark(); onPick(values[idx][0]); } }, 90);
       }, { passive: true });
+      // click and drag with the mouse too (a finger already scrolls it); on release it snaps
+      let drag = null;
+      list.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse" || e.button !== 0) return;
+        drag = { y: e.clientY, top: list.scrollTop, moved: false };
+        list.setPointerCapture(e.pointerId);
+        list.style.scrollSnapType = "none"; // snapping fights a manual drag
+      });
+      list.addEventListener("pointermove", (e) => {
+        if (!drag) return;
+        const dy = e.clientY - drag.y;
+        if (Math.abs(dy) > 3) drag.moved = true;
+        list.scrollTop = drag.top - dy;
+      });
+      const release = (e) => {
+        if (!drag) return;
+        const moved = drag.moved; drag = null;
+        list.releasePointerCapture(e.pointerId);
+        list.style.scrollSnapType = "";
+        if (moved) { e.preventDefault(); list.dataset.dragged = "1"; go(Math.round(list.scrollTop / ITEM), true); }
+      };
+      list.addEventListener("pointerup", release);
+      list.addEventListener("pointercancel", release);
+      // a drag must not count as a click on the item under the pointer
+      list.addEventListener("click", (e) => { if (list.dataset.dragged) { e.stopPropagation(); delete list.dataset.dragged; } }, true);
       list.onkeydown = (e) => {
         const k = { ArrowDown: 1, ArrowUp: -1, PageDown: 4, PageUp: -4 }[e.key];
         if (k) { e.preventDefault(); go(idx + k, true); }
@@ -371,6 +396,7 @@
           el("div", "tv-sticky-foot", go));
       }
       if (busy) box.append(el("p", "tv-note", busy));
+      if (folded) { const acc = accuracyNote(); if (acc) box.append(acc); }
       if (trip) box.append(renderGo());
       if (result) box.append(renderResult());
     }
@@ -668,11 +694,22 @@
     document.addEventListener("tv:lang", showStep);
     document.addEventListener("tv:stories", showStep);
 
+    // LOC-01: the best fix the device can give (GPS on a phone; on a computer it comes from the wifi
+    // and can be a street off). The margin is kept: past 40 m the form says so and offers to pick the street.
+    let fixAccuracy = null;
     function locate() {
       return new Promise((res) => {
         if (!fromHere || !navigator.geolocation) return res(null);
-        navigator.geolocation.getCurrentPosition((p) => res([p.coords.latitude, p.coords.longitude]), () => res(null), { timeout: 6000, maximumAge: 60000 });
+        navigator.geolocation.getCurrentPosition((p) => { fixAccuracy = Math.round(p.coords.accuracy || 0); res([p.coords.latitude, p.coords.longitude]); },
+          () => res(null), { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 });
       });
+    }
+    function accuracyNote() {
+      if (startKind !== "here" || !fixAccuracy || fixAccuracy <= 40) return null;
+      const pick = el("button", "tv-btn tv-btn-quiet", lu("map-pin", 16), t("tour.pick_street"));
+      pick.type = "button";
+      pick.onclick = () => { startKind = "street"; fromHere = false; startPick = null; editing = true; result = null; trip = null; emit("tv:clear-route"); render(); loadStreets(); };
+      return el("div", "tv-accuracy", el("p", "tv-note", lu("crosshair", 16), el("span", null, t("tour.approx_location", { m: fixAccuracy }))), pick);
     }
 
     async function run() {

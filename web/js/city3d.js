@@ -1,6 +1,6 @@
-// NaviVigo «Vista ciudad» en 3D (MAP3D-01): fuera del dibujo, el mundo real con satélite, edificios
-// de OpenStreetMap levantados en 3D y los nombres de las calles, con las rutas de «cómo llegar»
-// dibujadas encima. MapLibre GL (BSD-3, vendor/maplibre) se carga la primera vez que se abre.
+// NaviVigo «Vista ciudad» (MAP3D-01): fuera del dibujo, el mundo real en satélite visto desde arriba,
+// con los nombres de las calles de OpenStreetMap y las rutas de «cómo llegar» dibujadas encima.
+// (Hubo una versión inclinada con edificios en 3D: se quitó, se pedía el satélite normal.) MapLibre GL (BSD-3, vendor/maplibre) se carga la primera vez que se abre.
 // Fuentes: PNOA (IGN, CC BY 4.0) en España y World Imagery (Esri) en el resto; edificios y nombres,
 // OpenStreetMap vía OpenFreeMap (ODbL). Sin WebGL, se queda la vista 2D de siempre (city.js).
 // Expone la misma API que city.js: map, setCity, focus, popup, setWalked, clearWalked, addTransit.
@@ -57,7 +57,7 @@
       }
       map = new maplibregl.Map({
         container: wrap,
-        center: VIGO, zoom: 15.2, pitch: 58, bearing: -15, maxPitch: 70,
+        center: VIGO, zoom: 15.2, pitch: 0, bearing: 0, maxPitch: 0, dragRotate: false, touchPitch: false,
         attributionControl: { compact: true },
         style: {
           version: 8,
@@ -70,8 +70,6 @@
           layers: [
             { id: "sat-world", type: "raster", source: "world" },
             { id: "sat-es", type: "raster", source: "pnoa", minzoom: 6 },
-            { id: "buildings", type: "fill-extrusion", source: "osm", "source-layer": "building", minzoom: 14,
-              paint: { "fill-extrusion-color": "#f3ecdc", "fill-extrusion-height": ["coalesce", ["get", "render_height"], 9], "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], 0], "fill-extrusion-opacity": 0.42 } },
             { id: "street-names", type: "symbol", source: "osm", "source-layer": "transportation_name", minzoom: 14.5,
               layout: { "symbol-placement": "line", "text-field": ["coalesce", ["get", "name"], ""], "text-font": ["Noto Sans Regular"], "text-size": 12, "text-max-angle": 30 },
               paint: { "text-color": "#ffffff", "text-halo-color": "rgba(16,18,26,.85)", "text-halo-width": 1.6 } },
@@ -81,7 +79,8 @@
           ],
         },
       });
-      map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "bottom-right");
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+      map.touchZoomRotate.disableRotation();
       await new Promise((res) => map.once("load", res));
       // credits folded behind the (i) button: they took the whole bottom strip
       const attrib = wrap.querySelector(".maplibregl-ctrl-attrib"); if (attrib) attrib.classList.remove("maplibregl-compact-show");
@@ -137,7 +136,7 @@
 
   function fit() {
     if (!lastBounds) return;
-    map.fitBounds(lastBounds, { padding: pad(), pitch: 55, bearing: -15, duration: 900, maxZoom: 17.5 });
+    map.fitBounds(lastBounds, { padding: pad(), duration: 900, maxZoom: 17.5 });
   }
 
   // rutas del paseo o de casa al centro (tv:route), con sus tramos coche / bus / a pie
@@ -190,7 +189,7 @@
     load().then(() => {
       if (focusPin) { focusPin.remove(); focusPin = null; }
       if (html) focusPin = marker('<div class="tv-focus-pin">' + (window.LU ? LU.svg("map-pin", { size: 34 }) : "") + "</div>", [lon, lat], { anchor: "bottom" });
-      map.flyTo({ center: [lon, lat], zoom: Math.min(zoom + 0.3, 18.5), pitch: 58, bearing: -15, duration: 1400, essential: true });
+      map.flyTo({ center: [lon, lat], zoom: Math.min(zoom + 0.3, 18.5), duration: 1400, essential: true });
       if (html) popup(lat, lon, html);
     });
   }

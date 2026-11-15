@@ -382,5 +382,11 @@
   "go.traffic_slow": "slow or jammed on {streets}.",
   "go.traffic_route": "Your car route goes through slow sections: {streets}.",
   "go.traffic_note": "The car time doesn't include traffic; Google Maps does.",
-  "tour.when_hint": "The time you leave your starting point. If you're far away, we tell you when you'll arrive."
+  "tour.when_hint": "The time you leave your starting point. If you're far away, we tell you when you'll arrive.",
+  "tour.approx_location": "Approximate location (±{m} m): on a computer it comes from the wifi and may be the next street.",
+  "tour.pick_street": "Pick my street",
+  "dock.sites": "See places",
+  "dock.sites_short": "Places",
+  "dock.route": "Start a walk",
+  "dock.route_short": "Walk"
 }

@@ -382,5 +382,11 @@
   "go.traffic_slow": "lento o con retenciones en {streets}.",
   "go.traffic_route": "Tu ruta en coche pasa por tramos lentos: {streets}.",
   "go.traffic_note": "El tiempo en coche no cuenta el tráfico; Google Maps sí.",
-  "tour.when_hint": "Es la hora a la que sales del punto de partida. Si estás lejos, te decimos a qué hora llegas."
+  "tour.when_hint": "Es la hora a la que sales del punto de partida. Si estás lejos, te decimos a qué hora llegas.",
+  "tour.approx_location": "Ubicación aproximada (±{m} m): en un ordenador sale de la wifi y puede ser la calle de al lado.",
+  "tour.pick_street": "Elegir mi calle",
+  "dock.sites": "Ver sitios",
+  "dock.sites_short": "Sitios",
+  "dock.route": "Empezar ruta",
+  "dock.route_short": "Ruta"
 }
