@@ -19,8 +19,9 @@ Guía para repetirlo. Las reglas cortas están en `vault/01_PROYECTO/mapa_render
 | `v20-eliptica2` | Plaza Elíptica con la cúpula baja y ovalada que tiene de verdad, base de piedra, monumento de tubos de acero, pérgola (con fotos reales de referencia) | 1 |
 | `v21-capturas` | Costura H y=2048 que cortaba un bosquecillo (el render es una explanada de grava) y mancha clara con borde junto a la estación (ya estaba en el mapa original) | 2 |
 | `v22-plaza-estacion` | La plaza de la estación era asfalto oscuro y el aparcamiento salía vacío; en el render es hormigón claro y aparcamiento lleno de coches | 1 |
+| `v23-costura-h` | Costura H y=2048 desde x=2560 (cruzaba los tejados): ventana nueva centrada en (2800, 2048), 1,14× → 1,04× | 1 |
 
-Gasto total de la ronda: 35 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
+Gasto total de la ronda: 36 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
 `work/mapa-sonnet/` (`s4` a `s16`) y no se versionan.
 
 ## Principio: componer, no rehacer
