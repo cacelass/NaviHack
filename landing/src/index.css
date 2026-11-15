@@ -182,7 +182,7 @@ section[id] {
   height: 24px;
   display: block;
   flex-shrink: 0;
-  color: var(--navi-tile);
+  color: inherit;
   transition: transform 400ms var(--ease-out);
 }
 

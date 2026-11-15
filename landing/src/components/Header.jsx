@@ -130,9 +130,9 @@ export default function Header() {
       <div className="wrap header-inner">
         <a className="brand" href="#top" aria-label={`${site.name}, ir al inicio`} onClick={() => setOpen(false)}>
           <svg className="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6.2 9.2L12 3.4L17.8 9.2" stroke="currentColor" strokeWidth="2.4" strokeLinecap="butt" strokeLinejoin="miter" />
-            <path d="M1.6 19.6L12 10.8L22.4 19.6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="butt" strokeLinejoin="miter" />
-            <circle cx="12" cy="1.7" r="1.5" fill="#d9a441" />
+            <path d="M6.4 12.2L12 7L17.6 12.2" stroke="currentColor" strokeWidth="3.6" strokeLinecap="butt" strokeLinejoin="miter" />
+            <path d="M2.2 22L12 15L21.8 22" stroke="currentColor" strokeWidth="3.6" strokeLinecap="butt" strokeLinejoin="miter" />
+            <circle cx="12" cy="2.15" r="1.65" fill="currentColor" />
           </svg>
           <span className="brand-name">{site.name}</span>
         </a>
