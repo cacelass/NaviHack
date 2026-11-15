@@ -21,7 +21,7 @@
 
   // HUD controls hide only where an open surface actually covers them (HUD v5): on a wide
   // screen a centred sheet takes the dock and nothing else; on a phone, whatever it reaches.
-  const HUD = ".tv-dock, .tv-event-chip, .tv-corner, .tv-topsearch, .tv-brand, .tv-topbar-actions > *";
+  const HUD = ".tv-dock, .tv-event-chip, .tv-corner, .tv-topsearch, .tv-topbar-actions > *";
   const CENTRED = ".tv-tour, .tv-step, .tv-settings, .tv-layers-pop";
   const phone = matchMedia("(max-width: 700px)");
   const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
