@@ -177,6 +177,8 @@ Dos tuberías conviven:
 - **Render → tiles.** El mapa base se dibuja una sola vez (modelo de imagen) y
   se publica como pirámide de teselas en `web/tiles/`. Sol, sombras, noche y
   clima se aplican por código sobre esas teselas, no se redibujan.
+  Cómo se hizo y qué se aprendió: [`pipeline/render/README.md`](pipeline/render/README.md) (manual) y
+  [`docs/investigacion/expansion-vialia.md`](docs/investigacion/expansion-vialia.md) (memoria).
 
 Diagrama del pipeline de render (Mermaid):
 

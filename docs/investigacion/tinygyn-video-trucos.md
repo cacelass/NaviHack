@@ -350,3 +350,25 @@ El vídeo y nuestro spec coinciden: **el tile se pinta sin luz**. La luz se calc
 - [ ] Mar: una textura tileable + LUT de profundidad, cero llamadas.
 - [ ] Luz: ninguna sombra pintada; height map listo para sol, avión y tilt-shift.
 - [ ] Vialia: 5×5 con solape, nota de tile, zona desfasada, noria como asset aparte.
+
+---
+
+## 11. Lo que se comprobó en la práctica con Gemini Flash (TinyVigo, 14-15 de noviembre de 2026)
+
+El vídeo asume un modelo que obedece bien («redibuja solo lo que no es rojo»). Con `gemini-3.1-flash-image`,
+varias piezas del método no se trasladan. Cifras y comandos en
+[`expansion-vialia.md`](expansion-vialia.md) y en `pipeline/render/README.md`.
+
+| Pieza del vídeo | Qué pasó aquí | Qué se hace en su lugar |
+|---|---|---|
+| Costura: tira con los cuartos exteriores en rojo, redibujar el centro (§2) | Probado en la peor costura del 3×3 (salto 1,99×). El modelo **inventó otro barrio** (calles diagonales → cuadrícula con parque) y la métrica de salto dijo «arreglado» (0,91×); fidelidad al render 0,36 → 0,04. Dándole también el render como ancla ya no inventa pero **copia las dos mitades, raya incluida** (1,85×) | Ventana nueva de 1024 px centrada en la costura, pintada desde el render con la muestra de estilo (1,99× → 1,01×) |
+| Esquinas por IA (§2) | Ya lo dejó dicho el informe del 3×3: empeoran el detalle | Misma ventana nueva |
+| «Picture 1»: dibujo global de baja definición para posición y color (§4) | **No se ha usado**; la deriva de color se contuvo con una muestra de estilo del centro (512 px) y el ajuste de color por código | Pendiente de probar si mejora el tono entre ventanas lejanas |
+| Referencia de estilo + vecinos (§4) | La muestra **se copia**: casas sobre un muelle de maderas, una estación sobre una autovía, bloques en carmín, velo naranja. 5 de las 13 ventanas necesitaron repintarse | Línea explícita «no inventes X» por ventana y revisar cada una contra el render |
+| Mar por código (§7.3) | Confirmado y era de lo más visible. Pero la textura por ruido de valor hacía «nubes» y la máscara por color dejaba cuadritos en las crestas de las olas | Ondas alargadas y una máscara de agua afinada; ver `pipeline/render/sea.py` |
+| Datos desfasados: redibujar desde la foto de satélite (§1) | No hizo falta: el render parte de la ortofoto PNOA y los edificios del Concello | — |
+| Filtros finales fijos sobre cada tesela (§4) | Solo un ajuste de color por ventana y el contraste del ensamblador; no hay un stack de tres filtros versionado | Pendiente |
+| Coste: 1 llamada por dibujo (§5) | 42 llamadas `OK` en toda la ampliación (18 sobreviven en el mapa publicado), más 8 429 y 2 errores de red | Contar siempre las llamadas «de aprendizaje» |
+
+Y una lección que el vídeo no cuenta: **una métrica sola engaña**. El salto de color en una costura se puede
+«arreglar» inventando una tira uniforme; hay que mirar a la vez la fidelidad al render y la imagen.

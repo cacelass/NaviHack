@@ -21,6 +21,7 @@
 | `01_PROYECTO/arquitectura.md` | Cómo está montado el proyecto |
 | `01_PROYECTO/agentes.md` | Topología del sistema de agentes |
 | `01_PROYECTO/roadmap.md` | Por dónde va el trabajo |
+| `01_PROYECTO/mapa_render.md` | Mapa isométrico: render, pintado y publicación (las reglas en una página) |
 | `04_VISUALIZACIONES/grafo_conocimiento.md` | Grafo de conocimiento (graphify) |
 | `05_AGENTES/_index.md` | Directorio de agentes |
 | `05_AGENTES/*.md` | Ficha individual de cada agente |
