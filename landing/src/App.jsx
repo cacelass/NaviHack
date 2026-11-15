@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Reveal from './components/Reveal.jsx'
@@ -75,6 +76,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <Analytics />
     </>
   )
 }
