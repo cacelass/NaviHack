@@ -34,12 +34,13 @@
         "Los 35 puntos de points.json proyectados y comprobados sobre el mapa con una captura",
         "Tests de ida y vuelta y de un punto de control conocido"
       ],
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "a418fcba-f908-45e7-9e73-ecc0f2e71b5c",
       "raw_status": "IN_PROGRESS",
       "branch": "a418fcba-geo-01-georreferencia-del-mapa-i",
-      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d"
+      "assigned_actor_id": "cfbd7bda-65ce-4a11-b1c2-6f34daa85f1d",
+      "closed": "2026-11-15"
     },
     {
       "id": "GEAS-001",
@@ -1684,10 +1685,11 @@
         "Coste en llamadas calculado antes de lanzar",
         "Bloque ampliado publicado como versión nueva"
       ],
-      "status": "pending",
+      "status": "done",
       "depends_on": [],
       "ticket_id": "6219ff16-9a6d-4aa3-a6f0-d02748f1fc6c",
-      "raw_status": "FREE"
+      "raw_status": "FREE",
+      "closed": "2026-11-15"
     },
     {
       "id": "BRAND-01",

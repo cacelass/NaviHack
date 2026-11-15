@@ -972,3 +972,85 @@ $ node scripts/test_web_geo.mjs → 'OK proyeccion: centro y 5 puntos ida/vuelta
 ```
 
 </details>
+
+## GEO-01 — Georreferencia del mapa isométrico: lat/lon a píxel del lienzo y vuelta
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 0.81s
+- **Cambios:** pipeline/georef.py y georef.ts (lat/lon/z <-> pixel y coordenadas del visor), pipeline/render/{params,calibrate_origin,silhouette,validate_points}.py, render-params.json, fixtures/{points-3x3,origin-calibration-3x3,origin-calibration-wide}.json, tests/test_georef.py (30) y tests/test_calibrate_origin.py (6), docs/img/geo-01-puntos-sobre-el-mapa.jpg
+- **Decisiones:** El origen se lee del renderer original (no se escribe a mano) y se contrasta con el mar del MDT05: desfase de unos 3 m al este, norte-sur sin determinar, dentro del error de la fuente (celdas de 5 m), asi que no se corrige. El estimador se valida con desfases conocidos. 31 de los 35 puntos caen sobre el mapa ampliado; los otros 4 (Circo, Calvario, Samil x2) quedan fuera de cualquier bloque. Detalle y errores en docs/investigacion/expansion-vialia.md 4.1.
+- **Pendiente:** La componente norte-sur del origen no esta determinada: haria falta una costa vectorial mejor que la del MDT05 (la de OSM aqui es PGS, 3 vias). No hay otro contraste independiente a la vista.
+
+<details><summary>Evidencia</summary>
+
+```
+$ .venv/bin/python -m pytest tests/test_georef.py -q --no-header
+..............................                                           [100%]
+30 passed in 0.78s
+
+$ python3 -m pipeline.render.params --check
+render-params.json al día
+
+$ /tmp/opencode/venv-np/bin/python -m pytest tests/test_calibrate_origin.py -q --no-header   (numpy + opencv)
+6 passed, 1 warning in 0.55s
+
+$ .venv/bin/python -m pytest tests -q --no-header   (suite completa del proyecto)
+..............                                                           [100%]
+158 passed, 1 skipped in 0.82s
+
+$ python3 -m pipeline.render.calibrate_origin --render <render original 3x3> --canvas 3x3 --sweep   (resumen, umbral 1,0 m)
+  3x3   desfase (+5.10, +1.96) px = +2.82 m este, -0.68 m norte | IoU del mar 0.860 -> 0.863
+  wide  desfase (+6.59, +0.89) px = +3.35 m este, +0.25 m norte | IoU del mar 0.795 -> 0.800
+
+$ puntos de data/points.json proyectados sobre el mapa (lienzo wide): ver docs/img/geo-01-puntos-sobre-el-mapa.jpg
+  31 de 35 puntos dentro del lienzo 5120x3072; fuera: ['concello-3503', 'concello-3508', 'concello-3512', 'concello-3513']
+```
+
+</details>
+
+## ZONE-02 — Ampliación del bloque hacia Vialia
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 0.90s
+- **Cambios:** Render ampliado (pipeline/render/{fetch_ortho,fetch_buildings,scene,serve}.py y templates/), pintado e integracion (port_fix.py, pack_tiles.py, zona/ con prompts y recetas), mar por codigo (sea.py), borde (edge_fix.py), noria (noria.py), comprobaciones (seam_metric.py, fidelity.py); pirámides web/tiles/v7-puerto-vialia a v10-costura-izq; scripts/build_web_data.py y tests; doble clic para hacer zoom en web/js/app.js; manual pipeline/render/README.md y memoria docs/investigacion/expansion-vialia.md
+- **Decisiones:** Se pinta en ventanas de 1024 px y no en teselas sueltas ni en costuras: la tesela del puerto sola se inventaba, y redibujar una costura ya pintada con Gemini Flash o inventa un barrio o copia la raya. El mar va por codigo y de una vez para todo el mapa. La muestra de estilo del centro se copia, asi que cada ventana lleva una linea explicita de no inventes y se mira contra el render antes de integrarla. Cada version publicada es nueva y conserva canvas 3072. La estimacion de coste (16 minimo, ~30) se quedo corta: fueron 42 llamadas OK, 18 sobreviven en el mapa.
+- **Pendiente:** Otras costuras del 3x3 (media 1,26x, la peor 1,60x): misma receta, una llamada cada una. La noche de la noria encendida por codigo vive en web/ui (agente navihack). Archivo comprimido de las ventanas pintadas fuera del repo. No se ha subido version ni CHANGELOG (git commit_feature).
+
+<details><summary>Evidencia</summary>
+
+```
+$ git log --oneline --grep="publish v"   (versiones nuevas del mapa, ninguna sobrescribe a otra)
+599655e feat(map): publish v6-pulido-arbol pyramid and point the web at it
+865cd7c feat(map): publish v7-puerto-vialia, the repainted harbour and the Vialia zone
+8c85e18 feat(map): publish v8-este-ampliado, the map grows east past Vialia
+5e63508 feat(map): publish v9-noria, the Ferris wheel drawn into the car park at Vialia
+59c94e0 feat(map): publish v10-costura-izq, the worst seam of the 3x3 redrawn as a window
+
+$ cat web/tiles/current.json
+{"version": "v10-costura-izq"}
+
+$ manifests publicados (imagen y lienzo georreferenciado)
+  v7-puerto-vialia   imagen 4096x3072 | canvas 3072x3072 | niveles 9-12
+  v8-este-ampliado   imagen 5120x3072 | canvas 3072x3072 | niveles 9-13
+  v9-noria           imagen 5120x3072 | canvas 3072x3072 | niveles 9-13
+  v10-costura-izq    imagen 5120x3072 | canvas 3072x3072 | niveles 9-13
+
+$ los cuatro hitos dentro del lienzo ampliado (5120x3072), pixel y tesela (fila, columna)
+  porta-do-sol   ( 1535.6,  1535.6)  tesela (1, 1)
+  alameda        ( 2147.2,  1449.7)  tesela (1, 2)
+  garcia-barbon  ( 3097.1,  2027.9)  tesela (1, 3)
+  vialia         ( 3261.4,  2526.3)  tesela (2, 3)
+  noria (Concello) ( 4275.9,  2255.8)  tesela (2, 4)  <- dentro desde v8
+
+$ llamadas de imagen de la ampliacion (pipeline/ledger/image-calls.jsonl)
+  OK 42 | 429 8 | red 2   (el ledger total: 80 filas)
+
+$ mar por codigo, una sola capa para todo el mapa: pipeline/render/sea.py; aplicado en v8 y siguientes
+
+$ .venv/bin/python -m pytest tests -q --no-header
+158 passed, 1 skipped in 1.26s
+
+Estimacion de coste ANTES de lanzar: work/render-expansion/INFORME.md: 16 llamadas de minimo, ~30 en la practica. Real: 42 (18 sobreviven). Ver docs/investigacion/expansion-vialia.md §6.
+```
+
+</details>
