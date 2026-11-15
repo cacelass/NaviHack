@@ -15,9 +15,10 @@ Guía para repetirlo. Las reglas cortas están en `vault/01_PROYECTO/mapa_render
 | `v16-costa` | Costa de 7 tramos redibujada (espigón, barcos, bordes nítidos) | 16 |
 | `v17-sombras` | Tres sombras que la máscara de agua tomaba por agua | 3 |
 | `v18-cuenca` | Cuenca de agua inventada y texto falso en un tejado | 1 |
-| `v19-eliptica` | Cúpula de cristal esférica inventada sobre la Plaza Elíptica (es una plaza plana con un tragaluz oval) | 1 |
+| `v19-eliptica` | Error mío: quité la cúpula de la Plaza Elíptica y la dejé plana. Sustituida por v20 | 1 |
+| `v20-eliptica2` | Plaza Elíptica con la cúpula baja y ovalada que tiene de verdad, base de piedra, monumento de tubos de acero, pérgola (con fotos reales de referencia) | 1 |
 
-Gasto total de la ronda: 29 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
+Gasto total de la ronda: 30 llamadas de imagen de 40. Cada versión sale del fichero anterior; los intermedios están en
 `work/mapa-sonnet/` (`s4` a `s16`) y no se versionan.
 
 ## Principio: componer, no rehacer
@@ -86,7 +87,7 @@ Criterios para aceptar o rechazar una respuesta (se rechazaron 9 de 16 recortes 
 
 ## 4. Auditoría y comprobaciones
 
-- **Identificar lo que el mapa dibuja antes de darlo por bueno**: coordenadas con `pipeline.georef.to_latlon(px, py)` y búsqueda web del lugar. La «cúpula» de v10 a v18 era la Plaza Elíptica (42,2318 N, −8,7207 E): el modelo convirtió el tragaluz oval en una esfera con nervios. Que coincida con el render no basta: el render también puede llevar un tragaluz que el modelo exagera.
+- **Identificar lo que el mapa dibuja antes de darlo por bueno**: coordenadas con `pipeline.georef.to_latlon(px, py)` y búsqueda web del lugar. La «cúpula» de v10 a v18 era la Plaza Elíptica (42,2318 N, −8,7207 E): existe una cúpula de cristal, pero baja y ovalada, sobre un basamento de pizarra; el modelo la había exagerado a una esfera alta. Buscar **fotos reales** (Wikimedia Commons: `commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=<lugar>&gsrnamespace=6&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json`) y pasarlas como tercera imagen a `imggen.mjs`. Error mío en v19: leí «plaza plana» en la web, quité la cúpula sin mirar una foto y la dejé mal. Primero la foto, después la decisión.
 
 - Hojas de 24 pares mapa | render a 600 px **no ven** defectos finos (los dos fantasmas, las grúas, las charcas); las capturas
   de Jose con zoom sí. Ante una captura: localizarla con `cv2.matchTemplate` multiescala sobre el mapa (la escala sale sola),
