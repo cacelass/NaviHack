@@ -66,13 +66,7 @@
 
     function show(e) {
       if (!e.where || !window.tinyvigoCity) return;
-      const { map, setCity } = window.tinyvigoCity;
-      setCity(true);
-      setTimeout(() => {
-        map.flyTo([e.where.lat, e.where.lon], 17);
-        L.popup({ maxWidth: 260 }).setLatLng([e.where.lat, e.where.lon])
-          .setContent("<strong>" + e.titulo.replace(/</g, "&lt;") + "</strong><br>" + (e.where.name || "").replace(/</g, "&lt;")).openOn(map);
-      }, 120);
+      window.tinyvigoCity.focus(e.where.lat, e.where.lon, "<strong>" + e.titulo.replace(/</g, "&lt;") + "</strong><br>" + (e.where.name || "").replace(/</g, "&lt;"), 17);
       if (window.matchMedia("(max-width: 700px)").matches) { box.classList.remove("is-open"); render(); }
     }
 

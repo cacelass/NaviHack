@@ -513,3 +513,25 @@ body .tv-theme { display: none !important; } /* the theme is a setting, not a qu
   .tv-offline .tv-btn { justify-self: stretch; justify-content: center; }
 }
 .tv-settings .tv-seg.tv-seg-4 { grid-template-columns: 1fr 1fr; }
+
+/* ── MAP3D-01: «Vista ciudad» en 3D (city3d.js, MapLibre) ─────────────────────────────── */
+.tv-city3d { background: #10121a; }
+.tv-route-me { width: 16px; height: 16px; border-radius: 50%; background: #3d8bff; border: 3px solid #fff; box-sizing: border-box; }
+.tv-route-me.is-live { width: 20px; height: 20px; }
+.tv-marker-3d { width: 26px; height: 32px; }
+.tv-city3d .maplibregl-ctrl-group { background: var(--raised); border: 1px solid var(--line); border-radius: var(--r-ctl); box-shadow: none; overflow: hidden; }
+.tv-city3d .maplibregl-ctrl-group button { width: var(--tap); height: var(--tap); }
+.tv-city3d .maplibregl-ctrl-group button + button { border-top: 1px solid var(--line); }
+.tv-city3d .maplibregl-ctrl-icon { filter: var(--ctrl-icon-filter, none); }
+html[data-theme="dark"] .tv-city3d .maplibregl-ctrl-icon { filter: invert(1) brightness(1.4); }
+.tv-city3d .maplibregl-ctrl-bottom-right { bottom: calc(76px + env(safe-area-inset-bottom)); right: calc(4px + env(safe-area-inset-right)); }
+.tv-city3d .maplibregl-ctrl-attrib { font: 11px/1.4 var(--f-ui); }
+.tv-city3d .maplibregl-popup-content { padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-ctl); background: var(--raised); color: var(--fg); font: var(--fs-label)/1.4 var(--f-ui); box-shadow: none; }
+.tv-city3d .maplibregl-popup-tip { border-top-color: var(--raised) !important; border-bottom-color: var(--raised) !important; }
+.tv-city3d .maplibregl-popup-close-button { width: 32px; height: 32px; font-size: 20px; color: var(--fg-2); }
+.tv-city3d .maplibregl-popup-content a { color: var(--acc-line); }
+body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the drawn map */
+.tv-city3d .maplibregl-ctrl-bottom-right { bottom: calc(10px + env(safe-area-inset-bottom)); }
+.tv-focus-pin { color: #1b1f2c; }
+.tv-focus-pin svg { width: 36px; height: 36px; fill: #f4cd80; stroke-width: 1.6; }
+@media (max-width: 700px) { .tv-city3d .maplibregl-ctrl-bottom-right { bottom: calc(72px + env(safe-area-inset-bottom)); } }

@@ -4,6 +4,7 @@
   const COLORS = { light: "#f4cd80", attraction: "#e7836a", market: "#8fcf7a", santa_kings: "#d9534f", exhibit: "#9cc4ff", photo_gallery: "#9cc4ff", photocall: "#9cc4ff" };
 
   async function init() {
+    if (window.tinyvigoCity) return; // MAP3D-01: city3d.js is in charge (WebGL available)
     if (!window.L) await window.tinyvigo.need(() => window.L, "vendor/leaflet/leaflet.js");
     const P = window.tinyvigoPoints, t = P.t, txt = P.txt;
     const wrap = document.createElement("div");

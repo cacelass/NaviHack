@@ -90,7 +90,15 @@
 
   // capa de paradas y estaciones en la vista ciudad
   function addLayers() {
-    const C = window.tinyvigoCity; if (!C || !window.L || !data) return;
+    const C = window.tinyvigoCity; if (!C || !data) return;
+    const stopHtml = (id, name) => { const deps = nextDepartures(id); return "<strong>" + name + "</strong><br>" + (deps.length ? deps.map((x) => x.time + " · " + x.line + " → " + x.headsign).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>"; };
+    const stationHtml = (name) => { const rows = trains().filter((x) => x.station === name); return "<strong>" + name + "</strong><br>" + (rows.length ? rows.map((x) => x.time + " · " + x.train + " → " + x.to).join("<br>") : t("transit.no_more_today")) + "<br><small>" + t("transit.scheduled") + "</small>"; };
+    if (C.kind === "3d") { // MAP3D-01
+      const POS = { "Vigo Urzaiz": [42.234189, -8.713728], "Vigo-Guixar": [42.2392656, -8.7146089] };
+      C.addTransit({ stops: data.stops, stations: ((data.trains && data.trains.stations) || []).map((st) => ({ name: st.name, lat: (POS[st.name] || POS["Vigo-Guixar"])[0], lon: (POS[st.name] || POS["Vigo-Guixar"])[1] })), stopHtml, stationHtml });
+      return;
+    }
+    if (!window.L) return;
     const layer = L.layerGroup().addTo(C.map);
     // paradas de bus: discretas y solo a nivel de calle (zoom >= 17), no las ~1000 de Vigo a la vez
     const stopLayer = L.layerGroup();

@@ -234,7 +234,7 @@
     }
     const box = el("button", "tv-mini", tiles, Object.assign(el("span", "tv-mini-pin"), { innerHTML: PIN }));
     box.setAttribute("aria-label", t("detail.off_map"));
-    box.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 18), 120); } };
+    box.onclick = () => { if (window.tinyvigoCity) window.tinyvigoCity.focus(p.lat, p.lon, null, 18); };
     return box;
   }
   // la foto en grande al tocarla
@@ -296,7 +296,7 @@
       info: [
         ...storyParts(p),
         p.address ? el("div", "tv-addr", el("p", "tv-addr-line", lu("map-pin", 16), p.address), miniMap(p)) : null,
-        !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
+        !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) window.tinyvigoCity.focus(p.lat, p.lon, null, 17); }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
         freshness(p),
       ],
       sched: [sched ? el("p", "tv-sched-text", sched) : el("p", "tv-note", t("common.no_data"))],

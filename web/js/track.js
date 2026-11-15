@@ -62,17 +62,15 @@
       const here = pos && !sim ? snap(pos).at : pointAt(along), [x, y] = T.project(here[0], here[1]);
       meDot.setAttribute("transform", "translate(" + x.toFixed(1) + "," + y.toFixed(1) + ")");
     }
-    const C = window.tinyvigoCity;
-    if (C && window.L) {
-      if (!cityWalked) { cityWalked = L.polyline([], { color: "#8a8f9c", weight: 6, opacity: 0.95 }).addTo(C.map); cityMe = L.circleMarker([0, 0], { radius: 9, color: "#fff", weight: 3, fillColor: "#3d8bff", fillOpacity: 1 }).addTo(C.map); }
-      cityWalked.setLatLngs(walked); cityMe.setLatLng(pos && !sim ? snap(pos).at : pointAt(along));
-    }
+    const C = window.tinyvigoCity; // 2D or 3D city view: same API (city.js / city3d.js)
+    if (C && C.setWalked) { C.setWalked(walked, pos && !sim ? snap(pos).at : pointAt(along)); cityWalked = true; }
   }
   function clearDrawn() {
     const viewer = window.tinyvigo && window.tinyvigo.viewer;
     if (svg && viewer) viewer.removeOverlay(svg);
     svg = walkedLine = meDot = null;
-    if (cityWalked) { cityWalked.remove(); cityMe.remove(); cityWalked = cityMe = null; }
+    if (cityWalked && window.tinyvigoCity && window.tinyvigoCity.clearWalked) window.tinyvigoCity.clearWalked();
+    cityWalked = null;
   }
 
   // ── barra: tiempo restante y próxima parada ─────────────────────────────────────────
