@@ -67,7 +67,31 @@
 
   function init() {
     const P = window.tinyvigoPoints, t = P.t;
-    let index = null, results = {}, flat = [], active = -1, input = null;
+    let index = null, results = {}, flat = [], active = -1, input = null, filter = "all";
+    // HUD v5: filter chips on top of the dropdown; with no text it lists every place they allow
+    const FILTERS = [["all", "points.filter_all", "layers"], ["open", "common.open_now", "circle-check"], ["light", "points.filter_lights", "lightbulb"], ["market", "points.filter_markets", "store"], ["attraction", "points.filter_attractions", "ferris-wheel"]];
+    const passes = (p) => filter === "all" || (filter === "open" ? !!(P.status(p) || {}).open : p.type === filter);
+    function chips() {
+      const row = el("div", "tv-res-filters");
+      row.setAttribute("role", "group");
+      for (const [f, key, icon] of FILTERS) {
+        const b = el("button", "tv-res-filter" + (f === filter ? " is-on" : ""), lu(icon, 16), t(key));
+        b.type = "button"; b.setAttribute("aria-pressed", String(f === filter));
+        b.onmousedown = (e) => { e.preventDefault(); filter = f; run(input.value); };
+        row.append(b);
+      }
+      return row;
+    }
+    function pointRow(it) {
+      const p = it.p, st = P.status(p), i = flat.length;
+      flat.push(it);
+      const thumb = p.photo ? Object.assign(el("img", "tv-res-thumb"), { src: p.photo, alt: "", loading: "lazy", decoding: "async", width: 44, height: 44 }) : el("span", "tv-res-thumb", lu("map-pin", 20));
+      const b = el("button", "tv-res tv-res-point" + (i === active ? " is-active" : ""), thumb, el("span", "tv-name", it.label),
+        st ? el("span", "tv-badge" + (st.open ? " is-open" : ""), st.open ? st.word : st.label) : null);
+      b.setAttribute("role", "option");
+      b.onmousedown = (e) => { e.preventDefault(); go(it); };
+      return b;
+    }
     const box = el("div", "tv-results"); box.setAttribute("role", "listbox");
     const RKEY = "tinyvigo.recent";
     const recent = () => { try { return JSON.parse(localStorage.getItem(RKEY) || "[]"); } catch (e) { return []; } };
@@ -98,21 +122,22 @@
     }
 
     function render(q) {
-      box.replaceChildren();
+      box.replaceChildren(chips());
       flat = [];
       if (!q) {
-        const r = recent();
-        if (!r.length) { box.append(el("p", "tv-note tv-res-empty", t("search.hint"))); return; }
-        box.append(el("p", "tv-res-head", lu("clock"), t("search.recent")));
-        r.forEach((x) => { const b = el("button", "tv-res", lu("search"), el("span", "tv-name", x)); b.onmousedown = (e) => { e.preventDefault(); input.value = x; input.dispatchEvent(new Event("input", { bubbles: true })); }; box.append(b); });
+        const rows = P.points.filter(passes).map((p) => pointRow({ kind: "point", label: P.txt(p.name), p, lat: p.lat, lon: p.lon }));
+        box.append(...(rows.length ? rows : [el("p", "tv-note tv-res-empty", t("search.none", { q: "" }))]));
         return;
       }
       if (!index) { box.append(el("p", "tv-note tv-res-empty", t("state.loading") + "…")); return; }
       for (const g of GROUPS) {
-        const list = results[g.kind];
+        let list = results[g.kind];
+        if (g.kind === "point" && list) list = list.filter((it) => passes(it.p));
+        else if (filter !== "all") list = null; // a place filter leaves only places
         if (!list || !list.length) continue;
         box.append(el("p", "tv-res-head", lu(g.icon), t(g.label)));
         for (const it of list) {
+          if (it.kind === "point") { box.append(pointRow(it)); continue; }
           const i = flat.length; flat.push(it);
           const b = el("button", "tv-res" + (i === active ? " is-active" : ""), el("span", "tv-name", it.label), it.sub ? el("span", "tv-badge", it.sub) : null);
           b.setAttribute("role", "option");

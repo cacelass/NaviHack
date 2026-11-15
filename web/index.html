@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/app.css">
 <link rel="stylesheet" href="css/about.css">
 <link rel="stylesheet" href="css/points.css">
+<link rel="stylesheet" href="css/hud.css">
 </head>
 <body>
 <!-- tv-baked-points -->
@@ -20,6 +21,12 @@
 <div id="map" aria-label="Mapa isométrico de Vigo"></div>
 <div id="zoom"><button id="zoom-in" aria-label="Acercar"><span data-lu="plus"></span></button><button id="zoom-out" aria-label="Alejar"><span data-lu="minus"></span></button></div>
 <button class="tv-theme" data-theme-toggle aria-label="Cambiar tema"><span class="lu"></span></button>
+<div class="tv-dock" id="tv-dock" role="group" aria-label="Acciones principales">
+  <button id="dock-sitios" type="button" aria-controls="tv-points-panel" aria-expanded="false"><span data-lu="list"></span><span class="tv-dock-label">Ver sitios</span><span class="tv-dock-label-short">Sitios</span></button>
+  <span class="tv-dock-sep" aria-hidden="true"></span>
+  <button id="dock-ruta" type="button" aria-controls="tv-tour" aria-haspopup="dialog" aria-expanded="false"><span data-lu="footprints"></span><span class="tv-dock-label">Empezar ruta</span><span class="tv-dock-label-short">Ruta</span></button>
+</div>
+<button class="tv-event-chip" id="dock-hoy" type="button" aria-controls="tv-events" aria-haspopup="dialog" aria-expanded="false" aria-label="Abrir agenda de hoy"><span data-lu="lightbulb"></span><span class="tv-chip-copy"><span id="tv-event-prefix">Hoy</span><span id="tv-event-label"></span></span></button>
 <script src="ui/assets/theme.js"></script>
 <script>/* el visor es nocturno: oscuro por defecto salvo elección guardada o #light (auditoria-ui.md) */ try { if (!localStorage.getItem("tinyvigo-theme") && location.hash !== "#light") document.documentElement.setAttribute("data-theme", "dark"); } catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }</script>
 <script src="ui/assets/lucide.js"></script>
@@ -44,5 +51,46 @@
 <script src="js/minimap.js"></script>
 <script src="js/layers.js"></script>
 <script src="js/satellite.js"></script>
+<script src="js/hud.js"></script>
+<script>
+// HUD v5: delegate to the existing modules so data and sheet behavior stay in one place.
+(function () {
+  var sitios = document.getElementById('dock-sitios');
+  var ruta = document.getElementById('dock-ruta');
+  var hoy = document.getElementById('dock-hoy');
+  function syncSites() {
+    var panel = document.querySelector('.tv-panel');
+    if (sitios && panel) sitios.setAttribute('aria-expanded', String(!panel.classList.contains('is-collapsed')));
+  }
+  if (sitios) sitios.onclick = function () {
+    var panel = document.querySelector('.tv-panel');
+    if (!panel) return;
+    var opening = panel.classList.contains('is-collapsed');
+    if (window.tinyvigoSheets) window.tinyvigoSheets.closeAll();
+    panel.classList.toggle('is-collapsed', !opening);
+    syncSites();
+    if (opening) setTimeout(function () { var search = panel.querySelector('.tv-search'); if (search) search.focus(); }, 0);
+  };
+  if (ruta) ruta.onclick = function () {
+    if (window.tinyvigoSheets) window.tinyvigoSheets.closeAll();
+    var button = document.querySelector('.tv-tour-open');
+    if (button) button.click();
+  };
+  if (hoy) hoy.onclick = function () {
+    if (window.tinyvigoSheets) window.tinyvigoSheets.closeAll();
+    var button = document.querySelector('.tv-today-open');
+    if (button) button.click();
+  };
+  function bindPanel() {
+    var panel = document.querySelector('.tv-panel');
+    if (!panel || panel.dataset.dockBound) return;
+    panel.dataset.dockBound = 'true';
+    new MutationObserver(syncSites).observe(panel, { attributes: true, attributeFilter: ['class'] });
+    syncSites();
+  }
+  document.addEventListener('tv:ready', bindPanel, { once: true });
+  bindPanel();
+})();
+</script>
 </body>
 </html>

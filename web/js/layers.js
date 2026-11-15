@@ -172,7 +172,11 @@
   function set(id, on, opts = {}) {
     state[id] = !!on; save(); apply(id);
     const group = document.querySelector('.tv-layers-pop [data-layer="' + id + '"]');
-    if (group) { group.classList.toggle("is-on", !!on); group.setAttribute("aria-pressed", on ? "true" : "false"); }
+    if (group) {
+      group.classList.toggle("is-on", !!on);
+      group.setAttribute("aria-pressed", String(!!on));
+      group.setAttribute("aria-checked", String(!!on));
+    }
     if (on && lazies[id] && !opts.silent) lazies[id]();
     document.dispatchEvent(new CustomEvent("tv:layer", { detail: { id, on: !!on } }));
   }
@@ -183,47 +187,79 @@
     const btn = el("button", "tv-layers-btn");
     btn.type = "button";
     btn.setAttribute("aria-label", t("layers.title"));
-    btn.setAttribute("aria-haspopup", "true");
+    btn.setAttribute("aria-haspopup", "dialog");
     btn.setAttribute("aria-expanded", "false");
     btn.append(lu("layers", 20));
     const pop = el("div", "tv-layers-pop");
-    pop.setAttribute("role", "group");
-    pop.setAttribute("aria-label", t("layers.title"));
+    pop.id = "tv-layers-pop";
+    pop.setAttribute("role", "dialog");
+    pop.setAttribute("aria-labelledby", "tv-layers-title");
+    pop.setAttribute("aria-hidden", "true");
+    btn.setAttribute("aria-controls", pop.id);
+    function closePop(restoreFocus = false) {
+      pop.classList.remove("is-open");
+      pop.setAttribute("aria-hidden", "true");
+      btn.setAttribute("aria-expanded", "false");
+      if (restoreFocus) btn.focus();
+    }
+    const close = el("button", "tv-layers-close", lu("x", 20));
+    close.type = "button";
+    close.setAttribute("aria-label", t("common.close"));
+    close.onclick = () => closePop(true);
+    const title = el("h2", null, t("layers.title")); title.id = "tv-layers-title";
+    pop.append(close, title);
     for (const l of LAYERS) {
-      const b = el("button", "tv-layer" + (state[l.id] ? " is-on" : ""), lu(l.icon, 18), el("span", null, t(l.text)));
+      const b = el("button", "tv-layer" + (state[l.id] ? " is-on" : ""),
+        lu(l.icon, 18), el("span", "tv-layer-label", t(l.text)), el("span", "tv-layer-switch"));
       b.type = "button";
       b.dataset.layer = l.id;
-      b.setAttribute("aria-pressed", state[l.id] ? "true" : "false");
+      b.setAttribute("role", "switch");
+      b.setAttribute("aria-pressed", String(state[l.id]));
+      b.setAttribute("aria-checked", String(state[l.id]));
+      b.setAttribute("aria-label", t(l.text));
       b.onclick = () => set(l.id, !state[l.id]);
       pop.append(b);
     }
     // MAP-01: el «arte pixel off» enseña la ortofoto real de la misma zona.
     const sep = el("div", "tv-layers-sep");
-    const sat = el("button", "tv-layer tv-layer-sat" + (window.tinyvigoSat && window.tinyvigoSat.isOn() ? " is-on" : ""), lu("map", 18), el("span", null, t("sat.button")));
+    const satOn = () => !!(window.tinyvigoSat && window.tinyvigoSat.isOn());
+    const sat = el("button", "tv-layer tv-layer-sat" + (satOn() ? " is-on" : ""), lu("image", 18), el("span", "tv-layer-label", t("sat.button")), el("span", "tv-layer-switch"));
     sat.type = "button";
-    sat.setAttribute("aria-pressed", window.tinyvigoSat && window.tinyvigoSat.isOn() ? "true" : "false");
+    sat.setAttribute("role", "switch");
+    sat.setAttribute("aria-pressed", String(satOn()));
+    sat.setAttribute("aria-checked", String(satOn()));
+    sat.setAttribute("aria-label", t("sat.button"));
     sat.onclick = () => {
       if (!window.tinyvigoSat) return;
-      const next = !window.tinyvigoSat.isOn();
-      window.tinyvigoSat.set(next);
+      window.tinyvigoSat.set(!window.tinyvigoSat.isOn());
     };
     document.addEventListener("tv:sat", (e) => {
       sat.classList.toggle("is-on", e.detail.on);
-      sat.setAttribute("aria-pressed", e.detail.on ? "true" : "false");
-      sat.lastChild.textContent = e.detail.on ? t("sat.back") : t("sat.button");
+      sat.setAttribute("aria-pressed", String(e.detail.on));
+      sat.setAttribute("aria-checked", String(e.detail.on));
+      sat.setAttribute("aria-label", e.detail.on ? t("sat.back") : t("sat.button"));
+      sat.querySelector(".tv-layer-label").textContent = e.detail.on ? t("sat.back") : t("sat.button");
+      closePop();
     });
     pop.append(sep, sat);
     btn.onclick = () => {
       const open = !pop.classList.contains("is-open");
-      pop.classList.toggle("is-open", open);
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      if (open) Object.keys(lazies).forEach((id) => { if (state[id]) lazies[id](); });
+      if (!open) { closePop(); return; }
+      pop.classList.add("is-open");
+      pop.setAttribute("aria-hidden", "false");
+      btn.setAttribute("aria-expanded", "true");
+      Object.keys(lazies).forEach((id) => { if (state[id]) lazies[id](); });
+      const first = pop.querySelector(".tv-layer.is-on") || close;
+      first.focus();
     };
     wrap.append(btn, pop);
     document.body.append(wrap);
-    // cerrar al tocar fuera
+    // Closing outside keeps the trigger state synchronized with the sheet manager.
     document.addEventListener("pointerdown", (ev) => {
-      if (!wrap.contains(ev.target)) { pop.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); }
+      if (!wrap.contains(ev.target)) closePop();
+    });
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape" && pop.classList.contains("is-open")) { ev.stopImmediatePropagation(); closePop(true); }
     });
 
     for (const l of LAYERS) apply(l.id);
@@ -235,10 +271,17 @@
     document.addEventListener("tv:route", () => { if (!state.rutas) set("rutas", true); else apply("rutas"); });
     document.addEventListener("tv:lang", () => {
       btn.setAttribute("aria-label", t("layers.title"));
-      pop.querySelectorAll("[data-layer]").forEach((b) => { const id = b.dataset.layer; const l = LAYERS.find((x) => x.id === id); if (l) b.lastChild.textContent = t(l.text); });
-      if (sat.lastChild) sat.lastChild.textContent = window.tinyvigoSat && window.tinyvigoSat.isOn() ? t("sat.back") : t("sat.button");
+      title.textContent = t("layers.title");
+      close.setAttribute("aria-label", t("common.close"));
+      pop.querySelectorAll("[data-layer]").forEach((b) => {
+        const id = b.dataset.layer, l = LAYERS.find((x) => x.id === id);
+        if (l) { b.querySelector(".tv-layer-label").textContent = t(l.text); b.setAttribute("aria-label", t(l.text)); }
+      });
+      const satLabel = window.tinyvigoSat && window.tinyvigoSat.isOn() ? t("sat.back") : t("sat.button");
+      sat.querySelector(".tv-layer-label").textContent = satLabel;
+      sat.setAttribute("aria-label", satLabel);
     });
-    window.tinyvigoLayers = { isOn: (id) => !!state[id], set, toggle: (id) => set(id, !state[id]), state: () => ({ ...state }) };
+    window.tinyvigoLayers = { isOn: (id) => !!state[id], set, toggle: (id) => set(id, !state[id]), state: () => ({ ...state }), close: () => closePop() };
   }
 
   if (window.tinyvigoPoints) init();

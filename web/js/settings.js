@@ -9,7 +9,7 @@
     document.body.classList.add("tv-has-settings");
     const btn = el("button", "tv-settings-open", lu("settings"));
     const pop = el("div", "tv-settings");
-    pop.id = "tv-settings"; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-labelledby", "tv-settings-title");
+    pop.id = "tv-settings"; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-labelledby", "tv-settings-title"); pop.setAttribute("aria-hidden", "true");
     btn.setAttribute("aria-controls", "tv-settings"); btn.setAttribute("aria-haspopup", "dialog");
     document.body.append(btn, pop);
 
@@ -22,38 +22,48 @@
         b.onclick = () => { onPick(v); render(); const again = pop.querySelector("[data-v='" + v + "']"); if (again) again.focus(); };
         return b;
       }));
+      g.classList.add("tv-seg-" + items.length);
       g.setAttribute("role", "group"); if (label) g.setAttribute("aria-label", label);
       return g;
     };
     const isCity = () => document.body.classList.contains("is-city");
     const theme = () => document.documentElement.getAttribute("data-theme") || "dark";
+    const section = (label) => el("h3", "tv-set-title", label);
+    const settingRow = (icon, label, control) => el("div", "tv-set-row",
+      el("span", "tv-set-ico", lu(icon)), el("span", "tv-set-label", label), control);
+
+    function closePop(restoreFocus = true) {
+      pop.classList.remove("is-open");
+      render();
+      if (restoreFocus) btn.focus();
+    }
 
     function render() {
+      const open = pop.classList.contains("is-open");
       btn.setAttribute("aria-label", t("settings.title"));
-      btn.setAttribute("aria-expanded", pop.classList.contains("is-open") ? "true" : "false");
+      btn.setAttribute("aria-expanded", String(open));
+      pop.setAttribute("aria-hidden", String(!open));
       pop.replaceChildren();
-      if (!pop.classList.contains("is-open")) return;
+      if (!open) return;
       const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close"));
-      close.onclick = () => { pop.classList.remove("is-open"); render(); btn.focus(); };
+      close.onclick = () => closePop();
       const info = el("button", "tv-btn tv-btn-quiet", lu("info", 16), t("nav.about"));
-      info.onclick = () => { pop.classList.remove("is-open"); render(); const d = document.getElementById("about"); if (d) d.showModal(); };
+      info.onclick = () => { closePop(false); const d = document.getElementById("about"); if (d) d.showModal(); };
       pop.append(close, Object.assign(el("h2", null, t("settings.title")), { id: "tv-settings-title" }),
-        el("p", "tv-note", t("settings.language")),
-        seg([["gl", "Galego"], ["es", "Español"], ["en", "English"]], P.lang(), (l) => {
+        section(t("settings.language")),
+        settingRow("type", t("settings.language"), seg([["gl", "Galego"], ["es", "Español"], ["en", "English"]], P.lang(), (l) => {
           const b = document.querySelectorAll(".tv-panel .tv-langs button")[["gl", "es", "en"].indexOf(l)];
           if (b) b.click();
-        }, t("settings.language")),
-        el("p", "tv-note", t("settings.view")),
-        seg([["iso", "Vigo 3D", "layers"], ["city", t("app.city_view"), "map-pin"]], isCity() ? "city" : "iso", (v) => window.tinyvigoCity && window.tinyvigoCity.setCity(v === "city"), t("settings.view")),
-        el("p", "tv-note", t("settings.time")),
-        seg([["auto", t("tour.now"), "clock"], ["day", t("settings.light"), "sun"], ["night", t("settings.dark"), "moon"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().time : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ time: v }), t("settings.time")),
-        el("p", "tv-note", t("settings.weather")),
-        seg([["auto", t("settings.weather_real"), "layers"], ["clear", t("settings.weather_clear"), "sun"], ["cloudy", t("wx.cloudy"), "cloud"], ["rain", t("settings.weather_rain"), "cloud-rain"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().weather : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ weather: v }), t("settings.weather")),
-        el("p", "tv-note", t("settings.theme")),
-        seg([["dark", t("settings.dark"), "moon"], ["light", t("settings.light"), "sun"]], theme(), (v) => {
+        }, t("settings.language"))),
+        section(t("settings.view")),
+        settingRow("layers", t("settings.view"), seg([["iso", "Vigo 3D", "layers"], ["city", t("app.city_view"), "map-pin"]], isCity() ? "city" : "iso", (v) => window.tinyvigoCity && window.tinyvigoCity.setCity(v === "city"), t("settings.view"))),
+        settingRow("clock", t("settings.time"), seg([["auto", t("tour.now"), "clock"], ["day", t("settings.light"), "sun"], ["night", t("settings.dark"), "moon"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().time : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ time: v }), t("settings.time"))),
+        settingRow("cloud", t("settings.weather"), seg([["auto", t("settings.weather_real"), "layers"], ["clear", t("settings.weather_clear"), "sun"], ["cloudy", t("wx.cloudy"), "cloud"], ["rain", t("settings.weather_rain"), "cloud-rain"]], window.tinyvigoAmbient ? window.tinyvigoAmbient.state().weather : "auto", (v) => window.tinyvigoAmbient && window.tinyvigoAmbient.set({ weather: v }), t("settings.weather"))),
+        section(t("settings.theme")),
+        settingRow("palette", t("settings.theme"), seg([["dark", t("settings.dark"), "moon"], ["light", t("settings.light"), "sun"]], theme(), (v) => {
           document.documentElement.setAttribute("data-theme", v);
           try { localStorage.setItem("tinyvigo-theme", v); } catch (e) {}
-        }, t("settings.theme")),
+        }, t("settings.theme"))),
         info);
     }
     btn.onclick = () => {
@@ -61,9 +71,9 @@
       if (pop.classList.contains("is-open")) { const first = pop.querySelector(".tv-seg .is-on") || pop.querySelector("button"); if (first) first.focus(); }
     };
     document.addEventListener("tv:lang", render);
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && pop.classList.contains("is-open")) { e.stopImmediatePropagation(); pop.classList.remove("is-open"); render(); btn.focus(); } });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && pop.classList.contains("is-open")) { e.stopImmediatePropagation(); closePop(); } });
     render();
-    window.tinyvigoSettings = { open: () => { pop.classList.add("is-open"); render(); } };
+    window.tinyvigoSettings = { open: () => { pop.classList.add("is-open"); render(); const first = pop.querySelector(".tv-seg .is-on"); if (first) first.focus(); } };
   }
   if (window.tinyvigoPoints) init();
   else document.addEventListener("tv:ready", () => setTimeout(init, 0), { once: true });

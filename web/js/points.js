@@ -71,7 +71,10 @@
 
   // ── DOM ──────────────────────────────────────────────────────────────────
   const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null)); return n; };
-  const panel = el("aside", "tv-panel" + (matchMedia("(max-width: 700px)").matches ? " is-collapsed" : ""));
+  const narrow = matchMedia("(max-width: 700px)");
+  const panel = el("aside", "tv-panel is-collapsed"); // HUD v5: closed until «Ver sitios»
+  panel.id = "tv-points-panel";
+  narrow.addEventListener("change", (e) => { if (e.matches) panel.classList.add("is-collapsed"); });
   const sheet = el("section", "tv-sheet");
   document.body.append(panel, sheet);
   let filter = "all", query = "", selected = null;
@@ -132,6 +135,7 @@
   markers.forEach((m) => new OpenSeadragon.MouseTracker({ element: m, clickHandler: (e) => { e.preventDefaultAction = true; } }));
 
   function select(p, fly = true) {
+    if (selected !== p) sheetTab = "info";
     selected = p;
     markers.forEach((m, id) => m.classList.toggle("is-selected", id === p.id));
     if (fly && p.on_map) viewer.viewport.panTo(new OpenSeadragon.Point(p.x, p.y));
@@ -199,7 +203,8 @@
   }
 
   sheet.setAttribute("role", "dialog"); sheet.setAttribute("aria-labelledby", "tv-sheet-title");
-  let sheetOpener = null;
+  let sheetOpener = null, sheetTab = "info";
+  const TABS = [["info", "detail.tab_info"], ["sched", "detail.tab_sched"], ["go", "detail.tab_go"]];
   function renderSheet() {
     const wasOpen = sheet.classList.contains("is-open");
     sheet.replaceChildren();
@@ -228,18 +233,43 @@
       hero.append(zoom);
     } else hero.append(el("span", "tv-hero-ic", lu(ICON[p.type] || "map-pin", 40)));
     hero.append(typeChip, stateChip);
+    const back = el("button", "tv-crumb", lu("chevron-left", 16), t("points.title"));
+    back.type = "button";
+    back.onclick = () => { close.click(); panel.classList.remove("is-collapsed"); };
+    const tabs = el("div", "tv-tabs");
+    tabs.setAttribute("role", "tablist");
+    const panes = {
+      info: [
+        p.short ? el("p", "tv-short", txt(p.short)) : null,
+        p.long && txt(p.long) ? el("div", "tv-story", el("p", null, txt(p.long)), el("p", "tv-note", t("detail.story_source"))) : null,
+        p.address ? el("div", "tv-addr", el("p", "tv-addr-line", lu("map-pin", 16), p.address), miniMap(p)) : null,
+        !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
+        freshness(p),
+      ],
+      sched: [sched ? el("p", "tv-sched-text", sched) : el("p", "tv-note", t("common.no_data"))],
+      go: [el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null), parkingBlock(p)],
+    };
+    const paneEls = {};
+    for (const [id, key] of TABS) {
+      const tab = el("button", id === sheetTab ? "is-on" : "", t(key));
+      tab.type = "button"; tab.id = "tv-tab-" + id;
+      tab.setAttribute("role", "tab"); tab.setAttribute("aria-selected", String(id === sheetTab)); tab.setAttribute("aria-controls", "tv-pane-" + id);
+      const pane = el("div", "tv-pane tv-pane-" + id, ...panes[id].filter(Boolean));
+      pane.id = "tv-pane-" + id; pane.setAttribute("role", "tabpanel"); pane.setAttribute("aria-labelledby", tab.id); pane.hidden = id !== sheetTab;
+      tab.onclick = () => {
+        sheetTab = id;
+        tabs.querySelectorAll("[role=tab]").forEach((b) => { const on = b === tab; b.classList.toggle("is-on", on); b.setAttribute("aria-selected", String(on)); });
+        Object.entries(paneEls).forEach(([k, n]) => (n.hidden = k !== id));
+      };
+      tabs.append(tab); paneEls[id] = pane;
+    }
     sheet.append(...[
       close, // MOB-01: primer hijo de la ficha y «sticky»: sigue a la vista al hacer scroll
       hero,
+      back,
       Object.assign(el("h2", null, txt(p.name)), { id: "tv-sheet-title", tabIndex: -1 }),
-      p.short ? el("p", "tv-short", txt(p.short)) : null,
-      el("div", "tv-actions", dir, window.tinyvigoShare ? window.tinyvigoShare.button(txt(p.name)) : null),
-      sched ? el("details", "tv-sched", el("summary", null, lu("clock", 16), t("detail.schedule")), el("p", null, sched)) : null,
-      p.long && txt(p.long) ? el("details", "tv-sched tv-story-card", el("summary", null, lu("star", 16), t("detail.story")), el("p", null, txt(p.long)), el("p", "tv-note", t("detail.story_source"))) : null,
-      p.address ? el("div", "tv-addr", el("p", "tv-addr-line", lu("map-pin", 16), p.address), miniMap(p)) : null,
-      parkingBlock(p),
-      !p.on_map ? (() => { const b = el("button", "tv-btn tv-btn-quiet", lu("map-pin"), t("detail.off_map")); b.onclick = () => { if (window.tinyvigoCity) { window.tinyvigoCity.setCity(true); setTimeout(() => window.tinyvigoCity.map.flyTo([p.lat, p.lon], 17), 120); } }; return el("div", "tv-offmap", el("p", "tv-note", t("detail.off_map_note")), b); })() : null,
-      freshness(p),
+      tabs,
+      ...Object.values(paneEls),
     ].filter(Boolean));
     // el foco entra en la ficha al abrirla (teclado y lectores de pantalla)
     if (!wasOpen) setTimeout(() => { const h = document.getElementById("tv-sheet-title"); if (h) h.focus({ preventScroll: true }); }, 60);
@@ -252,8 +282,6 @@
       b.onclick = () => { lang = l; try { localStorage.setItem("tinyvigo.lang", l); } catch (e) {} document.documentElement.lang = l; renderPanel(); renderSheet(); document.dispatchEvent(new Event("tv:lang")); };
       return b;
     }));
-    const search = el("input", "tv-search"); search.type = "search"; search.placeholder = t("points.search"); search.value = query;
-    search.oninput = () => { query = search.value; renderList(); };
     const chips = el("div", "tv-chips", ...FILTERS.map((f) => {
       const b = el("button", f === filter ? "is-on" : "", lu(ICON[f] || "layers", 16), f === "all" ? t("points.filter_all") : t(TYPE_KEY[f]));
       b.onclick = () => { filter = f; renderPanel(); };
@@ -261,13 +289,13 @@
     }));
     const list = el("ul", "tv-list");
     const count = el("p", "tv-count");
-    const min = el("button", "tv-min", lu("minus")); min.setAttribute("aria-label", t("points.minimize")); min.title = t("points.minimize");
+    const min = el("button", "tv-min", lu("x")); min.setAttribute("aria-label", t("common.close")); min.title = t("common.close");
     min.onclick = () => panel.classList.add("is-collapsed");
     const head = el("header", null, el("h1", null, t("points.title")), langs, min);
     const toggle = el("button", "tv-toggle", lu("tree-pine"), el("span", "tv-toggle-t", t("points.title")), lu("plus", 16));
     toggle.setAttribute("aria-label", t("points.expand"));
     toggle.onclick = () => panel.classList.remove("is-collapsed");
-    panel.append(toggle, head, search, chips, count, list, grip);
+    panel.append(toggle, head, chips, count, list, grip);
     function renderList() {
       const q = query.trim().toLowerCase();
       const shown = points.filter((p) => (filter === "all" || p.type === filter || (filter === "exhibit" && ["photo_gallery", "photocall"].includes(p.type)))

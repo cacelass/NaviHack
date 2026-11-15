@@ -154,7 +154,29 @@
     btn.className = "tv-tour-open";
     const box = document.createElement("section");
     box.className = "tv-tour";
+    box.id = "tv-tour";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-hidden", "true");
+    btn.setAttribute("aria-controls", box.id);
+    btn.setAttribute("aria-haspopup", "dialog");
     document.body.append(btn, box);
+    let opener = null, preferredMode = "fastest";
+    const closeBox = (restoreFocus = true) => {
+      const wasOpen = box.classList.contains("is-open");
+      box.classList.remove("is-open");
+      render();
+      if (wasOpen && restoreFocus && opener && document.body.contains(opener)) setTimeout(() => opener.focus(), 0);
+    };
+    const openBox = () => {
+      const active = document.activeElement;
+      opener = active && active !== document.body && active !== document.documentElement ? active : (document.getElementById("dock-ruta") || btn);
+      box.classList.add("is-open");
+      render();
+      setTimeout(() => {
+        const target = document.getElementById("tv-tour-title") || box.querySelector(".tv-close");
+        if (target) target.focus({ preventScroll: true });
+      }, 30);
+    };
     let when = "now";
     const startTime = () => { if (when === "now") return new Date(); const d = new Date(); d.setHours(+when, 0, 0, 0); if (d < new Date()) d.setDate(d.getDate() + 1); return d; };
     let budget = 60, fromHere = true, result = null, startPos = ORIGIN, busy = "", trip = null, offset = 0, editing = false, startKind = "here", startPick = null, streets = null;
@@ -164,10 +186,16 @@
     const gmaps = (mode, dest, way = []) => "https://www.google.com/maps/dir/?api=1&travelmode=" + mode + "&origin=" + startPos.join(",") + "&destination=" + dest.join(",") + (way.length ? "&waypoints=" + way.map((w) => w.join(",")).join("|") : "");
 
     function render() {
+      const open = box.classList.contains("is-open");
       btn.replaceChildren(lu("route"), t("tour.open"));
+      btn.setAttribute("aria-expanded", String(open));
+      box.setAttribute("aria-hidden", String(!open));
+      box.setAttribute("aria-label", t("tour.custom"));
+      const dock = document.getElementById("dock-ruta");
+      if (dock) dock.setAttribute("aria-expanded", String(open));
       box.replaceChildren();
-      if (!box.classList.contains("is-open")) return;
-      const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close")); close.onclick = () => { box.classList.remove("is-open"); render(); };
+      if (!open) return;
+      const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close")); close.onclick = () => closeBox();
       const chips = el("div", "tv-chips", ...BUDGETS.map((b) => { const c = el("button", b === budget ? "is-on" : "", t("tour.minutes", { min: b })); c.onclick = () => { budget = b; render(); }; return c; }));
       // PLANNER-01: la salida acepta mi ubicación, Porta do Sol, las dos estaciones o una calle
       const sel = el("select", "tv-start", ...Object.entries(STARTS).map(([k, v]) => Object.assign(el("option", null, t(v.label)), { value: k, selected: k === startKind })));
@@ -185,8 +213,12 @@
       }
       const from = el("div", "tv-from", el("label", "tv-note", t("planner.start")), sel, street);
       const whenChips = el("div", "tv-chips", ...[["now", t("tour.now")], ["18", "18:00"], ["20", "20:00"], ["22", "22:00"]].map(([v, label]) => { const c = el("button", v === when ? "is-on" : "", label); c.onclick = () => { when = v; render(); }; return c; }));
-      const go = el("button", "tv-btn tv-go", t("tour.go")); go.onclick = () => { editing = false; run(); };
+      const go = el("button", "tv-btn tv-btn-quiet tv-go tv-plan-start", lu("footprints"), el("span", "tv-plan-start-label", t("walk.start")), lu("chevron-right"));
+      go.onclick = () => { editing = false; run(); };
       go.disabled = startKind === "street" && !startPick;
+      const modeChoices = el("div", "tv-planmodes", ...["fastest", "after_dark", "easy_walk"].map((mode) => planMode(mode)));
+      modeChoices.setAttribute("role", "radiogroup");
+      modeChoices.setAttribute("aria-label", t("tour.custom"));
       // MOB-01: con un tour o un «cómo llegar» ya calculado, el formulario se pliega en una línea
       // de resumen para que la ruta se vea en el mapa; «Cambiar» lo vuelve a abrir.
       const folded = (result || trip) && !editing && !busy;
@@ -198,7 +230,8 @@
         box.append(close, el("div", "tv-tour-head",
           el("p", "tv-kicker", t("tour.minutes", { min: budget }) + " · " + whenLabel + " · " + (startPick ? startPick.label : t(STARTS[startKind].label))), edit));
       } else {
-        box.append(close, el("h2", null, t("tour.title")), chips, el("p", "tv-note", t("tour.when")), whenChips, from, go);
+        box.append(close, Object.assign(el("h2", null, t("tour.custom")), { id: "tv-tour-title", tabIndex: -1 }),
+          chips, el("p", "tv-note", t("tour.when")), whenChips, from, modeChoices, go);
       }
       if (busy) box.append(el("p", "tv-note", busy));
       if (trip) box.append(renderGo());
@@ -274,6 +307,28 @@
     }
 
     const PLAN_ICON = { fastest: "footprints", after_dark: "star", easy_walk: "route" };
+    function planMode(value) {
+      const option = typeof value === "string" ? null : value;
+      const mode = option ? option.mode : value;
+      const selected = mode === preferredMode;
+      const meta = option ? t("tour.minutes", { min: option.total }) : t("routes." + mode + "_body");
+      const b = el("button", "tv-planmode" + (selected ? " is-on" : ""),
+        el("span", "tv-set-ico", lu(PLAN_ICON[mode], 20)),
+        el("span", "tv-planmode-body", el("span", "tv-planmode-name", t("planner." + mode)), el("span", "tv-planmode-meta", meta)),
+        el("span", "tv-radio", null));
+      b.type = "button";
+      b.dataset.mode = mode;
+      b.setAttribute("role", "radio");
+      b.setAttribute("aria-checked", String(selected));
+      b.onclick = () => {
+        preferredMode = mode;
+        const available = result && result.options && result.options.some((o) => o.mode === mode && o.ok !== false);
+        if (available && result.mode !== mode) { busy = t("tour.routing"); render(); applyMode(mode); return; }
+        render();
+        const again = box.querySelector('[data-mode="' + mode + '"]'); if (again) again.focus();
+      };
+      return b;
+    }
     function explain(o) {
       const base = t("planner.why_walk", { min: o.walkMin, m: o.walkMeters });
       if (o.mode === "after_dark") return base + " · " + (o.explain.unlitLegs == null ? t("planner.why_dark_day") : t("planner.why_dark", { n: String(o.explain.unlitLegs).replace(".", ",") }));
@@ -300,12 +355,8 @@
       const clr = el("button", "tv-btn tv-btn-quiet", t("tour.clear")); clr.onclick = () => { result = null; clear(viewer); emit("tv:clear-route"); render(); };
       const opts = result.options || [];
       const cur = opts.find((o) => o.mode === result.mode);
-      const tabs = opts.length > 1 ? el("div", "tv-planmodes", ...opts.map((o) => {
-        const b = el("button", o.mode === result.mode ? "is-on" : "", lu(PLAN_ICON[o.mode], 16), el("span", null, t("planner." + o.mode)), el("small", null, t("tour.minutes", { min: o.total })));
-        b.setAttribute("aria-pressed", String(o.mode === result.mode));
-        b.onclick = () => { if (o.mode !== result.mode) { busy = t("tour.routing"); render(); applyMode(o.mode); } };
-        return b;
-      })) : null;
+      const tabs = opts.length > 1 ? el("div", "tv-planmodes", ...opts.map((o) => planMode(o))) : null;
+      if (tabs) { tabs.setAttribute("role", "radiogroup"); tabs.setAttribute("aria-label", t("tour.custom")); }
       const why = cur ? el("p", "tv-note tv-why", explain(cur) + (result.source === "approx" ? " · " + t("go.approx") : "")) : null;
       return el("div", "tv-result", tabs, why,
         el("p", "tv-summary", t("tour.summary", { min: budget, n: stops.length, km })),
@@ -327,7 +378,7 @@
     }
     function startWalk(i) {
       at = i;
-      box.classList.remove("is-open"); render();
+      closeBox(false);
       showStep();
     }
     function showStep() {
@@ -411,7 +462,8 @@
         });
         options = res.options.filter((o) => o.ok); source = res.source;
       }
-      result = { ...planned, options, source, from, extraLegs, mode: options && options.length ? options[0].mode : null };
+      const preferred = options && (options.find((o) => o.mode === preferredMode) || options[0]);
+      result = { ...planned, options, source, from, extraLegs, mode: preferred ? preferred.mode : null };
       await applyMode(result.mode);
     }
     async function applyMode(mode) {
@@ -420,6 +472,7 @@
         const byId = new Map(result.stops.map((s) => [s.p.id, s]));
         result.stops = o.legs.map((l) => ({ ...byId.get(l.id), arrive: l.arrive, stay: l.stay }));
         result.mode = mode;
+        preferredMode = mode;
       }
       const from = result.from, stops = result.stops;
       let line, meters;
@@ -453,10 +506,10 @@
       await finish(from, planned, arrive, legs);
     }
 
-    btn.onclick = () => { const open = !box.classList.contains("is-open"); document.querySelectorAll(".tv-tour.is-open").forEach((b) => b.classList.remove("is-open")); box.classList.toggle("is-open", open); render(); };
+    btn.onclick = () => { if (box.classList.contains("is-open")) closeBox(); else openBox(); };
     document.addEventListener("tv:lang", render);
     render();
-    window.tinyvigoTour = { plan, project, unproject, run, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: () => { box.classList.add("is-open"); render(); }, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; startKind = v ? "here" : "centre"; startPick = v ? null : { pos: STARTS.centre.pos, label: "Porta do Sol" }; }, setStart2: (k) => { startKind = k; fromHere = k === "here"; startPick = STARTS[k].pos ? { pos: STARTS[k].pos, label: k } : null; }, result: () => result };
+    window.tinyvigoTour = { plan, project, unproject, run, setWhen: (v) => { when = v; }, state: () => budget + "-" + when, startWalk: (i) => startWalk(i), setStart: (p) => { fromHere = true; navigator.geolocation.getCurrentPosition = (ok) => ok({ coords: { latitude: p[0], longitude: p[1] } }); }, open: openBox, setBudget: (b) => { budget = b; }, setFromHere: (v) => { fromHere = v; startKind = v ? "here" : "centre"; startPick = v ? null : { pos: STARTS.centre.pos, label: "Porta do Sol" }; }, setStart2: (k) => { startKind = k; fromHere = k === "here"; startPick = STARTS[k].pos ? { pos: STARTS[k].pos, label: k } : null; }, result: () => result };
   }
 
   if (window.tinyvigoPoints) init();

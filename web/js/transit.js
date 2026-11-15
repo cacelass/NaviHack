@@ -82,8 +82,9 @@
     const p = e.detail;
     load().then(() => setTimeout(() => {
       const sheet = document.querySelector(".tv-sheet"); if (!sheet || !data) return;
+      const target = sheet.querySelector(".tv-pane-go") || sheet; // HUD v5: departures live in «Llegar»
       sheet.querySelectorAll(".tv-transit").forEach((n) => n.remove());
-      const b = departuresBlock(p); if (b) sheet.append(b);
+      const b = departuresBlock(p); if (b) target.append(b);
     }, 0));
   });
 

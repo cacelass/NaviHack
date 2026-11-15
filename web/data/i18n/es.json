@@ -193,6 +193,7 @@
   "about.portal_terms": "Condiciones del portal de datos abiertos",
   "tour.open": "Tour",
   "tour.title": "¿Cuánto tiempo tienes?",
+  "tour.custom": "Paseo a medida",
   "tour.from_here": "Desde mi ubicación",
   "tour.from_centre": "Desde Porta do Sol",
   "planner.start": "Salgo desde",
@@ -276,6 +277,13 @@
   "tour.when": "¿Cuándo vas?",
   "tour.now": "Ahora",
   "events.open": "Hoy",
+  "events.agenda": "Agenda",
+  "events.tomorrow": "Mañana",
+  "events.previous_day": "Día anterior",
+  "events.next_day": "Día siguiente",
+  "events.chip_countdown": "{when} encendido",
+  "events.in_hours": "en {h} h",
+  "events.in_hours_minutes": "en {h} h {min} min",
   "events.on_map": "Ver en el mapa",
   "xmas.title": "Navidad hoy",
   "xmas.lights_on": "Se encienden las luces",
@@ -336,5 +344,8 @@
   "layer.rutas": "Rutas",
   "sat.button": "Ver la foto real",
   "sat.back": "Volver al mapa pixel",
-  "minimap.label": "Mini-mapa: vista general"
+  "minimap.label": "Mini-mapa: vista general",
+  "detail.tab_info": "Info",
+  "detail.tab_sched": "Horario",
+  "detail.tab_go": "Llegar"
 }
