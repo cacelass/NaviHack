@@ -535,3 +535,9 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-focus-pin { color: #1b1f2c; }
 .tv-focus-pin svg { width: 36px; height: 36px; fill: #f4cd80; stroke-width: 1.6; }
 @media (max-width: 700px) { .tv-city3d .maplibregl-ctrl-bottom-right { bottom: calc(72px + env(safe-area-inset-bottom)); } }
+
+/* UI-08: on a narrow phone the centred dock touched the minimap (overlapped 20 px at 360 px):
+   it sits next to the «Hoy» chip instead, with air on both sides */
+@media (max-width: 520px) {
+  .tv-dock { left: calc(60px + env(safe-area-inset-left)); transform: none; }
+}

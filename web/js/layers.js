@@ -2,7 +2,10 @@
 // defecto; el resto apagadas. Los marcadores de eventos, buses, trenes, parking y cámaras se
 // pintan sobre el mapa isométrico con la misma proyección que el resto de la app (tour.project).
 (function () {
-  const CANVAS = 3072;
+  const CANVAS = 3072; // 1 viewer unit = 3072 canvas px (the drawing itself is wider, see within)
+  // inside the drawing: its real size from the manifest. The old check used 3072 and dropped
+  // everything east of it after the map grew (v8): Vialia's car park, its stops, its cameras.
+  const within = (xy) => { const m = window.tinyvigo && window.tinyvigo.manifest, w = m ? m.width : CANVAS, h = m ? m.height : CANVAS; return xy[0] > 0 && xy[0] < w && xy[1] > 0 && xy[1] < h; };
   const LAYERS = [
     { id: "navidad", icon: "tree-pine", text: "layer.navidad", on: true },
     { id: "eventos", icon: "calendar-days", text: "layer.eventos", on: true },
@@ -101,7 +104,7 @@
       const d = await (await fetch("data/transit.json")).json();
       for (const [id, name, lat, lon] of d.stops || []) {
         const xy = project(lat, lon); if (!xy) continue;
-        const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
+        const inside = within(xy);
         if (!inside) continue;
         const b = dot("is-bus", "bus", name);
         if (overlay(b, xy[0], xy[1])) add("buses", b);
@@ -126,7 +129,7 @@
       const rows = (window.tinyvigoData ? await window.tinyvigoData.parkings() : []).filter((r) => r.lat && r.lon); // WEB-05
       for (const r of rows) {
         const xy = project(r.lat, r.lon); if (!xy) continue;
-        const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
+        const inside = within(xy);
         if (!inside) continue;
         const b = dot("is-park", "square-parking", r.nombre || "Parking");
         b.onclick = () => toast(r.nombre + " · " + (r.plazaslibres ?? "?") + "/" + (r.totalplazas ?? "?") + " libres");
@@ -147,7 +150,7 @@
         const c = f.geometry ? f.geometry.coordinates : [f.lon, f.lat];
         if (!c || c[1] == null) continue;
         const xy = project(c[1], c[0]); if (!xy) continue;
-        const inside = xy[0] > 0 && xy[0] < CANVAS && xy[1] > 0 && xy[1] < CANVAS;
+        const inside = within(xy);
         if (!inside) continue;
         const props = f.properties || f;
         const b = dot("is-cam", "camera", props.name || props.nombre || "Cámara");
