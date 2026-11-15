@@ -356,5 +356,14 @@
   "walk.finish": "Finish walk",
   "walk.here": "You're here",
   "walk.live": "{m} m away · {min} min",
-  "walk.ended": "Walk finished. Merry Christmas!"
+  "walk.ended": "Walk finished. Merry Christmas!",
+  "offline.title": "Offline",
+  "offline.hint": "Save the map to use it without signal (about 10 MB).",
+  "offline.save": "Save the map",
+  "offline.update": "Save again",
+  "offline.saving": "Saving… {pct} %",
+  "offline.saved": "Saved: the map works without signal.",
+  "offline.now": "You're offline. What you've already seen is still here.",
+  "offline.now_saved": "You're offline. The saved map still works.",
+  "offline.back": "Back online."
 }

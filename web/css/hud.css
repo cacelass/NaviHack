@@ -432,3 +432,10 @@ body.is-walking .tv-track-go, body.is-walking .tv-track.is-following { display: 
 .tv-step-follow[aria-pressed="true"] { background: none; color: var(--fg-2); }
 .tv-step-follow[aria-pressed="true"] .lu, .tv-step-follow[aria-pressed="true"] svg { color: var(--fg-2); }
 .tv-step .tv-step-leg.is-live { color: var(--fg); font-weight: var(--w-600); font-variant-numeric: tabular-nums; }
+
+/* OFFLINE-01: guardar el mapa (Ajustes) */
+.tv-offline { flex-wrap: wrap; }
+.tv-offline .tv-offline-state { flex: 1 1 12rem; color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.tv-offline .tv-btn { margin-left: auto; }
+.tv-offline-bar { flex: 1 1 100%; height: 4px; border-radius: 2px; background: var(--sunk); overflow: hidden; }
+.tv-offline-bar span { display: block; height: 100%; background: var(--acc-line); transition: width .3s linear; }

@@ -356,5 +356,14 @@
   "walk.finish": "Rematar o paseo",
   "walk.here": "Xa chegaches",
   "walk.live": "A {m} m · {min} min",
-  "walk.ended": "Paseo rematado. Bo Nadal!"
+  "walk.ended": "Paseo rematado. Bo Nadal!",
+  "offline.title": "Sen conexión",
+  "offline.hint": "Garda o mapa para usalo sen cobertura (uns 10 MB).",
+  "offline.save": "Gardar o mapa",
+  "offline.update": "Gardar de novo",
+  "offline.saving": "Gardando… {pct} %",
+  "offline.saved": "Gardado: o mapa funciona sen cobertura.",
+  "offline.now": "Sen conexión. O que xa viches segue dispoñible.",
+  "offline.now_saved": "Sen conexión. O mapa gardado segue funcionando.",
+  "offline.back": "Conexión recuperada."
 }

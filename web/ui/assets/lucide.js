@@ -1,6 +1,6 @@
 /* Iconos de interfaz: Lucide v0.462.0 (ISC, ver assets/vendor/lucide/LICENSE).
    Inline y en currentColor para que hereden el color del texto. Generado por
-   tools/build-lucide.py â€” no editar a mano. Los marcadores del mapa usan estos mismos iconos
+   tools/build-lucide.py — no editar a mano. Los marcadores del mapa usan estos mismos iconos
    (un solo registro de iconos para toda la interfaz). */
 (function () {
   var P = {
@@ -63,6 +63,7 @@
     'upload': '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /> <polyline points="17 8 12 3 7 8" /> <line x1="12" x2="12" y1="3" y2="15" />',
     'user': '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" />',
     'wand-sparkles': '<path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72" /> <path d="m14 7 3 3" /> <path d="M5 6v4" /> <path d="M19 14v4" /> <path d="M10 2v2" /> <path d="M7 8H3" /> <path d="M21 16h-4" /> <path d="M11 3H9" />',
+    'wifi-off': '<path d="M12 20h.01" /> <path d="M8.5 16.429a5 5 0 0 1 7 0" /> <path d="M5 12.859a10 10 0 0 1 5.17-2.69" /> <path d="M19 12.859a10 10 0 0 0-2.007-1.523" /> <path d="M2 8.82a15 15 0 0 1 4.177-2.643" /> <path d="M22 8.82a15 15 0 0 0-11.288-3.764" /> <path d="m2 2 20 20" />',
     'x': '<path d="M18 6 6 18" /> <path d="m6 6 12 12" />',
   };
   function svg(name, opts) {

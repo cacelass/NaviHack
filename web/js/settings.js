@@ -64,6 +64,8 @@
           document.documentElement.setAttribute("data-theme", v);
           try { localStorage.setItem("tinyvigo-theme", v); } catch (e) {}
         }, t("settings.theme"))),
+        window.tinyvigoOffline ? section(t("offline.title")) : null,
+        window.tinyvigoOffline ? window.tinyvigoOffline.control(lu, el) : null,
         info);
     }
     btn.onclick = () => {

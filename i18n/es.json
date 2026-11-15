@@ -356,5 +356,14 @@
   "walk.finish": "Terminar paseo",
   "walk.here": "Has llegado",
   "walk.live": "A {m} m · {min} min",
-  "walk.ended": "Paseo terminado. ¡Feliz Navidad!"
+  "walk.ended": "Paseo terminado. ¡Feliz Navidad!",
+  "offline.title": "Sin conexión",
+  "offline.hint": "Guarda el mapa para usarlo sin cobertura (unos 10 MB).",
+  "offline.save": "Guardar el mapa",
+  "offline.update": "Volver a guardar",
+  "offline.saving": "Guardando… {pct} %",
+  "offline.saved": "Guardado: el mapa funciona sin cobertura.",
+  "offline.now": "Sin conexión. Lo que ya has visto sigue disponible.",
+  "offline.now_saved": "Sin conexión. El mapa guardado sigue funcionando.",
+  "offline.back": "Conexión recuperada."
 }
