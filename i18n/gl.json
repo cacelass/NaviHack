@@ -367,5 +367,10 @@
   "offline.now_saved": "Sen conexión. O mapa gardado segue funcionando.",
   "offline.back": "Conexión recuperada.",
   "panel.resize": "Cambiar o ancho do panel",
-  "a11y.skip": "Saltar á busca"
+  "a11y.skip": "Saltar á busca",
+  "search.filters": "Filtrar",
+  "search.more_filters": "Máis filtros",
+  "search.g_addresses": "Enderezos",
+  "search.addr_error": "Non se puido buscar o enderezo. Revisa a conexión.",
+  "search.looking": "Buscando «{q}»…"
 }

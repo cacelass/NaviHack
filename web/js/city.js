@@ -112,7 +112,19 @@
     btn.onclick = () => setCity(!document.body.classList.contains("is-city"));
     document.addEventListener("tv:lang", () => setCity(document.body.classList.contains("is-city")));
     setCity(false);
-    window.tinyvigoCity = { map, setCity };
+    // MAP3D-01: the same small API as the 3D city (city3d.js), so no module touches Leaflet directly
+    const popup = (lat, lon, html) => L.popup({ maxWidth: 260 }).setLatLng([lat, lon]).setContent(html).openOn(map);
+    const focus = (lat, lon, html, zoom = 17) => {
+      setCity(true);
+      setTimeout(() => { map.flyTo([lat, lon], zoom); if (html) popup(lat, lon, html); }, 120);
+    };
+    let walked = null, me = null;
+    const setWalked = (latlngs, here) => {
+      if (!walked) { walked = L.polyline([], { color: "#8a8f9c", weight: 6, opacity: 0.95 }).addTo(map); me = L.circleMarker([0, 0], { radius: 9, color: "#fff", weight: 3, fillColor: "#3d8bff", fillOpacity: 1 }).addTo(map); }
+      walked.setLatLngs(latlngs); me.setLatLng(here);
+    };
+    const clearWalked = () => { if (walked) { walked.remove(); me.remove(); walked = me = null; } };
+    window.tinyvigoCity = { map, setCity, focus, popup, setWalked, clearWalked, kind: "2d" };
   }
 
   if (window.tinyvigoPoints) init();

@@ -67,32 +67,48 @@
 
   function init() {
     const P = window.tinyvigoPoints, t = P.t;
-    let index = null, results = {}, flat = [], active = -1, input = null, filter = "all";
+    let index = null, results = {}, flat = [], active = -1, input = null, filter = "all", addresses = [], addrState = "";
     // HUD v5: filter chips on top of the dropdown; with no text it lists every place they allow
     const FILTERS = [["all", "points.filter_all", "layers"], ["open", "common.open_now", "circle-check"], ["light", "points.filter_lights", "lightbulb"], ["market", "points.filter_markets", "store"], ["attraction", "points.filter_attractions", "ferris-wheel"]];
     const passes = (p) => filter === "all" || (filter === "open" ? !!(P.status(p) || {}).open : p.type === filter);
     function chips() {
       const row = el("div", "tv-res-filters");
       row.setAttribute("role", "group");
+      row.setAttribute("aria-label", t("search.filters"));
       for (const [f, key, icon] of FILTERS) {
         const b = el("button", "tv-res-filter" + (f === filter ? " is-on" : ""), lu(icon, 16), t(key));
         b.type = "button"; b.setAttribute("aria-pressed", String(f === filter));
-        b.onmousedown = (e) => { e.preventDefault(); filter = f; run(input.value); };
+        b.onmousedown = (e) => { e.preventDefault(); filter = f; run(input.value, true); };
         row.append(b);
       }
-      return row;
+      return window.tvScrollHint ? window.tvScrollHint(row) : row;
     }
-    function pointRow(it) {
-      const p = it.p, st = P.status(p), i = flat.length;
+    // SEARCH-02: one card per result. Name on top (up to two lines, never cut mid-word), then what it
+    // is and its state on a second line; the picture or the kind's icon on the left.
+    function card(it, media, name, meta) {
+      const i = flat.length;
       flat.push(it);
-      const thumb = p.photo ? Object.assign(el("img", "tv-res-thumb"), { src: p.photo, alt: "", loading: "lazy", decoding: "async", width: 44, height: 44 }) : el("span", "tv-res-thumb", lu("map-pin", 20));
-      const b = el("button", "tv-res tv-res-point" + (i === active ? " is-active" : ""), thumb, el("span", "tv-name", it.label),
-        st ? el("span", "tv-badge" + (st.open ? " is-open" : ""), st.open ? st.word : st.label) : null);
+      const b = el("button", "tv-res" + (i === active ? " is-active" : ""), media, el("span", "tv-res-text", el("span", "tv-name", name), meta ? el("span", "tv-res-meta", ...meta) : null));
+      b.type = "button";
       b.setAttribute("role", "option");
       b.onmousedown = (e) => { e.preventDefault(); go(it); };
       return b;
     }
+    const iconBox = (name) => el("span", "tv-res-thumb tv-res-ico", lu(name, 20));
+    function pointRow(it) {
+      const p = it.p, st = P.status(p);
+      const thumb = p.photo ? Object.assign(el("img", "tv-res-thumb"), { src: p.photo, alt: "", loading: "lazy", decoding: "async", width: 56, height: 56 }) : iconBox(P.typeIcon(p.type));
+      const kind = el("span", "tv-res-kind", lu(P.typeIcon(p.type), 14), t(P.typeKey(p.type) || "points.filter_all"));
+      const state = st ? el("span", "tv-res-state" + (st.open ? " is-open" : ""), lu(st.open ? "circle-check" : "clock", 14), st.open ? st.word : st.label) : null;
+      return card(it, thumb, it.label, [kind, state]);
+    }
+    const KIND_ICON = { event: "calendar-days", station: "train-front", street: "map-pin", address: "map-pin" };
+    function otherRow(it) {
+      const icon = it.kind === "station" && it.bus ? "bus" : KIND_ICON[it.kind];
+      return card(it, iconBox(icon), it.label, it.sub ? [el("span", "tv-res-sub", it.sub)] : null);
+    }
     const box = el("div", "tv-results"); box.setAttribute("role", "listbox");
+    box.setAttribute("aria-label", t("points.search"));
     const RKEY = "tinyvigo.recent";
     const recent = () => { try { return JSON.parse(localStorage.getItem(RKEY) || "[]"); } catch (e) { return []; } };
     const remember = (q) => { try { localStorage.setItem(RKEY, JSON.stringify([q, ...recent().filter((x) => x !== q)].slice(0, 5))); } catch (e) {} };
@@ -103,25 +119,32 @@
       window.tinyvigoEvents ? window.tinyvigoEvents.load().catch(() => []) : [],
     ]).then(([streets, transit, agenda]) => { index = buildIndex(P, streets, transit, agenda); if (input && input.value) run(input.value); });
 
+    // anything OpenStreetMap knows (other streets with their number, other towns), after a pause
+    const lookUp = window.tinyvigoGeocode ? window.tinyvigoGeocode.debounced((r, q) => {
+      if (!input || input.value.trim() !== q.trim()) return;
+      addrState = r === null ? "error" : "";
+      // the centre's own streets are already listed: only what they do not cover
+      const known = new Set((results.street || []).map((x) => norm(x.label)));
+      addresses = (r || []).filter((a) => a.house || !known.has(norm(a.label)));
+      render(input.value.trim());
+    }) : null;
+
     function go(it) {
       remember(input.value.trim() || it.label);
       close();
+      const C = window.tinyvigoCity, esc = (s) => String(s || "").replace(/</g, "&lt;");
       if (it.kind === "point") {
-        if (!it.p.on_map && window.tinyvigoCity) window.tinyvigoCity.setCity(true);
         P.select(it.p);
-        if (!it.p.on_map && window.tinyvigoCity) setTimeout(() => window.tinyvigoCity.map.flyTo([it.lat, it.lon], 17), 120);
+        if (!it.p.on_map && C) C.focus(it.lat, it.lon, null, 17);
         return;
       }
-      if (it.lat == null || !window.tinyvigoCity) return;
-      const { map, setCity } = window.tinyvigoCity;
-      setCity(true);
-      setTimeout(() => {
-        map.flyTo([it.lat, it.lon], it.kind === "street" ? 17 : 18);
-        L.popup({ maxWidth: 260 }).setLatLng([it.lat, it.lon]).setContent("<strong>" + it.label.replace(/</g, "&lt;") + "</strong>" + (it.sub ? "<br>" + it.sub.replace(/</g, "&lt;") : "")).openOn(map);
-      }, 120);
+      if (it.lat == null) return;
+      if ((it.kind === "address" || it.kind === "street") && window.tinyvigoGeocode) { window.tinyvigoGeocode.show(it); return; }
+      if (C) C.focus(it.lat, it.lon, "<strong>" + esc(it.label) + "</strong>" + (it.sub ? "<br>" + esc(it.sub) : ""), 18);
     }
 
     function render(q) {
+      const top = box.scrollTop;
       box.replaceChildren(chips());
       flat = [];
       if (!q) {
@@ -136,21 +159,26 @@
         else if (filter !== "all") list = null; // a place filter leaves only places
         if (!list || !list.length) continue;
         box.append(el("p", "tv-res-head", lu(g.icon), t(g.label)));
-        for (const it of list) {
-          if (it.kind === "point") { box.append(pointRow(it)); continue; }
-          const i = flat.length; flat.push(it);
-          const b = el("button", "tv-res" + (i === active ? " is-active" : ""), el("span", "tv-name", it.label), it.sub ? el("span", "tv-badge", it.sub) : null);
-          b.setAttribute("role", "option");
-          b.onmousedown = (e) => { e.preventDefault(); go(it); };
-          box.append(b);
-        }
+        for (const it of list) box.append(it.kind === "point" ? pointRow(it) : otherRow(it));
       }
-      if (!flat.length) box.append(el("p", "tv-note tv-res-empty", t("search.none", { q })));
+      if (filter === "all" && q.length >= 3) {
+        if (addresses.length) {
+          box.append(el("p", "tv-res-head", lu("map-pin"), t("search.g_addresses")));
+          for (const it of addresses) box.append(otherRow(it));
+          box.append(el("p", "tv-res-credit", window.tinyvigoGeocode.credit));
+        } else if (addrState === "error") box.append(el("p", "tv-note tv-res-empty", t("search.addr_error")));
+      }
+      if (!flat.length && addrState !== "error") box.append(el("p", "tv-note tv-res-empty", t(q.length >= 3 && lookUp ? "search.looking" : "search.none", { q })));
+      box.scrollTop = top;
     }
 
-    function run(q) { results = index ? search(index, q) : {}; active = -1; render(q.trim()); }
-    function open(inp) { input = inp; inp.after(box); box.classList.add("is-open"); run(inp.value); }
-    function close() { box.classList.remove("is-open"); active = -1; }
+    function run(q, keepAddresses) {
+      results = index ? search(index, q) : {}; active = -1;
+      if (!keepAddresses) { addresses = []; addrState = ""; if (lookUp && q.trim().length >= 3) lookUp(q.trim()); }
+      render(q.trim());
+    }
+    function open(inp) { input = inp; inp.after(box); box.classList.add("is-open"); document.body.classList.add("is-searching"); run(inp.value); }
+    function close() { box.classList.remove("is-open"); document.body.classList.remove("is-searching"); active = -1; }
 
     // el panel se repinta (idioma, filtros): se engancha por delegación
     document.addEventListener("focusin", (e) => { if (e.target.classList && e.target.classList.contains("tv-search")) open(e.target); });
@@ -163,6 +191,7 @@
         if (!flat.length) return;
         active = (active + (e.key === "ArrowDown" ? 1 : -1) + flat.length) % flat.length;
         render(input.value.trim());
+        const a = box.querySelector(".tv-res.is-active"); if (a) a.scrollIntoView({ block: "nearest" });
       } else if (e.key === "Enter" && flat.length) { e.preventDefault(); go(flat[Math.max(active, 0)]); input.blur(); }
       else if (e.key === "Escape") { close(); input.blur(); }
     });

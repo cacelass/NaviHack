@@ -348,7 +348,7 @@
     const toggle = el("button", "tv-toggle", lu("tree-pine"), el("span", "tv-toggle-t", t("points.title")), lu("plus", 16));
     toggle.setAttribute("aria-label", t("points.expand"));
     toggle.onclick = () => panel.classList.remove("is-collapsed");
-    panel.append(toggle, head, chips, count, list, grip);
+    panel.append(toggle, head, window.tvScrollHint ? window.tvScrollHint(chips) : chips, count, list, grip);
     function renderList() {
       const q = query.trim().toLowerCase();
       const shown = points.filter((p) => (filter === "all" || p.type === filter || (filter === "exhibit" && ["photo_gallery", "photocall"].includes(p.type)))
@@ -380,6 +380,6 @@
   document.documentElement.lang = lang;
   renderPanel();
   setInterval(() => { renderPanel(); renderSheet(); }, 60_000); // «abierto ahora» al minuto
-  window.tinyvigoPoints = { points, status, select, t: (k, v) => t(k, v), txt: (o) => txt(o), lang: () => lang, storyContent, factIcon };
+  window.tinyvigoPoints = { points, status, select, t: (k, v) => t(k, v), txt: (o) => txt(o), lang: () => lang, storyContent, factIcon, typeKey: (type) => TYPE_KEY[type], typeIcon: (type) => ICON[type] || "map-pin" };
   document.dispatchEvent(new Event("tv:ready"));
 })();

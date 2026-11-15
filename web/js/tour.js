@@ -237,13 +237,47 @@
       sel.onchange = () => { startKind = sel.value; fromHere = startKind === "here"; startPick = STARTS[startKind].pos ? { pos: STARTS[startKind].pos, label: t(STARTS[startKind].label) } : null; render(); if (startKind === "street") loadStreets(); };
       let street = null;
       if (startKind === "street") {
+        // SEARCH-02: any street or address, not only the centre's: the centre's streets first, then
+        // OpenStreetMap (geocode.js), in a list under the box that updates in place while typing
         const input = el("input", "tv-street");
-        Object.assign(input, { type: "search", placeholder: t("planner.street_placeholder"), value: startPick ? startPick.label : "" });
-        input.setAttribute("list", "tv-streets"); input.setAttribute("aria-label", t("planner.street_placeholder"));
-        const dl = el("datalist", null); dl.id = "tv-streets";
-        const fill = () => { dl.replaceChildren(...(streets || []).filter((x) => !input.value || norm(x[0]).includes(norm(input.value))).slice(0, 40).map((x) => Object.assign(el("option"), { value: x[0] }))); };
-        input.oninput = () => { fill(); const hit = (streets || []).find((x) => norm(x[0]) === norm(input.value)); startPick = hit ? { pos: [hit[1], hit[2]], label: hit[0] } : null; go.disabled = !startPick; };
-        fill(); street = el("div", "tv-street-wrap", input, dl);
+        Object.assign(input, { type: "search", placeholder: t("planner.street_placeholder"), value: startPick ? startPick.label : "", autocomplete: "off" });
+        input.setAttribute("aria-label", t("planner.street_placeholder"));
+        input.setAttribute("role", "combobox"); input.setAttribute("aria-autocomplete", "list"); input.setAttribute("aria-controls", "tv-street-list");
+        const list = el("ul", "tv-street-list"); list.id = "tv-street-list"; list.setAttribute("role", "listbox");
+        const pick = (it) => {
+          startPick = { pos: [it.lat, it.lon], label: it.label + (it.sub ? ", " + it.sub : "") };
+          input.value = startPick.label; list.replaceChildren(); input.setAttribute("aria-expanded", "false");
+          go.disabled = false;
+        };
+        const item = (it) => {
+          const b = el("button", "tv-street-opt", lu("map-pin", 16), el("span", null, el("strong", null, it.label), it.sub ? el("small", null, it.sub) : null));
+          b.type = "button"; b.setAttribute("role", "option");
+          b.onmousedown = (e) => e.preventDefault();
+          b.onclick = () => pick(it);
+          return el("li", null, b);
+        };
+        let remote = [], remoteState = "";
+        const paint = () => {
+          const q = norm(input.value);
+          const local = q.length < 2 ? [] : (streets || []).filter((x) => norm(x[0]).includes(q)).slice(0, 5).map((x) => ({ label: x[0], sub: "Vigo", lat: x[1], lon: x[2] }));
+          const seen = new Set(local.map((x) => norm(x.label)));
+          const all = local.concat(remote.filter((x) => !seen.has(norm(x.label)) || x.house));
+          list.replaceChildren(...all.slice(0, 8).map(item));
+          if (!all.length && q.length >= 3) list.append(el("li", "tv-note", remoteState === "error" ? t("search.addr_error") : remoteState === "busy" ? t("search.looking", { q: input.value.trim() }) : t("search.none", { q: input.value.trim() })));
+          input.setAttribute("aria-expanded", String(list.children.length > 0));
+        };
+        const look = window.tinyvigoGeocode ? window.tinyvigoGeocode.debounced((r, q) => {
+          if (q.trim() !== input.value.trim()) return;
+          remote = r || []; remoteState = r === null ? "error" : ""; paint();
+        }) : null;
+        input.oninput = () => {
+          startPick = null; go.disabled = true; remote = [];
+          remoteState = look && input.value.trim().length >= 3 ? "busy" : "";
+          paint();
+          if (remoteState === "busy") look(input.value.trim());
+        };
+        input.onkeydown = (e) => { if (e.key === "Enter") { const first = list.querySelector(".tv-street-opt"); if (first) { e.preventDefault(); first.click(); } } };
+        street = el("div", "tv-street-wrap", input, list);
       }
       const from = el("div", "tv-from", el("label", "tv-note", t("planner.start")), sel, street);
       const whenChips = el("div", "tv-chips", ...[["now", t("tour.now")], ["18", "18:00"], ["20", "20:00"], ["22", "22:00"]].map(([v, label]) => { const c = el("button", v === when ? "is-on" : "", label); c.onclick = () => { when = v; render(); }; return c; }));

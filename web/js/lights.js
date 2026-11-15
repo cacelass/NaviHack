@@ -32,8 +32,11 @@
   }
 
   function buildTint() {
-    const c = Object.assign(document.createElement("canvas"), { width: 4, height: 4 });
-    const g = c.getContext("2d"); g.fillStyle = TINT; g.fillRect(0, 0, 4, 4);
+    // same proportions as the map: a square tint made the world 1.67 tall and let the view slide
+    // past the bottom of the drawing into the empty background
+    const m = window.tinyvigo.manifest, cw = Math.round(m.width / 256), ch = Math.round(m.height / 256);
+    const c = Object.assign(document.createElement("canvas"), { width: cw, height: ch });
+    const g = c.getContext("2d"); g.fillStyle = TINT; g.fillRect(0, 0, cw, ch);
     addLayer(c.toDataURL(), "multiply", (item) => { tint = item; paint(); });
   }
 
