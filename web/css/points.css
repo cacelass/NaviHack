@@ -29,7 +29,7 @@ html[data-theme="dark"] { --acc: var(--accent-5); --on-acc: #1d1d1d; }
 .tv-langs { display: flex; gap: 2px; background: var(--sunk); border-radius: var(--r-ctl); padding: 2px; }
 .tv-langs button { border: 0; background: none; border-radius: var(--r-sm); min-height: 40px; padding: 0 var(--sp-2); font-size: var(--fs-meta); font-weight: var(--w-500); cursor: pointer; color: var(--fg-2); }
 .tv-langs .is-on { background: var(--raised); color: var(--fg); }
-.tv-search { box-sizing: border-box; width: 100%; height: var(--tap); border: 0; border-radius: var(--r-ctl); padding: 0 var(--sp-3); background: var(--sunk); outline: none; font-size: var(--fs-copy); }
+.tv-search { box-sizing: border-box; width: 100%; height: var(--tap); border: 0; border-radius: var(--r-ctl); padding: 0 var(--sp-3); background: var(--sunk); outline: none; font-size: var(--fs-copy); text-align: left; }
 .tv-search::placeholder { color: var(--fg-3); }
 .tv-search:focus-visible { outline: 2px solid var(--acc); }
 .tv-chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: none; }
