@@ -8,7 +8,6 @@
   const DETOUR = 1.3; // calle frente a línea recta
   const STAY = { light: 5, exhibit: 3, photo_gallery: 5, photocall: 3, santa_kings: 10, market: 20, attraction: 15 };
   const VALUE = { attraction: 3, market: 3, light: 2.5, santa_kings: 2, photocall: 1.5, exhibit: 1, photo_gallery: 1 };
-  const BUDGETS = [30, 60, 90, 120];
   const NEAR_MIN = 5; // a más de 5 min a pie del primer punto, preguntamos cómo quieres llegar (GO-01)
   const ROUTER = "https://routing.openstreetmap.de/routed-foot/route/v1/foot/";
   // PLANNER-01: puntos de salida fijos (estaciones de Renfe del GTFS de X-02)
@@ -212,7 +211,70 @@
       }, 30);
     };
     let when = "now";
-    const startTime = () => { if (when === "now") return new Date(); const d = new Date(); d.setHours(+when, 0, 0, 0); if (d < new Date()) d.setDate(d.getDate() + 1); return d; };
+    const startTime = () => {
+      if (when === "now") return new Date();
+      const [h, m] = String(when).split(":"), d = new Date();
+      d.setHours(+h, +(m || 0), 0, 0);
+      if (d < new Date()) d.setDate(d.getDate() + 1);
+      return d;
+    };
+    const whenText = (w) => (w === "now" ? t("tour.now") : String(w).includes(":") ? w : String(w).padStart(2, "0") + ":00");
+
+    // PLANNER-02: a wheel picker (drag up or down and it snaps, like the iPhone one), in the app's
+    // style. One value per row, the middle one is the choice. Mouse wheel, arrows and Home/End work;
+    // screen readers get a spinbutton. Picking does not re-render the form (it would reset the wheel).
+    function wheel(values, current, label, onPick) {
+      const ITEM = 40;
+      let idx = Math.max(0, values.findIndex(([v]) => String(v) === String(current)));
+      const box = el("div", "tv-picker");
+      box.tabIndex = 0;
+      box.setAttribute("role", "spinbutton");
+      box.setAttribute("aria-label", label);
+      box.setAttribute("aria-valuemin", "0"); box.setAttribute("aria-valuemax", String(values.length - 1));
+      const list = el("div", "tv-picker-list", ...values.map(([, text], i) => {
+        const o = el("div", "tv-picker-item", text);
+        o.onclick = () => go(i, true);
+        return o;
+      }));
+      box.append(list);
+      const mark = () => {
+        [...list.children].forEach((c, i) => c.classList.toggle("is-on", i === idx));
+        box.setAttribute("aria-valuenow", String(idx)); box.setAttribute("aria-valuetext", values[idx][1]);
+      };
+      const go = (i, smooth) => {
+        idx = Math.max(0, Math.min(values.length - 1, i));
+        list.scrollTo({ top: idx * ITEM, behavior: smooth ? "smooth" : "auto" });
+        mark(); onPick(values[idx][0]);
+      };
+      let settle = 0;
+      list.addEventListener("scroll", () => {
+        clearTimeout(settle);
+        settle = setTimeout(() => { const i = Math.round(list.scrollTop / ITEM); if (i !== idx) { idx = Math.max(0, Math.min(values.length - 1, i)); mark(); onPick(values[idx][0]); } }, 90);
+      }, { passive: true });
+      box.onkeydown = (e) => {
+        const k = { ArrowDown: 1, ArrowUp: -1, PageDown: 4, PageUp: -4 }[e.key];
+        if (k) { e.preventDefault(); go(idx + k, true); }
+        else if (e.key === "Home") { e.preventDefault(); go(0, true); }
+        else if (e.key === "End") { e.preventDefault(); go(values.length - 1, true); }
+      };
+      mark();
+      requestAnimationFrame(() => { list.scrollTop = idx * ITEM; });
+      return box;
+    }
+    const durText = (m) => (m < 60 ? t("tour.minutes", { min: m }) : Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : ""));
+    const DURATIONS = Array.from({ length: 16 }, (_, i) => (i + 1) * 15); // 15 min … 4 h
+    function startTimes() {
+      // now, then every quarter of an hour until 03:00 (the latest the lights stay on)
+      const out = [["now", t("tour.now")]], d = new Date();
+      d.setSeconds(0, 0); d.setMinutes(Math.ceil((d.getMinutes() + 1) / 15) * 15);
+      const end = new Date(); end.setHours(3, 0, 0, 0); if (end <= new Date()) end.setDate(end.getDate() + 1);
+      while (d <= end && out.length < 96) {
+        const v = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+        out.push([v, v]); d.setMinutes(d.getMinutes() + 15);
+      }
+      if (when !== "now" && !out.some(([v]) => v === whenText(when))) out.splice(1, 0, [whenText(when), whenText(when)]); // a shared link's time
+      return out;
+    }
     let budget = 60, fromHere = true, result = null, startPos = ORIGIN, busy = "", trip = null, offset = 0, editing = false, startKind = "here", startPick = null, streets = null;
 
     const el = (tag, cls, ...kids) => { const n = document.createElement(tag); if (cls) n.className = cls; n.append(...kids.filter((k) => k != null && k !== false)); return n; };
@@ -230,7 +292,7 @@
       box.replaceChildren();
       if (!open) return;
       const close = el("button", "tv-close", lu("x")); close.setAttribute("aria-label", t("common.close")); close.onclick = () => closeBox();
-      const chips = el("div", "tv-chips", ...BUDGETS.map((b) => { const c = el("button", b === budget ? "is-on" : "", t("tour.minutes", { min: b })); c.onclick = () => { budget = b; render(); }; return c; }));
+      const durWheel = wheel(DURATIONS.map((m) => [m, durText(m)]), DURATIONS.includes(budget) ? budget : 60, t("tour.duration"), (v) => { budget = v; });
       // PLANNER-01: la salida acepta mi ubicación, Porta do Sol, las dos estaciones o una calle
       const sel = el("select", "tv-start", ...Object.entries(STARTS).map(([k, v]) => Object.assign(el("option", null, t(v.label)), { value: k, selected: k === startKind })));
       sel.setAttribute("aria-label", t("planner.start"));
@@ -280,7 +342,7 @@
         street = el("div", "tv-street-wrap", input, list);
       }
       const from = el("div", "tv-from", el("label", "tv-note", t("planner.start")), sel, street);
-      const whenChips = el("div", "tv-chips", ...[["now", t("tour.now")], ["18", "18:00"], ["20", "20:00"], ["22", "22:00"]].map(([v, label]) => { const c = el("button", v === when ? "is-on" : "", label); c.onclick = () => { when = v; render(); }; return c; }));
+      const whenWheel = wheel(startTimes(), when === "now" ? "now" : whenText(when), t("tour.when"), (v) => { when = v; });
       const go = el("button", "tv-btn tv-go tv-plan-start", lu("footprints"), el("span", "tv-plan-start-label", t("walk.start")));
       go.onclick = () => { editing = false; run(); };
       go.disabled = startKind === "street" && !startPick;
@@ -294,14 +356,16 @@
       if (folded) {
         const edit = el("button", "tv-btn tv-btn-quiet tv-edit", t("go.change"));
         edit.onclick = () => { editing = true; render(); };
-        const whenLabel = when === "now" ? t("tour.now") : when + ":00";
+        const whenLabel = whenText(when);
         // HUD v5: title + what was asked on one line, with «Cambiar» next to it
         box.append(close, Object.assign(el("h2", null, t("tour.custom")), { id: "tv-tour-title", tabIndex: -1 }), el("div", "tv-tour-head",
           el("p", "tv-kicker", t("tour.minutes", { min: budget }) + " · " + whenLabel + " · " + (startPick ? startPick.label : t(STARTS[startKind].label))), edit));
       } else {
         box.append(close, Object.assign(el("h2", null, t("tour.custom")), { id: "tv-tour-title", tabIndex: -1 }),
-          el("p", "tv-note tv-field-label", t("tour.duration")), chips,
-          el("p", "tv-note tv-field-label", t("tour.when")), whenChips, from,
+          el("div", "tv-pickers",
+            el("div", "tv-picker-field", el("p", "tv-note tv-field-label", t("tour.duration")), durWheel),
+            el("div", "tv-picker-field", el("p", "tv-note tv-field-label", t("tour.when")), whenWheel)),
+          el("p", "tv-note tv-when-hint", t("tour.when_hint")), from,
           el("p", "tv-note tv-field-label", t("tour.kind")), modeChoices,
           el("div", "tv-sticky-foot", go));
       }

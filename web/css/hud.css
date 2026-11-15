@@ -568,3 +568,16 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-traffic-now .lu, .tv-traffic-now svg, .tv-traffic-route .lu, .tv-traffic-route svg { flex: none; margin-top: 1px; color: var(--ok); }
 .tv-traffic-now.is-slow .lu, .tv-traffic-now.is-slow svg, .tv-traffic-route .is-slow .lu, .tv-traffic-route .is-slow svg { color: var(--warning); }
 .tv-city3d.is-far .tv-park { display: none; }
+
+/* PLANNER-02: wheel pickers (three rows in view, the middle one is the choice) */
+.tv-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.tv-picker-field { display: grid; gap: 6px; min-width: 0; }
+.tv-picker { position: relative; height: 120px; border-radius: var(--r-ctl); background: var(--sunk); overflow: hidden; outline: none; }
+.tv-picker::before { content: ""; position: absolute; left: 6px; right: 6px; top: 40px; height: 40px; border-radius: var(--r-sm); background: var(--raised); border: 1px solid var(--acc-line); pointer-events: none; }
+.tv-picker:focus-visible { box-shadow: 0 0 0 2px var(--acc-line); }
+.tv-picker-list { position: relative; height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior: contain; scrollbar-width: none; padding: 40px 0; box-sizing: border-box; }
+.tv-picker-list::-webkit-scrollbar { display: none; }
+.tv-picker-item { height: 40px; display: grid; place-items: center; scroll-snap-align: center; font: var(--w-500) var(--fs-copy)/1 var(--f-ui); color: var(--fg-3); font-variant-numeric: tabular-nums; cursor: pointer; user-select: none; transition: color .15s var(--ease); }
+.tv-picker-item.is-on { color: var(--fg); font-weight: var(--w-600); }
+.tv-picker { -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); }
+.tv-when-hint { margin: var(--sp-2) 0 0; font-size: var(--fs-meta); color: var(--fg-3); }

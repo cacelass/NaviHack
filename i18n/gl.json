@@ -275,7 +275,7 @@
   "walk.you": "o teu punto de saída",
   "walk.end": "Fin do paseo. Bo Nadal!",
   "walk.story": "Vas ver",
-  "tour.when": "Cando vas?",
+  "tour.when": "A que hora saes?",
   "tour.now": "Agora",
   "events.open": "Hoxe",
   "events.agenda": "Axenda",
@@ -381,5 +381,6 @@
   "go.traffic_fluid": "fluído no centro.",
   "go.traffic_slow": "lento ou con retencións en {streets}.",
   "go.traffic_route": "A túa ruta en coche pasa por tramos lentos: {streets}.",
-  "go.traffic_note": "O tempo en coche non conta o tráfico; Google Maps si."
+  "go.traffic_note": "O tempo en coche non conta o tráfico; Google Maps si.",
+  "tour.when_hint": "É a hora á que saes do punto de partida. Se estás lonxe, dicímosche a que hora chegas."
 }
