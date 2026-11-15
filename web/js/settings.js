@@ -55,7 +55,9 @@
       close.onclick = () => closePop();
       const info = el("button", "tv-btn tv-btn-quiet", lu("info", 16), t("nav.about"));
       info.onclick = () => { closePop(false); const d = document.getElementById("about"); if (d) d.showModal(); };
-      pop.append(close, Object.assign(el("h2", null, t("settings.title")), { id: "tv-settings-title" }),
+      // UI-09: the groups sit in a wrapper so desktop can lay them out in two columns
+      // without disturbing the close button or the title (display:contents below 701px).
+      const grid = el("div", "tv-set-grid",
         group("languages", t("settings.language"), seg(LANG_OPTIONS, P.lang(), (l) => {
           const b = document.querySelectorAll(".tv-panel .tv-langs button")[LANG_OPTIONS.map((x) => x[0]).indexOf(l)];
           if (b) b.click();
@@ -67,8 +69,8 @@
           document.documentElement.setAttribute("data-theme", v);
           try { localStorage.setItem("tinyvigo-theme", v); } catch (e) {}
         }, t("settings.theme"))),
-        window.tinyvigoOffline ? group("wifi-off", t("offline.title"), window.tinyvigoOffline.control(lu, el)) : null,
-        info);
+        window.tinyvigoOffline ? group("wifi-off", t("offline.title"), window.tinyvigoOffline.control(lu, el)) : null);
+      pop.append(close, Object.assign(el("h2", null, t("settings.title")), { id: "tv-settings-title" }), grid, info);
     }
     btn.onclick = () => {
       pop.classList.toggle("is-open"); render();

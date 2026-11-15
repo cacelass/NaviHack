@@ -502,7 +502,11 @@ body.is-walking .tv-track-go, body.is-walking .tv-track.is-following { display: 
 body .tv-theme { display: none !important; } /* the theme is a setting, not a quick action */
 .tv-settings { width: 360px; max-height: calc(100dvh - 80px); overflow-y: auto; gap: 0 !important; }
 .tv-set-group { display: grid; gap: var(--sp-2); padding: var(--sp-3) 0; border-top: 1px solid var(--line); }
-.tv-settings > h2 + .tv-set-group { border-top: 0; padding-top: 0; }
+.tv-set-grid { display: contents; } /* mobile/default: the groups stack as if there were no wrapper */
+/* the sticky header's own box overlaps ~26px into whatever comes right after it (it bleeds to the
+   panel's edges with a negative margin, then shifts again as a sticky offset) — clear it instead
+   of letting the first row's title hide underneath */
+.tv-set-grid > .tv-set-group:first-child { border-top: 0; padding-top: 0; margin-top: var(--sp-6); }
 .tv-settings .tv-set-title { display: flex; align-items: center; gap: 8px; margin: 0; font-size: var(--fs-label); font-weight: var(--w-600); color: var(--fg); }
 .tv-settings .tv-set-title .lu, .tv-settings .tv-set-title svg { color: var(--acc-line); flex: none; }
 .tv-settings .tv-seg { display: grid; grid-auto-flow: row; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 2px; width: 100%; max-width: none; box-sizing: border-box; justify-content: stretch; }
@@ -517,6 +521,12 @@ body .tv-theme { display: none !important; } /* the theme is a setting, not a qu
   .tv-offline .tv-btn { justify-self: stretch; justify-content: center; }
 }
 .tv-settings .tv-seg.tv-seg-4 { grid-template-columns: 1fr 1fr; }
+/* UI-09: wider panel, two columns of settings groups once there's room for them */
+@media (min-width: 701px) {
+  .tv-settings { width: 560px; }
+  .tv-set-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--sp-4); }
+  .tv-set-grid > .tv-set-group:nth-child(-n+2) { border-top: 0; padding-top: 0; margin-top: var(--sp-6); }
+}
 
 /* ── MAP3D-01: «Vista ciudad» en 3D (city3d.js, MapLibre) ─────────────────────────────── */
 .tv-city3d { background: #10121a; }
