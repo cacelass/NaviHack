@@ -324,8 +324,8 @@ Costura `H y=2048`, columna 0: salto de color 1,99× lo normal. Tres intentos:
 ## 8. Entorno y trabajo en equipo
 
 - **Worktree.** `work/` está en `.gitignore`: lo pintado se pierde al borrar el worktree. Copia en
-  `~/proyectos/NaviHack/work/` (`puerto/`, `zona/`, `estilo/`, `estilo2/`, `noria/`, `seams/`, `seamwin/`,
-  `render-expansion/`). Para guardarlo de verdad, un archivo comprimido fuera del repo.
+  `~/proyectos/NaviHack/work/` (`puerto/`, `zona/`, `este/`, `estilo/`, `estilo2/`, `noria/`, `seams/`,
+  `seamwin/`, `render-expansion/`, `render-wide/`, 1,7 GB en total). Para guardarlo de verdad, un archivo comprimido fuera del repo.
 - **Rebase con el arnés.** Los commits WIP del arnés (`wip(harness)…`) chocan con el espejo del backlog. Receta de
   `AGENTS.md`: `git checkout origin/main -- harness/featureslist.json` (y `--theirs` en
   `agents/workspace/audit/audit.jsonl`), `git add` y `GIT_EDITOR=true git rebase --continue`.
