@@ -181,3 +181,9 @@ python3 -m scripts.serve_web --port 8000 --no-open        # y mirarlo en un nave
 - `build_web_data` también reescribe `web/data/i18n/*` y el bloque incrustado de `web/index.html`; si no son
   tuyos, no los incluyas en el commit (`git checkout -- web/data/i18n web/index.html`).
 - Comprobación en navegador: 0 teselas con error (`performance.getEntriesByType('resource')`) y mirar la zona tocada.
+
+## 8. Arreglos puntuales tras publicar (ronda 2)
+
+Costuras con una ventana mezclada (`seam_window_blend.py`), costa, sombras tomadas por agua y objetos cortados: se redibuja un
+recorte con el modelo y se pega solo lo que cambia (`paste_patch.py`). El método, los criterios para aceptar una respuesta y lo
+que se descartó están en `docs/investigacion/mapa-ronda2-metodo.md`.
