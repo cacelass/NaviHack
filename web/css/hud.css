@@ -584,7 +584,6 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-picker-list::-webkit-scrollbar { display: none; }
 .tv-picker-item { height: 40px; display: grid; place-items: center; scroll-snap-align: center; font: var(--w-500) var(--fs-copy)/1 var(--f-ui); color: var(--fg-3); font-variant-numeric: tabular-nums; cursor: pointer; user-select: none; transition: color .15s var(--ease); }
 .tv-picker-item.is-on { color: var(--fg); font-weight: var(--w-600); }
-.tv-picker { -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent); }
 .tv-when-hint { margin: var(--sp-2) 0 0; font-size: var(--fs-meta); color: var(--fg-3); }
 
 /* LOC-01: approximate location, with a way out */
