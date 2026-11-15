@@ -523,9 +523,9 @@ body .tv-theme { display: none !important; } /* the theme is a setting, not a qu
 .tv-settings .tv-seg.tv-seg-4 { grid-template-columns: 1fr 1fr; }
 /* UI-09: wider panel, two columns of settings groups once there's room for them */
 @media (min-width: 701px) {
-  .tv-settings { width: 560px; }
-  .tv-set-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--sp-4); }
-  .tv-set-grid > .tv-set-group:nth-child(-n+2) { border-top: 0; padding-top: 0; margin-top: var(--sp-6); }
+  .tv-settings { width: 760px; }
+  .tv-set-grid { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--sp-4); }
+  .tv-set-grid > .tv-set-group:nth-child(-n+3) { border-top: 0; padding-top: 0; margin-top: var(--sp-6); }
 }
 
 /* ── MAP3D-01: «Vista ciudad» en 3D (city3d.js, MapLibre) ─────────────────────────────── */
@@ -587,8 +587,8 @@ body.is-city .tv-corner { display: none; } /* the minimap and zoom belong to the
 .tv-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
 .tv-picker-field { display: grid; gap: 6px; min-width: 0; }
 .tv-picker { position: relative; height: 120px; border-radius: var(--r-ctl); background: var(--sunk); overflow: hidden; outline: none; }
-.tv-picker::before { content: ""; position: absolute; left: 6px; right: 6px; top: 40px; height: 40px; border-radius: var(--r-sm); background: var(--raised); border: 1px solid var(--acc-line); pointer-events: none; }
-.tv-picker:focus-within { box-shadow: 0 0 0 2px var(--acc-line); }
+.tv-picker::before { content: ""; position: absolute; left: 6px; right: 6px; top: 40px; height: 40px; border-radius: var(--r-sm); background: var(--raised); pointer-events: none; }
+.tv-picker:focus-within { outline: 2px solid var(--acc-line); outline-offset: 2px; }
 .tv-picker-list:focus-visible { outline: none; }
 .tv-picker-list { position: relative; height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior: contain; scrollbar-width: none; padding: 40px 0; box-sizing: border-box; }
 .tv-picker-list::-webkit-scrollbar { display: none; }
