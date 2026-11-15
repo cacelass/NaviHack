@@ -493,9 +493,6 @@ html[data-theme="dark"] { --link: var(--accent-5); }
 .tv-glow, .tv-light { pointer-events: none; mix-blend-mode: screen; }
 .tv-glow { position: relative; border-radius: 50%; opacity: calc(var(--night, 0) * .85);
   background: radial-gradient(circle, rgba(255, 214, 140, .7) 0%, rgba(255, 180, 80, .22) 34%, transparent 68%); }
-/* the bulbs stay still: 22 halos twinkling cost ~100 ms/s of style work with the map idle */
-.tv-glow::before, .tv-glow::after { content: ""; position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #fff1c8; opacity: .85; }
-.tv-glow::before { left: 38%; top: 42%; } .tv-glow::after { left: 58%; top: 54%; opacity: .6; }
 .tv-glow-attraction { background: radial-gradient(circle, rgba(255, 150, 210, .6) 0%, rgba(150, 140, 255, .2) 36%, transparent 68%); }
 .tv-glow-santa_kings { background: radial-gradient(circle, rgba(255, 140, 110, .6) 0%, rgba(255, 100, 70, .2) 36%, transparent 68%); }
 @keyframes tv-twinkle { from { opacity: .35; } to { opacity: 1; } }

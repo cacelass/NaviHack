@@ -55,29 +55,33 @@
     const m = window.tinyvigo.manifest, s = LAMP_SCALE;
     const cv = Object.assign(document.createElement("canvas"), { width: Math.round(m.width * s), height: Math.round(m.height * s) });
     const g = cv.getContext("2d");
-    const R = 7; // radio del charco de luz a esta escala (≈ 7 m)
+    const R = 9; // radio de cada toque de luz a esta escala (≈ 9 m)
     const spr = Object.assign(document.createElement("canvas"), { width: 2 * R, height: 2 * R });
     const sg = spr.getContext("2d"), grad = sg.createRadialGradient(R, R, 0, R, R, R);
-    grad.addColorStop(0, "rgba(255, 228, 170, .85)");
-    grad.addColorStop(0.15, "rgba(255, 196, 120, .42)");
-    grad.addColorStop(0.5, "rgba(255, 170, 90, .1)");
-    grad.addColorStop(1, "rgba(255, 160, 80, 0)");
+    // sin núcleo claro: un punto brillante suelto parece polvo; la luz es un charco ancho que cae suave
+    grad.addColorStop(0, "rgba(255, 190, 110, .24)");
+    grad.addColorStop(0.45, "rgba(255, 170, 90, .10)");
+    grad.addColorStop(1, "rgba(255, 150, 70, 0)");
     sg.fillStyle = grad; sg.fillRect(0, 0, 2 * R, 2 * R);
     g.globalCompositeOperation = "lighter";
+    // la luz recorre la calle: toques cada pocos px que se solapan en charcos bajo cada farola y se apagan entre ellas
+    const STEP = 9;
     for (const line of doc.lines) {
-      let prev = project(line[0][0], line[0][1]), carry = LAMP_EVERY / 2;
+      let prev = project(line[0][0], line[0][1]), run = 0;
       for (let i = 1; i < line.length; i++) {
         const cur = project(line[i][0], line[i][1]);
         const dx = cur[0] - prev[0], dy = cur[1] - prev[1], len = Math.hypot(dx, dy);
-        let d = carry;
-        while (d <= len) {
+        for (let d = STEP - (run % STEP); d <= len; d += STEP) {
           const x = (prev[0] + (dx * d) / len) * s, y = (prev[1] + (dy * d) / len) * s;
-          if (x > -R && y > -R && x < cv.width + R && y < cv.height + R && !(O && O.hidden(x / s, y / s))) g.drawImage(spr, x - R, y - R);
-          d += LAMP_EVERY;
+          const k = Math.cos(((run + d) / LAMP_EVERY) * Math.PI), pool = 0.14 + 0.86 * k * k * k * k;
+          if (x > -R && y > -R && x < cv.width + R && y < cv.height + R && !(O && O.hidden(x / s, y / s))) {
+            g.globalAlpha = pool; g.drawImage(spr, x - R, y - R);
+          }
         }
-        carry = d - len; prev = cur;
+        run += len; prev = cur;
       }
     }
+    g.globalAlpha = 1;
     cv.toBlob((blob) => addLayer(URL.createObjectURL(blob), "screen", (item) => { lamps = item; paint(); }));
   }
 
