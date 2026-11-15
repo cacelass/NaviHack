@@ -2000,8 +2000,130 @@
         "Cumple web/ui/DESIGN.md: Inter, sin sombras ni degradados, iconos Lucide, dorado solo como acento, 44 px",
         "npm run build sin errores, sin scroll horizontal a 390 y 1440 px, sin errores de consola"
       ],
-      "status": "pending",
-      "depends_on": []
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "ROUTE-02",
+      "title": "Rutas: terminar limpia el mapa y paradas legibles",
+      "description": "Rutas: terminar limpia el mapa y paradas legibles",
+      "acceptance_criteria": [
+        "Terminar paseo borra línea, pines, trazo y Seguirme",
+        "Pines numerados anclados al sitio, actual y vistas distinguibles, paradas juntas agrupadas"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "ROUTE-03",
+      "title": "Seguirme dentro de la tarjeta del paseo",
+      "description": "Seguirme dentro de la tarjeta del paseo",
+      "acceptance_criteria": [
+        "Distancia y minutos en vivo",
+        "Avanza sola al pasar cada parada",
+        "Sin GPS ofrece la simulación en la tarjeta"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "CONTENT-02",
+      "title": "Textos de lugares, fecha del circo y foto en la agenda",
+      "description": "Textos de lugares, fecha del circo y foto en la agenda",
+      "acceptance_criteria": [
+        "stories.json sin lenguaje de folleto ni cifras repetidas en gl/es/en",
+        "Circo sin la fecha errónea en el nombre",
+        "Eventos de la agenda con la foto del punto"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "LIGHT-03",
+      "title": "Luz de noche por código: tinte medido, farolas, Árbol y Noria",
+      "description": "Luz de noche por código: tinte medido, farolas, Árbol y Noria",
+      "acceptance_criteria": [
+        "Tinte multiplicado por el azul medido",
+        "Farolas por las calles de OSM al anochecer",
+        "Luces de Navidad según su horario",
+        "Árbol y Noria con luz propia",
+        "Sin coste de día"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "OFFLINE-01",
+      "title": "App instalable y mapa guardable sin conexión",
+      "description": "App instalable y mapa guardable sin conexión",
+      "acceptance_criteria": [
+        "Service worker y manifest",
+        "Guardar el mapa entero desde Ajustes con avance",
+        "El mapa carga sin red tras guardarlo"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "A11Y-01",
+      "title": "Accesibilidad con teclado y lector de pantalla",
+      "description": "Accesibilidad con teclado y lector de pantalla",
+      "acceptance_criteria": [
+        "axe-core sin incidencias en los seis paneles y la landing",
+        "Saltar a la búsqueda",
+        "El foco no se pierde al abrir y cerrar paneles"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "PERF-01",
+      "title": "Rendimiento de las luces y de la landing",
+      "description": "Rendimiento de las luces y de la landing",
+      "acceptance_criteria": [
+        "Trabajo de estilo de noche con el mapa quieto por debajo de 20 ms/s",
+        "Hero de la landing por debajo de 300 KB"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
+    },
+    {
+      "id": "MAP-04",
+      "title": "Minimapa con Vigo entero",
+      "description": "Minimapa con Vigo entero",
+      "acceptance_criteria": [
+        "El minimapa muestra la imagen completa sin recorte",
+        "El recuadro de la vista y el toque se miden contra la imagen real"
+      ],
+      "status": "done",
+      "depends_on": [],
+      "started": "2026-11-15",
+      "review_rounds": 0,
+      "closed": "2026-11-15"
     }
   ]
 }

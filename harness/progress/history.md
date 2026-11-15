@@ -1054,3 +1054,147 @@ Estimacion de coste ANTES de lanzar: work/render-expansion/INFORME.md: 16 llamad
 ```
 
 </details>
+
+## MAP-04 — Minimapa con Vigo entero
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.57s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Edge 1440 y 390: minimap 148x89 (antes 148x148 recortado); tocar 85%/80% lleva el recuadro al borde (x=1354 de 1355). Commit f76eb64. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## ROUTE-02 — Rutas: terminar limpia el mapa y paradas legibles
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.57s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Ruta de 9 paradas: tras Terminar paseo svg=0 pins=0 result=false seguirme oculto, 0 marcadores ocultos, toast Paseo terminado; pines 1 2 3·4 5..9, actual en oscuro, vistas con check. Commits f76eb64. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## ROUTE-03 — Seguirme dentro de la tarjeta del paseo
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.60s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Simulación: A 430 m · 6 min → 330 m; auto-avance Renos → Papá Noel en la Farola; Dejar de seguir vuelve a Seguirme; sin GPS la tarjeta ofrece Simular paseo (390 y 1440). Commit f76eb64. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## CONTENT-02 — Textos de lugares, fecha del circo y foto en la agenda
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.67s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Circo de Navidad sin «desde el 5 de diciembre» (ticketrona: 4 dic–10 ene); 35 historias reescritas en gl/es/en; encendido de luces → foto del Árbol. Commit c1c693b. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## LIGHT-03 — Luz de noche por código: tinte medido, farolas, Árbol y Noria
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.56s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Día: tinte 0, 0 overlays; noche: 3 capas, 24 overlays, sin errores (1440 y 390); 1488 calles OSM. Commits 96f7122, b3de72e. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## OFFLINE-01 — App instalable y mapa guardable sin conexión
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.63s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Guardar → caché shell 88 + teselas 85; sin red: recarga y zoom máximo al este, 29 marcadores, sin errores. Commit 435e4bf. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## A11Y-01 — Accesibilidad con teclado y lector de pantalla
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.57s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+axe-core: 0 incidencias en inicio, lista, ficha, planificador, agenda, ajustes y landing claro/oscuro; 1.er Tab = Saltar a la búsqueda; agenda mantiene foco; Escape devuelve el foco. Commit 2a17843. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## PERF-01 — Rendimiento de las luces y de la landing
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.57s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Noche quieto: 82 → 12 ms/s de estilo; pan de noche 40-50 → 88 fps; hero 527 → 246 KB. Commit b3de72e. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
+
+## LANDING-02 — Landing con mimo: scroll progresivo, tarjetas a medida, copy humano y SEO, capturas del HUD nuevo
+
+- **Cerrada:** 2026-11-15
+- **Verificación:** ./init.sh en verde · 158 passed, 1 skipped in 1.61s
+- **Cambios:** _(no indicados)_
+- **Decisiones:** _(ninguna reseñable)_
+- **Pendiente:** _(nada)_
+
+<details><summary>Evidencia</summary>
+
+```
+Sin ratón, chips ni frase redundante; título sin —; reveals verticales expo-out; Pasea por la Navidad con pasos y consejos; capturas del HUD actual; axe 0; 1440/390 sin scroll horizontal ni errores; 44 px. Commits ae8dfde, b3de72e. · init.sh:   ✔ pytest                 158 passed, 1 skipped in 1.70s ━━ ENTORNO LISTO ━━  2 aviso(s)
+```
+
+</details>
