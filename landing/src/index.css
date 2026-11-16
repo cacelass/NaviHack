@@ -382,7 +382,17 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
   .tips { grid-template-columns: repeat(4, 1fr); }
 }
 
+/* one column: the lights card shows two garlands, not a 25rem panel */
+@media (max-width: 799px) {
+  .xmas-wrap { min-height: 0; max-height: none; aspect-ratio: 600 / 265; }
+}
+
 @media (max-width: 639px) {
+  /* a thinner bezel: at phone size 7px reads as a thick frame */
+  .phone { padding: 4px; border-radius: 26px; }
+  .phone-screen { border-radius: 22px; }
+  .map-card.is-phone .phone { border-radius: 26px 26px 0 0; }
+  .map-card.is-phone .phone-screen { border-radius: 22px 22px 0 0; }
   .hero { min-height: auto; padding-block: calc(var(--header-h) + 2.5rem) 3rem; align-items: flex-start; }
   .hero-veil { background: rgba(16, 18, 26, 0.74); }
   .hero-actions .btn { flex: 1 1 100%; }
