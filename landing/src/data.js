@@ -22,10 +22,18 @@ export const hero = {
   text: 'Las luces del Concello, los mercados y la noria, sobre un dibujo del centro. Mira qué está encendido ahora y sal a dar un paseo que cabe en el tiempo que tienes.',
 }
 
+// The launch video (37 s, narrated). Files in public/video, loaded only when someone presses play.
+export const video = {
+  label: 'Vídeo de NaviVigo',
+  src: 'video/navivigo.mp4',
+  poster: 'video/navivigo-poster.webp',
+  play: 'Ver el vídeo',
+  length: '37 s',
+}
+
 export const map = {
   id: 'mapa',
   title: 'Todo lo de la Navidad, en su sitio',
-  intro: 'Un mapa del centro de Vigo para saber qué hay, si está abierto y cómo llegar, sin saltar de web en web.',
   items: [
     {
       key: 'mapa',
@@ -117,5 +125,7 @@ export const footer = {
     { label: 'OpenStreetMap', note: 'Calles y farolas: © colaboradores de OpenStreetMap (ODbL)', href: 'https://www.openstreetmap.org/copyright' },
     { label: 'Renfe', note: 'GTFS de Renfe Operadora (CC BY 4.0)', href: 'https://data.renfe.com' },
     { label: 'Open-Meteo', note: 'Weather data by Open-Meteo.com (CC BY 4.0)', href: 'https://open-meteo.com' },
+    { label: 'Música del vídeo', note: '"Jingle Bells", Kevin MacLeod (incompetech.com), CC BY 4.0', href: 'https://incompetech.com' },
+    { label: 'ElevenLabs', note: 'Voz del vídeo', href: 'https://elevenlabs.io' },
   ],
 }

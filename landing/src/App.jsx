@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
+import LaunchVideo from './components/LaunchVideo.jsx'
 import Reveal from './components/Reveal.jsx'
 import FeatureCard from './components/FeatureCard.jsx'
 import Walk from './components/Walk.jsx'
@@ -19,11 +20,12 @@ export default function App() {
       <main>
         <Hero />
 
+        <LaunchVideo />
+
         <section className="section" id={map.id}>
           <div className="wrap">
             <div className="section-head">
               <Reveal as="h2" className="section-title">{map.title}</Reveal>
-              <Reveal as="p" className="section-intro" delay={80}>{map.intro}</Reveal>
             </div>
             <div className="bento">
               {map.items.map((item, i) => (
