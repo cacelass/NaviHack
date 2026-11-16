@@ -44,7 +44,7 @@ export const map = {
     {
       key: 'noche',
       title: 'De noche, con sus luces',
-      text: 'Al ponerse el sol se encienden las farolas y cada luz de Navidad a su hora. El Árbol de Porta do Sol brilla más en sus pases de música.',
+      text: 'De noche el mapa se enciende: las farolas y cada luz de Navidad, a su hora. El Árbol de Porta do Sol brilla más en sus pases de música.',
     },
     {
       key: 'hoy',
