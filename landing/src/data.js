@@ -44,6 +44,11 @@ export const map = {
       alt: 'El mapa ilustrado del centro de Vigo con los puntos de Navidad marcados',
     },
     {
+      key: 'video',
+      title: 'Míralo en 37 segundos',
+      text: 'Un paseo rápido por el mapa, con voz y música.',
+    },
+    {
       key: 'ficha',
       title: 'Cada sitio, con su ficha',
       text: 'Su foto, el horario oficial, si está encendido ahora y los minutos andando hasta él.',

@@ -3,6 +3,7 @@ import Phone from './Phone.jsx'
 import FichaMock from './FichaMock.jsx'
 import ChristmasLights from './ChristmasLights.jsx'
 import TodayAgenda from './TodayAgenda.jsx'
+import LaunchVideo from './LaunchVideo.jsx'
 
 // One flat card per thing the map does: the real screen on a sunk panel, then title and text.
 // Its place in the bento grid comes from `item.key` (index.css, .map-card.is-<key>).
@@ -23,7 +24,9 @@ export default function FeatureCard({ item, delay = 0 }) {
         </div>
       )}
       <div className="map-media">
-        {item.key === 'noche' || item.key === 'hoy' ? null : item.key === 'ficha' ? (
+        {item.key === 'noche' || item.key === 'hoy' ? null : item.key === 'video' ? (
+          <LaunchVideo />
+        ) : item.key === 'ficha' ? (
           <Phone className="phone-sm"><FichaMock /></Phone>
         ) : item.phone ? (
           <Phone className="phone-sm">
