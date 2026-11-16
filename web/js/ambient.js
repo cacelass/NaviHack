@@ -77,10 +77,9 @@
     const n = Math.round((innerWidth * innerHeight) / 9000);
     flakes = Array.from({ length: Math.min(140, Math.max(24, n)) }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: 0.6 + Math.random() * 2.2, v: 1.6 + Math.random() * 2.2, ph: Math.random() * Math.PI * 2, a: 0.4 + Math.random() * 0.5 }));
   };
-  function weatherLoop(ts) {
-    raf = requestAnimationFrame(weatherLoop);
-    if (document.hidden || ts - last < 50) return;
-    last = ts;
+  // con reduce-motion se pinta un fotograma fijo (sin mover gotas/copos ni rayos) en vez de
+  // apagar la lluvia entera: antes "reduced" tapaba el lienzo aunque se eligiera lluvia a mano.
+  function paint(ts) {
     const c = fx, ctx = c.getContext("2d"), W = innerWidth, H = innerHeight;
     if (c.width !== W || c.height !== H) { c.width = W; c.height = H; drops = []; flakes = []; }
     const k = CLIMATES[weather()] || CLIMATES.clear;
@@ -91,10 +90,12 @@
     if (k.snow) {
       ctx.fillStyle = "rgba(240, 246, 255, .8)";
       for (const f of flakes) {
-        f.y += f.v; f.x += Math.sin(sec * 0.8 + f.ph) * 0.25;
-        if (f.y > H + 4) { f.y = -4; f.x = Math.random() * W; }
-        if (f.x < -4) f.x = W + 4; else if (f.x > W + 4) f.x = -4;
-        ctx.globalAlpha = f.a * (0.7 + 0.3 * Math.sin(sec * 2 + f.ph));
+        if (!reduced) {
+          f.y += f.v; f.x += Math.sin(sec * 0.8 + f.ph) * 0.25;
+          if (f.y > H + 4) { f.y = -4; f.x = Math.random() * W; }
+          if (f.x < -4) f.x = W + 4; else if (f.x > W + 4) f.x = -4;
+        }
+        ctx.globalAlpha = reduced ? f.a : f.a * (0.7 + 0.3 * Math.sin(sec * 2 + f.ph));
         ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.fill();
       }
       ctx.globalAlpha = 1;
@@ -105,12 +106,14 @@
       ctx.strokeStyle = "rgba(210, 222, 240," + alpha.toFixed(2) + ")"; ctx.lineWidth = 1.2; ctx.beginPath();
       for (const d of drops) {
         ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - len * 0.25, d.y + len);
-        d.y += v; d.x -= v * 0.25;
-        if (d.y > H + len) { d.y = -len; d.x = Math.random() * (W + 100); }
+        if (!reduced) {
+          d.y += v; d.x -= v * 0.25;
+          if (d.y > H + len) { d.y = -len; d.x = Math.random() * (W + 100); }
+        }
       }
       ctx.stroke();
     }
-    if (k.storm) {
+    if (k.storm && !reduced) {
       if (bolt) {
         bolt.t += 50;
         const a = Math.max(0, 1 - bolt.t / 320);
@@ -128,6 +131,12 @@
       }
     }
   }
+  function weatherLoop(ts) {
+    raf = requestAnimationFrame(weatherLoop);
+    if (document.hidden || ts - last < 50) return;
+    last = ts;
+    paint(ts);
+  }
 
   function apply() {
     const lvl = nightLevel(), w = weather(), k = CLIMATES[w] || CLIMATES.clear, city = document.body.classList.contains("is-city");
@@ -137,8 +146,8 @@
     const weatherOn = (k.snow || k.rain > 0) && !city;
     fx.style.display = weatherOn ? "block" : "none";
     cancelAnimationFrame(raf);
-    if (weatherOn && !reduced) raf = requestAnimationFrame(weatherLoop);
-    clouds.classList.toggle("is-on", (k.clouds || k.rain > 0 || k.snow) && !city && !reduced);
+    if (weatherOn) { if (reduced) paint(performance.now()); else raf = requestAnimationFrame(weatherLoop); }
+    clouds.classList.toggle("is-on", (k.clouds || k.rain > 0 || k.snow) && !city);
     document.body.classList.toggle("tv-reduced", reduced);
   }
 
