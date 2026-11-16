@@ -278,7 +278,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .bento { display: grid; gap: 1rem; }
 .map-card { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-card); background: var(--surface); border: 1px solid transparent; transition: border-color 300ms var(--ease), opacity 1s var(--ease-expo), transform 1.2s var(--ease-expo); }
 .map-card:hover { border-color: var(--line-strong); }
-.map-media { position: relative; overflow: hidden; padding: 1.25rem 1.25rem 0; background: var(--sunk); }
+.map-media { position: relative; overflow: hidden; padding: 1.25rem 1.25rem 0; }
 .map-media > img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 30%; border-radius: 10px 10px 0 0; border: 1px solid var(--line); border-bottom: 0; transform: translateY(18px) scale(1.04); transition: transform 1.6s var(--ease-expo); transition-delay: calc(var(--reveal-delay, 0ms) + 120ms); }
 .map-card.is-visible .map-media > img { transform: none; }
 .map-card:hover .map-media > img { transform: translateY(-4px); transition-duration: 700ms; transition-delay: 0ms; }
