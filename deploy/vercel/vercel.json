@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/demo", "destination": "/demo/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/demo/data/live/:feed.json", "destination": "/api/live?feed=:feed" },
     { "source": "/demo/data/transit.json", "destination": "/api/live?feed=transit" }
